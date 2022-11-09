@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Common Package &mdash; Console Access Library 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Device Management Package" href="console_access_library.device_management.html" />
+    <link rel="prev" title="console_access_library package" href="console_access_library.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Console Access Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="console_access_library.html">console_access_library package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="console_access_library.html#console-access-library-subpackages">Console Access Library Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Common Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.device_management.html">Device Management Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.insight.html">Insight Package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="console_access_library.html#module-console_access_library.client">console_access_library.client</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">Console Access Library</a> &raquo;</li>
+          <li><a href="console_access_library.html">console_access_library package</a> &raquo;</li>
+      <li>Common Package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/console_access_library.common.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="common-package">
+<h1>Common Package<a class="headerlink" href="#common-package" title="Permalink to this headline"></a></h1>
+<section id="module-console_access_library.common.config">
+<span id="config"></span><h2>Config<a class="headerlink" href="#module-console_access_library.common.config" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfiguration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaAppConfiguration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/config.html#SchemaAppConfiguration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfiguration" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<p>Schema for AppConfiguration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfiguration.base_url">
+<span class="sig-name descname"><span class="pre">base_url</span></span><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfiguration.base_url" title="Permalink to this definition"></a></dt>
+<dd><p>Console access URL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>string, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfiguration.token_url">
+<span class="sig-name descname"><span class="pre">token_url</span></span><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfiguration.token_url" title="Permalink to this definition"></a></dt>
+<dd><p>Access token issuance URL required for Console access</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>string, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfiguration.client_secret">
+<span class="sig-name descname"><span class="pre">client_secret</span></span><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfiguration.client_secret" title="Permalink to this definition"></a></dt>
+<dd><p>Client ID required to issue an access token</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>string, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfiguration.client_id">
+<span class="sig-name descname"><span class="pre">client_id</span></span><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfiguration.client_id" title="Permalink to this definition"></a></dt>
+<dd><p>Client Secret required to issue an access token</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>string, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfiguration.opts">
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfiguration.opts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaAppConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/config.html#SchemaAppConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<p>Schema for AppConfiguration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfig.console_access_settings">
+<span class="sig-name descname"><span class="pre">console_access_settings</span></span><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfig.console_access_settings" title="Permalink to this definition"></a></dt>
+<dd><p>Nested AppConfiguration schema</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>app_configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.config.SchemaAppConfig.opts">
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.common.config.SchemaAppConfig.opts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.common.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings_file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.config.Config" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class obtains the configuration details needed for APIs from user.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.config.Config.read_settings_file">
+<span class="sig-name descname"><span class="pre">read_settings_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/config.html#Config.read_settings_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.config.Config.read_settings_file" title="Permalink to this definition"></a></dt>
+<dd><p>Read App configuration file for configurations details needed for APIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>“Success” - On Success</p></li>
+<li><p>”Generic Error” - If an error occurs when reading the configuration file</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.config.Config.get_access_token">
+<span class="sig-name descname"><span class="pre">get_access_token</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/config.html#Config.get_access_token"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.config.Config.get_access_token" title="Permalink to this definition"></a></dt>
+<dd><p>Get Access Token from Token Server needed for API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>“__access_token_str__” - On Success</p></li>
+<li><p>”Generic Error” - If an error occurs when obtaining an access token</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-console_access_library.common.error_codes">
+<span id="error-codes"></span><h2>error_codes<a class="headerlink" href="#module-console_access_library.common.error_codes" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ErrorCodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/error_codes.html#ErrorCodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></p>
+<p>Class to check error status code</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>IntEnum</strong> (<em>object</em>) – Inherited from class enum</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.SUCCESS">
+<span class="sig-name descname"><span class="pre">SUCCESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.SUCCESS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.GENERIC_ERROR">
+<span class="sig-name descname"><span class="pre">GENERIC_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.GENERIC_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.KEY_ERROR">
+<span class="sig-name descname"><span class="pre">KEY_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.KEY_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.TYPE_ERROR">
+<span class="sig-name descname"><span class="pre">TYPE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.TYPE_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.ATTRIBUTE_ERROR">
+<span class="sig-name descname"><span class="pre">ATTRIBUTE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.ATTRIBUTE_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.error_codes.ErrorCodes.VALUE_ERROR">
+<span class="sig-name descname"><span class="pre">VALUE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#console_access_library.common.error_codes.ErrorCodes.VALUE_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-console_access_library.common.logger">
+<span id="logger"></span><h2>logger<a class="headerlink" href="#module-console_access_library.common.logger" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Logger</span></span><a class="reference internal" href="_modules/console_access_library/common/logger.html#Logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.logger.Logger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generic log class with custom log configuration. which abstracts     original logging for customization. it supports logs printed stdout and     to the log file.</p>
+<blockquote>
+<div><dl>
+<dt>Example:</dt><dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">common.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="n">set_logger</span>
+<span class="k">class</span> <span class="nc">XYZ</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">XYZ</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.CLIENT_NAME">
+<span class="sig-name descname"><span class="pre">CLIENT_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ConsoleAccessClient'</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.CLIENT_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.FORMATTER">
+<span class="sig-name descname"><span class="pre">FORMATTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;logging.Formatter</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.FORMATTER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.time_string">
+<span class="sig-name descname"><span class="pre">time_string</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'20221109-110108'</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.time_string" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.LOG_FILE">
+<span class="sig-name descname"><span class="pre">LOG_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'console_access_library-20221109-110108.log'</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.LOG_FILE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.DEBUG">
+<span class="sig-name descname"><span class="pre">DEBUG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.DEBUG" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.WARNING">
+<span class="sig-name descname"><span class="pre">WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.WARNING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.INFO">
+<span class="sig-name descname"><span class="pre">INFO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.INFO" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.ERROR">
+<span class="sig-name descname"><span class="pre">ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.OFF">
+<span class="sig-name descname"><span class="pre">OFF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.OFF" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.LOGGER_NAME">
+<span class="sig-name descname"><span class="pre">LOGGER_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'console_access_library.common.logger'</span></em><a class="headerlink" href="#console_access_library.common.logger.Logger.LOGGER_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.get_console_handler">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_console_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/logger.html#Logger.get_console_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.logger.Logger.get_console_handler" title="Permalink to this definition"></a></dt>
+<dd><p>Returns console handler function which sends logging output to sys.stdout</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>StreamHandler object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>console_handler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.get_file_handler">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_file_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/logger.html#Logger.get_file_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.logger.Logger.get_file_handler" title="Permalink to this definition"></a></dt>
+<dd><p>Returns file handler function which sends logging output to file</p>
+<dl class="simple">
+<dt>Returns</dt><dd><p>file_handler : TimedRotatingFileHandler object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.logger.Logger.set_logger">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/logger.html#Logger.set_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.logger.Logger.set_logger" title="Permalink to this definition"></a></dt>
+<dd><p>Returns logger instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>str</em>) – Log level INFO, ERROR, WARN, DEBUG, OFF
+Eg: set_logger(__name__)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>logger object created with console and file handler is returned</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-console_access_library.common.console_access_base_class">
+<span id="console-access-base-class"></span><h2>console_access_base_class<a class="headerlink" href="#module-console_access_library.common.console_access_base_class" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConsoleAccessBaseClass</span></span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_validation_error_response">
+<span class="sig-name descname"><span class="pre">on_validation_error_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass.on_validation_error_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_validation_error_response" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares response dictionary on schema validation error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>string</em>) – Name of the module in which validation error encountered.</p></li>
+<li><p><strong>error</strong> (<em>string</em>) – Error message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_generic_error_response">
+<span class="sig-name descname"><span class="pre">on_generic_error_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass.on_generic_error_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_generic_error_response" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares response dictionary using the on schema generic error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>string</em>) – Name of the module in which generic error encountered.</p></li>
+<li><p><strong>exception</strong> (<em>object</em>) – Error object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_key_error_response">
+<span class="sig-name descname"><span class="pre">on_key_error_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_err</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass.on_key_error_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_key_error_response" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares response dictionary on api key error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>string</em>) – Name of the module in which key error encountered.</p></li>
+<li><p><strong>error</strong> (<em>string</em>) – Error message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_type_error_response">
+<span class="sig-name descname"><span class="pre">on_type_error_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_error</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass.on_type_error_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_type_error_response" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares response dictionary on api type error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>string</em>) – Name of the module in which type error encountered.</p></li>
+<li><p><strong>error</strong> (<em>string</em>) – Error message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_attribute_error_response">
+<span class="sig-name descname"><span class="pre">on_attribute_error_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_err</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass.on_attribute_error_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_attribute_error_response" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares response dictionary on api attribute error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>string</em>) – Name of the module in which attribute error encountered.</p></li>
+<li><p><strong>error</strong> (<em>string</em>) – Error message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_value_error_response">
+<span class="sig-name descname"><span class="pre">on_value_error_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_err</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/common/console_access_base_class.html#ConsoleAccessBaseClass.on_value_error_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_value_error_response" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares response dictionary on api value error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>string</em>) – Name of the module in which value error encountered.</p></li>
+<li><p><strong>error</strong> (<em>string</em>) – Error message.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="console_access_library.html" class="btn btn-neutral float-left" title="console_access_library package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="console_access_library.device_management.html" class="btn btn-neutral float-right" title="Device Management Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

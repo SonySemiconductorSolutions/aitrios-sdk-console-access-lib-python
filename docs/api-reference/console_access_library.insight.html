@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insight Package &mdash; Console Access Library 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Console Access Library - Quick Start Guide" href="README.html" />
+    <link rel="prev" title="Device Management Package" href="console_access_library.device_management.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Console Access Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="console_access_library.html">console_access_library package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="console_access_library.html#console-access-library-subpackages">Console Access Library Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.common.html">Common Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.device_management.html">Device Management Package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Insight Package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="console_access_library.html#module-console_access_library.client">console_access_library.client</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">Console Access Library</a> &raquo;</li>
+          <li><a href="console_access_library.html">console_access_library package</a> &raquo;</li>
+      <li>Insight Package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/console_access_library.insight.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="insight-package">
+<h1>Insight Package<a class="headerlink" href="#insight-package" title="Permalink to this headline"></a></h1>
+<section id="module-console_access_library.insight.get_image_directories">
+<span id="get-image-directories"></span><h2>get_image_directories<a class="headerlink" href="#module-console_access_library.insight.get_image_directories" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_directories.SchemaGetImageDirectories">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaGetImageDirectories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_directories.html#SchemaGetImageDirectories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_directories.SchemaGetImageDirectories" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<p>Schema for API for GetImageDirectories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_directories.SchemaGetImageDirectories.device_id">
+<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.insight.get_image_directories.SchemaGetImageDirectories.device_id" title="Permalink to this definition"></a></dt>
+<dd><p>Device ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_directories.SchemaGetImageDirectories.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_directories.html#SchemaGetImageDirectories.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_directories.SchemaGetImageDirectories.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate <cite>data</cite> against the schema, returning a dictionary of
+validation errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The data to validate.</p></li>
+<li><p><strong>many</strong> – Whether to validate <cite>data</cite> as a collection. If <cite>None</cite>, the
+value for <cite>self.many</cite> is used.</p></li>
+<li><p><strong>partial</strong> – Whether to ignore missing fields and not require
+any fields declared. Propagates down to <code class="docutils literal notranslate"><span class="pre">Nested</span></code> fields as well. If
+its value is an iterable, only missing fields listed in that iterable
+will be ignored. Use dot delimiters to specify nested fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of validation errors.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_directories.SchemaGetImageDirectories.opts">
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.insight.get_image_directories.SchemaGetImageDirectories.opts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_directories.GetImageDirectories">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetImageDirectories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_directories.html#GetImageDirectories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_directories.GetImageDirectories" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<p>This class implements API for each device group, a list of image storage         directories for each device is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_directories.GetImageDirectories.get_image_directories">
+<span class="sig-name descname"><span class="pre">get_image_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_directories.html#GetImageDirectories.get_image_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_directories.GetImageDirectories.get_image_directories" title="Permalink to this definition"></a></dt>
+<dd><p>Image storage directory list retrieval API. For each device group, a list of image             storage directories for each device is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. If specified, returns a list of image
+directories linked to the specified device ID.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>No key name (object) : Image save directory information</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If the http_status returned from the Low Level SDK
+API is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="c1"># For Console Access Library API Usage,</span>
+<span class="c1"># edit console access setting configuration parameters with real values.</span>
+<span class="c1"># file_path: samples/console_access_settings.yaml</span>
+<span class="c1"># console_access_settings:</span>
+<span class="c1">#       base_url: &quot;__base_url__&quot;</span>
+<span class="c1">#       token_url: &quot;__token_url__&quot;</span>
+<span class="c1">#       client_secret: &#39;__client_secret__&#39;</span>
+<span class="c1">#       client_id: &#39;__client_id__&#39;</span>
+
+<span class="c1"># Set path for Console Access Library Setting File.</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span><span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Client.</span>
+<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># set the real value</span>
+<span class="n">device_id</span> <span class="o">=</span> <span class="s2">&quot;__device_id__&quot;</span>
+
+<span class="c1"># Insight - GetImageDirectories</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">insight</span><span class="o">.</span><span class="n">get_image_directories</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-console_access_library.insight.get_images">
+<span id="get-images"></span><h2>get_images<a class="headerlink" href="#module-console_access_library.insight.get_images" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaGetImages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#SchemaGetImages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<p>Schema for API to get a (saved) image of the specified device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.device_id">
+<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.device_id" title="Permalink to this definition"></a></dt>
+<dd><p>Device ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.sub_directory_name">
+<span class="sig-name descname"><span class="pre">sub_directory_name</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.sub_directory_name" title="Permalink to this definition"></a></dt>
+<dd><p>Sub Directory Name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.number_of_images">
+<span class="sig-name descname"><span class="pre">number_of_images</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.number_of_images" title="Permalink to this definition"></a></dt>
+<dd><p>Number Of Images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.skip">
+<span class="sig-name descname"><span class="pre">skip</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.skip" title="Permalink to this definition"></a></dt>
+<dd><p>Skip.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.order_by">
+<span class="sig-name descname"><span class="pre">order_by</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.order_by" title="Permalink to this definition"></a></dt>
+<dd><p>Order By.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#SchemaGetImages.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate <cite>data</cite> against the schema, returning a dictionary of
+validation errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The data to validate.</p></li>
+<li><p><strong>many</strong> – Whether to validate <cite>data</cite> as a collection. If <cite>None</cite>, the
+value for <cite>self.many</cite> is used.</p></li>
+<li><p><strong>partial</strong> – Whether to ignore missing fields and not require
+any fields declared. Propagates down to <code class="docutils literal notranslate"><span class="pre">Nested</span></code> fields as well. If
+its value is an iterable, only missing fields listed in that iterable
+will be ignored. Use dot delimiters to specify nested fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of validation errors.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.opts">
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.opts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.GetImages">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetImages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#GetImages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.GetImages" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<p>This class implements API to get images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.GetImages.get_images">
+<span class="sig-name descname"><span class="pre">get_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#GetImages.get_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.GetImages.get_images" title="Permalink to this definition"></a></dt>
+<dd><p>Get a (saved) image of the specified device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – The Device ID.</p></li>
+<li><p><strong>sub_directory_name</strong> (<em>str</em><em>, </em><em>required</em>) – The Sub Directory Name.
+The subdirectory will be the directory notified in the response
+of start_upload_inference_result.</p></li>
+<li><p><strong>number_of_images</strong> (<em>int</em><em>, </em><em>optional</em>) – The Number Of Images. 0-256. If not specified: 50</p></li>
+<li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – The Skip. If not specified: 0</p></li>
+<li><p><strong>order_by</strong> (<em>str</em><em>, </em><em>optional</em>) – The Order By. DESC, ASC, desc, asc. If not specified:ASC</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">total_image_count</span></code> (int) : Total number of images</p></li>
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">images</span></code> (object)<span class="classifier">Image filename and image file data</span></dt><dd><p>(base64 encoded data)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If the http_status returned from the Low Level SDK
+API is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="c1"># For Console Access Library API Usage,</span>
+<span class="c1"># edit console access setting configuration parameters with real values.</span>
+<span class="c1"># file_path: samples/console_access_settings.yaml</span>
+<span class="c1"># console_access_settings:</span>
+<span class="c1">#       base_url: &quot;__base_url__&quot;</span>
+<span class="c1">#       token_url: &quot;__token_url__&quot;</span>
+<span class="c1">#       client_secret: &#39;__client_secret__&#39;</span>
+<span class="c1">#       client_id: &#39;__client_id__&#39;</span>
+
+<span class="c1"># Set path for Console Access Library Setting File.</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span><span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Client.</span>
+<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># set the real value</span>
+<span class="n">device_id</span> <span class="o">=</span>  <span class="s2">&quot;__device_id__&quot;</span>
+<span class="n">sub_directory_name</span> <span class="o">=</span>  <span class="s2">&quot;__sub_directory_name__&quot;</span>
+<span class="n">number_of_images</span> <span class="o">=</span>  <span class="s2">&quot;__number_of_images__&quot;</span>
+<span class="n">skip</span> <span class="o">=</span>  <span class="s2">&quot;__skip__&quot;</span>
+<span class="n">order_by</span> <span class="o">=</span>  <span class="s2">&quot;__get_images_order_by__&quot;</span>
+
+<span class="c1"># Insight - GetImages</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">insight</span><span class="o">.</span><span class="n">get_images</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span>
+                                                 <span class="n">sub_directory_name</span><span class="p">,</span>
+                                                 <span class="n">number_of_images</span><span class="p">,</span>
+                                                 <span class="n">skip</span><span class="p">,</span>
+                                                 <span class="n">order_by</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-console_access_library.insight.get_inference_results">
+<span id="get-inference-results"></span><h2>get_inference_results<a class="headerlink" href="#module-console_access_library.insight.get_inference_results" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaGetInferenceresults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_inference_results.html#SchemaGetInferenceresults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<p>Schema for API to retrieve (saved) inference result metadata list        information for a specified device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.device_id">
+<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.device_id" title="Permalink to this definition"></a></dt>
+<dd><p>Device ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, required</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.filter" title="Permalink to this definition"></a></dt>
+<dd><p>Filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.number_of_inference_results">
+<span class="sig-name descname"><span class="pre">number_of_inference_results</span></span><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.number_of_inference_results" title="Permalink to this definition"></a></dt>
+<dd><p>Number Of Inference Results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.raw" title="Permalink to this definition"></a></dt>
+<dd><p>Raw.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.time">
+<span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.time" title="Permalink to this definition"></a></dt>
+<dd><p>Time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_inference_results.html#SchemaGetInferenceresults.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.validate" title="Permalink to this definition"></a></dt>
+<dd><p>Validate <cite>data</cite> against the schema, returning a dictionary of
+validation errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The data to validate.</p></li>
+<li><p><strong>many</strong> – Whether to validate <cite>data</cite> as a collection. If <cite>None</cite>, the
+value for <cite>self.many</cite> is used.</p></li>
+<li><p><strong>partial</strong> – Whether to ignore missing fields and not require
+any fields declared. Propagates down to <code class="docutils literal notranslate"><span class="pre">Nested</span></code> fields as well. If
+its value is an iterable, only missing fields listed in that iterable
+will be ignored. Use dot delimiters to specify nested fields.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of validation errors.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.SchemaGetInferenceresults.opts">
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.insight.get_inference_results.SchemaGetInferenceresults.opts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.GetInferenceresults">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetInferenceresults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_inference_results.html#GetInferenceresults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_inference_results.GetInferenceresults" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<p>This class implements API to get inference results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.get_inference_results.GetInferenceresults.get_inference_results">
+<span class="sig-name descname"><span class="pre">get_inference_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_inference_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_inference_results.html#GetInferenceresults.get_inference_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_inference_results.GetInferenceresults.get_inference_results" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves (saved) inference result metadata list information for a specified device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – The Device ID.</p></li>
+<li><p><strong>filter</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The Filter. Search filter (same specifications as Cosmos DB UI
+on Azure portal except for the following)</p>
+<blockquote>
+<div><ul>
+<li><p>No need to prepend where string</p></li>
+<li><p>It is not necessary to add a deviceID.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>number_of_inference_results</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of acquisitions.
+If not specified: 20</p></li>
+<li><p><strong>raw</strong> (<em>int</em><em>, </em><em>optional</em>) – <p>The Raw. Data format of inference results.
+- 1:Append records stored in Cosmos DB.
+- 0:Not granted.</p>
+<blockquote>
+<div><p>If not specified: 0</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>time</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The Time. Inference result data stored in Cosmos DB.
+yyyyMMddHHmmssfff</p>
+<blockquote>
+<div><ul>
+<li><p>yyyy: 4-digit year string</p></li>
+<li><p>MM: 2-digit month string</p></li>
+<li><p>dd: 2-digit day string</p></li>
+<li><p>HH: 2-digit hour string</p></li>
+<li><p>mm: 2-digit minute string</p></li>
+<li><p>ss: 2-digit seconds string</p></li>
+<li><p>fff: 3-digit millisecond string</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul>
+<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>No key name (object) : Inference data</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If the http_status returned from the Low Level SDK
+API is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="c1"># For Console Access Library API Usage,</span>
+<span class="c1"># edit console access setting configuration parameters with real values.</span>
+<span class="c1"># file_path: samples/console_access_settings.yaml</span>
+<span class="c1"># console_access_settings:</span>
+<span class="c1">#       base_url: &quot;__base_url__&quot;</span>
+<span class="c1">#       token_url: &quot;__token_url__&quot;</span>
+<span class="c1">#       client_secret: &#39;__client_secret__&#39;</span>
+<span class="c1">#       client_id: &#39;__client_id__&#39;</span>
+
+<span class="c1"># Set path for Console Access Library Setting File.</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span><span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Client.</span>
+<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># set the real value</span>
+<span class="n">device_id</span> <span class="o">=</span>  <span class="s2">&quot;__device_id__&quot;</span>
+<span class="nb">filter</span> <span class="o">=</span>  <span class="s2">&quot;__filter__&quot;</span>
+<span class="n">number_of_inferenceresults</span> <span class="o">=</span>  <span class="s2">&quot;__number_of_inferenceresults__&quot;</span>
+<span class="n">raw</span> <span class="o">=</span>  <span class="s2">&quot;__raw__&quot;</span>
+<span class="n">time</span> <span class="o">=</span>  <span class="s2">&quot;__time__&quot;</span>
+
+<span class="c1"># Insight - GetInferenceResults</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">insight</span><span class="o">.</span><span class="n">get_inference_results</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span>
+                                            <span class="nb">filter</span><span class="p">,</span>
+                                            <span class="n">number_of_inferenceresults</span><span class="p">,</span>
+                                            <span class="n">raw</span><span class="p">,</span>
+                                            <span class="n">time</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-console_access_library.insight.insight">
+<span id="insight"></span><h2>insight<a class="headerlink" href="#module-console_access_library.insight.insight" title="Permalink to this headline"></a></h2>
+<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="console_access_library.insight.insight.Insight">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Insight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<p>Abstract class to access Console Access Library Insight component APIs from Insight component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.insight.Insight.get_image_directories">
+<span class="sig-name descname"><span class="pre">get_image_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_image_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_image_directories" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">get_image_directories</span></code> API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. If specified, returns a list of image
+directories linked to the specified device ID.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">get_image_directories</span></code> API</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.insight.Insight.get_images">
+<span class="sig-name descname"><span class="pre">get_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_images" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">get_images</span></code> API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – The Device ID.</p></li>
+<li><p><strong>sub_directory_name</strong> (<em>str</em><em>, </em><em>required</em>) – The Sub Directory Name.
+The subdirectory will be the directory notified in the response
+of start_upload_inference_result.</p></li>
+<li><p><strong>number_of_images</strong> (<em>int</em><em>, </em><em>optional</em>) – The Number Of Images. 0-256. If not specified: 50</p></li>
+<li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – The Skip. If not specified: 0</p></li>
+<li><p><strong>order_by</strong> (<em>str</em><em>, </em><em>optional</em>) – The Order By. DESC, ASC, desc, asc. If not specified:ASC</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">get_images</span></code> API</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.insight.insight.Insight.get_inference_results">
+<span class="sig-name descname"><span class="pre">get_inference_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_inference_results</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_inference_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_inference_results" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">get_inference_results</span></code> API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – The Device ID.</p></li>
+<li><p><strong>filter</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The Filter. Search filter (same specifications as Cosmos DB UI
+on Azure portal except for the following)</p>
+<blockquote>
+<div><ul>
+<li><p>No need to prepend where string</p></li>
+<li><p>It is not necessary to add a deviceID.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>number_of_inference_results</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of acquisitions.
+If not specified: 20</p></li>
+<li><p><strong>raw</strong> (<em>int</em><em>, </em><em>optional</em>) – <p>The Raw. Data format of inference results.
+- 1:Append records stored in Cosmos DB.
+- 0:Not granted.</p>
+<blockquote>
+<div><p>If not specified: 0</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>time</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>The Time. Inference result data stored in Cosmos DB.
+yyyyMMddHHmmssfff</p>
+<blockquote>
+<div><ul>
+<li><p>yyyy: 4-digit year string</p></li>
+<li><p>MM: 2-digit month string</p></li>
+<li><p>dd: 2-digit day string</p></li>
+<li><p>HH: 2-digit hour string</p></li>
+<li><p>mm: 2-digit minute string</p></li>
+<li><p>ss: 2-digit seconds string</p></li>
+<li><p>fff: 3-digit millisecond string</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">get_inference_results</span></code> API</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="console_access_library.device_management.html" class="btn btn-neutral float-left" title="Device Management Package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="README.html" class="btn btn-neutral float-right" title="Console Access Library - Quick Start Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
