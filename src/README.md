@@ -1,5 +1,5 @@
 # **Console Access Library - Quick Start Guide**
-## Steps to install Console Access library and get started with Demo application.
+Steps to install Console Access library and get started with Demo application.
 
 
 1. Create virtual environment
@@ -77,13 +77,3 @@
     ```
     python samples/console_access_client_api_demo.py
     ```
-
-## Restrictions
-- None
-
-## Get a support
-- [Contact us](https://developer.aitrios.sony-semicon.com/contact-us/)
-
-## Trademark
-- [Read This First](https://developer.aitrios.sony-semicon.com/development-guides/documents/manuals/)
-

@@ -1,0 +1,10 @@
+demo_configuration:
+  device_id: "__device_id__"
+  number_of_images: __number_of_images__
+  skip: __skip__
+  sub_directory_name: "__sub_directory_name__"
+  number_of_inferenceresults: __number_of_inferenceresults__
+  filter: "__filter__"
+  raw: __raw__
+  time: "__time__"
+  get_images_order_by: "__get_images_order_by__"

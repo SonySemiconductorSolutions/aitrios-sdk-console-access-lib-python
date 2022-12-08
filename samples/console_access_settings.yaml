@@ -1,0 +1,5 @@
+console_access_settings:
+  base_url: null
+  token_url: null
+  client_secret: null
+  client_id: null

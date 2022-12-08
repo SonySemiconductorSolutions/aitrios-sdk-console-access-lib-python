@@ -1,0 +1,11 @@
+.vscode
+__pycache__
+src/console_access_library.egg-info/
+src/build/
+tools/docs/build/
+tests/unit/reports/
+venv_console_access_library/
+log_level.pickle
+tests/unit/log_level.pickle
+*.log
+tests/unit/*.log

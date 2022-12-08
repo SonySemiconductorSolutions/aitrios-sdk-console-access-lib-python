@@ -1,0 +1,528 @@
+= Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python版 pass:[<br/>] 機能仕様書 pass:[<br/>]
+:title-page-background-image: image:../../../images/Trademark.png[fit=none,pdfwidth=50%,position=bottom center]
+:sectnums:
+:sectnumlevels: 4
+:chapter-label:
+:author: Copyright 2022 Sony Semiconductor Solutions Corporation
+:revdate: 2022 - xx - xx
+:revnumber: 0.0.x
+:toc:
+:toc-title: 目次
+:toclevels: 4
+:chapter-label:
+:document-title-header:
+:lang: ja
+
+== 更新履歴
+
+|===
+|Date |What/Why
+
+|2022/11/16
+|初版作成
+
+|===
+
+== はじめに
+
+* 本書は、Consoleへのアクセスを提供するConsole Access Libraryについての機能仕様である
+機能開発言語には、Pythonを使用する
+
+== 用語・略語
+|===
+|Terms/Abbreviations |Meaning 
+
+|Console for AITRIOS
+|エッジからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、デバイスマネジメント機能など）を提供するクラウドサービス +
+以降、本文中ではConsoleと記載する
+
+|Low Level SDK
+|ConsoleのREST APIのAPI仕様（yaml）からOpenAPI Generatorで自動生成したClient
+
+|Cloud App
+|Console Access Libraryを使用するアプリケーション
+
+|
+|
+
+|===
+
+== 想定ユースケース
+* Console Access Libraryを使用して、下記を実施する
+** エッジAIデバイスの情報を取得
+** エッジAIデバイスに推論開始（推論結果アップロード開始）、推論停止（推論結果アップロード停止）
+** エッジAIデバイスの出力結果（画像、推論結果）の取得
+
+== 機能概要、アルゴリズム
+[#_Functional-Overview]
+=== Functional Overview
+* Consoleにアクセス可能なClientを生成する
+** Consoleアクセスに必要な設定ファイルを作成し、設定ファイルをClientに設定する
++
+Consoleアクセスに必要な情報は下記である
++
+|===
+|Name |Description
+
+|Console endpoint
+|APIサーバ・ベースURL
+
+|Authorization endpoint
+|アクセストークンを発行する認証サーバURL
+
+|Client ID
+|アクセストークン発行に必要なClient ID
+
+|Client Secret
+|アクセストークン発行に必要なClient Secret
+
+|===
+
+* Clientから機能毎に分類されたConsoleのAPIを実行する
++
+[TIP]
+====
+機能毎の分類は、Consoleが提供するLow Level SDKのAPIの分類に従います。 +
+Consoleアクセスに必要なアクセストークンの取得と更新をします。（Wrap）
+====
+** Device Management
+*** get_devices / エッジAIデバイスの情報一覧取得
+*** start_upload_inference_result / 推論結果メタデータ取得開始
+*** stop_upload_inference_result / 推論結果メタデータ取得停止
+*** get_command_parameter_file / Consoleに登録されたCommandParameterFileの一覧取得
+** Insight
+*** get_image_directories / 画像保存ディレクトリ一覧取得
+*** get_images / 保存済画像取得
+*** get_inferenceresults / 保存済推論結果メタデータ一覧取得
+
+* Console Access Libraryの実行時、コンソールにログの出力を行う
+** ログフォーマットは下記の通りに定義する
+*** [ログ出力時刻] [ログレベル] [クライアント名] : メッセージ本文
+*** ログ出力時刻は、ユーザーが利用する環境のシステム時刻を使用する
+*** ログ出力時刻は、ISO 8601形式で日付+時刻+タイムゾーンを出力する
+*** ログ出力例: +
+2022-06-21T11:31:42.612+0900 ERROR ConsoleAccessClient : Failed to log request
+
+** ログレベルを指定して、出力するログレベルを切り替えられる
+*** ログレベルは下記の通りに定義する
++
+[%header%autowidth]
+|===
+|Level |Summary 
+
+|ERROR
+|Console Access Libraryの実行時、正常に処理を終了できなかった場合に使用する
+
+|WARNING
+|異常とは言い切れないが正常とも異なる、何らかの予期しない問題が発生したときに使用する
+
+|INFO
+|Console Access Libraryがイベントを実行する際に使用する
+
+|DEBUG
+|Console Access Libraryの動作状況等、詳細なデバッグ情報を使用する
+
+|OFF
+|全てのログを無効にする
+|===
+*** 指定したログレベル以上のログを出力する +
+例) INFOを指定するとINFO/WARNING/ERRORを出力し、DEBUGは出力しない
+*** 指定したログレベルがOFFの場合は、全てのログレベルを出力しない
+*** 既定のログレベルはOFFとする
+*** ログレベルの指定は、ライブラリを利用するアプリケーション側で開発言語毎に指定された手順で行う
++
+[%header]
+|===
+|Pythonでの指定例
+a|
+[source,python]
+----
+import console_access_library
+
+# Set the desired logging level
+console_access_library.set_logger(level=logging.WARNING)
+----
+|===
+
+* Console Access Libraryの実行時、エラー条件の確認を行う
+** 以下の条件でエラーと判断する
+*** APIの入力パラメータが不適
+*** APIの入力パラメータは適切だが、 Console Low Level SDKからの応答が期待通りではない(Timeout/Errorなど)
+*** Consoleに正常に接続できない(認証エラー、URL誤り、など)
+
+=== Algorithm
+* Console Access Library使用開始
+. Cloud AppでConsoleアクセスに必要な設定ファイルを作成
++
+. Cloud AppからのClientを作成
++
+Client生成時には、設定ファイルの読み込み、アクセストークンの取得、Low Level SDKの生成
+. Client instanceからLow Level SDKのAPIをWrapしたAPIを利用
++
+Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なアクセストークンの取得、更新
+
+* 推論結果メタデータ取得開始 - 停止
+. get_devices APIで、デバイスのIDを確認
+. start_upload_inference_result APIで推論結果メタデータ取得開始
+. InsightのAPIを使用して、推論結果、画像の取得
+. stop_upload_inference_result APIで推論結果メタデータ取得停止
+
+
+=== Under what condition
+* ConsoleのAPIへのアクセスはLow Level SDKを使用すること
+
+=== API
+
+* Client
+** constructor(setting_file)
+** get_device_management()
+** get_insight()
+
+* DeviceManagement
+** get_devices(device_id: str, device_name: str, connection_state: str, device_group_id: str)
+** start_upload_inference_result(device_id: str)
+** stop_upload_inference_result(device_id: str)
+** get_command_parameter_file()
+
+* Insight
+** get_image_directories(device_id: str)
+** get_images(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_inference_results(device_id: str, filter: str, number_of_inference_results: int, raw: int, time: str)
+
+=== Others Exclusive conditions / specifications
+* command parameter fileをエッジAIデバイスに適用済みであること
+
+== 操作性仕様、画面仕様
+* 無し
+
+== 各BlockでのAPIパラメータ
+各エラーメッセージは、関数名が言語によって異なる（この資料では代表してPythonでのエラーメッセージを記載）
+
+* Client
+** constructor: コンストラクタ
++
+【Error：設定ファイル読み込みにてErrorが発生した場合】Errorを発生させる
++
+【Error：アクセストークン取得にてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|setting_file
+|Consoleアクセスに必要な情報を記述した設定ファイルへのパス
+|なし
+
+|===
++
+|===
+|Return value|Meaning
+
+|Client instance
+|Low Level SDKのAPIをWrapしたAPIを実行可能なclient instance
+|===
+
+** get_device_management: DeviceManagement APIを提供するInstanceの取得
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|===
++
+|===
+|Return value|Meaning
+
+|DeviceManagement instance
+|DeviceManagement APIを提供するInstance
+|===
+
+** get_insight: Insight APIを提供するInstanceの取得
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|===
++
+|===
+|Return value|Meaning
+
+|Insight instance
+|Insight APIを提供するInstance
+|===
+
+* DeviceManagement
+** get_devices: Deviceの情報取得
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|エッジAIデバイスのID
+|部分検索、大文字小文字は区別しない +
+指定なしの場合、全device_id検索
+
+|device_name
+|エッジAIデバイスの名前
+|部分検索、大文字小文字は区別しない +
+指定なしの場合、全device_name検索
+
+|connection_state
+|接続状態
+|接続状態の場合: Connected +
+切断状態の場合: Disconnected +
+完全一致検索、大文字小文字は区別しない +
+指定なしの場合、全connection_state検索
+
+|device_group_id
+|エッジAIデバイスの所属グループ
+|完全一致検索、大文字小文字は区別しない +
+指定なしの場合、全device_group_id検索
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|実行結果
+
+|Device information
+|エッジAIデバイスの情報
+|===
+
+** start_upload_inference_result: 推論結果メタデータ取得開始
++
+【Error：device_idが空の場合】E001 : device_id is required.
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|エッジAIデバイスのID
+|なし
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|実行結果
+
+|outputSubDirectory
+|Input Image格納パス、UploadMethod:Blob Storageのみ
+
+|===
+
+** stop_upload_inference_result: 推論結果メタデータ取得停止
++
+【Error：device_idが空の場合】E001 : device_id is required.
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|エッジAIデバイスのID
+|なし
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|実行結果
+
+|===
+
+** get_command_parameter_file:  Consoleに登録されたCommandParameterFileの一覧取得
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Consoleに登録されているCommandParameterの一覧
+
+|===
+
+* Insight
+** get_image_directories: 画像保存ディレクトリ一覧取得
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|エッジAIデバイスのID
+|なし +
+指定なしの場合、全てのdevice_idの情報を返す
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|実行結果
+
+|Image save directory information
+|画像保存ディレクトリ情報
+|===
+
+** get_images: (保存済)画像取得
++
+【Error：device_idが空の場合】E001 : device_id is required.
++
+【Error：sub_directory_nameが空の場合】E001 : sub_directory_name is required.
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|エッジAIデバイスのID
+|なし
+
+|sub_directory_name
+|画像保存のサブディレクトリ
+|なし +
+サブディレクトリは、start_upload_inference_resultの応答で通知されるdirectory、または、get_image_directoriesで取得したdirectory
+
+|number_of_images
+|画像の取得数
+|0-256 +
+指定なしの場合:50
+
+|skip
+|取得をスキップする画像の数
+|なし +
+指定なしの場合:0
+
+|order_by
+|ソート順：画像の作成された日時によるソート順
+|DESC、ASC、desc、asc +
+指定なしの場合:ASC
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|実行結果
+
+|Image filename and image content
+|画像ファイル名と、画像ファイルデータ（base64 encode済みデータ）
+|===
+
+** get_inference_results: (保存済)推論結果メタデータ一覧取得
++
+【Error：device_idが空の場合】E001 : device_id is required.
++
+【Error：Low Level SDKにてErrorが発生した場合】Errorを発生させる
++
+【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Errorを発生させる
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|エッジAIデバイスのID
+|なし
+
+|filter
+|検索フィルタ(AzureポータルのCosmos DB UIと下記以外は同じ仕様) +
+- where文字列を先頭に付加する必要はない +
+- deviceIDを付加する必要はない
+|なし
+
+|NumberOfInferenceresults
+|取得件数
+|なし +
+指定なしの場合:20
+
+|raw
+|推論結果のデータ形式
+|1:Cosmos DBに格納されたままのレコードを付加 +
+0:付与しない +
+指定なしの場合:0
+
+|time
+|Cosmos DBに格納された推論結果データのタイムスタンプ
+|yyyyMMddHHmmssfff +
+- yyyy: 4桁の年の文字列 +
+- MM: 2桁の月の文字列 +
+- dd: 2桁の日の文字列 +
+- HH: 2桁の時間の文字列 +
+- mm: 2桁の分の文字列 +
+- ss: 2桁の秒の文字列 +
+- fff: 3桁のミリ秒の文字列
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|実行結果
+
+|inference data
+|推論結果
+|===
+
+== ログ出力メッセージ
+各レベル毎に表示するメッセージは下記の通り定義する
+
+=== ERRORレベル
+T.B.D.
+
+=== WARNINGレベル
+T.B.D.
+
+=== INFOレベル
+T.B.D.
+
+=== DEBUGレベル
+T.B.D.
+
+== 目標性能
+* 無し
+
+== 制限事項
+* 無し
+
+== その他特記事項
+* 無し
+
+== 未決定事項
+* 無し

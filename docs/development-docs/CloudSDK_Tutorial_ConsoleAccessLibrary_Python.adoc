@@ -1,0 +1,125 @@
+= Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python pass:[<br/>] Tutorial pass:[<br/>]
+:title-page-background-image: image:../../../images/Trademark_en.png[fit=none,pdfwidth=50%,position=bottom center]
+:sectnums:
+:sectnumlevels: 4
+:chapter-label:
+:author: Copyright 2022 Sony Semiconductor Solutions Corporation
+:revdate: 2022 - xx - xx
+:revnumber: 0.0.x
+:toc:
+:toc-title: TOC
+:toclevels: 4
+:chapter-label:
+:document-title-header:
+:lang: en
+
+== Objective
+
+To explain the various APIs exposed by Console Access Library and help the user to build and use the library.
+
+== Prerequisites
+- Python 3.8.10
+- Python dependency modules
+
+    * requests==2.28.1
+    * jsonschema>=4.6.2
+    * setuptools==63.2.0
+    * wheel>=0.37.1
+    * PyYAML>=6.0
+    * marshmallow>=3.17.0
+    * pytest>=7.1.2
+    * pytest-html-reporter>=0.2.9
+    * pytest-ordering>=0.6
+    * sphinx==4.3.2
+    * myst-parser==0.18.0
+    * sphinx-rtd-theme==1.0.0
+    * sphinxcontrib-napoleon==0.7
+    * rst2pdf==0.99
+    * streamlit==1.10.0
+
+=== Console Access Library API Specification
+- docs/api-reference/index.html
+
+== Usage
+
+=== Installation
+
+. Clone the repository
+
+. Install python dependencies for demo application
++
+```
+    pip install -r requirements.txt
+```
+
+. Run the following command to install into current python environment.
++
+```
+    python -m pip install lib/python_client.
+```
+
+.  Run the following command to install into current python environment.
++
+```
+    python -m pip install src/.
+```
+
+
+=== Set Configuration Parameter to start Console Access Library Sample Application
+
+    * Option 1:
+
+        Edit console access setting configuration parameters with real values(samples\console_access_settings.yaml).
+
+----
+        console_access_settings:
+            base_url: "__base_url__"
+            token_url: "__token_url__"
+            client_secret: "__client_secret__"
+            client_id: "__client_id__"
+----
+
+    * Option 2:
+
+        Keep the default console access setting configuration parameters as null and export the real values to environment.
+        (samples\console_access_settings.yaml).
+
+----
+        console_access_settings:
+            base_url: null
+            token_url: null
+            client_secret: null
+            client_id: null
+----
+
+        Export the real values to environment.
+
+----
+        export BASE_URL="__base_url__"
+        export TOKEN_URL="__token_url__"
+        export CLIENT_SECRET="__client_secret__"
+        export CLIENT_ID="__client_id__"
+----
+
+samples\demo_config.yaml
+
+----
+    demo_configuration:
+        device_id: "__device_id__"
+        number_of_images: __number_of_images__
+        skip: __skip__
+        sub_directory_name: "__sub_directory_name__"
+        number_of_inferenceresults: __number_of_inferenceresults__
+        filter: "__filter__"
+        raw: __raw__
+        time: "__time__"
+        get_images_order_by: "__get_images_order_by__"
+----
+
+=== Starting the App
+
+To run the CLI demo, open cmd terminal from the root folder, and run the following command.
+
+```
+python samples/console_access_client_api_demo.py
+```
