@@ -8,6 +8,8 @@ import enum
 class PathValues(str, enum.Enum):
     DEVICES = "/devices"
     COMMAND_PARAMETER_FILES = "/command_parameter_files"
+    COMMAND_PARAMETER_FILES_FILE_NAME = "/command_parameter_files/{file_name}"
+    DEVICES_CONFIGURATION_COMMAND_PARAMETER_FILES_FILE_NAME = "/devices/configuration/command_parameter_files/{file_name}"
     DEPLOYCONFIGURATIONS = "/deployconfigurations"
     DEPLOYCONFIGURATIONS_CONFIG_ID = "/deployconfigurations/{config_id}"
     DEVICES_DEVICE_ID_DEPLOYS_DEPLOY_ID = "/devices/{device_id}/deploys/{deploy_id}"

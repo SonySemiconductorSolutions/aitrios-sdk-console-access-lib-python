@@ -1,10 +1,18 @@
 Common Package
 ==============
 
-Config
+config
 ------
 
 .. automodule:: console_access_library.common.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+console\_access\_base\_class
+----------------------------
+
+.. automodule:: console_access_library.common.console_access_base_class
    :members:
    :undoc-members:
    :show-inheritance:
@@ -17,18 +25,10 @@ error\_codes
    :undoc-members:
    :show-inheritance:
 
-logger
-------
+read\_console\_access\_settings
+-------------------------------
 
-.. automodule:: console_access_library.common.logger
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-console\_access\_base\_class
-----------------------------
-
-.. automodule:: console_access_library.common.console_access_base_class
+.. automodule:: console_access_library.common.read_console_access_settings
    :members:
    :undoc-members:
    :show-inheritance:

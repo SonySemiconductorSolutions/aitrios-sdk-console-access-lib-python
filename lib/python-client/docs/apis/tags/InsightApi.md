@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 # **export_images**
 <a name="export_images"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type export_images(key)
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} export_images(key)
 
 ExportImages
 
@@ -56,7 +56,6 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'to_datetime': "",
         'device_id': "",
         'file_format': "",
-        'redcowinraincipher': "1",
     }
     try:
         # ExportImages
@@ -87,7 +86,6 @@ from_datetime | FromDatetimeSchema | | optional
 to_datetime | ToDatetimeSchema | | optional
 device_id | DeviceIdSchema | | optional
 file_format | FileFormatSchema | | optional
-redcowinraincipher | RedcowinraincipherSchema | | optional
 
 
 # KeySchema
@@ -135,15 +133,6 @@ Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 str,  | str,  | File Format | if omitted the server will use the default value of ""
 
-# RedcowinraincipherSchema
-
-Redcowinraincipher
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Redcowinraincipher | if omitted the server will use the default value of "1"
-
 ### Return Types, Responses
 
 Code | Class | Description
@@ -168,7 +157,14 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
+
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**key** | str,  | str,  | todo | [optional] 
+**url** | str,  | str,  | todo | [optional] 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 #### export_images.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -748,6 +744,7 @@ import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import insight_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 from aitrios_console_rest_client_sdk_primitive.model.inference import Inference
+from aitrios_console_rest_client_sdk_primitive.model.inference_result import InferenceResult
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -919,46 +916,9 @@ Key | Input Type | Accessed Type | Description | Notes
 **model_type** | str,  | str,  |  | [optional] 
 **training_kit_name** | str,  | str,  |  | [optional] 
 **_ts** | decimal.Decimal, int,  | decimal.Decimal,  |  | [optional] 
-**[inference_result](#inference_result)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | [optional] 
+**inference_result** | [**InferenceResult**]({{complexTypePrefix}}InferenceResult.md) | [**InferenceResult**]({{complexTypePrefix}}InferenceResult.md) |  | [optional] 
 **[inferences](#inferences)** | list, tuple,  | tuple,  | todo | [optional] 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# inference_result
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**DeviceID** | str,  | str,  |  | [optional] 
-**ModelID** | str,  | str,  |  | [optional] 
-**Image** | bool,  | BoolClass,  |  | [optional] 
-**[Inferences](#Inferences)** | list, tuple,  | tuple,  | todo | [optional] 
-**id** | str,  | str,  |  | [optional] 
-**ttl** | decimal.Decimal, int,  | decimal.Decimal,  |  | [optional] 
-**_rid** | str,  | str,  |  | [optional] 
-**_self** | str,  | str,  |  | [optional] 
-**_etag** | str,  | str,  |  | [optional] 
-**_attachments** | str,  | str,  |  | [optional] 
-**_ts** | decimal.Decimal, int,  | decimal.Decimal,  |  | [optional] 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# Inferences
-
-todo
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-list, tuple,  | tuple,  | todo | 
-
-### Tuple Items
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[**Inference**]({{complexTypePrefix}}Inference.md) | [**Inference**]({{complexTypePrefix}}Inference.md) | [**Inference**]({{complexTypePrefix}}Inference.md) |  | 
 
 # inferences
 

@@ -1,5 +1,5 @@
-requests==2.28.1
-setuptools==63.2.0
+requests>=2.28.1
+setuptools>=63.2.0
 wheel>=0.37.1
 PyYAML>=6.0
 jsonschema>=4.6.2
@@ -8,8 +8,13 @@ pytest>=7.1.2
 pytest-html-reporter>=0.2.9
 pytest-ordering>=0.6
 sphinx==4.3.2
-myst-parser==0.18.0
-sphinx-rtd-theme==1.0.0
-sphinxcontrib-napoleon==0.7
-rst2pdf==0.99
+myst-parser>=0.18.0
+sphinx-rtd-theme>=1.0.0
+sphinxcontrib-napoleon>=0.7
+rst2pdf>=0.99
 streamlit==1.10.0
+pytest-timeout>=2.1.0
+PyJWT>=2.6.0
+nassl>=4.0
+cryptography>=36.0
+validators>=0.18

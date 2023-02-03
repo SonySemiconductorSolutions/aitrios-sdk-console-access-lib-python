@@ -9,3 +9,4 @@ log_level.pickle
 tests/unit/log_level.pickle
 *.log
 tests/unit/*.log
+samples/console_access_settings.yaml

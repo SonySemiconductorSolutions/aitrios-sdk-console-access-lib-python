@@ -26,29 +26,17 @@ import frozendict  # noqa: F401
 from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 
 from . import path
 
-# query params
+# Query params
 ConfigIdSchema = schemas.StrSchema
 CommentSchema = schemas.StrSchema
-DeviceTypeSchema = schemas.StrSchema
 SensorLoaderVersionNumberSchema = schemas.StrSchema
 SensorVersionNumberSchema = schemas.StrSchema
 ModelIdSchema = schemas.StrSchema
 ModelVersionNumberSchema = schemas.StrSchema
-ColorMatrixModeSchema = schemas.StrSchema
-ColorMatrixFileNameSchema = schemas.StrSchema
-GammaModeSchema = schemas.StrSchema
-GammaFileNameSchema = schemas.StrSchema
-LscispModeSchema = schemas.StrSchema
-LscispFileNameSchema = schemas.StrSchema
-LscrawModeSchema = schemas.StrSchema
-LscrawFileNameSchema = schemas.StrSchema
-PrewbModeSchema = schemas.StrSchema
-PrewbFileNameSchema = schemas.StrSchema
-DewarpModeSchema = schemas.StrSchema
-DewarpFileNameSchema = schemas.StrSchema
 ApFwVersionNumberSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
@@ -60,23 +48,10 @@ RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
         'comment': typing.Union[CommentSchema, str, ],
-        'device_type': typing.Union[DeviceTypeSchema, str, ],
         'sensor_loader_version_number': typing.Union[SensorLoaderVersionNumberSchema, str, ],
         'sensor_version_number': typing.Union[SensorVersionNumberSchema, str, ],
         'model_id': typing.Union[ModelIdSchema, str, ],
         'model_version_number': typing.Union[ModelVersionNumberSchema, str, ],
-        'color_matrix_mode': typing.Union[ColorMatrixModeSchema, str, ],
-        'color_matrix_file_name': typing.Union[ColorMatrixFileNameSchema, str, ],
-        'gamma_mode': typing.Union[GammaModeSchema, str, ],
-        'gamma_file_name': typing.Union[GammaFileNameSchema, str, ],
-        'lscisp_mode': typing.Union[LscispModeSchema, str, ],
-        'lscisp_file_name': typing.Union[LscispFileNameSchema, str, ],
-        'lscraw_mode': typing.Union[LscrawModeSchema, str, ],
-        'lscraw_file_name': typing.Union[LscrawFileNameSchema, str, ],
-        'prewb_mode': typing.Union[PrewbModeSchema, str, ],
-        'prewb_file_name': typing.Union[PrewbFileNameSchema, str, ],
-        'dewarp_mode': typing.Union[DewarpModeSchema, str, ],
-        'dewarp_file_name': typing.Union[DewarpFileNameSchema, str, ],
         'ap_fw_version_number': typing.Union[ApFwVersionNumberSchema, str, ],
     },
     total=False
@@ -98,12 +73,6 @@ request_query_comment = api_client.QueryParameter(
     name="comment",
     style=api_client.ParameterStyle.FORM,
     schema=CommentSchema,
-    explode=True,
-)
-request_query_device_type = api_client.QueryParameter(
-    name="device_type",
-    style=api_client.ParameterStyle.FORM,
-    schema=DeviceTypeSchema,
     explode=True,
 )
 request_query_sensor_loader_version_number = api_client.QueryParameter(
@@ -130,85 +99,13 @@ request_query_model_version_number = api_client.QueryParameter(
     schema=ModelVersionNumberSchema,
     explode=True,
 )
-request_query_color_matrix_mode = api_client.QueryParameter(
-    name="color_matrix_mode",
-    style=api_client.ParameterStyle.FORM,
-    schema=ColorMatrixModeSchema,
-    explode=True,
-)
-request_query_color_matrix_file_name = api_client.QueryParameter(
-    name="color_matrix_file_name",
-    style=api_client.ParameterStyle.FORM,
-    schema=ColorMatrixFileNameSchema,
-    explode=True,
-)
-request_query_gamma_mode = api_client.QueryParameter(
-    name="gamma_mode",
-    style=api_client.ParameterStyle.FORM,
-    schema=GammaModeSchema,
-    explode=True,
-)
-request_query_gamma_file_name = api_client.QueryParameter(
-    name="gamma_file_name",
-    style=api_client.ParameterStyle.FORM,
-    schema=GammaFileNameSchema,
-    explode=True,
-)
-request_query_lscisp_mode = api_client.QueryParameter(
-    name="lscisp_mode",
-    style=api_client.ParameterStyle.FORM,
-    schema=LscispModeSchema,
-    explode=True,
-)
-request_query_lscisp_file_name = api_client.QueryParameter(
-    name="lscisp_file_name",
-    style=api_client.ParameterStyle.FORM,
-    schema=LscispFileNameSchema,
-    explode=True,
-)
-request_query_lscraw_mode = api_client.QueryParameter(
-    name="lscraw_mode",
-    style=api_client.ParameterStyle.FORM,
-    schema=LscrawModeSchema,
-    explode=True,
-)
-request_query_lscraw_file_name = api_client.QueryParameter(
-    name="lscraw_file_name",
-    style=api_client.ParameterStyle.FORM,
-    schema=LscrawFileNameSchema,
-    explode=True,
-)
-request_query_prewb_mode = api_client.QueryParameter(
-    name="prewb_mode",
-    style=api_client.ParameterStyle.FORM,
-    schema=PrewbModeSchema,
-    explode=True,
-)
-request_query_prewb_file_name = api_client.QueryParameter(
-    name="prewb_file_name",
-    style=api_client.ParameterStyle.FORM,
-    schema=PrewbFileNameSchema,
-    explode=True,
-)
-request_query_dewarp_mode = api_client.QueryParameter(
-    name="dewarp_mode",
-    style=api_client.ParameterStyle.FORM,
-    schema=DewarpModeSchema,
-    explode=True,
-)
-request_query_dewarp_file_name = api_client.QueryParameter(
-    name="dewarp_file_name",
-    style=api_client.ParameterStyle.FORM,
-    schema=DewarpFileNameSchema,
-    explode=True,
-)
 request_query_ap_fw_version_number = api_client.QueryParameter(
     name="ap_fw_version_number",
     style=api_client.ParameterStyle.FORM,
     schema=ApFwVersionNumberSchema,
     explode=True,
 )
-SchemaFor200ResponseBodyApplicationJson = schemas.AnyTypeSchema
+SchemaFor200ResponseBodyApplicationJson = SuccessResponse
 
 
 @dataclass
@@ -336,18 +233,49 @@ _all_accept_content_types = (
 
 
 class BaseApi(api_client.Api):
+    @typing.overload
+    def _create_deploy_configuration_oapg(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def _create_deploy_configuration_oapg(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def _create_deploy_configuration_oapg(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
 
     def _create_deploy_configuration_oapg(
-        self: api_client.Api,
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         """
         CreateDeployConfiguration
         :param skip_deserialization: If true then api_response.response will be set but
@@ -361,23 +289,10 @@ class BaseApi(api_client.Api):
         for parameter in (
             request_query_config_id,
             request_query_comment,
-            request_query_device_type,
             request_query_sensor_loader_version_number,
             request_query_sensor_version_number,
             request_query_model_id,
             request_query_model_version_number,
-            request_query_color_matrix_mode,
-            request_query_color_matrix_file_name,
-            request_query_gamma_mode,
-            request_query_gamma_file_name,
-            request_query_lscisp_mode,
-            request_query_lscisp_file_name,
-            request_query_lscraw_mode,
-            request_query_lscraw_file_name,
-            request_query_prewb_mode,
-            request_query_prewb_file_name,
-            request_query_dewarp_mode,
-            request_query_dewarp_file_name,
             request_query_ap_fw_version_number,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
@@ -421,17 +336,49 @@ class BaseApi(api_client.Api):
 class CreateDeployConfiguration(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
+    @typing.overload
     def create_deploy_configuration(
-        self: BaseApi,
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def create_deploy_configuration(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def create_deploy_configuration(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
+
+    def create_deploy_configuration(
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         return self._create_deploy_configuration_oapg(
             query_params=query_params,
             accept_content_types=accept_content_types,
@@ -444,17 +391,49 @@ class CreateDeployConfiguration(BaseApi):
 class ApiForpost(BaseApi):
     # this class is used by api classes that refer to endpoints by path and http method names
 
+    @typing.overload
     def post(
-        self: BaseApi,
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def post(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def post(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
+
+    def post(
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         return self._create_deploy_configuration_oapg(
             query_params=query_params,
             accept_content_types=accept_content_types,

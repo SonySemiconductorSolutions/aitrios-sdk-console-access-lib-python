@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 # **delete_device_app**
 <a name="delete_device_app"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type delete_device_app(app_nameversion_number)
+> SuccessResponse delete_device_app(app_nameversion_number)
 
 DeleteDeviceApp
 
@@ -26,6 +26,7 @@ Delete device app.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import device_app_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -108,11 +109,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### delete_device_app.ApiResponseFor401
 Name | Type | Description  | Notes
@@ -187,7 +187,7 @@ No authorization required
 
 # **deploy_device_app**
 <a name="deploy_device_app"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type deploy_device_app(deploy_device_app_json_body)
+> SuccessResponse deploy_device_app(deploy_device_app_json_body)
 
 DeployDeviceApp
 
@@ -199,6 +199,7 @@ Deploy device app.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import device_app_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from aitrios_console_rest_client_sdk_primitive.model.deploy_device_app_json_body import DeployDeviceAppJsonBody
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
@@ -269,11 +270,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### deploy_device_app.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -361,7 +361,7 @@ No authorization required
 
 # **get_device_app_deploys**
 <a name="get_device_app_deploys"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type get_device_app_deploys(app_nameversion_number)
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_device_app_deploys(app_nameversion_number)
 
 GetDeviceAppDeploys
 
@@ -373,6 +373,7 @@ Get Device App Deploys.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import device_app_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.device_app_deploy_history import DeviceAppDeployHistory
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -459,7 +460,25 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
+
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**[deploys](#deploys)** | list, tuple,  | tuple,  |  | 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+
+# deploys
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+list, tuple,  | tuple,  |  | 
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**DeviceAppDeployHistory**]({{complexTypePrefix}}DeviceAppDeployHistory.md) | [**DeviceAppDeployHistory**]({{complexTypePrefix}}DeviceAppDeployHistory.md) | [**DeviceAppDeployHistory**]({{complexTypePrefix}}DeviceAppDeployHistory.md) |  | 
 
 #### get_device_app_deploys.ApiResponseFor401
 Name | Type | Description  | Notes
@@ -534,7 +553,7 @@ No authorization required
 
 # **get_device_apps**
 <a name="get_device_apps"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type get_device_apps()
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_device_apps()
 
 GetDeviceApps
 
@@ -546,6 +565,7 @@ Get device apps.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import device_app_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.device_app import DeviceApp
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -592,14 +612,38 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
+
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**[apps](#apps)** | list, tuple,  | tuple,  |  | 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+
+# apps
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+list, tuple,  | tuple,  |  | 
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**DeviceApp**]({{complexTypePrefix}}DeviceApp.md) | [**DeviceApp**]({{complexTypePrefix}}DeviceApp.md) | [**DeviceApp**]({{complexTypePrefix}}DeviceApp.md) |  | 
 
 #### get_device_apps.ApiResponseFor401
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[Unset, ] |  |
+body | typing.Union[SchemaFor401ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
+
+# SchemaFor401ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
 
 #### get_device_apps.ApiResponseFor403
 Name | Type | Description  | Notes
@@ -648,7 +692,7 @@ No authorization required
 
 # **import_device_app**
 <a name="import_device_app"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type import_device_app(import_device_app_json_body)
+> SuccessResponse import_device_app(import_device_app_json_body)
 
 ImportDeviceApp
 
@@ -661,6 +705,7 @@ import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import device_app_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 from aitrios_console_rest_client_sdk_primitive.model.import_device_app_json_body import ImportDeviceAppJsonBody
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -731,11 +776,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### import_device_app.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -810,7 +854,7 @@ No authorization required
 
 # **undeploy_device_app**
 <a name="undeploy_device_app"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type undeploy_device_app(device_ids)
+> SuccessResponse undeploy_device_app(device_ids)
 
 UndeployDeviceApp
 
@@ -822,6 +866,7 @@ Undeploy device app.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import device_app_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -894,11 +939,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### undeploy_device_app.ApiResponseFor400
 Name | Type | Description  | Notes

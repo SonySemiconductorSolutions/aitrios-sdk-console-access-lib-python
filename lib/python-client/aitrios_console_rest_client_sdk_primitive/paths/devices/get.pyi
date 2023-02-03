@@ -26,12 +26,58 @@ import frozendict  # noqa: F401
 from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.device import Device
 
-# query params
+# Query params
 ConnectionStateSchema = schemas.StrSchema
 DeviceNameSchema = schemas.StrSchema
 DeviceIdSchema = schemas.StrSchema
 DeviceGroupIdSchema = schemas.StrSchema
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'connectionState': typing.Union[ConnectionStateSchema, str, ],
+        'device_name': typing.Union[DeviceNameSchema, str, ],
+        'device_id': typing.Union[DeviceIdSchema, str, ],
+        'device_group_id': typing.Union[DeviceGroupIdSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_connection_state = api_client.QueryParameter(
+    name="connectionState",
+    style=api_client.ParameterStyle.FORM,
+    schema=ConnectionStateSchema,
+    explode=True,
+)
+request_query_device_name = api_client.QueryParameter(
+    name="device_name",
+    style=api_client.ParameterStyle.FORM,
+    schema=DeviceNameSchema,
+    explode=True,
+)
+request_query_device_id = api_client.QueryParameter(
+    name="device_id",
+    style=api_client.ParameterStyle.FORM,
+    schema=DeviceIdSchema,
+    explode=True,
+)
+request_query_device_group_id = api_client.QueryParameter(
+    name="device_group_id",
+    style=api_client.ParameterStyle.FORM,
+    schema=DeviceGroupIdSchema,
+    explode=True,
+)
 
 
 class SchemaFor200ResponseBodyApplicationJson(
@@ -54,467 +100,13 @@ class SchemaFor200ResponseBodyApplicationJson(
             
                 class MetaOapg:
                     
-                    
-                    class items(
-                        schemas.DictSchema
-                    ):
-                    
-                    
-                        class MetaOapg:
-                            required = {
-                                "ins_date",
-                                "upd_id",
-                                "device_id",
-                                "upd_date",
-                                "connectionState",
-                                "ins_id",
-                                "lastActivityTime",
-                            }
-                            
-                            class properties:
-                                device_id = schemas.StrSchema
-                                place = schemas.StrSchema
-                                comment = schemas.StrSchema
-                                
-                                
-                                class _property(
-                                    schemas.DictSchema
-                                ):
-                                
-                                
-                                    class MetaOapg:
-                                        required = {
-                                            "device_name",
-                                            "internal_device_id",
-                                        }
-                                        
-                                        class properties:
-                                            device_name = schemas.StrSchema
-                                            internal_device_id = schemas.StrSchema
-                                            __annotations__ = {
-                                                "device_name": device_name,
-                                                "internal_device_id": internal_device_id,
-                                            }
-                                    
-                                    device_name: MetaOapg.properties.device_name
-                                    internal_device_id: MetaOapg.properties.internal_device_id
-                                    
-                                    @typing.overload
-                                    def __getitem__(self, name: typing_extensions.Literal["device_name"]) -> MetaOapg.properties.device_name: ...
-                                    
-                                    @typing.overload
-                                    def __getitem__(self, name: typing_extensions.Literal["internal_device_id"]) -> MetaOapg.properties.internal_device_id: ...
-                                    
-                                    @typing.overload
-                                    def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
-                                    
-                                    def __getitem__(self, name: typing.Union[typing_extensions.Literal["device_name", "internal_device_id", ], str]):
-                                        # dict_instance[name] accessor
-                                        return super().__getitem__(name)
-                                    
-                                    
-                                    @typing.overload
-                                    def get_item_oapg(self, name: typing_extensions.Literal["device_name"]) -> MetaOapg.properties.device_name: ...
-                                    
-                                    @typing.overload
-                                    def get_item_oapg(self, name: typing_extensions.Literal["internal_device_id"]) -> MetaOapg.properties.internal_device_id: ...
-                                    
-                                    @typing.overload
-                                    def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
-                                    
-                                    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["device_name", "internal_device_id", ], str]):
-                                        return super().get_item_oapg(name)
-                                    
-                                
-                                    def __new__(
-                                        cls,
-                                        *args: typing.Union[dict, frozendict.frozendict, ],
-                                        device_name: typing.Union[MetaOapg.properties.device_name, str, ],
-                                        internal_device_id: typing.Union[MetaOapg.properties.internal_device_id, str, ],
-                                        _configuration: typing.Optional[schemas.Configuration] = None,
-                                        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-                                    ) -> '_property':
-                                        return super().__new__(
-                                            cls,
-                                            *args,
-                                            device_name=device_name,
-                                            internal_device_id=internal_device_id,
-                                            _configuration=_configuration,
-                                            **kwargs,
-                                        )
-                                ins_id = schemas.StrSchema
-                                ins_date = schemas.StrSchema
-                                upd_id = schemas.StrSchema
-                                upd_date = schemas.StrSchema
-                                connectionState = schemas.StrSchema
-                                lastActivityTime = schemas.StrSchema
-                                
-                                
-                                class models(
-                                    schemas.ListSchema
-                                ):
-                                
-                                
-                                    class MetaOapg:
-                                        
-                                        
-                                        class items(
-                                            schemas.DictSchema
-                                        ):
-                                        
-                                        
-                                            class MetaOapg:
-                                                
-                                                class properties:
-                                                    model_version_id = schemas.StrSchema
-                                                    __annotations__ = {
-                                                        "model_version_id": model_version_id,
-                                                    }
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["model_version_id"]) -> MetaOapg.properties.model_version_id: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
-                                            
-                                            def __getitem__(self, name: typing.Union[typing_extensions.Literal["model_version_id", ], str]):
-                                                # dict_instance[name] accessor
-                                                return super().__getitem__(name)
-                                            
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["model_version_id"]) -> typing.Union[MetaOapg.properties.model_version_id, schemas.Unset]: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
-                                            
-                                            def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["model_version_id", ], str]):
-                                                return super().get_item_oapg(name)
-                                            
-                                        
-                                            def __new__(
-                                                cls,
-                                                *args: typing.Union[dict, frozendict.frozendict, ],
-                                                model_version_id: typing.Union[MetaOapg.properties.model_version_id, str, schemas.Unset] = schemas.unset,
-                                                _configuration: typing.Optional[schemas.Configuration] = None,
-                                                **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-                                            ) -> 'items':
-                                                return super().__new__(
-                                                    cls,
-                                                    *args,
-                                                    model_version_id=model_version_id,
-                                                    _configuration=_configuration,
-                                                    **kwargs,
-                                                )
-                                
-                                    def __new__(
-                                        cls,
-                                        arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
-                                        _configuration: typing.Optional[schemas.Configuration] = None,
-                                    ) -> 'models':
-                                        return super().__new__(
-                                            cls,
-                                            arg,
-                                            _configuration=_configuration,
-                                        )
-                                
-                                    def __getitem__(self, i: int) -> MetaOapg.items:
-                                        return super().__getitem__(i)
-                                
-                                
-                                class device_groups(
-                                    schemas.ListSchema
-                                ):
-                                
-                                
-                                    class MetaOapg:
-                                        
-                                        
-                                        class items(
-                                            schemas.DictSchema
-                                        ):
-                                        
-                                        
-                                            class MetaOapg:
-                                                required = {
-                                                    "ins_date",
-                                                    "upd_id",
-                                                    "device_group_id",
-                                                    "upd_date",
-                                                    "device_type",
-                                                    "ins_id",
-                                                }
-                                                
-                                                class properties:
-                                                    device_group_id = schemas.StrSchema
-                                                    device_type = schemas.StrSchema
-                                                    comment = schemas.StrSchema
-                                                    ins_id = schemas.StrSchema
-                                                    ins_date = schemas.StrSchema
-                                                    upd_id = schemas.StrSchema
-                                                    upd_date = schemas.StrSchema
-                                                    __annotations__ = {
-                                                        "device_group_id": device_group_id,
-                                                        "device_type": device_type,
-                                                        "comment": comment,
-                                                        "ins_id": ins_id,
-                                                        "ins_date": ins_date,
-                                                        "upd_id": upd_id,
-                                                        "upd_date": upd_date,
-                                                    }
-                                            
-                                            ins_date: MetaOapg.properties.ins_date
-                                            upd_id: MetaOapg.properties.upd_id
-                                            device_group_id: MetaOapg.properties.device_group_id
-                                            upd_date: MetaOapg.properties.upd_date
-                                            device_type: MetaOapg.properties.device_type
-                                            ins_id: MetaOapg.properties.ins_id
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["device_group_id"]) -> MetaOapg.properties.device_group_id: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["device_type"]) -> MetaOapg.properties.device_type: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["comment"]) -> MetaOapg.properties.comment: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["ins_id"]) -> MetaOapg.properties.ins_id: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["ins_date"]) -> MetaOapg.properties.ins_date: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["upd_id"]) -> MetaOapg.properties.upd_id: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: typing_extensions.Literal["upd_date"]) -> MetaOapg.properties.upd_date: ...
-                                            
-                                            @typing.overload
-                                            def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
-                                            
-                                            def __getitem__(self, name: typing.Union[typing_extensions.Literal["device_group_id", "device_type", "comment", "ins_id", "ins_date", "upd_id", "upd_date", ], str]):
-                                                # dict_instance[name] accessor
-                                                return super().__getitem__(name)
-                                            
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["device_group_id"]) -> MetaOapg.properties.device_group_id: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["device_type"]) -> MetaOapg.properties.device_type: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["comment"]) -> typing.Union[MetaOapg.properties.comment, schemas.Unset]: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["ins_id"]) -> MetaOapg.properties.ins_id: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["ins_date"]) -> MetaOapg.properties.ins_date: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["upd_id"]) -> MetaOapg.properties.upd_id: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: typing_extensions.Literal["upd_date"]) -> MetaOapg.properties.upd_date: ...
-                                            
-                                            @typing.overload
-                                            def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
-                                            
-                                            def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["device_group_id", "device_type", "comment", "ins_id", "ins_date", "upd_id", "upd_date", ], str]):
-                                                return super().get_item_oapg(name)
-                                            
-                                        
-                                            def __new__(
-                                                cls,
-                                                *args: typing.Union[dict, frozendict.frozendict, ],
-                                                ins_date: typing.Union[MetaOapg.properties.ins_date, str, ],
-                                                upd_id: typing.Union[MetaOapg.properties.upd_id, str, ],
-                                                device_group_id: typing.Union[MetaOapg.properties.device_group_id, str, ],
-                                                upd_date: typing.Union[MetaOapg.properties.upd_date, str, ],
-                                                device_type: typing.Union[MetaOapg.properties.device_type, str, ],
-                                                ins_id: typing.Union[MetaOapg.properties.ins_id, str, ],
-                                                comment: typing.Union[MetaOapg.properties.comment, str, schemas.Unset] = schemas.unset,
-                                                _configuration: typing.Optional[schemas.Configuration] = None,
-                                                **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-                                            ) -> 'items':
-                                                return super().__new__(
-                                                    cls,
-                                                    *args,
-                                                    ins_date=ins_date,
-                                                    upd_id=upd_id,
-                                                    device_group_id=device_group_id,
-                                                    upd_date=upd_date,
-                                                    device_type=device_type,
-                                                    ins_id=ins_id,
-                                                    comment=comment,
-                                                    _configuration=_configuration,
-                                                    **kwargs,
-                                                )
-                                
-                                    def __new__(
-                                        cls,
-                                        arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
-                                        _configuration: typing.Optional[schemas.Configuration] = None,
-                                    ) -> 'device_groups':
-                                        return super().__new__(
-                                            cls,
-                                            arg,
-                                            _configuration=_configuration,
-                                        )
-                                
-                                    def __getitem__(self, i: int) -> MetaOapg.items:
-                                        return super().__getitem__(i)
-                                __annotations__ = {
-                                    "device_id": device_id,
-                                    "place": place,
-                                    "comment": comment,
-                                    "property": _property,
-                                    "ins_id": ins_id,
-                                    "ins_date": ins_date,
-                                    "upd_id": upd_id,
-                                    "upd_date": upd_date,
-                                    "connectionState": connectionState,
-                                    "lastActivityTime": lastActivityTime,
-                                    "models": models,
-                                    "device_groups": device_groups,
-                                }
-                        
-                        ins_date: MetaOapg.properties.ins_date
-                        upd_id: MetaOapg.properties.upd_id
-                        device_id: MetaOapg.properties.device_id
-                        upd_date: MetaOapg.properties.upd_date
-                        connectionState: MetaOapg.properties.connectionState
-                        ins_id: MetaOapg.properties.ins_id
-                        lastActivityTime: MetaOapg.properties.lastActivityTime
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["device_id"]) -> MetaOapg.properties.device_id: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["place"]) -> MetaOapg.properties.place: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["comment"]) -> MetaOapg.properties.comment: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["property"]) -> MetaOapg.properties._property: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["ins_id"]) -> MetaOapg.properties.ins_id: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["ins_date"]) -> MetaOapg.properties.ins_date: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["upd_id"]) -> MetaOapg.properties.upd_id: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["upd_date"]) -> MetaOapg.properties.upd_date: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["connectionState"]) -> MetaOapg.properties.connectionState: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["lastActivityTime"]) -> MetaOapg.properties.lastActivityTime: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["models"]) -> MetaOapg.properties.models: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["device_groups"]) -> MetaOapg.properties.device_groups: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
-                        
-                        def __getitem__(self, name: typing.Union[typing_extensions.Literal["device_id", "place", "comment", "property", "ins_id", "ins_date", "upd_id", "upd_date", "connectionState", "lastActivityTime", "models", "device_groups", ], str]):
-                            # dict_instance[name] accessor
-                            return super().__getitem__(name)
-                        
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["device_id"]) -> MetaOapg.properties.device_id: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["place"]) -> typing.Union[MetaOapg.properties.place, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["comment"]) -> typing.Union[MetaOapg.properties.comment, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["property"]) -> typing.Union[MetaOapg.properties._property, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["ins_id"]) -> MetaOapg.properties.ins_id: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["ins_date"]) -> MetaOapg.properties.ins_date: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["upd_id"]) -> MetaOapg.properties.upd_id: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["upd_date"]) -> MetaOapg.properties.upd_date: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["connectionState"]) -> MetaOapg.properties.connectionState: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["lastActivityTime"]) -> MetaOapg.properties.lastActivityTime: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["models"]) -> typing.Union[MetaOapg.properties.models, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["device_groups"]) -> typing.Union[MetaOapg.properties.device_groups, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
-                        
-                        def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["device_id", "place", "comment", "property", "ins_id", "ins_date", "upd_id", "upd_date", "connectionState", "lastActivityTime", "models", "device_groups", ], str]):
-                            return super().get_item_oapg(name)
-                        
-                    
-                        def __new__(
-                            cls,
-                            *args: typing.Union[dict, frozendict.frozendict, ],
-                            ins_date: typing.Union[MetaOapg.properties.ins_date, str, ],
-                            upd_id: typing.Union[MetaOapg.properties.upd_id, str, ],
-                            device_id: typing.Union[MetaOapg.properties.device_id, str, ],
-                            upd_date: typing.Union[MetaOapg.properties.upd_date, str, ],
-                            connectionState: typing.Union[MetaOapg.properties.connectionState, str, ],
-                            ins_id: typing.Union[MetaOapg.properties.ins_id, str, ],
-                            lastActivityTime: typing.Union[MetaOapg.properties.lastActivityTime, str, ],
-                            place: typing.Union[MetaOapg.properties.place, str, schemas.Unset] = schemas.unset,
-                            comment: typing.Union[MetaOapg.properties.comment, str, schemas.Unset] = schemas.unset,
-                            models: typing.Union[MetaOapg.properties.models, list, tuple, schemas.Unset] = schemas.unset,
-                            device_groups: typing.Union[MetaOapg.properties.device_groups, list, tuple, schemas.Unset] = schemas.unset,
-                            _configuration: typing.Optional[schemas.Configuration] = None,
-                            **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-                        ) -> 'items':
-                            return super().__new__(
-                                cls,
-                                *args,
-                                ins_date=ins_date,
-                                upd_id=upd_id,
-                                device_id=device_id,
-                                upd_date=upd_date,
-                                connectionState=connectionState,
-                                ins_id=ins_id,
-                                lastActivityTime=lastActivityTime,
-                                place=place,
-                                comment=comment,
-                                models=models,
-                                device_groups=device_groups,
-                                _configuration=_configuration,
-                                **kwargs,
-                            )
+                    @staticmethod
+                    def items() -> typing.Type['Device']:
+                        return Device
             
                 def __new__(
                     cls,
-                    arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
+                    arg: typing.Union[typing.Tuple['Device'], typing.List['Device']],
                     _configuration: typing.Optional[schemas.Configuration] = None,
                 ) -> 'devices':
                     return super().__new__(
@@ -523,7 +115,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                         _configuration=_configuration,
                     )
             
-                def __getitem__(self, i: int) -> MetaOapg.items:
+                def __getitem__(self, i: int) -> 'Device':
                     return super().__getitem__(i)
             __annotations__ = {
                 "devices": devices,
@@ -566,29 +158,168 @@ class SchemaFor200ResponseBodyApplicationJson(
             _configuration=_configuration,
             **kwargs,
         )
+
+
+@dataclass
+class ApiResponseFor200(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor200ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_200 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor200,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor200ResponseBodyApplicationJson),
+    },
+)
 SchemaFor400ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor400(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor400ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_400 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor400,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor400ResponseBodyApplicationJson),
+    },
+)
 SchemaFor401ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor401(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor401ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_401 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor401,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor401ResponseBodyApplicationJson),
+    },
+)
 SchemaFor403ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor403(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor403ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_403 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor403,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor403ResponseBodyApplicationJson),
+    },
+)
 SchemaFor500ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor500(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor500ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_500 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor500,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor500ResponseBodyApplicationJson),
+    },
+)
 SchemaFor503ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor503(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor503ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_503 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor503,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor503ResponseBodyApplicationJson),
+    },
+)
 _all_accept_content_types = (
     'application/json',
 )
 
 
 class BaseApi(api_client.Api):
+    @typing.overload
+    def _get_devices_oapg(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def _get_devices_oapg(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def _get_devices_oapg(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
 
     def _get_devices_oapg(
-        self: api_client.Api,
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         """
         GetDevices
         :param skip_deserialization: If true then api_response.response will be set but
@@ -646,17 +377,49 @@ class BaseApi(api_client.Api):
 class GetDevices(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
+    @typing.overload
     def get_devices(
-        self: BaseApi,
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def get_devices(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def get_devices(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
+
+    def get_devices(
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         return self._get_devices_oapg(
             query_params=query_params,
             accept_content_types=accept_content_types,
@@ -669,17 +432,49 @@ class GetDevices(BaseApi):
 class ApiForget(BaseApi):
     # this class is used by api classes that refer to endpoints by path and http method names
 
+    @typing.overload
     def get(
-        self: BaseApi,
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def get(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def get(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
+
+    def get(
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         return self._get_devices_oapg(
             query_params=query_params,
             accept_content_types=accept_content_types,

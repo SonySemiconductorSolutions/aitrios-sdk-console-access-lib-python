@@ -27,14 +27,84 @@ from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 from aitrios_console_rest_client_sdk_primitive.model.inference import Inference
+from aitrios_console_rest_client_sdk_primitive.model.inference_result import InferenceResult
 
-# query params
+# Query params
 NumberOfInferenceresultsSchema = schemas.IntSchema
 FilterSchema = schemas.StrSchema
 RawSchema = schemas.IntSchema
 TimeSchema = schemas.StrSchema
-# path params
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'NumberOfInferenceresults': typing.Union[NumberOfInferenceresultsSchema, decimal.Decimal, int, ],
+        'filter': typing.Union[FilterSchema, str, ],
+        'raw': typing.Union[RawSchema, decimal.Decimal, int, ],
+        'time': typing.Union[TimeSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_number_of_inferenceresults = api_client.QueryParameter(
+    name="NumberOfInferenceresults",
+    style=api_client.ParameterStyle.FORM,
+    schema=NumberOfInferenceresultsSchema,
+    explode=True,
+)
+request_query_filter = api_client.QueryParameter(
+    name="filter",
+    style=api_client.ParameterStyle.FORM,
+    schema=FilterSchema,
+    explode=True,
+)
+request_query_raw = api_client.QueryParameter(
+    name="raw",
+    style=api_client.ParameterStyle.FORM,
+    schema=RawSchema,
+    explode=True,
+)
+request_query_time = api_client.QueryParameter(
+    name="time",
+    style=api_client.ParameterStyle.FORM,
+    schema=TimeSchema,
+    explode=True,
+)
+# Path params
 DeviceIdSchema = schemas.StrSchema
+RequestRequiredPathParams = typing_extensions.TypedDict(
+    'RequestRequiredPathParams',
+    {
+        'device_id': typing.Union[DeviceIdSchema, str, ],
+    }
+)
+RequestOptionalPathParams = typing_extensions.TypedDict(
+    'RequestOptionalPathParams',
+    {
+    },
+    total=False
+)
+
+
+class RequestPathParams(RequestRequiredPathParams, RequestOptionalPathParams):
+    pass
+
+
+request_path_device_id = api_client.PathParameter(
+    name="device_id",
+    style=api_client.ParameterStyle.SIMPLE,
+    schema=DeviceIdSchema,
+    required=True,
+)
 
 
 class SchemaFor200ResponseBodyApplicationJson(
@@ -61,181 +131,10 @@ class SchemaFor200ResponseBodyApplicationJson(
                     model_type = schemas.StrSchema
                     training_kit_name = schemas.StrSchema
                     _ts = schemas.IntSchema
-                    
-                    
-                    class inference_result(
-                        schemas.DictSchema
-                    ):
-                    
-                    
-                        class MetaOapg:
-                            
-                            class properties:
-                                DeviceID = schemas.StrSchema
-                                ModelID = schemas.StrSchema
-                                Image = schemas.BoolSchema
-                                
-                                
-                                class Inferences(
-                                    schemas.ListSchema
-                                ):
-                                
-                                
-                                    class MetaOapg:
-                                        
-                                        @staticmethod
-                                        def items() -> typing.Type['Inference']:
-                                            return Inference
-                                
-                                    def __new__(
-                                        cls,
-                                        arg: typing.Union[typing.Tuple['Inference'], typing.List['Inference']],
-                                        _configuration: typing.Optional[schemas.Configuration] = None,
-                                    ) -> 'Inferences':
-                                        return super().__new__(
-                                            cls,
-                                            arg,
-                                            _configuration=_configuration,
-                                        )
-                                
-                                    def __getitem__(self, i: int) -> 'Inference':
-                                        return super().__getitem__(i)
-                                id = schemas.StrSchema
-                                ttl = schemas.IntSchema
-                                _rid = schemas.StrSchema
-                                _self = schemas.StrSchema
-                                _etag = schemas.StrSchema
-                                _attachments = schemas.StrSchema
-                                _ts = schemas.IntSchema
-                                __annotations__ = {
-                                    "DeviceID": DeviceID,
-                                    "ModelID": ModelID,
-                                    "Image": Image,
-                                    "Inferences": Inferences,
-                                    "id": id,
-                                    "ttl": ttl,
-                                    "_rid": _rid,
-                                    "_self": _self,
-                                    "_etag": _etag,
-                                    "_attachments": _attachments,
-                                    "_ts": _ts,
-                                }
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["DeviceID"]) -> MetaOapg.properties.DeviceID: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["ModelID"]) -> MetaOapg.properties.ModelID: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["Image"]) -> MetaOapg.properties.Image: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["Inferences"]) -> MetaOapg.properties.Inferences: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["id"]) -> MetaOapg.properties.id: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["ttl"]) -> MetaOapg.properties.ttl: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["_rid"]) -> MetaOapg.properties._rid: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["_self"]) -> MetaOapg.properties._self: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["_etag"]) -> MetaOapg.properties._etag: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["_attachments"]) -> MetaOapg.properties._attachments: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: typing_extensions.Literal["_ts"]) -> MetaOapg.properties._ts: ...
-                        
-                        @typing.overload
-                        def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
-                        
-                        def __getitem__(self, name: typing.Union[typing_extensions.Literal["DeviceID", "ModelID", "Image", "Inferences", "id", "ttl", "_rid", "_self", "_etag", "_attachments", "_ts", ], str]):
-                            # dict_instance[name] accessor
-                            return super().__getitem__(name)
-                        
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["DeviceID"]) -> typing.Union[MetaOapg.properties.DeviceID, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["ModelID"]) -> typing.Union[MetaOapg.properties.ModelID, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["Image"]) -> typing.Union[MetaOapg.properties.Image, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["Inferences"]) -> typing.Union[MetaOapg.properties.Inferences, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["id"]) -> typing.Union[MetaOapg.properties.id, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["ttl"]) -> typing.Union[MetaOapg.properties.ttl, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["_rid"]) -> typing.Union[MetaOapg.properties._rid, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["_self"]) -> typing.Union[MetaOapg.properties._self, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["_etag"]) -> typing.Union[MetaOapg.properties._etag, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["_attachments"]) -> typing.Union[MetaOapg.properties._attachments, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: typing_extensions.Literal["_ts"]) -> typing.Union[MetaOapg.properties._ts, schemas.Unset]: ...
-                        
-                        @typing.overload
-                        def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
-                        
-                        def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["DeviceID", "ModelID", "Image", "Inferences", "id", "ttl", "_rid", "_self", "_etag", "_attachments", "_ts", ], str]):
-                            return super().get_item_oapg(name)
-                        
-                    
-                        def __new__(
-                            cls,
-                            *args: typing.Union[dict, frozendict.frozendict, ],
-                            DeviceID: typing.Union[MetaOapg.properties.DeviceID, str, schemas.Unset] = schemas.unset,
-                            ModelID: typing.Union[MetaOapg.properties.ModelID, str, schemas.Unset] = schemas.unset,
-                            Image: typing.Union[MetaOapg.properties.Image, bool, schemas.Unset] = schemas.unset,
-                            Inferences: typing.Union[MetaOapg.properties.Inferences, list, tuple, schemas.Unset] = schemas.unset,
-                            id: typing.Union[MetaOapg.properties.id, str, schemas.Unset] = schemas.unset,
-                            ttl: typing.Union[MetaOapg.properties.ttl, decimal.Decimal, int, schemas.Unset] = schemas.unset,
-                            _rid: typing.Union[MetaOapg.properties._rid, str, schemas.Unset] = schemas.unset,
-                            _self: typing.Union[MetaOapg.properties._self, str, schemas.Unset] = schemas.unset,
-                            _etag: typing.Union[MetaOapg.properties._etag, str, schemas.Unset] = schemas.unset,
-                            _attachments: typing.Union[MetaOapg.properties._attachments, str, schemas.Unset] = schemas.unset,
-                            _ts: typing.Union[MetaOapg.properties._ts, decimal.Decimal, int, schemas.Unset] = schemas.unset,
-                            _configuration: typing.Optional[schemas.Configuration] = None,
-                            **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-                        ) -> 'inference_result':
-                            return super().__new__(
-                                cls,
-                                *args,
-                                DeviceID=DeviceID,
-                                ModelID=ModelID,
-                                Image=Image,
-                                Inferences=Inferences,
-                                id=id,
-                                ttl=ttl,
-                                _rid=_rid,
-                                _self=_self,
-                                _etag=_etag,
-                                _attachments=_attachments,
-                                _ts=_ts,
-                                _configuration=_configuration,
-                                **kwargs,
-                            )
+                
+                    @staticmethod
+                    def inference_result() -> typing.Type['InferenceResult']:
+                        return InferenceResult
                     
                     
                     class inferences(
@@ -300,7 +199,7 @@ class SchemaFor200ResponseBodyApplicationJson(
             def __getitem__(self, name: typing_extensions.Literal["_ts"]) -> MetaOapg.properties._ts: ...
             
             @typing.overload
-            def __getitem__(self, name: typing_extensions.Literal["inference_result"]) -> MetaOapg.properties.inference_result: ...
+            def __getitem__(self, name: typing_extensions.Literal["inference_result"]) -> 'InferenceResult': ...
             
             @typing.overload
             def __getitem__(self, name: typing_extensions.Literal["inferences"]) -> MetaOapg.properties.inferences: ...
@@ -338,7 +237,7 @@ class SchemaFor200ResponseBodyApplicationJson(
             def get_item_oapg(self, name: typing_extensions.Literal["_ts"]) -> typing.Union[MetaOapg.properties._ts, schemas.Unset]: ...
             
             @typing.overload
-            def get_item_oapg(self, name: typing_extensions.Literal["inference_result"]) -> typing.Union[MetaOapg.properties.inference_result, schemas.Unset]: ...
+            def get_item_oapg(self, name: typing_extensions.Literal["inference_result"]) -> typing.Union['InferenceResult', schemas.Unset]: ...
             
             @typing.overload
             def get_item_oapg(self, name: typing_extensions.Literal["inferences"]) -> typing.Union[MetaOapg.properties.inferences, schemas.Unset]: ...
@@ -361,7 +260,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                 model_type: typing.Union[MetaOapg.properties.model_type, str, schemas.Unset] = schemas.unset,
                 training_kit_name: typing.Union[MetaOapg.properties.training_kit_name, str, schemas.Unset] = schemas.unset,
                 _ts: typing.Union[MetaOapg.properties._ts, decimal.Decimal, int, schemas.Unset] = schemas.unset,
-                inference_result: typing.Union[MetaOapg.properties.inference_result, dict, frozendict.frozendict, schemas.Unset] = schemas.unset,
+                inference_result: typing.Union['InferenceResult', schemas.Unset] = schemas.unset,
                 inferences: typing.Union[MetaOapg.properties.inferences, list, tuple, schemas.Unset] = schemas.unset,
                 _configuration: typing.Optional[schemas.Configuration] = None,
                 **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
@@ -396,30 +295,172 @@ class SchemaFor200ResponseBodyApplicationJson(
 
     def __getitem__(self, i: int) -> MetaOapg.items:
         return super().__getitem__(i)
+
+
+@dataclass
+class ApiResponseFor200(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor200ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_200 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor200,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor200ResponseBodyApplicationJson),
+    },
+)
 SchemaFor400ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor400(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor400ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_400 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor400,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor400ResponseBodyApplicationJson),
+    },
+)
 SchemaFor401ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor401(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor401ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_401 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor401,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor401ResponseBodyApplicationJson),
+    },
+)
 SchemaFor403ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor403(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor403ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_403 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor403,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor403ResponseBodyApplicationJson),
+    },
+)
 SchemaFor500ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor500(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor500ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_500 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor500,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor500ResponseBodyApplicationJson),
+    },
+)
 SchemaFor503ResponseBodyApplicationJson = ErrorResponse
+
+
+@dataclass
+class ApiResponseFor503(api_client.ApiResponse):
+    response: urllib3.HTTPResponse
+    body: typing.Union[
+        SchemaFor503ResponseBodyApplicationJson,
+    ]
+    headers: schemas.Unset = schemas.unset
+
+
+_response_for_503 = api_client.OpenApiResponse(
+    response_cls=ApiResponseFor503,
+    content={
+        'application/json': api_client.MediaType(
+            schema=SchemaFor503ResponseBodyApplicationJson),
+    },
+)
 _all_accept_content_types = (
     'application/json',
 )
 
 
 class BaseApi(api_client.Api):
+    @typing.overload
+    def _get_inference_results_oapg(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def _get_inference_results_oapg(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def _get_inference_results_oapg(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
 
     def _get_inference_results_oapg(
-        self: api_client.Api,
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         """
         GetInferenceResults
         :param skip_deserialization: If true then api_response.response will be set but
@@ -491,18 +532,53 @@ class BaseApi(api_client.Api):
 class GetInferenceResults(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
+    @typing.overload
     def get_inference_results(
-        self: BaseApi,
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def get_inference_results(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def get_inference_results(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
+
+    def get_inference_results(
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         return self._get_inference_results_oapg(
             query_params=query_params,
             path_params=path_params,
@@ -516,18 +592,53 @@ class GetInferenceResults(BaseApi):
 class ApiForget(BaseApi):
     # this class is used by api classes that refer to endpoints by path and http method names
 
+    @typing.overload
     def get(
-        self: BaseApi,
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: typing_extensions.Literal[False] = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+    ]: ...
+
+    @typing.overload
+    def get(
+        self,
+        skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+    ) -> api_client.ApiResponseWithoutDeserialization: ...
+
+    @typing.overload
+    def get(
+        self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
+        path_params: RequestPathParams = frozendict.frozendict(),
+        accept_content_types: typing.Tuple[str] = _all_accept_content_types,
+        stream: bool = False,
+        timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
+        skip_deserialization: bool = ...,
+    ) -> typing.Union[
+        ApiResponseFor200,
+        api_client.ApiResponseWithoutDeserialization,
+    ]: ...
+
+    def get(
+        self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
-    ) -> typing.Union[
-        ApiResponseFor200,
-        api_client.ApiResponseWithoutDeserialization
-    ]:
+    ):
         return self._get_inference_results_oapg(
             query_params=query_params,
             path_params=path_params,

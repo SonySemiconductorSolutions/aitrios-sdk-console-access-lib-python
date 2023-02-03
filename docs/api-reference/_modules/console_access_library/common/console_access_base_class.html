@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.common.console_access_base_class &mdash; Console Access Library 0.1.0 documentation</title>
+  <title>console_access_library.common.console_access_base_class &mdash; Console Access Library 0.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -27,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> Console Access Library
           </a>
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -56,9 +57,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>console_access_library.common.console_access_base_class</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.common.console_access_base_class</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -68,21 +69,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for console_access_library.common.console_access_base_class</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
-<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="sd">you may not use this file except in compliance with the License.</span>
-<span class="sd">You may obtain a copy of the License at</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
 
-<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
 
-<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
-<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="sd">See the License for the specific language governing permissions and</span>
-<span class="sd">limitations under the License.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
 
 <span class="c1"># pylint:disable=wrong-import-position</span>
 <span class="c1"># pylint:disable=duplicate-code</span>
@@ -91,25 +92,55 @@
 <span class="c1"># pylint:disable=import-error</span>
 <span class="c1"># pylint:disable=missing-function-docstring</span>
 <span class="c1"># pylint:disable=unused-import</span>
+<span class="c1"># pylint:disable=broad-except</span>
 
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validates_schema</span>
+
 <span class="kn">from</span> <span class="nn">console_access_library.common.error_codes</span> <span class="kn">import</span> <span class="n">ErrorCodes</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SchemaErrorResponse"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.SchemaErrorResponse">[docs]</a><span class="k">class</span> <span class="nc">SchemaErrorResponse</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for Validating HTTP Error Response</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: str, required : Result</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for result&quot;</span><span class="p">})</span>
+
+    <span class="c1">#: str, required : Code</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for code&quot;</span><span class="p">})</span>
+
+    <span class="c1">#: str, required : Message</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for message&quot;</span><span class="p">})</span>
+
+    <span class="c1">#: str, required : Time</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for time&quot;</span><span class="p">})</span></div>
 
 
 <div class="viewcode-block" id="ConsoleAccessBaseClass"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass">[docs]</a><span class="k">class</span> <span class="nc">ConsoleAccessBaseClass</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;ConsoleAccessBaseClass&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ConsoleAccessBaseClass&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructor Method for ConsoleAccessBaseClass&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for ConsoleAccessBaseClass&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span> <span class="o">=</span> <span class="n">ErrorCodes</span>
 
     <span class="k">def</span> <span class="nf">_error_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">schema_params</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;This function return error message for invalid schema</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function return error message for invalid schema</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            message(str): error message</span>
@@ -121,8 +152,13 @@
         <span class="n">error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> schema = </span><span class="si">{</span><span class="n">schema_params</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">error_message</span>
 
+    <span class="k">def</span> <span class="nf">_get_date_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns current date time in string format&quot;&quot;&quot;</span>
+        <span class="n">_current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_current_time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%SZ&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="ConsoleAccessBaseClass.on_validation_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_validation_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_validation_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepares response dictionary on schema validation error.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary on schema validation error.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            module_name (string): Name of the module in which validation error encountered.</span>
@@ -132,100 +168,145 @@
 <span class="sd">            dict: Dictionary object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Validation Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
         <span class="n">_return_on_validation_error_response</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="si">}</span><span class="s2"> :</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">messages</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">messages</span><span class="p">),</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_date_time</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">_return_on_validation_error_response</span></div>
 
-<div class="viewcode-block" id="ConsoleAccessBaseClass.on_generic_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_generic_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_generic_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepares response dictionary using the on schema generic error.</span>
+<div class="viewcode-block" id="ConsoleAccessBaseClass.on_generic_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_generic_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_generic_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">exception</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary using the on schema generic error.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            module_name (string): Name of the module in which generic error encountered.</span>
+<span class="sd">            module_name (str): Name of the module in which generic error encountered.</span>
 <span class="sd">            exception (object): Error object.</span>
+<span class="sd">            message (str): Message string from the API.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Generic Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
+        <span class="n">message_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
+            <span class="n">message_data</span> <span class="o">=</span> <span class="n">message</span>
+
+        <span class="k">if</span> <span class="n">exception</span><span class="p">:</span>
+            <span class="n">message_data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+
         <span class="n">_return_on_generic_error_response</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">GENERIC_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="si">}</span><span class="s2"> :</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">),</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">GENERIC_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">message_data</span><span class="p">),</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">GENERIC_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_date_time</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">_return_on_generic_error_response</span></div>
 
 <div class="viewcode-block" id="ConsoleAccessBaseClass.on_key_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_key_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_key_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">key_err</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepares response dictionary on api key error.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary on api key error.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            module_name (string): Name of the module in which key error encountered.</span>
-<span class="sd">            error (string): Error message.</span>
+<span class="sd">            key_err (string): Error message.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Key Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
         <span class="n">_return_on_key_error_response</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">KEY_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="si">}</span><span class="s2"> :</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key_err</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">KEY_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">key_err</span><span class="o">.</span><span class="n">messages</span><span class="p">),</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">KEY_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_date_time</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">_return_on_key_error_response</span></div>
 
 <div class="viewcode-block" id="ConsoleAccessBaseClass.on_type_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_type_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_type_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">type_error</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepares response dictionary on api type error.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary on api type error.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            module_name (string): Name of the module in which type error encountered.</span>
-<span class="sd">            error (string): Error message.</span>
+<span class="sd">            type_error (string): Error message.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Type Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
         <span class="n">_return_on_type_error_response</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">TYPE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="si">}</span><span class="s2"> :</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">type_error</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">TYPE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">type_error</span><span class="p">),</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">TYPE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_date_time</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">_return_on_type_error_response</span></div>
 
 <div class="viewcode-block" id="ConsoleAccessBaseClass.on_attribute_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_attribute_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_attribute_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">attr_err</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepares response dictionary on api attribute error.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary on api attribute error.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            module_name (string): Name of the module in which attribute error encountered.</span>
-<span class="sd">            error (string): Error message.</span>
+<span class="sd">            attr_err (string): Error message.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Attribute Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
         <span class="n">_return_on_attribute_error_response</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">ATTRIBUTE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="si">}</span><span class="s2"> :</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">attr_err</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">ATTRIBUTE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">attr_err</span><span class="o">.</span><span class="n">messages</span><span class="p">),</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">ATTRIBUTE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_date_time</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">_return_on_attribute_error_response</span></div>
 
 <div class="viewcode-block" id="ConsoleAccessBaseClass.on_value_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_value_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_value_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">val_err</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Prepares response dictionary on api value error.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary on api value error.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            module_name (string): Name of the module in which value error encountered.</span>
-<span class="sd">            error (string): Error message.</span>
+<span class="sd">            val_err (string): Error message.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Value Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
         <span class="n">_return_on_value_error_response</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">VALUE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="si">}</span><span class="s2"> :</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">val_err</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;error_code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">VALUE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">val_err</span><span class="o">.</span><span class="n">messages</span><span class="p">),</span>
+            <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_codes</span><span class="o">.</span><span class="n">VALUE_ERROR</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
+            <span class="s2">&quot;datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_date_time</span><span class="p">(),</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="n">_return_on_value_error_response</span></div></div>
+        <span class="k">return</span> <span class="n">_return_on_value_error_response</span></div>
+
+<div class="viewcode-block" id="ConsoleAccessBaseClass.on_http_error_response"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass.on_http_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">on_http_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">http_error</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepares response dictionary on api http error.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            module_name (string): Name of the module in which value error encountered.</span>
+<span class="sd">            http_error (string): Error message.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Dictionary object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Http Error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">http_error_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">http_error</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+            <span class="n">_return_on_http_error_response</span> <span class="o">=</span> <span class="n">SchemaErrorResponse</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">http_error_json</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">_return_on_http_error_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_generic_error_response</span><span class="p">(</span>
+                <span class="n">module_name</span><span class="p">,</span> <span class="n">exception</span><span class="o">=</span><span class="n">ex</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_return_on_http_error_response</span></div></div>
 </pre></div>
 
            </div>

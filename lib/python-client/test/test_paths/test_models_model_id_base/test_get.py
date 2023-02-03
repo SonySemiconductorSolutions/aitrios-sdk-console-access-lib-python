@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestModelsModelIdBase(ApiTestMixin, unittest.TestCase):
     """
     ModelsModelIdBase unit test stubs
-        GetBaseModelStatusFunc  # noqa: E501
+        GetBaseModelStatus  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

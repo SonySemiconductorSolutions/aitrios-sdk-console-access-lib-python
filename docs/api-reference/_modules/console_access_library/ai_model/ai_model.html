@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>console_access_library.ai_model.ai_model &mdash; Console Access Library 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.2.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.ai_model.ai_model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for console_access_library.ai_model.ai_model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
+
+<span class="c1"># pylint:disable=missing-module-docstring</span>
+<span class="c1"># pylint:disable=import-error</span>
+<span class="c1"># pylint:disable=too-many-instance-attributes</span>
+<span class="c1"># pylint:disable=too-many-public-methods</span>
+<span class="c1"># pylint:disable=duplicate-code</span>
+<span class="c1"># pylint:disable=too-many-function-args</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
+<span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=too-many-lines</span>
+
+<span class="kn">from</span> <span class="nn">console_access_library.ai_model.delete_model</span> <span class="kn">import</span> <span class="n">DeleteModel</span>
+<span class="kn">from</span> <span class="nn">console_access_library.ai_model.get_base_model_status</span> <span class="kn">import</span> <span class="n">GetBaseModelStatus</span>
+<span class="kn">from</span> <span class="nn">console_access_library.ai_model.get_models</span> <span class="kn">import</span> <span class="n">GetModels</span>
+<span class="kn">from</span> <span class="nn">console_access_library.ai_model.import_base_model</span> <span class="kn">import</span> <span class="n">ImportBaseModel</span>
+<span class="kn">from</span> <span class="nn">console_access_library.ai_model.publish_model</span> <span class="kn">import</span> <span class="n">PublishModel</span>
+<span class="kn">from</span> <span class="nn">console_access_library.ai_model.publish_model_wait_response</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PublishModelStatus</span><span class="p">,</span>
+    <span class="n">PublishModelWaitResponse</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+
+
+<div class="viewcode-block" id="AIModel"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel">[docs]</a><span class="k">class</span> <span class="nc">AIModel</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library AIModel component \</span>
+<span class="sd">    APIs from AIModel component</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ConsoleAccessBaseClass (object): Inherited from \</span>
+<span class="sd">            :class:`~console_access_library.common.ConsoleAccessBaseClass`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for AIModel Abstract class</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): Object of Configuration Class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_models_obj</span> <span class="o">=</span> <span class="n">GetModels</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_base_model_status_obj</span> <span class="o">=</span> <span class="n">GetBaseModelStatus</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete_model_obj</span> <span class="o">=</span> <span class="n">DeleteModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_import_base_model_obj</span> <span class="o">=</span> <span class="n">ImportBaseModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_publish_model_obj</span> <span class="o">=</span> <span class="n">PublishModel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_publish_model_wait_response_obj</span> <span class="o">=</span> <span class="n">PublishModelWaitResponse</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publish_status</span> <span class="o">=</span> <span class="n">PublishModelStatus</span>
+
+<div class="viewcode-block" id="AIModel.get_models"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel.get_models">[docs]</a>    <span class="k">def</span> <span class="nf">get_models</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_platform</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">project_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">latest_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_models`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_id (str, optional) : Model ID. Partial search \</span>
+<span class="sd">                If not specified, all model_id searches.</span>
+<span class="sd">            comment (str, optional) : Model Description. Partial search \</span>
+<span class="sd">                If not specified, search all comments.</span>
+<span class="sd">            project_name(str, optional) : Project Name. Partial search \</span>
+<span class="sd">                Search all project_name if not specified.</span>
+<span class="sd">            model_platform(str, optional) : Model platform</span>
+
+<span class="sd">               - 0 : Custom Vision</span>
+<span class="sd">               - 1 : Non Custom Vision</span>
+<span class="sd">               - 2 : Model Retrainer</span>
+
+<span class="sd">                Exact search, If not specified, search all model_platforms.</span>
+
+<span class="sd">            project_type (str, optional) : Project Type.</span>
+
+<span class="sd">                - 0 : Base</span>
+<span class="sd">                - 1 : Device</span>
+
+<span class="sd">                Exact search, Search all project_types if not specified.</span>
+
+<span class="sd">            device_id (str, optional) : Device Id. (specified if you \</span>
+<span class="sd">                want to search for the device model). Exact search \</span>
+<span class="sd">                Search all device_ids if not specified.</span>
+
+<span class="sd">            latest_type (str, optional) : Latest version type.</span>
+
+<span class="sd">                - 0 : latest published version</span>
+<span class="sd">                - 1 : Latest version (latest including model version in process of \</span>
+<span class="sd">                conversion/publishing)</span>
+
+<span class="sd">                Exact search, 1 if not specified.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*          | *Type*     | *Description*                 |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                | ``models`` |                   | ``array``  | The subordinate elements are  |</span>
+<span class="sd">                |            |                   |            | listed in ascending order of  |</span>
+<span class="sd">                |            |                   |            | model ID                      |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``model_id``      | ``string`` | Set the model ID              |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``device_type``   | ``string`` | Set the model type            |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``functionality`` | ``string`` | Set the feature description   |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``vendor_name``   | ``string`` | Set the vendor name           |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``model_comment`` | ``string`` | Set the description           |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``network_type``  | ``string`` | 0: Custom Vision              |</span>
+<span class="sd">                |            |                   |            |                               |</span>
+<span class="sd">                |            |                   |            | 1: Non Custom Vision          |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``projects``      | ``array``  | Refer :ref:`projects &lt;p2&gt;`    |</span>
+<span class="sd">                |            |                   |            | for more details              |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                | projects   | .. _p2:                                                             |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                     |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |``projects``|                    | ``array``  |The subordinate elements are listed|</span>
+<span class="sd">                |            |                    |            |in ascending order of project type |</span>
+<span class="sd">                |            |                    |            |and model project name.            |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_project_    | ``string`` |Set the model project name         |</span>
+<span class="sd">                |            |name``              |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_platform``  |``string``  |Set up the model platform          |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_type``      |``string``  |Set the model type                 |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``project_type``    |``string``  |Set the project type               |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``device_id``       |``string``  |Set the device ID * This is not an |</span>
+<span class="sd">                |            |                    |            |internal ID                        |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``versions``        |``array``   |Refer :ref:`versions &lt;v2&gt;`         |</span>
+<span class="sd">                |            |                    |            |for more details                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                | versions   | .. _v2:                                                             |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                     |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |``versions``|                    | ``array``  |Although it is a subordinate       |</span>
+<span class="sd">                |            |                    |            |element, in the case of this API,  |</span>
+<span class="sd">                |            |                    |            |there is always one.               |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``version_number``  | ``string`` |Set the version number             |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``iteration_id``    |``string``  |Set the iteration ID               |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``iteration_name``  |``string``  |Set the iteration name             |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``accuracy``        |``string``  |Set the precision                  |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``latest_flg``      |``string``  |Set the latest flag                |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_latest    |``string``  |Set the latest published flag      |</span>
+<span class="sd">                |            |_flg``              |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``version_status``  |``string``  |Set your status                    |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;01&#39;: &#39;Before conversion&#39;          |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;02&#39;: &#39;Converting&#39;                 |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;03&#39;: &#39;Conversion failed&#39;          |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;04&#39;: &#39;Conversion complete&#39;        |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;05&#39;: &#39;Adding to configuration&#39;    |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;06&#39;: &#39;Add to configuration failed&#39;|</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;07&#39;: Add to configuration         |</span>
+<span class="sd">                |            |                    |            |complete                           |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            |&#39;11&#39;: &#39;Saving&#39; Model saving        |</span>
+<span class="sd">                |            |                    |            |status in Model Retrainer case     |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``org_file_name``   |``string``  |Set the file name of the model     |</span>
+<span class="sd">                |            |                    |            |before conversion                  |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``org_file_size``   |``integer`` |Set the publishing model file size |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_file_     |``string``  |Set the publishing model file name |</span>
+<span class="sd">                |            |name``              |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_file_     |``integer`` |Set the publishing model file size |</span>
+<span class="sd">                |            |size``              |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_file_size`` |``integer`` |Set the model file size            |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_framework`` |``string``  |Set up the model framework         |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``conv_id``         |``string``  |Set the conversion request ID      |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``labels``          |``string``  |Set the label array                |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``stage``           |``string``  |Set the conversion stage           |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``result``          |``string``  |Set the conversion result          |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``convert_start_    |``string``  |Set the conversion start date and  |</span>
+<span class="sd">                |            |date``              |            |time                               |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``convert_end_date``|``string``  |Set the conversion end date and    |</span>
+<span class="sd">                |            |                    |            |time                               |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_start     |``string``  |Set the publish start date and time|</span>
+<span class="sd">                |            |_date``             |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_end_date``|``string``  |Set the publication end date and   |</span>
+<span class="sd">                |            |                    |            |time                               |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``version_comment`` |``string``  |Set the description                |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``version_ins_date``|``date``    |Set the version creation time      |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``version_upd_date``|``date``    |Set the version creation time      |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+
+<span class="sd">           **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_models_obj</span><span class="o">.</span><span class="n">get_models</span><span class="p">(</span>
+            <span class="n">model_id</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">model_platform</span><span class="p">,</span> <span class="n">project_type</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">latest_type</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AIModel.import_base_model"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel.import_base_model">[docs]</a>    <span class="k">def</span> <span class="nf">import_base_model</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">converted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">vendor_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">input_format_param</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">network_config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">network_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+        <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``import_base_model`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_id (str, required) : Model ID. (model ID for new \</span>
+<span class="sd">                saving or version upgrade). Within 100 characters.</span>
+<span class="sd">            model (str, required) : Model file SAS URI</span>
+<span class="sd">            converted (bool, optional) : Convert flag. True: Converted Model \</span>
+<span class="sd">                False: Unconverted Model \</span>
+<span class="sd">                False if not specified</span>
+<span class="sd">            vendor_name (str, optional) : Vendor Name.  (specified when saving as new) \</span>
+<span class="sd">                Up to 100 characters. Not specified for version upgrade. \</span>
+<span class="sd">                No vendor name if not specified.</span>
+<span class="sd">            comment (str, optional) : Explanation about the model to be entered when \</span>
+<span class="sd">                registering a new model. When newly saved, it is set as \</span>
+<span class="sd">                a description of the model and version. \</span>
+<span class="sd">                When the version is upgraded, it is set as the \</span>
+<span class="sd">                description of the version. Within 100 characters If not specified, there is no \</span>
+<span class="sd">                explanation about the model to be entered when registering a new model.</span>
+<span class="sd">            input_format_param (str, optional) : input format param file (json format) URI \</span>
+<span class="sd">                Evaluate Azure: SAS URI+ AWS: Presigned URIs Usage: Packager conversion \</span>
+<span class="sd">                information (image format information). Illegal characters except for SAS URI \</span>
+<span class="sd">                format json format is an array of objects (each object contains the following \</span>
+<span class="sd">                values). Example ordinal: Order of DNN input to converter (value range: 0-2) \</span>
+<span class="sd">                format: format (&quot;RGB&quot; or &quot;BGR&quot;) If not specified, do not evaluate.</span>
+<span class="sd">            network_config (str, optional) : URI of network config file (json format) \</span>
+<span class="sd">                Evaluate Azure: SAS URI+ AWS: Presigned URIs In case of pre-conversion \</span>
+<span class="sd">                model, specify. (=Ignored for post-conversion model) Usage: Conversion parameter \</span>
+<span class="sd">                information of model converter. Illegal characters except for SAS URI format \</span>
+<span class="sd">                If not specified, do not evaluate.</span>
+<span class="sd">            network_type (str, optional) : The Network Type. (Valid only for \</span>
+<span class="sd">                new model registration).</span>
+
+<span class="sd">                - 0: Custom Vision</span>
+<span class="sd">                - 1: Non Custom Vision</span>
+
+<span class="sd">                1 if not specified.</span>
+<span class="sd">            labels (list, optional) : Label Name. Example: [&quot;label01&quot;,&quot;label02&quot;,&quot;label03&quot;]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
+<span class="sd">                +------------+------------+-------------------------------+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +------------+------------+-------------------------------+</span>
+
+<span class="sd">           **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_import_base_model_obj</span><span class="o">.</span><span class="n">import_base_model</span><span class="p">(</span>
+            <span class="n">model_id</span><span class="p">,</span>
+            <span class="n">model</span><span class="p">,</span>
+            <span class="n">converted</span><span class="p">,</span>
+            <span class="n">vendor_name</span><span class="p">,</span>
+            <span class="n">comment</span><span class="p">,</span>
+            <span class="n">input_format_param</span><span class="p">,</span>
+            <span class="n">network_config</span><span class="p">,</span>
+            <span class="n">network_type</span><span class="p">,</span>
+            <span class="n">labels</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AIModel.get_base_model_status"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel.get_base_model_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_base_model_status</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">latest_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_base_model_status`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_id (str, required) : The Model ID.</span>
+<span class="sd">            latest_type (str, optional) : Latest version type.</span>
+
+<span class="sd">                - 0: latest published version</span>
+<span class="sd">                - 1: Latest version (latest including model version in process of \</span>
+<span class="sd">                conversion/publishing)</span>
+
+<span class="sd">                Exact search, 1 if not specified.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                | *Level1*        | *Level2* | *Type*   |*Description*                            |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``model_id``     |          |``string``|Set the model ID                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``device_type``  |          |``string``|Set the model type                       |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``functionality``|          |``string``|Set the feature                          |</span>
+<span class="sd">                |                 |          |          |description                              |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``vendor_name``  |          |``string``|Set the vendor name                      |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``model_comment``|          |``string``|Set the description                      |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``network_type`` |          |``string``|0: Custom Vision                         |</span>
+<span class="sd">                |                 |          |          |                                         |</span>
+<span class="sd">                |                 |          |          |1: Non Custom Vision                     |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |``projects``     |          |``array`` |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``model_  |``string``|Set the model project name               |</span>
+<span class="sd">                |                 |project_  |          |                                         |</span>
+<span class="sd">                |                 |name``    |          |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``model_  |``string``|Set the model project                    |</span>
+<span class="sd">                |                 |project_  |          |ID                                       |</span>
+<span class="sd">                |                 |id``      |          |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``model_  |``string``|Set up the model platform                |</span>
+<span class="sd">                |                 |platform``|          |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``model_  |``string``|Set the model type                       |</span>
+<span class="sd">                |                 |type``    |          |                                         |</span>
+<span class="sd">                |                 |          |          |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``project_|``string``|Set the project type                     |</span>
+<span class="sd">                |                 |type``    |          |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``device_ |``string``|Set the device ID                        |</span>
+<span class="sd">                |                 |id``      |          |                                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+<span class="sd">                |                 |``versi   |``array`` |Refer :ref:`versions &lt;versions_element2&gt;`|</span>
+<span class="sd">                |                 |ons``     |          |for more details                         |</span>
+<span class="sd">                +-----------------+----------+----------+-----------------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                | versions   | .. _versions_element2:                                             |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*    | *Description*                     |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |``versions``|                    | ``array`` |Although it is a subordinate       |</span>
+<span class="sd">                |            |                    |           |element, in the case of this       |</span>
+<span class="sd">                |            |                    |           |API, there is always one.          |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``version_number``  | ``string``|Set the version number             |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``iteration_id``    |``string`` |Set the iteration ID               |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``iteration_name``  |``string`` |Set the iteration name             |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``accuracy``        |``string`` |Set the precision                  |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``model_            |``string`` |Refer :ref:`model_performance &lt;m3&gt;`|</span>
+<span class="sd">                |            |performance``       |           |for more details                   |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``latest_flg``      |``string`` |Set the latest flag                |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_latest_   |``string`` |Set the latest published flag      |</span>
+<span class="sd">                |            |flg``               |           |                                   |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``version_status``  |``string`` |Set your status                    |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;01&#39;: &#39;Before conversion&#39;          |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;02&#39;: &#39;Converting&#39;                 |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;03&#39;: &#39;Conversion failed&#39;          |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;04&#39;: &#39;Conversion complete&#39;        |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;05&#39;: &#39;Adding to configuration&#39;    |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;06&#39;: &#39;Add to configuration failed&#39;|</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;07&#39;: &#39;Add to configuration        |</span>
+<span class="sd">                |            |                    |           |complete                           |</span>
+<span class="sd">                |            |                    |           |                                   |</span>
+<span class="sd">                |            |                    |           |&#39;11&#39;: &#39;Saving&#39; Model saving        |</span>
+<span class="sd">                |            |                    |           |status in Model Retrainer case     |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``org_file_name``   |``string`` |Set the file name of the model     |</span>
+<span class="sd">                |            |                    |           |before conversion                  |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``org_file_size``   |``integer``|Set the publishing model file size |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_file_     |``string`` |Set the publishing model file name |</span>
+<span class="sd">                |            |name``              |           |                                   |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_file_     |``integer``|Set the publishing model file size |</span>
+<span class="sd">                |            |size``              |           |                                   |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``model_file_size`` |``integer``|Deployment model file size         |</span>
+<span class="sd">                |            |                    |           |* However, TBD is set as the       |</span>
+<span class="sd">                |            |                    |           |calculation method                 |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``model_framework`` |``string`` |Set up the model framework         |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``conv_id``         |``string`` |Set the conversion request ID      |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``labels``          |``string`` |Set the label array                |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``stage``           |``string`` |Set the conversion stage           |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``result``          |``string`` |Set the conversion result          |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``kpi``             |``string`` |Refer :ref:`kpi &lt;kpi1&gt;`            |</span>
+<span class="sd">                |            |                    |           |for more details                   |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``convert_start_    |``string`` |Set the conversion start date and  |</span>
+<span class="sd">                |            |date``              |           |time                               |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``convert_end_date``|``string`` |Set the conversion end date and    |</span>
+<span class="sd">                |            |                    |           |time                               |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_start_    |``string`` |Set the publish start date and time|</span>
+<span class="sd">                |            |date``              |           |                                   |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``publish_end_date``|``string`` |Set the publication end date and   |</span>
+<span class="sd">                |            |                    |           |time                               |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``version_comment`` |``string`` |Set the description                |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``version_ins_date``|``date``   |Set the version creation time      |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+<span class="sd">                |            |``version_upd_date``|``date``   |Set the version creation time      |</span>
+<span class="sd">                +------------+--------------------+-----------+-----------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |``model_p   | .. _m3:                                                            |</span>
+<span class="sd">                |erformance``|                                                                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |``model_p   |                    | ``string`` |Set model performance             |</span>
+<span class="sd">                |erformance``|                    |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``perTag            |``string``  |Refer :ref:`pTP &lt;pTP_element1&gt;`   |</span>
+<span class="sd">                |            |Performance``       |            |for more details                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``precision``       |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``precisionStd      |``string``  |                                  |</span>
+<span class="sd">                |            |Deviation``         |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``recall``          |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``recallStd         |``string``  |                                  |</span>
+<span class="sd">                |            |Deviation``         |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``averagePrecision``|``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | kpi        | .. _kpi1:                                                          |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |``kpi``     |                    | ``string`` |Set KPIs                          |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Memory Report``   |``string``  |Refer :ref:`MP &lt;MP_element1&gt;`     |</span>
+<span class="sd">                |            |                    |            |for more details                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | pTP        | .. _pTP_element1:                                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |``perTagP   |                    | ``string`` |                                  |</span>
+<span class="sd">                |erformance``|                    |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``id``              |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``name``            |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``precision``       |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``precisionStd      |``string``  |                                  |</span>
+<span class="sd">                |            |Deviation``         |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``recallStd         |``string``  |                                  |</span>
+<span class="sd">                |            |Deviation``         |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``averagePrecision``|``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |MP          |.. _MP_element1:                                                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |``Memory    |                    | ``string`` |                                  |</span>
+<span class="sd">                |Report``    |                    |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Name``            |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Runtime Memory    |``string``  |                                  |</span>
+<span class="sd">                |            |Physical Size``     |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Model Memory      |``string``  |                                  |</span>
+<span class="sd">                |            |Physical Size``     |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Reserved Memory`` |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Memory Usage``    |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Total Memory      |``string``  |                                  |</span>
+<span class="sd">                |            |Available On Chip`` |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Memory            |``string``  |                                  |</span>
+<span class="sd">                |            |Utilization``       |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Fit In Chip``     |``string``  |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Input Persistent``|            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Networks``        |            |Refer :ref:`Networks &lt;Ne1&gt;`       |</span>
+<span class="sd">                |            |                    |            |for more details                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |Networks    |.. _Ne1:                                                            |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                    |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |``Networks``|                    |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Hash``            |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Name``            |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Runtime Memory    |            |                                  |</span>
+<span class="sd">                |            |Physical Size``     |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Model Memory      |            |                                  |</span>
+<span class="sd">                |            |Physical Size``     |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+<span class="sd">                |            |``Input Persistence |            |                                  |</span>
+<span class="sd">                |            |Cost``              |            |                                  |</span>
+<span class="sd">                +------------+--------------------+------------+----------------------------------+</span>
+
+<span class="sd">           **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_base_model_status_obj</span><span class="o">.</span><span class="n">get_base_model_status</span><span class="p">(</span><span class="n">model_id</span><span class="p">,</span> <span class="n">latest_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AIModel.delete_model"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel.delete_model">[docs]</a>    <span class="k">def</span> <span class="nf">delete_model</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``delete_model`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_id (str, required) : The Model ID.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                    +------------+------------+-------------------------------+</span>
+<span class="sd">                    | *Level1*   | *Type*     | *Description*                 |</span>
+<span class="sd">                    +------------+------------+-------------------------------+</span>
+<span class="sd">                    | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                    +------------+------------+-------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delete_model_obj</span><span class="o">.</span><span class="n">delete_model</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AIModel.publish_model"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel.publish_model">[docs]</a>    <span class="k">def</span> <span class="nf">publish_model</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``publish_model`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_id (str, required) : The Model ID.</span>
+<span class="sd">            device_id (str, optional) : The ID of edge AI device. \</span>
+<span class="sd">                Specify when the device model is the target \</span>
+<span class="sd">                If the base model is the target, do not specify.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +----------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*       | *Type*     | *Description*                 |</span>
+<span class="sd">                +----------------+------------+-------------------------------+</span>
+<span class="sd">                | ``result``     | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +----------------+------------+-------------------------------+</span>
+<span class="sd">                | ``import_id``  | ``string`` | Set the import_id of          |</span>
+<span class="sd">                |                |            | Model Import Rest API         |</span>
+<span class="sd">                |                |            | (model-import) response       |</span>
+<span class="sd">                +----------------+------------+-------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_publish_model_obj</span><span class="o">.</span><span class="n">publish_model</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AIModel.publish_model_wait_response"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.ai_model.AIModel.publish_model_wait_response">[docs]</a>    <span class="k">def</span> <span class="nf">publish_model_wait_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``publish_model_wait_response`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_id (str, required) : The Model ID.</span>
+<span class="sd">            device_id (str, optional) : ID of edge AI device. Specify when the device \</span>
+<span class="sd">                model is the target, If the base model is the target, do not specify.</span>
+<span class="sd">            callback (function, optional) : A function handle of the form - \</span>
+<span class="sd">                ``publish_callback(status)``, where ``status`` is the notified publish status. \</span>
+<span class="sd">                Callback Function to check the publishing status with ``get_base_model_status``,</span>
+<span class="sd">                and if not completed, call the callback function to notify the publishing status.\</span>
+<span class="sd">                If not specified, no callback notification.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - dict</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-------------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*          | *Type*     | *Description*                 |</span>
+<span class="sd">                +-------------------+------------+-------------------------------+</span>
+<span class="sd">                | ``result``        | ``string`` | &quot;SUCCESS&quot;                     |</span>
+<span class="sd">                +-------------------+------------+-------------------------------+</span>
+<span class="sd">                | ``process time``  | ``string`` | Processing Time               |</span>
+<span class="sd">                +-------------------+------------+-------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_publish_model_wait_response_obj</span><span class="o">.</span><span class="n">publish_model_wait_response</span><span class="p">(</span>
+            <span class="n">model_id</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">callback</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

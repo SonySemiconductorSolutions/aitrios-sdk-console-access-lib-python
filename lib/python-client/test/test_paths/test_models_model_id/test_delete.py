@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestModelsModelId(ApiTestMixin, unittest.TestCase):
     """
     ModelsModelId unit test stubs
-        DeleteModelFunc  # noqa: E501
+        DeleteModel  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

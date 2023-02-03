@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestModels(ApiTestMixin, unittest.TestCase):
     """
     Models unit test stubs
-        ImportBaseModelFunc  # noqa: E501
+        ImportBaseModel  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

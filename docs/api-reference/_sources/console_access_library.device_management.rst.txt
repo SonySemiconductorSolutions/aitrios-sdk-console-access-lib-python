@@ -1,5 +1,5 @@
 Device Management Package
-==========================
+=========================
 
 device\_management
 ------------------

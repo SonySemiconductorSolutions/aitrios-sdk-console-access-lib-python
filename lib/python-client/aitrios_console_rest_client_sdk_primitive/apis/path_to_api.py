@@ -3,6 +3,8 @@ import typing_extensions
 from aitrios_console_rest_client_sdk_primitive.paths import PathValues
 from aitrios_console_rest_client_sdk_primitive.apis.paths.devices import Devices
 from aitrios_console_rest_client_sdk_primitive.apis.paths.command_parameter_files import CommandParameterFiles
+from aitrios_console_rest_client_sdk_primitive.apis.paths.command_parameter_files_file_name import CommandParameterFilesFileName
+from aitrios_console_rest_client_sdk_primitive.apis.paths.devices_configuration_command_parameter_files_file_name import DevicesConfigurationCommandParameterFilesFileName
 from aitrios_console_rest_client_sdk_primitive.apis.paths.deployconfigurations import Deployconfigurations
 from aitrios_console_rest_client_sdk_primitive.apis.paths.deployconfigurations_config_id import DeployconfigurationsConfigId
 from aitrios_console_rest_client_sdk_primitive.apis.paths.devices_device_id_deploys_deploy_id import DevicesDeviceIdDeploysDeployId
@@ -26,6 +28,8 @@ PathToApi = typing_extensions.TypedDict(
     {
         PathValues.DEVICES: Devices,
         PathValues.COMMAND_PARAMETER_FILES: CommandParameterFiles,
+        PathValues.COMMAND_PARAMETER_FILES_FILE_NAME: CommandParameterFilesFileName,
+        PathValues.DEVICES_CONFIGURATION_COMMAND_PARAMETER_FILES_FILE_NAME: DevicesConfigurationCommandParameterFilesFileName,
         PathValues.DEPLOYCONFIGURATIONS: Deployconfigurations,
         PathValues.DEPLOYCONFIGURATIONS_CONFIG_ID: DeployconfigurationsConfigId,
         PathValues.DEVICES_DEVICE_ID_DEPLOYS_DEPLOY_ID: DevicesDeviceIdDeploysDeployId,
@@ -50,6 +54,8 @@ path_to_api = PathToApi(
     {
         PathValues.DEVICES: Devices,
         PathValues.COMMAND_PARAMETER_FILES: CommandParameterFiles,
+        PathValues.COMMAND_PARAMETER_FILES_FILE_NAME: CommandParameterFilesFileName,
+        PathValues.DEVICES_CONFIGURATION_COMMAND_PARAMETER_FILES_FILE_NAME: DevicesConfigurationCommandParameterFilesFileName,
         PathValues.DEPLOYCONFIGURATIONS: Deployconfigurations,
         PathValues.DEPLOYCONFIGURATIONS_CONFIG_ID: DeployconfigurationsConfigId,
         PathValues.DEVICES_DEVICE_ID_DEPLOYS_DEPLOY_ID: DevicesDeviceIdDeploysDeployId,

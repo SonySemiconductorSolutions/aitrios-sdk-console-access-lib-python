@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.device_management.device_management &mdash; Console Access Library 0.1.0 documentation</title>
+  <title>console_access_library.device_management.device_management &mdash; Console Access Library 0.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -27,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> Console Access Library
           </a>
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -56,9 +57,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>console_access_library.device_management.device_management</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.device_management.device_management</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -68,30 +69,34 @@
            <div itemprop="articleBody">
              
   <h1>Source code for console_access_library.device_management.device_management</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
-<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="sd">you may not use this file except in compliance with the License.</span>
-<span class="sd">You may obtain a copy of the License at</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
 
-<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
 
-<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
-<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="sd">See the License for the specific language governing permissions and</span>
-<span class="sd">limitations under the License.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
 
 <span class="c1"># pylint:disable=missing-module-docstring</span>
 <span class="c1"># pylint:disable=import-error</span>
 <span class="c1"># pylint:disable=too-many-instance-attributes</span>
 <span class="c1"># pylint:disable=too-many-public-methods</span>
 <span class="c1"># pylint:disable=duplicate-code</span>
+<span class="c1"># pylint:disable=too-many-function-args</span>
+<span class="c1"># pylint:disable=invalid-name</span>
 
 <span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
-<span class="kn">from</span> <span class="nn">console_access_library.device_management.get_command_parameter_file</span> <span class="kn">import</span> <span class="n">GetCommandParameterFile</span>
+<span class="kn">from</span> <span class="nn">console_access_library.device_management.get_command_parameter_file</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GetCommandParameterFile</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">console_access_library.device_management.get_devices</span> <span class="kn">import</span> <span class="n">GetDevices</span>
 <span class="kn">from</span> <span class="nn">console_access_library.device_management.start_upload_inference_result</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">StartUploadInferenceResult</span><span class="p">,</span>
@@ -102,7 +107,7 @@
 
 
 <div class="viewcode-block" id="DeviceManagement"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement">[docs]</a><span class="k">class</span> <span class="nc">DeviceManagement</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library DeviceManagement component</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library DeviceManagement component</span>
 <span class="sd">    APIs from devicemanagement component</span>
 
 <span class="sd">    Args:</span>
@@ -111,7 +116,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructor Method for DeviceManagement Abstract class</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for DeviceManagement Abstract class</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            config (object): Object of Configuration Class</span>
@@ -122,26 +127,303 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_upload_inference_result_obj</span> <span class="o">=</span> <span class="n">StopUploadInferenceResult</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_command_parameter_file_obj</span> <span class="o">=</span> <span class="n">GetCommandParameterFile</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DeviceManagement.get_devices"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_devices">[docs]</a>    <span class="k">def</span> <span class="nf">get_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query_params</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``get_devices`` API</span>
+<div class="viewcode-block" id="DeviceManagement.get_devices"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_devices">[docs]</a>    <span class="k">def</span> <span class="nf">get_devices</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">connection_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_devices`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            query_params (dict, optional): Dictionary of parameters to be passed. Defaults to None</span>
+<span class="sd">            device_id (str, optional): Edge AI Device ID. Partial search, case insensitive.</span>
+<span class="sd">                Search all device_ids if not specified.</span>
+<span class="sd">            device_name (str, optional) : Edge AI device name. Partial search, case insensitive.</span>
+<span class="sd">                If not specified, search all device_names.</span>
+<span class="sd">            connection_state (str, optional) : Connection status. For connected state: Connected</span>
+<span class="sd">                Disconnected state: Disconnected</span>
+<span class="sd">                Exact match search, case insensitive.</span>
+<span class="sd">                If not specified, search all connection_states.</span>
+<span class="sd">            device_group_id (str, optional) : Affiliated Edge AI device group.</span>
+<span class="sd">                Exact match search, case insensitive.</span>
+<span class="sd">                Search all device_group_id if not specified.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``get_devices`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                | *Level1*   | *Level2*           |*Type*     | *Description*                  |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                | ``devices``|                    |``array``  | The subordinate elements are   |</span>
+<span class="sd">                |            |                    |           | listed in ascending order by   |</span>
+<span class="sd">                |            |                    |           | device ID                      |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``device_id``      |``string`` | Set the device ID              |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``place``          |``string`` | Set the location               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``comment``        |``string`` | Set the device description     |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``property``       |``string`` | Set device properties          |</span>
+<span class="sd">                |            |                    |           | (device_name, etc.)            |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``ins_id``         |``string`` | Set the creator of the device  |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``ins_date``       |``string`` | Set the date and               |</span>
+<span class="sd">                |            |                    |           | time the device was created.   |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``upd_id``         |``string`` | Set up an updater for          |</span>
+<span class="sd">                |            |                    |           | your device                    |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``upd_date``       |``string`` | Set the date and time          |</span>
+<span class="sd">                |            |                    |           | of the device update.          |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``connectionState`` |``string`` | Set the connection status      |</span>
+<span class="sd">                |            |                    |           | of the device.                 |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``lastActivityTime``|``string`` | Set the last connection date   |</span>
+<span class="sd">                |            |                    |           | and time of the device.        |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups &lt;ds&gt;`|</span>
+<span class="sd">                |            |                    |           | for more details               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``models``         |``array``  | Refer :ref:`models &lt;model1&gt;`   |</span>
+<span class="sd">                |            |                    |           | for more details               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | device_groups     | .. _ds:                                                    |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | ``device_groups`` |                    | ``array``  | The subordinate          |</span>
+<span class="sd">                |                   |                    |            | elements are listed      |</span>
+<span class="sd">                |                   |                    |            | in ascending order       |</span>
+<span class="sd">                |                   |                    |            | by device group ID       |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_group_id`` | ``string`` | Set the device group ID  |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_type``     | ``string`` | Set the device type      |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   | ``comment``        |``string``  | Set the device           |</span>
+<span class="sd">                |                   |                    |            | bdescription             |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   | ``ins_id``         |``string``  | Set the date and time    |</span>
+<span class="sd">                |                   |                    |            | that the device group    |</span>
+<span class="sd">                |                   |                    |            | was created.             |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   | ``ins_date``       |``string``  | Set the creator of the   |</span>
+<span class="sd">                |                   |                    |            | device group.            |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   | ``upd_id``         |``string``  | Set the updater for      |</span>
+<span class="sd">                |                   |                    |            | the device group         |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   | ``upd_date``       |``string``  | Set the date and time of |</span>
+<span class="sd">                |                   |                    |            | the device group update. |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | models            | .. _model1:                                                |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | ``models``        |                    | ``array``  | The subordinate          |</span>
+<span class="sd">                |                   |                    |            | elements are listed      |</span>
+<span class="sd">                |                   |                    |            | in ascending order       |</span>
+<span class="sd">                |                   |                    |            | by device group ID       |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``model_version_id``| ``string`` | Set the model version ID |</span>
+<span class="sd">                |                   |                    |            | Format: ModelID:v1.0001  |</span>
+<span class="sd">                |                   |                    |            | * If DnnModelVersion does|</span>
+<span class="sd">                |                   |                    |            | not exist in the DB, the |</span>
+<span class="sd">                |                   |                    |            | network_id is displayed. |</span>
+<span class="sd">                |                   |                    |            | Example) 0201020002370200|</span>
+<span class="sd">                |                   |                    |            | In the above case, 000237|</span>
+<span class="sd">                |                   |                    |            | (7~12 digits) If it is 16|</span>
+<span class="sd">                |                   |                    |            | digits,it is displayed   |</span>
+<span class="sd">                |                   |                    |            | as is.                   |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_devices_obj</span><span class="o">.</span><span class="n">get_devices</span><span class="p">(</span><span class="n">query_params</span><span class="o">=</span><span class="n">query_params</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_devices_obj</span><span class="o">.</span><span class="n">get_devices</span><span class="p">(</span>
+            <span class="n">device_id</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">connection_state</span><span class="p">,</span> <span class="n">device_group_id</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DeviceManagement.start_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">start_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``start_upload_inference_result`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``start_upload_inference_result`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Device ID. No more than 100 characters.</span>
+<span class="sd">            device_id (str, required): Edge AI Device ID.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``start_upload_inference_result`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*               | *Type*     | *Description*             |</span>
+<span class="sd">                +------------------------+------------+---------------------------+</span>
+<span class="sd">                | ``result``             | ``string`` | Set &quot;SUCCESS&quot; pinning     |</span>
+<span class="sd">                +------------------------+------------+---------------------------+</span>
+<span class="sd">                | ``outputSubDirectory`` | ``string`` | Input Image storage path  |</span>
+<span class="sd">                |                        |            | UploadMethod:BlobStorage  |</span>
+<span class="sd">                |                        |            | only                      |</span>
+<span class="sd">                +------------------------+------------+---------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_upload_inference_result_obj</span><span class="o">.</span><span class="n">start_upload_inference_result</span><span class="p">(</span>
@@ -149,13 +431,97 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DeviceManagement.stop_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">stop_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``stop_upload_inference_result`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``stop_upload_inference_result`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Device ID. No more than 100 characters.</span>
+<span class="sd">            device_id (str, required): Edge AI Device ID.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``stop_upload_inference_result`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-----------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*              | *Type*     | *Description*             |</span>
+<span class="sd">                +-----------------------+------------+---------------------------+</span>
+<span class="sd">                | ``result``            | ``string`` | Set &quot;SUCCESS&quot; pinning     |</span>
+<span class="sd">                +-----------------------+------------+---------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_upload_inference_result_obj</span><span class="o">.</span><span class="n">stop_upload_inference_result</span><span class="p">(</span>
@@ -163,10 +529,115 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DeviceManagement.get_command_parameter_file"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_parameter_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``get_command_parameter_file`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_command_parameter_file`` API</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``get_command_parameter_file`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                | *Level1*          |*Level2*      |*Type*    | *Description*                 |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                | ``parameter_list``|              |``array`` | Parameter file list           |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``parameter`` |``string``| The setting value. json       |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``filename``  |``string``| File Name                     |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``comment``   |``string``| comment                       |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``isdefault`` |``string``| True: Default parameter       |</span>
+<span class="sd">                |                   |              |          | not False: Default            |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``device_ids``|``List``  | List of target devices.       |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``ins_id``    |``string``| Set the creator of the setting|</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``ins_date``  |``string``| Set the date and time that    |</span>
+<span class="sd">                |                   |              |          | the setting was created       |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``upd_id``    |``string``| Set who updated the settings. |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                |                   |``upd_date``  |``string``| Set the date and time when    |</span>
+<span class="sd">                |                   |              |          | the settings were updated     |</span>
+<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_command_parameter_file_obj</span><span class="o">.</span><span class="n">get_command_parameter_file</span><span class="p">()</span></div></div>

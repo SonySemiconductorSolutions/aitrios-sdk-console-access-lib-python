@@ -3,8 +3,32 @@ demo_configuration:
   number_of_images: __number_of_images__
   skip: __skip__
   sub_directory_name: "__sub_directory_name__"
-  number_of_inferenceresults: __number_of_inferenceresults__
+  number_of_inference_results: __number_of_inference_results__
   filter: "__filter__"
   raw: __raw__
   time: "__time__"
+  converted: "__converted__"
+  vendor_name: "__vendor_name__"
   get_images_order_by: "__get_images_order_by__"
+  get_last_inference_and_image_data_order_by: "__get_last_inference_and_image_data_order_by__"
+  key: "__key__"
+  app_name: "__app_name__"
+  version_number: "__version_number__"
+  model: "__model__"
+  model_id: "__model_id__"
+  compiled_flg: "__compiled_flg__"
+  file_name: "__file_name__"
+  comment: "__comment__"
+  input_format_param: "__input_format_param__"
+  network_config: "__network_config__"
+  network_type: "__network_type__"
+  labels: "__labels__"
+  config_id: "__config_id__"
+  sensor_loader_version_number: "__sensor_loader_version_number__"
+  sensor_version_number: "__sensor_version_number__"
+  model_version_number: "__model_version_number__"
+  ap_fw_version_number: "__ap_fw_version_number__"
+  device_ids: "__device_ids__"
+  deploy_parameter: "__deploy_parameter__"
+  replace_model_id: "__replace_model_id__"
+  timeout: __timeout__
