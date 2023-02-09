@@ -884,8 +884,7 @@ If not specified, no notification by the callback function
 
 |app_name
 |Name of the DeviceApp
-|The maximum character limit is "app_name + 
-version_number <=31" +
+|The maximum character limit is "app_name + version_number <=31" +
 Forbidden characters except for the following +
 ・Alphanumeric characters +
 ・Underbar +
@@ -893,8 +892,7 @@ Forbidden characters except for the following +
 
 |version_number
 |DeviceApp version
-|The maximum character limit is "app_name + 
-version_number <=31" +
+|The maximum character limit is "app_name + version_number <=31" +
 Forbidden characters except for the following +
 ・Alphanumeric characters +
 ・Underbar +
