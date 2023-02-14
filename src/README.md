@@ -153,7 +153,6 @@
         version_number: "__version_number__"
         model: "__model__
         model_id: "__model_id__"
-        file_content: "__file_content__"
         compiled_flg: "__compiled_flg__"
         file_name: "__file_name__"
         comment: "__comment__"
@@ -169,13 +168,12 @@
         device_ids: "__device_ids__"
         deploy_parameter: "__deploy_parameter__"
         replace_model_id: "__replace_model_id__"
-        deploy_id: "__deploy_id__"
         timeout: __timeout__
     ```
 
 9. To run API "import_device_app" in Console Access Library sample application
     ```
-    Place the contents of aot file as base64 in samples/device_app_file_content.txt
+    Place the contents of wasm file as base64 in samples/device_app_file_content.txt
     ```
 
 10. Run demo application using the following command

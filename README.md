@@ -173,7 +173,7 @@
 
 9. To run API "import_device_app" in Console Access Library sample application
     ```
-    Place the contents of aot file as base64 in samples/device_app_file_content.txt
+    Place the contents of wasm file as base64 in samples/device_app_file_content.txt
     ```
 
 10. Run demo application using the following command
