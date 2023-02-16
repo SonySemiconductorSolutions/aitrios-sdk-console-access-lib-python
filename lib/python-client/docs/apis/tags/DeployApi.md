@@ -5,16 +5,189 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**cancel_deployment**](#cancel_deployment) | **put** /devices/{device_id}/deploys/{deploy_id} | CancelDeployment
 [**create_deploy_configuration**](#create_deploy_configuration) | **post** /deployconfigurations | CreateDeployConfiguration
 [**delete_deploy_configuration**](#delete_deploy_configuration) | **delete** /deployconfigurations/{config_id} | DeleteDeployConfiguration
 [**deploy_by_configuration**](#deploy_by_configuration) | **put** /deployconfigurations/{config_id} | DeployByConfiguration
-[**deploy_device_cancel**](#deploy_device_cancel) | **put** /devices/{device_id}/deploys/{deploy_id} | DeployDeviceCancel
 [**get_deploy_configurations**](#get_deploy_configurations) | **get** /deployconfigurations | GetDeployConfigurations
 [**get_deploy_history**](#get_deploy_history) | **get** /devices/{device_id}/deploys | GetDeployHistory
 
+# **cancel_deployment**
+<a name="cancel_deployment"></a>
+> SuccessResponse cancel_deployment(device_iddeploy_id)
+
+CancelDeployment
+
+Cancel_Deployment .
+
+### Example
+
+```python
+import aitrios_console_rest_client_sdk_primitive
+from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
+from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = aitrios_console_rest_client_sdk_primitive.Configuration(
+    host = "http://localhost"
+)
+
+# Enter a context with an instance of the API client
+with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = deploy_api.DeployApi(api_client)
+
+    # example passing only required values which don't have defaults set
+    path_params = {
+        'device_id': "device_id_example",
+        'deploy_id': "deploy_id_example",
+    }
+    try:
+        # CancelDeployment
+        api_response = api_instance.cancel_deployment(
+            path_params=path_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeployApi->cancel_deployment: %s\n" % e)
+```
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+path_params | RequestPathParams | |
+accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### path_params
+#### RequestPathParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+device_id | DeviceIdSchema | | 
+deploy_id | DeployIdSchema | | 
+
+# DeviceIdSchema
+
+Device Id
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  | Device Id | 
+
+# DeployIdSchema
+
+Deploy Id
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  | Deploy Id | 
+
+### Return Types, Responses
+
+Code | Class | Description
+------------- | ------------- | -------------
+n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
+200 | [ApiResponseFor200](#cancel_deployment.ApiResponseFor200) | Successful Response
+401 | [ApiResponseFor401](#cancel_deployment.ApiResponseFor401) | Authorization Error
+403 | [ApiResponseFor403](#cancel_deployment.ApiResponseFor403) | Forbidden
+404 | [ApiResponseFor404](#cancel_deployment.ApiResponseFor404) | Not Found
+500 | [ApiResponseFor500](#cancel_deployment.ApiResponseFor500) | Internal Server Error
+503 | [ApiResponseFor503](#cancel_deployment.ApiResponseFor503) | Service Unavailable
+
+#### cancel_deployment.ApiResponseFor200
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
+
+
+#### cancel_deployment.ApiResponseFor401
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor401ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor401ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
+
+#### cancel_deployment.ApiResponseFor403
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor403ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor403ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
+
+#### cancel_deployment.ApiResponseFor404
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor404ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor404ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
+
+#### cancel_deployment.ApiResponseFor500
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor500ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor500ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
+
+#### cancel_deployment.ApiResponseFor503
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor503ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor503ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
+
+### Authorization
+
+No authorization required
+
+[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
+
 # **create_deploy_configuration**
 <a name="create_deploy_configuration"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type create_deploy_configuration(config_id)
+> SuccessResponse create_deploy_configuration(config_id)
 
 CreateDeployConfiguration
 
@@ -26,6 +199,7 @@ Create Deploy Configuration.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -55,23 +229,10 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     query_params = {
         'config_id': "config_id_example",
         'comment': "",
-        'device_type': "01",
         'sensor_loader_version_number': "",
         'sensor_version_number': "",
         'model_id': "",
         'model_version_number': "",
-        'color_matrix_mode': "none",
-        'color_matrix_file_name': "",
-        'gamma_mode': "none",
-        'gamma_file_name': "",
-        'lscisp_mode': "none",
-        'lscisp_file_name': "",
-        'lscraw_mode': "none",
-        'lscraw_file_name': "",
-        'prewb_mode': "none",
-        'prewb_file_name': "",
-        'dewarp_mode': "none",
-        'dewarp_file_name': "",
         'ap_fw_version_number': "",
     }
     try:
@@ -100,23 +261,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 config_id | ConfigIdSchema | | 
 comment | CommentSchema | | optional
-device_type | DeviceTypeSchema | | optional
 sensor_loader_version_number | SensorLoaderVersionNumberSchema | | optional
 sensor_version_number | SensorVersionNumberSchema | | optional
 model_id | ModelIdSchema | | optional
 model_version_number | ModelVersionNumberSchema | | optional
-color_matrix_mode | ColorMatrixModeSchema | | optional
-color_matrix_file_name | ColorMatrixFileNameSchema | | optional
-gamma_mode | GammaModeSchema | | optional
-gamma_file_name | GammaFileNameSchema | | optional
-lscisp_mode | LscispModeSchema | | optional
-lscisp_file_name | LscispFileNameSchema | | optional
-lscraw_mode | LscrawModeSchema | | optional
-lscraw_file_name | LscrawFileNameSchema | | optional
-prewb_mode | PrewbModeSchema | | optional
-prewb_file_name | PrewbFileNameSchema | | optional
-dewarp_mode | DewarpModeSchema | | optional
-dewarp_file_name | DewarpFileNameSchema | | optional
 ap_fw_version_number | ApFwVersionNumberSchema | | optional
 
 
@@ -137,15 +285,6 @@ Comment
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 str,  | str,  | Comment | if omitted the server will use the default value of ""
-
-# DeviceTypeSchema
-
-Device type
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Device type | if omitted the server will use the default value of "01"
 
 # SensorLoaderVersionNumberSchema
 
@@ -183,114 +322,6 @@ Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 str,  | str,  | Model version number | if omitted the server will use the default value of ""
 
-# ColorMatrixModeSchema
-
-Color matrix mode
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Color matrix mode | if omitted the server will use the default value of "none"
-
-# ColorMatrixFileNameSchema
-
-Color matrix file name
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Color matrix file name | if omitted the server will use the default value of ""
-
-# GammaModeSchema
-
-Gamma mode
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Gamma mode | if omitted the server will use the default value of "none"
-
-# GammaFileNameSchema
-
-Gamma file name
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Gamma file name | if omitted the server will use the default value of ""
-
-# LscispModeSchema
-
-Lscisp mode
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Lscisp mode | if omitted the server will use the default value of "none"
-
-# LscispFileNameSchema
-
-Lscisp file name
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Lscisp file name | if omitted the server will use the default value of ""
-
-# LscrawModeSchema
-
-Lscraw mode
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Lscraw mode | if omitted the server will use the default value of "none"
-
-# LscrawFileNameSchema
-
-Lscraw file name
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Lscraw file name | if omitted the server will use the default value of ""
-
-# PrewbModeSchema
-
-Prewb mode
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Prewb mode | if omitted the server will use the default value of "none"
-
-# PrewbFileNameSchema
-
-Prewb file name
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Prewb file name | if omitted the server will use the default value of ""
-
-# DewarpModeSchema
-
-Dewarp mode
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Dewarp mode | if omitted the server will use the default value of "none"
-
-# DewarpFileNameSchema
-
-Dewarp file name
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Dewarp file name | if omitted the server will use the default value of ""
-
 # ApFwVersionNumberSchema
 
 Ap fw version number
@@ -320,11 +351,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### create_deploy_configuration.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -399,7 +429,7 @@ No authorization required
 
 # **delete_deploy_configuration**
 <a name="delete_deploy_configuration"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type delete_deploy_configuration(config_id)
+> SuccessResponse delete_deploy_configuration(config_id)
 
 DeleteDeployConfiguration
 
@@ -411,6 +441,7 @@ Delete Deploy Configuration.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -482,11 +513,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### delete_deploy_configuration.ApiResponseFor401
 Name | Type | Description  | Notes
@@ -561,7 +591,7 @@ No authorization required
 
 # **deploy_by_configuration**
 <a name="deploy_by_configuration"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type deploy_by_configuration(config_iddevice_ids)
+> SuccessResponse deploy_by_configuration(config_iddevice_ids)
 
 DeployByConfiguration
 
@@ -573,6 +603,7 @@ Deploy By Configuration.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -705,11 +736,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
 #### deploy_by_configuration.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -754,8 +784,14 @@ Type | Description  | Notes
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[Unset, ] |  |
+body | typing.Union[SchemaFor500ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
+
+# SchemaFor500ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
+
 
 #### deploy_by_configuration.ApiResponseFor503
 Name | Type | Description  | Notes
@@ -776,170 +812,9 @@ No authorization required
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **deploy_device_cancel**
-<a name="deploy_device_cancel"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type deploy_device_cancel(device_iddeploy_id)
-
-DeployDeviceCancel
-
-Deploy Device Cancel.
-
-### Example
-
-```python
-import aitrios_console_rest_client_sdk_primitive
-from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
-from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = aitrios_console_rest_client_sdk_primitive.Configuration(
-    host = "http://localhost"
-)
-
-# Enter a context with an instance of the API client
-with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = deploy_api.DeployApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'device_id': "device_id_example",
-        'deploy_id': "deploy_id_example",
-    }
-    try:
-        # DeployDeviceCancel
-        api_response = api_instance.deploy_device_cancel(
-            path_params=path_params,
-        )
-        pprint(api_response)
-    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling DeployApi->deploy_device_cancel: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-device_id | DeviceIdSchema | | 
-deploy_id | DeployIdSchema | | 
-
-# DeviceIdSchema
-
-Device Id
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Device Id | 
-
-# DeployIdSchema
-
-Deploy Id
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  | Deploy Id | 
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#deploy_device_cancel.ApiResponseFor200) | Successful Response
-401 | [ApiResponseFor401](#deploy_device_cancel.ApiResponseFor401) | Authorization Error
-403 | [ApiResponseFor403](#deploy_device_cancel.ApiResponseFor403) | Forbidden
-404 | [ApiResponseFor404](#deploy_device_cancel.ApiResponseFor404) | Not Found
-500 | [ApiResponseFor500](#deploy_device_cancel.ApiResponseFor500) | Internal Server Error
-503 | [ApiResponseFor503](#deploy_device_cancel.ApiResponseFor503) | Service Unavailable
-
-#### deploy_device_cancel.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
-
-#### deploy_device_cancel.ApiResponseFor401
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor401ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor401ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
-
-
-#### deploy_device_cancel.ApiResponseFor403
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor403ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor403ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
-
-
-#### deploy_device_cancel.ApiResponseFor404
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor404ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor404ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**ErrorResponse**](../../models/ErrorResponse.md) |  | 
-
-
-#### deploy_device_cancel.ApiResponseFor500
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[Unset, ] |  |
-headers | Unset | headers were not defined |
-
-#### deploy_device_cancel.ApiResponseFor503
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[Unset, ] |  |
-headers | Unset | headers were not defined |
-
-### Authorization
-
-No authorization required
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
 # **get_deploy_configurations**
 <a name="get_deploy_configurations"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type get_deploy_configurations()
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_deploy_configurations()
 
 GetDeployConfigurations
 
@@ -951,6 +826,7 @@ Get Deploy Configurations.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.deploy_configuration import DeployConfiguration
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -997,7 +873,26 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
+
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**deploy_configurations** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+**[devices](#devices)** | list, tuple,  | tuple,  |  | [optional] 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+
+# devices
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+list, tuple,  | tuple,  |  | 
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**DeployConfiguration**]({{complexTypePrefix}}DeployConfiguration.md) | [**DeployConfiguration**]({{complexTypePrefix}}DeployConfiguration.md) | [**DeployConfiguration**]({{complexTypePrefix}}DeployConfiguration.md) |  | 
 
 #### get_deploy_configurations.ApiResponseFor401
 Name | Type | Description  | Notes
@@ -1059,7 +954,7 @@ No authorization required
 
 # **get_deploy_history**
 <a name="get_deploy_history"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type get_deploy_history(device_id)
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_deploy_history(device_id)
 
 GetDeployHistory
 
@@ -1071,6 +966,7 @@ Get Deploy History.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import deploy_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.deploy_history import DeployHistory
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -1145,7 +1041,25 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
+
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**[deploys](#deploys)** | list, tuple,  | tuple,  |  | 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+
+# deploys
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+list, tuple,  | tuple,  |  | 
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**DeployHistory**]({{complexTypePrefix}}DeployHistory.md) | [**DeployHistory**]({{complexTypePrefix}}DeployHistory.md) | [**DeployHistory**]({{complexTypePrefix}}DeployHistory.md) |  | 
 
 #### get_deploy_history.ApiResponseFor401
 Name | Type | Description  | Notes

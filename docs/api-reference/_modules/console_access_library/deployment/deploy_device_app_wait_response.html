@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>console_access_library.deployment.deploy_device_app_wait_response &mdash; Console Access Library 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.2.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.deployment.deploy_device_app_wait_response</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for console_access_library.deployment.deploy_device_app_wait_response</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
+
+<span class="c1"># pylint:disable=missing-module-docstring</span>
+<span class="c1"># pylint:disable=import-error</span>
+<span class="c1"># pylint:disable=wrong-import-position</span>
+<span class="c1"># pylint:disable=duplicate-code</span>
+<span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=redefined-builtin</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
+<span class="c1"># pylint:disable=too-many-branches</span>
+<span class="c1"># pylint:disable=too-many-locals</span>
+<span class="c1"># pylint:disable=too-many-return-statements</span>
+<span class="c1"># pylint:disable=protected-access</span>
+<span class="c1"># pylint:disable=no-value-for-parameter</span>
+<span class="c1"># pylint:disable=too-many-nested-blocks</span>
+<span class="c1"># pylint:disable=too-many-statements</span>
+<span class="c1"># pylint:disable=broad-except</span>
+<span class="c1"># pylint:disable=unused-variable</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="kn">import</span> <span class="nn">aitrios_console_rest_client_sdk_primitive</span>
+<span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validates_schema</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+<span class="kn">from</span> <span class="nn">console_access_library.deployment.deploy_device_app</span> <span class="kn">import</span> <span class="n">DeployDeviceApp</span>
+<span class="kn">from</span> <span class="nn">console_access_library.deployment.get_device_app_deploys</span> <span class="kn">import</span> <span class="n">GetDeviceAppDeploys</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SchemaDeployDeviceAppWaitResponse"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.SchemaDeployDeviceAppWaitResponse">[docs]</a><span class="k">class</span> <span class="nc">SchemaDeployDeviceAppWaitResponse</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for DeployDeviceAppWaitResponse API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: str, required : App name</span>
+    <span class="n">app_name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for app_name&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, required : App version</span>
+    <span class="n">version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for version_number&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, required : IDs of edge AI devices</span>
+    <span class="n">device_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid Value for device_ids&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Deployment parameters</span>
+    <span class="n">deploy_parameter</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for deploy_parameter&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : deploy comment</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: function, optional : callback (function, optional) : A function handle of the form -</span>
+    <span class="c1">#: ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``</span>
+    <span class="c1">#: is the array of the dictionary for each device :</span>
+    <span class="c1">#: [</span>
+    <span class="c1">#:     {</span>
+    <span class="c1">#:         &lt;device_id&gt; : {</span>
+    <span class="c1">#:             &quot;status&quot;:&lt;status&gt;,</span>
+    <span class="c1">#:             &quot;found_position&quot;:&lt;found_position&gt;,</span>
+    <span class="c1">#:             &quot;skip&quot;:&lt;skip&gt;</span>
+    <span class="c1">#:         }</span>
+    <span class="c1">#:     },</span>
+    <span class="c1">#: ]</span>
+
+    <span class="c1">#: here - ``device_id``: is device ID,</span>
+    <span class="c1">#:     - ``status``: is the notified deployment status for that device_id,</span>
+    <span class="c1">#:     - ``found_position``: index of the device id from devices array of the</span>
+    <span class="c1">#:             ``get_device_app_deploys`` response</span>
+    <span class="c1">#:     - ``skip``: deploy status has captured, so skip for next iteration</span>
+    <span class="c1">#:             inside the loop</span>
+
+    <span class="c1">#: Callback function to check the deploying status with ``get_device_app_deploys``,</span>
+    <span class="c1">#: and if not completed, call the callback function and notify the deploying status.</span>
+    <span class="c1">#: If not specified, no callback notification.</span>
+    <span class="n">callback</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid return for callback&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="SchemaDeployDeviceAppWaitResponse.validate"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.SchemaDeployDeviceAppWaitResponse.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;app_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;app_name is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;version_number&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;version_number is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_ids is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;deploy_parameter&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_parameter&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_parameter&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;deploy_parameter is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;comment is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">&quot;callback&quot;</span> <span class="ow">in</span> <span class="n">data</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;callback&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;callback&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+                <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;callback&quot;</span><span class="p">],</span> <span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;callback is required or need to be a function/method&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DeployDeviceAppStatus"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppStatus">[docs]</a><span class="k">class</span> <span class="nc">DeployDeviceAppStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Deploy Device App Enum Status&quot;&quot;&quot;</span>
+
+    <span class="n">DEPLOYING</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+    <span class="n">DEPLOYMENT_DONE</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+    <span class="n">DEPLOYMENT_FAILED</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+    <span class="n">DEPLOYMENT_CANCELED</span> <span class="o">=</span> <span class="s2">&quot;3&quot;</span></div>
+
+
+<div class="viewcode-block" id="DeployDeviceAppWaitResponse"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppWaitResponse">[docs]</a><span class="k">class</span> <span class="nc">DeployDeviceAppWaitResponse</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements DeployDeviceAppWaitResponse API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ConsoleAccessBaseClass (object): Inherited from \</span>
+<span class="sd">            :class:`~console_access_library.common.ConsoleAccessBaseClass`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for the class DeployDeviceAppWaitResponse</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): Object of Configuration Class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_device_app_obj</span> <span class="o">=</span> <span class="n">DeployDeviceApp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_device_app_deploy_status_obj</span> <span class="o">=</span> <span class="n">GetDeviceAppDeploys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">_set_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">found_position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the device id deploy status information to global array</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (str): Device ID, Case sensitive</span>
+<span class="sd">            status (str, optional): The notified deployment status for that device_id.</span>
+<span class="sd">            found_position (int, optional): index of the device id from devices array \</span>
+<span class="sd">                of the ``get_device_app_deploys`` response. Defaults to 0.</span>
+<span class="sd">            skip (int, optional): deploy status has captured, so skip for next iteration\</span>
+<span class="sd">                inside the loop. Defaults to 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">device_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">device_id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">device_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">)</span>
+            <span class="p">]:</span>
+                <span class="n">dict_</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                    <span class="s2">&quot;found_position&quot;</span><span class="p">:</span> <span class="n">found_position</span><span class="p">,</span>
+                    <span class="s2">&quot;skip&quot;</span><span class="p">:</span> <span class="n">skip</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dict_</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">devices_array</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">device_id</span> <span class="ow">in</span> <span class="n">devices_array</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">device_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">status</span><span class="p">,</span>
+                            <span class="s2">&quot;found_position&quot;</span><span class="p">:</span> <span class="n">found_position</span><span class="p">,</span>
+                            <span class="s2">&quot;skip&quot;</span><span class="p">:</span> <span class="n">skip</span><span class="p">,</span>
+                        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_get_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get device id deploy status information from the global array</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (str): Device ID, Case sensitive</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: if device ID found.</span>
+<span class="sd">            None: if device ID not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">devices_array</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">device_id</span> <span class="ow">in</span> <span class="n">devices_array</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">devices_array</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="DeployDeviceAppWaitResponse.deploy_device_app_wait_response"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppWaitResponse.deploy_device_app_wait_response">[docs]</a>    <span class="k">def</span> <span class="nf">deploy_device_app_wait_response</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">deploy_parameter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deploy and wait for completion</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            app_name (str, required) : App name</span>
+<span class="sd">            version_number (str, required) : App version</span>
+<span class="sd">            device_ids (str, required) : IDs of edge AI devices \</span>
+<span class="sd">                Specify multiple device IDs separated by commas</span>
+<span class="sd">            deploy_parameter (str, optional) : Deployment parameters \</span>
+<span class="sd">                Base64 encoded string in Json format No parameters if not specified.</span>
+<span class="sd">            comment (str, optional) : deploy comment \</span>
+<span class="sd">                up to 100 characters \</span>
+<span class="sd">                No comment if not specified.</span>
+<span class="sd">            callback (function, optional) : A function handle of the form - \</span>
+<span class="sd">                ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\</span>
+<span class="sd">                is the array of the dictionary for each device :</span>
+
+<span class="sd">                .. code-block:: console</span>
+
+<span class="sd">                    [</span>
+<span class="sd">                        {</span>
+<span class="sd">                            &lt;device_id&gt; : {</span>
+<span class="sd">                                &quot;status&quot;:&lt;status&gt;,</span>
+<span class="sd">                                &quot;found_position&quot;:&lt;found_position&gt;,</span>
+<span class="sd">                                &quot;skip&quot;:&lt;skip&gt;</span>
+<span class="sd">                            }</span>
+<span class="sd">                        },</span>
+<span class="sd">                    ]</span>
+
+<span class="sd">                - ``device_id``: is device ID,</span>
+<span class="sd">                - ``status``: is the notified deployment status for that device_id,</span>
+<span class="sd">                - ``found_position``: index of the device id from devices array of the \</span>
+<span class="sd">                        ``get_device_app_deploys`` response</span>
+<span class="sd">                - ``skip``: deploy status has captured, so skip for next iteration \</span>
+<span class="sd">                        inside the loop</span>
+
+<span class="sd">                Callback function to check the deploying status with ``get_device_app_deploys``,\</span>
+<span class="sd">                and if not completed, call the callback function and notify the deploying status.</span>
+<span class="sd">                If not specified, no callback notification.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - dict</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*          | *Type*     | *Description*              |</span>
+<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                | ``No_item_name``  |                   | ``array``  | deploy device app          |</span>
+<span class="sd">                |                   |                   |            | wait response array        |</span>
+<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                |                   | ``device_id``     | ``string`` | Set the device id          |</span>
+<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                |                   | ``result``        | ``string`` | &quot;SUCCESS&quot;                  |</span>
+<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                |                   | ``process_time``  | ``string`` | Processing Time            |</span>
+<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty OR</span>
+<span class="sd">                    if type of callback paramter not a function.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import os</span>
+<span class="sd">                import sys</span>
+<span class="sd">                from pprint import pprint</span>
+
+<span class="sd">                from console_access_library.client import Client</span>
+<span class="sd">                from console_access_library.common.config import Config</span>
+<span class="sd">                from console_access_library.common.read_console_access_settings</span>
+<span class="sd">                import ReadConsoleAccessSettings</span>
+
+<span class="sd">                # For Console Access Library API Usage,</span>
+<span class="sd">                # edit console access setting configuration parameters with real values.</span>
+<span class="sd">                # file_path: samples/console_access_settings.yaml</span>
+<span class="sd">                # console_access_settings:</span>
+<span class="sd">                #     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
+<span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+
+<span class="sd">                # Set path for Console Access Library Setting File.</span>
+<span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
+<span class="sd">                                                 &quot;samples&quot;,</span>
+<span class="sd">                                                 &quot;console_access_settings.yaml&quot;)</span>
+
+<span class="sd">                # Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="sd">                read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)</span>
+
+<span class="sd">                # Instantiate Console Access Library Config.</span>
+<span class="sd">                config_obj = Config(</span>
+<span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.client_id,</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                )</span>
+
+<span class="sd">                # Instantiate Console Access Library Client.</span>
+<span class="sd">                client_obj = Client(config_obj)</span>
+
+<span class="sd">                # Create Instance for Deployment</span>
+<span class="sd">                deployment_obj = client_obj.get_deployment()</span>
+
+<span class="sd">                # set the real value</span>
+<span class="sd">                app_name = &quot;__app_name__&quot;,</span>
+<span class="sd">                version_number = &quot;__version_number__&quot;,</span>
+<span class="sd">                device_ids = &quot;__device_ids__&quot;,</span>
+<span class="sd">                deploy_parameter = &quot;__deploy_parameter__&quot;,</span>
+<span class="sd">                comment = &quot;__comment__&quot;</span>
+<span class="sd">                callback = &quot;__callback__&quot;</span>
+
+<span class="sd">                # callback is user defined method</span>
+<span class="sd">                def deploy_device_app_callback(deploy_status_array):</span>
+<span class="sd">                    # Process callback received for the ``device_id`` with ``status`` from \</span>
+<span class="sd">                    # ``deploy_status_array``:</span>
+<span class="sd">                    # is the array of the dictionary for each device :</span>
+<span class="sd">                    # [</span>
+<span class="sd">                    #     {</span>
+<span class="sd">                    #         &lt;device_id&gt; : {</span>
+<span class="sd">                    #             &quot;status&quot;:&lt;status&gt;,</span>
+<span class="sd">                    #             &quot;found_position&quot;:&lt;found_position&gt;,</span>
+<span class="sd">                    #             &quot;skip&quot;:&lt;skip&gt;</span>
+<span class="sd">                    #         }</span>
+<span class="sd">                    #     },</span>
+<span class="sd">                    # ]\</span>
+
+<span class="sd">                    # here - ``device_id``: is device ID,</span>
+<span class="sd">                    #     - ``status``: is the notified deployment status for that device_id,</span>
+<span class="sd">                    #     - ``found_position``: index of the device id from devices array of \</span>
+<span class="sd">                    #               the ``get_device_app_deploys`` response</span>
+<span class="sd">                    #     - ``skip``: deploy status has captured, so skip for next iteration \</span>
+<span class="sd">                    #               inside the loop</span>
+
+<span class="sd">                # Deployment - DeployDeviceApps</span>
+<span class="sd">                response = deployment_obj.deploy_device_app_wait_response(</span>
+<span class="sd">                    app_name,</span>
+<span class="sd">                    version_number,</span>
+<span class="sd">                    device_ids,</span>
+<span class="sd">                    deploy_parameter,</span>
+<span class="sd">                    comment,</span>
+<span class="sd">                    callback</span>
+<span class="sd">                )</span>
+<span class="sd">                pprint(response)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
+            <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Validate Schema</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="n">SchemaDeployDeviceAppWaitResponse</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
+
+            <span class="n">_deploy_status</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYING</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="s2">&quot;deploying&quot;</span><span class="p">,</span>
+                <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_DONE</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="s2">&quot;deployment_done&quot;</span><span class="p">,</span>
+                <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_FAILED</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="s2">&quot;deployment_failed&quot;</span><span class="p">,</span>
+                <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_CANCELED</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="s2">&quot;deployment_canceled&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">_return_deploy_device_app</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_return_deploy_device_app_wait_response_all_device_ids</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">deploy_device_app_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Deploying Device App... &quot;</span><span class="p">)</span>
+
+                <span class="n">_return_deploy_device_app</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_device_app_obj</span><span class="o">.</span><span class="n">deploy_device_app</span><span class="p">(</span>
+                    <span class="n">app_name</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;app_name&quot;</span><span class="p">],</span>
+                    <span class="n">version_number</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;version_number&quot;</span><span class="p">],</span>
+                    <span class="n">device_ids</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">],</span>
+                    <span class="n">deploy_parameter</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;deploy_parameter&quot;</span><span class="p">],</span>
+                    <span class="n">comment</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">],</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="s2">&quot;result&quot;</span> <span class="ow">in</span> <span class="n">_return_deploy_device_app</span>
+                    <span class="ow">and</span> <span class="n">_return_deploy_device_app</span><span class="p">[</span><span class="s2">&quot;result&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;SUCCESS&quot;</span>
+                <span class="p">):</span>
+                    <span class="n">device_ids_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">device_ids</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+                    <span class="n">_deploy_device_app_status</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="c1"># Wait till Deploy status is canceled, failed or success</span>
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="c1"># Get Device App Deploys Status</span>
+                        <span class="n">_return_get_device_app_deploy_status</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_get_device_app_deploy_status_obj</span><span class="o">.</span><span class="n">get_device_app_deploys</span><span class="p">(</span>
+                                <span class="n">app_name</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;app_name&quot;</span><span class="p">],</span>
+                                <span class="n">version_number</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;version_number&quot;</span><span class="p">],</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+
+                        <span class="c1"># Check Get Device App Deploys Status is not None</span>
+                        <span class="k">if</span> <span class="n">_return_get_device_app_deploy_status</span><span class="p">:</span>
+
+                            <span class="c1"># Get the length of the &quot;deploys&quot; array</span>
+                            <span class="n">deploy_response_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+                                <span class="n">_return_get_device_app_deploy_status</span><span class="p">[</span><span class="s2">&quot;deploys&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+
+                            <span class="c1"># traverse &quot;devices&quot; array from the &quot;deploys&quot; array</span>
+                            <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">deploy_response_length</span><span class="p">):</span>
+                                <span class="n">_deploy_device_app_status_json</span> <span class="o">=</span> <span class="p">(</span>
+                                    <span class="n">_return_get_device_app_deploy_status</span><span class="p">[</span><span class="s2">&quot;deploys&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">][</span>
+                                        <span class="s2">&quot;devices&quot;</span>
+                                    <span class="p">]</span>
+                                <span class="p">)</span>
+                                <span class="c1"># traverse device_id status from the &quot;devices&quot; array</span>
+                                <span class="k">for</span> <span class="n">devices_id_index</span><span class="p">,</span> <span class="n">devices_json</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                                    <span class="n">_deploy_device_app_status_json</span>
+                                <span class="p">):</span>
+                                    <span class="n">_deploy_device_app_status</span> <span class="o">=</span> <span class="n">_deploy_device_app_status_json</span><span class="p">[</span>
+                                        <span class="n">devices_id_index</span>
+                                    <span class="p">][</span><span class="s2">&quot;status&quot;</span><span class="p">]</span>
+                                    <span class="n">devices_id_from_response</span> <span class="o">=</span> <span class="n">_deploy_device_app_status_json</span><span class="p">[</span>
+                                        <span class="n">devices_id_index</span>
+                                    <span class="p">][</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span>
+
+                                    <span class="c1"># check if the device_id is present in user provided</span>
+                                    <span class="c1"># devices list</span>
+                                    <span class="k">if</span> <span class="n">devices_id_from_response</span> <span class="ow">in</span> <span class="n">device_ids_list</span><span class="p">:</span>
+
+                                        <span class="c1"># Check if the device_id is not present in global array,</span>
+                                        <span class="c1"># Then, add the first occurence of device_id to the</span>
+                                        <span class="c1"># global array.</span>
+                                        <span class="c1"># Set found_position of the first occurence of device_id</span>
+                                        <span class="c1"># to the global array</span>
+                                        <span class="k">if</span> <span class="n">devices_id_from_response</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+                                            <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+                                            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span>
+                                            <span class="p">)</span>
+                                        <span class="p">]:</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">_set_values</span><span class="p">(</span>
+                                                <span class="n">device_id</span><span class="o">=</span><span class="n">devices_id_from_response</span><span class="p">,</span>
+                                                <span class="n">found_position</span><span class="o">=</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                                <span class="n">status</span><span class="o">=</span><span class="n">_deploy_device_app_status</span><span class="p">,</span>
+                                            <span class="p">)</span>
+
+                                        <span class="c1"># Check if the device_id is present in global array,</span>
+                                        <span class="c1"># Then get the found_position of the first occurence</span>
+                                        <span class="c1"># of device_id from the global array</span>
+                                        <span class="c1"># and get the skip value of the first occurence of</span>
+                                        <span class="c1"># device_id from the global array</span>
+                                        <span class="k">elif</span> <span class="p">(</span>
+                                            <span class="n">devices_id_from_response</span>
+                                            <span class="ow">in</span> <span class="p">[</span>
+                                                <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+                                                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span>
+                                                <span class="p">)</span>
+                                            <span class="p">]</span>
+                                            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+                                        <span class="p">):</span>
+                                            <span class="n">array_device_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_values</span><span class="p">(</span>
+                                                <span class="n">devices_id_from_response</span>
+                                            <span class="p">)</span>
+                                            <span class="n">_found_position</span> <span class="o">=</span> <span class="n">array_device_json</span><span class="p">[</span><span class="s2">&quot;found_position&quot;</span><span class="p">]</span>
+                                            <span class="n">_skip</span> <span class="o">=</span> <span class="n">array_device_json</span><span class="p">[</span><span class="s2">&quot;skip&quot;</span><span class="p">]</span>
+
+                                            <span class="c1"># Check whether it&#39;s first occurence</span>
+                                            <span class="c1"># Then Add status of the added device to</span>
+                                            <span class="c1"># the global array</span>
+                                            <span class="k">if</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">_found_position</span> <span class="ow">and</span> <span class="n">_skip</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">_set_values</span><span class="p">(</span>
+                                                    <span class="n">device_id</span><span class="o">=</span><span class="n">devices_id_from_response</span><span class="p">,</span>
+                                                    <span class="n">status</span><span class="o">=</span><span class="n">_deploy_device_app_status</span><span class="p">,</span>
+                                                    <span class="n">found_position</span><span class="o">=</span><span class="n">_found_position</span><span class="p">,</span>
+                                                    <span class="n">skip</span><span class="o">=</span><span class="n">_skip</span><span class="p">,</span>
+                                                <span class="p">)</span>
+
+                                                <span class="c1"># if deployment status is canceled,</span>
+                                                <span class="c1"># completed successfully or failed,</span>
+                                                <span class="c1"># then set the skip value as 1 of the respective</span>
+                                                <span class="c1"># device in global array</span>
+                                                <span class="c1"># and prepare response with required information</span>
+                                                <span class="k">if</span> <span class="n">_deploy_device_app_status</span> <span class="ow">in</span> <span class="p">[</span>
+                                                    <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_DONE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                                    <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_CANCELED</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                                    <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_FAILED</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                                <span class="p">]:</span>
+                                                    <span class="c1"># Set the skip value as 1 of the respective</span>
+                                                    <span class="c1"># device in global array</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">_set_values</span><span class="p">(</span>
+                                                        <span class="n">device_id</span><span class="o">=</span><span class="n">devices_id_from_response</span><span class="p">,</span>
+                                                        <span class="n">status</span><span class="o">=</span><span class="n">_deploy_device_app_status</span><span class="p">,</span>
+                                                        <span class="n">found_position</span><span class="o">=</span><span class="n">_found_position</span><span class="p">,</span>
+                                                        <span class="n">skip</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                    <span class="p">)</span>
+
+                                                    <span class="c1"># Fill Response information for selected</span>
+                                                    <span class="c1"># device_id</span>
+                                                    <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="p">{}</span>
+
+                                                    <span class="c1"># &quot;result&quot;</span>
+                                                    <span class="n">_return_deploy_device_app_wait_response</span><span class="p">[</span>
+                                                        <span class="s2">&quot;result&quot;</span>
+                                                    <span class="p">]</span> <span class="o">=</span> <span class="n">_deploy_status</span><span class="p">[</span><span class="n">_deploy_device_app_status</span><span class="p">]</span>
+
+                                                    <span class="c1"># &quot;device_id&quot;</span>
+                                                    <span class="n">_return_deploy_device_app_wait_response</span><span class="p">[</span>
+                                                        <span class="s2">&quot;device_id&quot;</span>
+                                                    <span class="p">]</span> <span class="o">=</span> <span class="n">devices_id_from_response</span>
+
+                                                    <span class="c1"># &quot;process_time&quot;</span>
+                                                    <span class="n">deploy_device_app_end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+                                                    <span class="n">deploy_time_seconds</span> <span class="o">=</span> <span class="p">(</span>
+                                                        <span class="n">deploy_device_app_end_time</span>
+                                                        <span class="o">-</span> <span class="n">deploy_device_app_start_time</span>
+                                                    <span class="p">)</span>
+                                                    <span class="c1"># convert seconds to &quot;HH:MM:SS&quot; format</span>
+                                                    <span class="c1"># pylint:disable=line-too-long</span>
+                                                    <span class="n">total_deploy_device_app_time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">deploy_time_seconds</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+                                                    <span class="n">_return_deploy_device_app_wait_response</span><span class="p">[</span>
+                                                        <span class="s2">&quot;process_time&quot;</span>
+                                                    <span class="p">]</span> <span class="o">=</span> <span class="n">total_deploy_device_app_time_str</span>
+
+                                                    <span class="c1"># append the respective device_id&#39;s</span>
+                                                    <span class="c1"># deploy_by_configuration_wait_response</span>
+                                                    <span class="c1"># to the array</span>
+                                                    <span class="c1"># _return_deploy_device_app_wait_response_all_device_ids</span>
+
+                                                    <span class="n">_return_deploy_device_app_wait_response_all_device_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                        <span class="n">_return_deploy_device_app_wait_response</span>
+                                                    <span class="p">)</span>
+
+                                                    <span class="n">_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                                    <span class="c1"># break the for loop</span>
+                                    <span class="c1"># traverse device_id status from the &quot;devices&quot; array</span>
+                                    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">device_ids_list</span><span class="p">)</span> <span class="o">==</span> <span class="n">_count</span><span class="p">:</span>
+                                        <span class="k">break</span>
+
+                                    <span class="c1"># ignore the devices_id_from_response as not available</span>
+                                    <span class="c1"># in device_ids_list</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                        <span class="k">continue</span>
+
+                                <span class="c1"># break the for loop</span>
+                                <span class="c1"># traverse &quot;devices&quot; array from the &quot;deploys&quot; array</span>
+                                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">device_ids_list</span><span class="p">)</span> <span class="o">==</span> <span class="n">_count</span><span class="p">:</span>
+                                    <span class="k">break</span>
+
+                            <span class="c1"># Update Callback function</span>
+                            <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_deploy_callback_status_array</span><span class="p">)</span>
+
+                            <span class="c1"># break the main loop if all device ids are updated</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">device_ids_list</span><span class="p">)</span> <span class="o">==</span> <span class="n">_count</span><span class="p">:</span>
+                                <span class="k">break</span>
+
+                    <span class="k">return</span> <span class="n">_return_deploy_device_app_wait_response_all_device_ids</span>
+
+                <span class="c1"># Return deploy_device_app response</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="n">_return_deploy_device_app</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_key_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">key_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiTypeError</span> <span class="k">as</span> <span class="n">type_err</span><span class="p">:</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_type_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">type_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiValueError</span> <span class="k">as</span> <span class="n">val_err</span><span class="p">:</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_value_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">val_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiAttributeError</span> <span class="k">as</span> <span class="n">attr_err</span><span class="p">:</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_attribute_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">attr_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiException</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_http_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_generic_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
+                <span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">_return_deploy_device_app_wait_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span>
+                <span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_return_deploy_device_app_wait_response</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

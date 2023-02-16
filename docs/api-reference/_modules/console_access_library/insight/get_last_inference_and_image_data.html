@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>console_access_library.insight.get_last_inference_and_image_data &mdash; Console Access Library 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.2.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.insight.get_last_inference_and_image_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for console_access_library.insight.get_last_inference_and_image_data</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
+
+
+<span class="c1"># pylint:disable=missing-module-docstring</span>
+<span class="c1"># pylint:disable=import-error</span>
+<span class="c1"># pylint:disable=wrong-import-position</span>
+<span class="c1"># pylint:disable=duplicate-code</span>
+<span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=redefined-builtin</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
+<span class="c1"># pylint:disable=too-many-locals</span>
+<span class="c1"># pylint:disable=too-many-return-statements</span>
+<span class="c1"># pylint:disable=protected-access</span>
+<span class="c1"># pylint:disable=broad-except</span>
+<span class="c1"># pylint:disable=no-else-return</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">aitrios_console_rest_client_sdk_primitive</span>
+<span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validates_schema</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+<span class="kn">from</span> <span class="nn">console_access_library.insight.get_images</span> <span class="kn">import</span> <span class="n">GetImages</span>
+<span class="kn">from</span> <span class="nn">console_access_library.insight.get_inference_results</span> <span class="kn">import</span> <span class="n">GetInferenceresults</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SchemaGetLastInferenceAndImageData"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_last_inference_and_image_data.SchemaGetLastInferenceAndImageData">[docs]</a><span class="k">class</span> <span class="nc">SchemaGetLastInferenceAndImageData</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for API to get the latest data of saved inference result and image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: str, required : Edge AI Device ID</span>
+    <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, required : Image storage subdirectory. The subdirectory will be the directory notified</span>
+    <span class="c1">#:                 in the start_upload_inference_result response.</span>
+    <span class="n">sub_directory_name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for sub_directory_name&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="SchemaGetLastInferenceAndImageData.validate"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_last_inference_and_image_data.SchemaGetLastInferenceAndImageData.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sub_directory_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;sub_directory_name is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GetLastInferenceAndImageData"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_last_inference_and_image_data.GetLastInferenceAndImageData">[docs]</a><span class="k">class</span> <span class="nc">GetLastInferenceAndImageData</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements API to get the latest data of saved inference result and image.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ConsoleAccessBaseClass (object): Inherited from \</span>
+<span class="sd">            :class:`~console_access_library.common.ConsoleAccessBaseClass`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for the class GetLastInferenceAndImageData</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): Object of Configuration Class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+
+    <span class="k">def</span> <span class="nf">_validate_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validates parameters passed to get_last_inference_and_image_data API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (dict): Dictionary of params with optional default values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Updated dictionary of params with optional default values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">params</span>
+
+<div class="viewcode-block" id="GetLastInferenceAndImageData.get_last_inference_and_image_data"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_last_inference_and_image_data.GetLastInferenceAndImageData.get_last_inference_and_image_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_inference_and_image_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latest data of saved inference result and image.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
+<span class="sd">            sub_directory_name (str, required) : Image storage subdirectory Defaults to None.</span>
+<span class="sd">                The subdirectory will be the directory notified in the</span>
+<span class="sd">                start_upload_inference_result response.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - dict</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">            - when time parameter is not specified</span>
+
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                | *Level1*           | *Type*     | *Description*                      |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                | ``image_data``     |``array``   | Refer :ref:`image_data &lt;id7&gt;`      |</span>
+<span class="sd">                |                    |            | for more details                   |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                |``inference_data``  |``array``   | Refer :ref:`inference_data &lt;ifd7&gt;` |</span>
+<span class="sd">                |                    |            | for more details                   |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+
+<span class="sd">                +----------------+---------------------------------------------------------------+</span>
+<span class="sd">                | image_data     | .. _id7:                                                      |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*       | *Level2*             | *Type*     | *Description*             |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                | ``image_data`` |                      | ``array``  | image data                |</span>
+<span class="sd">                |                |                      |            |                           |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                |                | ``total_image_count``|  ``int``   | Set the total number of   |</span>
+<span class="sd">                |                |                      |            | images                    |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                |                | ``images``           | ``array``  | Refer :ref:`images &lt;im7&gt;` |</span>
+<span class="sd">                |                |                      |            | for more details          |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+
+<span class="sd">                +-----------------------+-----------------------------------------------------+</span>
+<span class="sd">                | images                | .. _im7:                                            |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
+<span class="sd">                |                       |            |            | The descendant elements   |</span>
+<span class="sd">                |                       |            |            | are listed in ascending   |</span>
+<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
+<span class="sd">                |                       |            |            | * Base64 encoding         |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | inference_data   | .. _ifd7:                                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``inference_data``|             |``array``  | inference_data                     |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``id``       | ``string``| The ID of the inference            |</span>
+<span class="sd">                |                  |             |           | result metadata.                   |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Dnn Model Version                  |</span>
+<span class="sd">                |                  |_version_id``|           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` |Model type.                         |</span>
+<span class="sd">                |                  |_type``      |           |                                    |</span>
+<span class="sd">                |                  |             |           |00: Image classification            |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           |01: Object detection                |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           |In the case of imported             |</span>
+<span class="sd">                |                  |             |           |models, 01 is fixed at the          |</span>
+<span class="sd">                |                  |             |           |current level.                      |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``training   |``string`` |Name of the training_kit            |</span>
+<span class="sd">                |                  |_kit_name``  |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``_ts``      |``string`` |Timestamp. = System                 |</span>
+<span class="sd">                |                  |             |           |registration date and time          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr7&gt;`|</span>
+<span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inference_result   | .. _ifr7:                                                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
+<span class="sd">                |                    |              |            |in ascending order of project  |</span>
+<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
+<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if7&gt;`  |</span>
+<span class="sd">                |                    |              |            |for more details               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inferences         | .. _if7:                                                  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
+<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
+<span class="sd">                |                    |              |            |going through PPL              |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
+
+<span class="sd">            - when time parameter is specified</span>
+
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                | *Level1*           | *Type*     | *Description*                      |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                | ``image_data``     |``array``   | Refer :ref:`image_data &lt;id8&gt;`      |</span>
+<span class="sd">                |                    |            | for more details                   |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                |``inference_data``  |``array``   | Refer :ref:`inference_data &lt;ifd8&gt;` |</span>
+<span class="sd">                |                    |            | for more details                   |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+
+<span class="sd">                +----------------+---------------------------------------------------------------+</span>
+<span class="sd">                | image_data     | .. _id8:                                                      |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*       | *Level2*             | *Type*     | *Description*             |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                | ``image_data`` |                      | ``array``  | image data                |</span>
+<span class="sd">                |                |                      |            |                           |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                |                | ``total_image_count``|  ``int``   | Set the total number of   |</span>
+<span class="sd">                |                |                      |            | images                    |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                |                | ``images``           | ``array``  | Refer :ref:`images &lt;im8&gt;` |</span>
+<span class="sd">                |                |                      |            | for more details          |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+
+<span class="sd">                +-----------------------+-----------------------------------------------------+</span>
+<span class="sd">                | images                | .. _im8:                                            |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
+<span class="sd">                |                       |            |            | The descendant elements   |</span>
+<span class="sd">                |                       |            |            | are listed in ascending   |</span>
+<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
+<span class="sd">                |                       |            |            | * Base64 encoding         |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+
+<span class="sd">                +------------------+-----------------------------------------------------------+</span>
+<span class="sd">                | inference_data   | .. _ifd8:                                                 |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*     | *Type*    | *Description*                  |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |``inference_data``|              |``array``  | inference_data                 |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``id``        | ``string``| The ID of the inference result |</span>
+<span class="sd">                |                  |              |           | metadata. = GUID automatically |</span>
+<span class="sd">                |                  |              |           | fired by CosmosDB              |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``device_id`` | ``string``| Device ID.                     |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``model_id``  | ``string``| Model ID.                      |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``_ts``       |``string`` | Timestamp. = System            |</span>
+<span class="sd">                |                  |              |           | registration date and time     |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``inferences``|``array``  |Refer :ref:`inferences &lt;if7&gt;`   |</span>
+<span class="sd">                |                  |              |           |for more details                |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import os</span>
+<span class="sd">                import sys</span>
+<span class="sd">                from pprint import pprint</span>
+
+<span class="sd">                from console_access_library.client import Client</span>
+<span class="sd">                from console_access_library.common.config import Config</span>
+<span class="sd">                from console_access_library.common.read_console_access_settings</span>
+<span class="sd">                import ReadConsoleAccessSettings</span>
+
+<span class="sd">                # For Console Access Library API Usage,</span>
+<span class="sd">                # edit console access setting configuration parameters with real values.</span>
+<span class="sd">                # file_path: samples/console_access_settings.yaml</span>
+<span class="sd">                # console_access_settings:</span>
+<span class="sd">                #     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
+<span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+
+<span class="sd">                # Set path for Console Access Library Setting File.</span>
+<span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
+<span class="sd">                                                 &quot;samples&quot;,</span>
+<span class="sd">                                                 &quot;console_access_settings.yaml&quot;)</span>
+
+<span class="sd">                # Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="sd">                read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)</span>
+
+<span class="sd">                # Instantiate Console Access Library Config.</span>
+<span class="sd">                config_obj = Config(</span>
+<span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.client_id,</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                )</span>
+
+<span class="sd">                # Instantiate Console Access Library Client.</span>
+<span class="sd">                client_obj = Client(config_obj)</span>
+
+<span class="sd">                # Create Instance for Insight</span>
+<span class="sd">                insight_obj = client_obj.get_insight()</span>
+
+<span class="sd">                # set the real value</span>
+<span class="sd">                device_id =  &quot;__device_id__&quot;</span>
+<span class="sd">                sub_directory_name =  &quot;__sub_directory_name__&quot;</span>
+<span class="sd">                raw =  &quot;__raw__&quot;</span>
+
+<span class="sd">                # Insight - GetLastInferenceAndImageData</span>
+<span class="sd">                response = insight_obj.get_last_inference_and_image_data(</span>
+<span class="sd">                                                   device_id,</span>
+<span class="sd">                                                   sub_directory_name,</span>
+<span class="sd">                                                   )</span>
+<span class="sd">                pprint(response)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+
+            <span class="c1"># Validate API parameters</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_params</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
+
+            <span class="c1"># Validate schema</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="n">SchemaGetLastInferenceAndImageData</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">_get_images_obj</span> <span class="o">=</span> <span class="n">GetImages</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+                <span class="n">_return_get_image_data</span> <span class="o">=</span> <span class="n">_get_images_obj</span><span class="o">.</span><span class="n">get_images</span><span class="p">(</span>
+                    <span class="n">device_id</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">],</span>
+                    <span class="n">sub_directory_name</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;sub_directory_name&quot;</span><span class="p">],</span>
+                    <span class="n">number_of_images</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">skip</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">order_by</span><span class="o">=</span><span class="s2">&quot;DESC&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">_latest_image_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+                <span class="n">_latest_inference_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_return_get_image_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">_latest_image_data</span> <span class="o">=</span> <span class="n">_return_get_image_data</span>
+                    <span class="n">_latest_image_ts</span> <span class="o">=</span> <span class="n">_latest_image_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+                    <span class="n">_get_inference_obj</span> <span class="o">=</span> <span class="n">GetInferenceresults</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+                    <span class="n">_return_get_inference_data</span> <span class="o">=</span> <span class="n">_get_inference_obj</span><span class="o">.</span><span class="n">get_inference_results</span><span class="p">(</span>
+                        <span class="n">device_id</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">],</span>
+                        <span class="n">number_of_inference_results</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">raw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">time</span><span class="o">=</span><span class="n">_latest_image_ts</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_return_get_inference_data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">_latest_inference_data</span> <span class="o">=</span> <span class="n">_return_get_inference_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="c1"># Prepare the success response:</span>
+                    <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;image_data&quot;</span><span class="p">:</span> <span class="n">_latest_image_data</span><span class="p">,</span>
+                        <span class="s2">&quot;inference_data&quot;</span><span class="p">:</span> <span class="n">_latest_inference_data</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="k">return</span> <span class="n">_return_get_last_inference_and_image_data</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;image_data&quot;</span><span class="p">:</span> <span class="n">_latest_image_data</span><span class="p">,</span>
+                        <span class="s2">&quot;inference_data&quot;</span><span class="p">:</span> <span class="n">_latest_inference_data</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="k">return</span> <span class="n">_return_get_last_inference_and_image_data</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
+                <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_key_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">key_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiTypeError</span> <span class="k">as</span> <span class="n">type_err</span><span class="p">:</span>
+                <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_type_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">type_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiValueError</span> <span class="k">as</span> <span class="n">val_err</span><span class="p">:</span>
+                <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_value_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">val_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiAttributeError</span> <span class="k">as</span> <span class="n">attr_err</span><span class="p">:</span>
+                <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_attribute_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">attr_err</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiException</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_http_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_generic_error_response</span><span class="p">(</span>
+                    <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
+                <span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">_return_get_last_inference_and_image_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span>
+                <span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_return_get_last_inference_and_image_data</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

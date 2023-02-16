@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Device Management Package &mdash; Console Access Library 0.1.0 documentation</title>
+  <title>Device Management Package &mdash; Console Access Library 0.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -19,7 +20,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Insight Package" href="console_access_library.insight.html" />
-    <link rel="prev" title="Common Package" href="console_access_library.common.html" /> 
+    <link rel="prev" title="Deployment Package" href="console_access_library.deployment.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -30,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> Console Access Library
           </a>
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -43,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Console Access Library</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="console_access_library.html">console_access_library package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="console_access_library.html">Console Access Library Package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="console_access_library.html#console-access-library-subpackages">Console Access Library Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.ai_model.html">AI Model Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="console_access_library.common.html">Common Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.deployment.html">Deployment Package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Device Management Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="console_access_library.insight.html">Insight Package</a></li>
 </ul>
@@ -71,10 +74,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">Console Access Library</a> &raquo;</li>
-          <li><a href="console_access_library.html">console_access_library package</a> &raquo;</li>
-      <li>Device Management Package</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Console Access Library</a></li>
+          <li class="breadcrumb-item"><a href="console_access_library.html">Console Access Library Package</a></li>
+      <li class="breadcrumb-item active">Device Management Package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/console_access_library.device_management.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,18 +91,6 @@
 <h1>Device Management Package<a class="headerlink" href="#device-management-package" title="Permalink to this headline"></a></h1>
 <section id="module-console_access_library.device_management.device_management">
 <span id="device-management"></span><h2>device_management<a class="headerlink" href="#module-console_access_library.device_management.device_management" title="Permalink to this headline"></a></h2>
-<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-</div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an “AS IS” BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeviceManagement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement" title="Permalink to this definition"></a></dt>
@@ -113,17 +104,321 @@ APIs from devicemanagement component</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement.get_devices">
-<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.get_devices" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.get_devices" title="Permalink to this definition"></a></dt>
 <dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">get_devices</span></code> API</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>query_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of parameters to be passed. Defaults to None</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Edge AI Device ID. Partial search, case insensitive.
+Search all device_ids if not specified.</p></li>
+<li><p><strong>device_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Edge AI device name. Partial search, case insensitive.
+If not specified, search all device_names.</p></li>
+<li><p><strong>connection_state</strong> (<em>str</em><em>, </em><em>optional</em>) – Connection status. For connected state: Connected
+Disconnected state: Disconnected
+Exact match search, case insensitive.
+If not specified, search all connection_states.</p></li>
+<li><p><strong>device_group_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Affiliated Edge AI device group.
+Exact match search, case insensitive.
+Search all device_group_id if not specified.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">get_devices</span></code> API</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-even"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
+</ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 27%" />
+<col style="width: 15%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">devices</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>The subordinate elements are
+listed in ascending order by
+device ID</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device ID</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">place</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the location</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device description</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">property</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set device properties
+(device_name, etc.)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the creator of the device</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and
+time the device was created.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set up an updater for
+your device</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time
+of the device update.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">connectionState</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the connection status
+of the device.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lastActivityTime</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the last connection date
+and time of the device.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_groups</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>Refer <a class="reference internal" href="#ds"><span class="std std-ref">device_groups</span></a>
+for more details</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">models</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>Refer <a class="reference internal" href="#model1"><span class="std std-ref">models</span></a>
+for more details</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 26%" />
+<col style="width: 16%" />
+<col style="width: 34%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>device_groups</p></td>
+<td colspan="3"></td>
+</tr>
+<tr class="row-even" id="ds"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">device_groups</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>The subordinate
+elements are listed
+in ascending order
+by device group ID</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_group_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device group ID</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_type</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device type</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device
+bdescription</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time
+that the device group
+was created.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the creator of the
+device group.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the updater for
+the device group</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time of
+the device group update.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 26%" />
+<col style="width: 16%" />
+<col style="width: 34%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>models</p></td>
+<td colspan="3"></td>
+</tr>
+<tr class="row-even" id="model1"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">models</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>The subordinate
+elements are listed
+in ascending order
+by device group ID</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_version_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the model version ID
+Format: ModelID:v1.0001
+* If DnnModelVersion does
+not exist in the DB, the
+network_id is displayed.
+Example) 0201020002370200
+In the above case, 000237
+(7~12 digits) If it is 16
+digits,it is displayed
+as is.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -134,13 +429,131 @@ APIs from devicemanagement component</p>
 <dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">start_upload_inference_result</span></code> API</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. No more than 100 characters.</p>
+<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Edge AI Device ID.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">start_upload_inference_result</span></code> API</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-even"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
+</ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 19%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set “SUCCESS” pinning</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">outputSubDirectory</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Input Image storage path
+UploadMethod:BlobStorage
+only</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -151,13 +564,125 @@ APIs from devicemanagement component</p>
 <dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">stop_upload_inference_result</span></code> API</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. No more than 100 characters.</p>
+<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Edge AI Device ID.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">stop_upload_inference_result</span></code> API</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-even"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
+</ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 19%" />
+<col style="width: 44%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set “SUCCESS” pinning</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -168,10 +693,173 @@ APIs from devicemanagement component</p>
 <dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">get_command_parameter_file</span></code> API</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Dictionary object returned by <code class="docutils literal notranslate"><span class="pre">get_command_parameter_file</span></code> API</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
+<dd class="field-odd"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
+</ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 19%" />
+<col style="width: 14%" />
+<col style="width: 42%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">parameter_list</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>Parameter file list</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parameter</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>The setting value. json</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">filename</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>File Name</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>comment</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">isdefault</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>True: Default parameter
+not False: Default</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_ids</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List</span></code></p></td>
+<td><p>List of target devices.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the creator of the setting</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time that
+the setting was created</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set who updated the settings.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time when
+the settings were updated</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
+<li><p><strong>Generic Error Response</strong> :</p>
+<blockquote>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Validation Error Response</strong> :</p>
+<blockquote>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Key Error Response</strong> :</p>
+<blockquote>
+<div><p>If API key error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Type Error Response</strong> :</p>
+<blockquote>
+<div><p>If API type error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Attribute Error Response</strong> :</p>
+<blockquote>
+<div><p>If API attribute error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Value Error Response</strong> :</p>
+<blockquote>
+<div><p>If API value error returned from the Low Level SDK API.
+Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -181,23 +869,11 @@ APIs from devicemanagement component</p>
 </section>
 <section id="module-console_access_library.device_management.get_command_parameter_file">
 <span id="get-command-parameter-file"></span><h2>get_command_parameter_file<a class="headerlink" href="#module-console_access_library.device_management.get_command_parameter_file" title="Permalink to this headline"></a></h2>
-<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-</div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an “AS IS” BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetCommandParameterFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_command_parameter_file.html#GetCommandParameterFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
-<p>This class implements API to get a commandParameterFile list.</p>
+<p>This class implements GetCommandParameterFile API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
@@ -206,33 +882,110 @@ limitations under the License.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile.get_command_parameter_file">
 <span class="sig-name descname"><span class="pre">get_command_parameter_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_command_parameter_file.html#GetCommandParameterFile.get_command_parameter_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile.get_command_parameter_file" title="Permalink to this definition"></a></dt>
-<dd><p>Get command parameter file list.</p>
+<dd><p>Get list of CommandParameterFile registered in Console</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><ul>
-<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">parameter_list</span></code> (object) : List of CommandParameters registered in Console</p></li>
+<dd class="field-odd"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
 </ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 19%" />
+<col style="width: 14%" />
+<col style="width: 42%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">parameter_list</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>Parameter file list</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">parameter</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>The setting value. json</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">filename</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>File Name</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>comment</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">isdefault</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>True: Default parameter
+not False: Default</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_ids</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">List</span></code></p></td>
+<td><p>List of target devices.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the creator of the setting</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time that
+the setting was created</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set who updated the settings.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time when
+the settings were updated</p></td>
+</tr>
+</tbody>
+</table>
 </div></blockquote>
-</li>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
 <li><p><strong>Generic Error Response</strong> :</p>
 <blockquote>
-<div><p>If the http_status returned from the Low Level SDK
-API is other than 200. Dictionary with below key and value pairs.</p>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p><strong>Validation Error Response</strong> :</p>
 <blockquote>
-<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -241,8 +994,10 @@ API is other than 200. Dictionary with below key and value pairs.</p>
 <div><p>If API key error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -251,8 +1006,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API type error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -261,8 +1018,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API attribute error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -271,42 +1030,73 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API value error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
+</div></blockquote>
 </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
 <span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.read_console_access_settings</span>
+<span class="kn">import</span> <span class="n">ReadConsoleAccessSettings</span>
 
 <span class="c1"># For Console Access Library API Usage,</span>
 <span class="c1"># edit console access setting configuration parameters with real values.</span>
 <span class="c1"># file_path: samples/console_access_settings.yaml</span>
 <span class="c1"># console_access_settings:</span>
-<span class="c1">#       base_url: &quot;__base_url__&quot;</span>
-<span class="c1">#       token_url: &quot;__token_url__&quot;</span>
-<span class="c1">#       client_secret: &#39;__client_secret__&#39;</span>
-<span class="c1">#       client_id: &#39;__client_id__&#39;</span>
+<span class="c1">#     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="c1">#     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="c1">#     client_secret: &quot;__client_secret__&quot;</span>
+<span class="c1">#     client_id: &quot;__client_id__&quot;</span>
 
 <span class="c1"># Set path for Console Access Library Setting File.</span>
-<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span><span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+                                 <span class="s2">&quot;samples&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="n">read_console_access_settings_obj</span> <span class="o">=</span> <span class="n">ReadConsoleAccessSettings</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Config.</span>
+<span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">console_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">portal_authorization_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_secret</span>
+<span class="p">)</span>
 
 <span class="c1"># Instantiate Console Access Library Client.</span>
-<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+<span class="n">client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config_obj</span><span class="p">)</span>
+
+<span class="c1"># Create Instance for DeviceManagement</span>
+<span class="n">device_management_obj</span> <span class="o">=</span> <span class="n">client_obj</span><span class="o">.</span><span class="n">get_device_management</span><span class="p">()</span>
 
 <span class="c1"># DeviceManagement - GetCommandParameterFile</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">device_management</span><span class="o">.</span><span class="n">get_command_parameter_file</span><span class="p">()</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">device_management_obj</span><span class="o">.</span><span class="n">get_command_parameter_file</span><span class="p">()</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -317,23 +1107,11 @@ Dictionary with below key and value pairs.</p>
 </section>
 <section id="module-console_access_library.device_management.get_devices">
 <span id="get-devices"></span><h2>get_devices<a class="headerlink" href="#module-console_access_library.device_management.get_devices" title="Permalink to this headline"></a></h2>
-<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-</div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an “AS IS” BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaGetDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#SchemaGetDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
-<p>Schema for API GetDevices.</p>
+<p>Schema for GetDevices API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
@@ -342,7 +1120,7 @@ limitations under the License.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_id">
 <span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_id" title="Permalink to this definition"></a></dt>
-<dd><p>Device ID.</p>
+<dd><p>Edge AI Device ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str, optional</p>
@@ -353,7 +1131,7 @@ limitations under the License.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_name">
 <span class="sig-name descname"><span class="pre">device_name</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_name" title="Permalink to this definition"></a></dt>
-<dd><p>Device name.</p>
+<dd><p>Edge AI device name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str, optional</p>
@@ -362,8 +1140,8 @@ limitations under the License.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.connectionState">
-<span class="sig-name descname"><span class="pre">connectionState</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.connectionState" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.connection_state">
+<span class="sig-name descname"><span class="pre">connection_state</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.connection_state" title="Permalink to this definition"></a></dt>
 <dd><p>Connection status.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -375,7 +1153,7 @@ limitations under the License.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_group_id">
 <span class="sig-name descname"><span class="pre">device_group_id</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_group_id" title="Permalink to this definition"></a></dt>
-<dd><p>Device group to which you belong.</p>
+<dd><p>Affiliated Edge AI device group</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str, optional</p>
@@ -420,7 +1198,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.GetDevices">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
-<p>This class implements API to get devices list information.</p>
+<p>This class implements GetDevices API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
@@ -428,44 +1206,248 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.GetDevices.get_devices">
-<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices.get_devices" title="Permalink to this definition"></a></dt>
-<dd><p>get devices list information API</p>
+<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices.get_devices" title="Permalink to this definition"></a></dt>
+<dd><p>Get device list information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>query_params</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Dictionary of parameters to be passed. Defaults to None.</p>
-<ul class="simple">
-<li><p><strong>device_id</strong> (str, optional) : Device ID. Partial search, case insensitive.</p></li>
-<li><p><strong>device_name</strong> (str, optional) : Device name. Partial search, case not sensitive</p></li>
-<li><p><strong>connectionState</strong> (str, optional) : Connection status. Exact match search,                         case not sensitive</p></li>
-<li><p><strong>device_group_id</strong> (str, optional) : Device group to which you belong.                         Exact match search, case insensitive.</p></li>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Edge AI Device ID. Partial search, case insensitive.                Search all device_ids if not specified.</p></li>
+<li><p><strong>device_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Edge AI device name.                Partial search, case insensitive.                If not specified, search all device_names.</p></li>
+<li><p><strong>connection_state</strong> (<em>str</em><em>, </em><em>optional</em>) – Connection status.                For connected state: Connected                Disconnected state: Disconnected                Exact match search, case insensitive.                If not specified, search all connection_states.</p></li>
+<li><p><strong>device_group_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Affiliated Edge AI device group.                Exact match search, case insensitive.                Search all device_group_id if not specified.</p></li>
 </ul>
-</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul>
-<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">devices</span></code> (object) : Device information</p></li>
+<dd class="field-even"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
 </ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 27%" />
+<col style="width: 15%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">devices</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>The subordinate elements are
+listed in ascending order by
+device ID</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device ID</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">place</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the location</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device description</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">property</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set device properties
+(device_name, etc.)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the creator of the device</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and
+time the device was created.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set up an updater for
+your device</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time
+of the device update.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">connectionState</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the connection status
+of the device.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lastActivityTime</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the last connection date
+and time of the device.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_groups</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>Refer <a class="reference internal" href="#dg"><span class="std std-ref">device_groups</span></a>
+for more details</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">models</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>Refer <a class="reference internal" href="#model"><span class="std std-ref">models</span></a>
+for more details</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 26%" />
+<col style="width: 16%" />
+<col style="width: 34%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>device_groups</p></td>
+<td colspan="3"></td>
+</tr>
+<tr class="row-even" id="dg"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">device_groups</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>The subordinate
+elements are listed
+in ascending order
+by device group ID</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_group_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device group ID</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">device_type</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device type</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">comment</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the device
+bdescription</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time
+that the device group
+was created.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ins_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the creator of the
+device group.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the updater for
+the device group</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">upd_date</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the date and time of
+the device group update.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 26%" />
+<col style="width: 16%" />
+<col style="width: 34%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>models</p></td>
+<td colspan="3"></td>
+</tr>
+<tr class="row-even" id="model"><td><p><em>Level1</em></p></td>
+<td><p><em>Level2</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">models</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>The subordinate
+elements are listed
+in ascending order
+by device group ID</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">model_version_id</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set the model version ID
+Format: ModelID:v1.0001
+* If DnnModelVersion does
+not exist in the DB, the
+network_id is displayed.
+Example) 0201020002370200
+In the above case, 000237
+(7~12 digits) If it is 16
+digits,it is displayed
+as is.</p></td>
+</tr>
+</tbody>
+</table>
 </div></blockquote>
-</li>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
 <li><p><strong>Generic Error Response</strong> :</p>
 <blockquote>
-<div><p>If the http_status returned from the Low Level SDK
-API is other than 200. Dictionary with below key and value pairs.</p>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p><strong>Validation Error Response</strong> :</p>
 <blockquote>
-<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -474,8 +1456,10 @@ API is other than 200. Dictionary with below key and value pairs.</p>
 <div><p>If API key error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -484,8 +1468,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API type error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -494,8 +1480,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API attribute error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -504,42 +1492,78 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API value error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
+</div></blockquote>
 </p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
 <span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.read_console_access_settings</span>
+<span class="kn">import</span> <span class="n">ReadConsoleAccessSettings</span>
 
 <span class="c1"># For Console Access Library API Usage,</span>
 <span class="c1"># edit console access setting configuration parameters with real values.</span>
 <span class="c1"># file_path: samples/console_access_settings.yaml</span>
 <span class="c1"># console_access_settings:</span>
-<span class="c1">#   base_url: &quot;__base_url__&quot;</span>
-<span class="c1">#   token_url: &quot;__token_url__&quot;</span>
-<span class="c1">#   client_secret: &#39;__client_secret__&#39;</span>
-<span class="c1">#   client_id: &#39;__client_id__&#39;</span>
+<span class="c1">#     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="c1">#     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="c1">#     client_secret: &quot;__client_secret__&quot;</span>
+<span class="c1">#     client_id: &quot;__client_id__&quot;</span>
 
 <span class="c1"># Set path for Console Access Library Setting File.</span>
-<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+                                 <span class="s2">&quot;samples&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="n">read_console_access_settings_obj</span> <span class="o">=</span> <span class="n">ReadConsoleAccessSettings</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Config.</span>
+<span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">console_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">portal_authorization_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_secret</span>
+<span class="p">)</span>
 
 <span class="c1"># Instantiate Console Access Library Client.</span>
-<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+<span class="n">client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config_obj</span><span class="p">)</span>
+
+<span class="c1"># Create Instance for DeviceManagement</span>
+<span class="n">device_management_obj</span> <span class="o">=</span> <span class="n">client_obj</span><span class="o">.</span><span class="n">get_device_management</span><span class="p">()</span>
 
 <span class="c1"># DeviceManagement - GetDevices</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">device_management</span><span class="o">.</span><span class="n">get_devices</span><span class="p">()</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">device_management_obj</span><span class="o">.</span><span class="n">get_devices</span><span class="p">(</span>
+    <span class="n">device_id</span><span class="p">,</span>
+    <span class="n">device_name</span><span class="p">,</span>
+    <span class="n">connection_state</span><span class="p">,</span>
+    <span class="n">device_group_id</span>
+<span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -550,23 +1574,11 @@ Dictionary with below key and value pairs.</p>
 </section>
 <section id="module-console_access_library.device_management.start_upload_inference_result">
 <span id="start-upload-inference-result"></span><h2>start_upload_inference_result<a class="headerlink" href="#module-console_access_library.device_management.start_upload_inference_result" title="Permalink to this headline"></a></h2>
-<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-</div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an “AS IS” BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaStartUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#SchemaStartUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
-<p>Schema for API for StartUploadInferenceResult.</p>
+<p>Schema for StartUploadInferenceResult API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
@@ -575,7 +1587,7 @@ limitations under the License.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.device_id">
 <span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.device_id" title="Permalink to this definition"></a></dt>
-<dd><p>Device ID.</p>
+<dd><p>Edge AI Device ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str, required</p>
@@ -620,7 +1632,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StartUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#StartUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
-<p>This class implements API to execute instructions for starting acquisition of         inference result metadata (Output Tensor) and image (Input Tensor) to the specified device.</p>
+<p>This class implements StartUploadInferenceResult API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
@@ -629,41 +1641,68 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult.start_upload_inference_result">
 <span class="sig-name descname"><span class="pre">start_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#StartUploadInferenceResult.start_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult.start_upload_inference_result" title="Permalink to this definition"></a></dt>
-<dd><p>execute instructions for starting acquisition of inference result metadata             (Output Tensor) and image (Input Tensor) to the specified device API</p>
+<dd><p>Execute inference result metadata (Output Tensor) and image (Input Tensor)             acquisition start instruction to the specified device.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. No more than 100 characters.</p>
+<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. Case-sensitive</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul>
-<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : Result</p></li>
-<li><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">outputSubDirectory</span></code> (str)<span class="classifier">Input Image storage path,</span></dt><dd><p>UploadMethod:Blob Storage only</p>
-</dd>
-</dl>
-</li>
+<dd class="field-even"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
 </ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 19%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set “SUCCESS” pinning</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">outputSubDirectory</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Input Image storage path
+UploadMethod:BlobStorage
+only</p></td>
+</tr>
+</tbody>
+</table>
 </div></blockquote>
-</li>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
 <li><p><strong>Generic Error Response</strong> :</p>
 <blockquote>
-<div><p>If the http_status returned from the Low Level SDK
-API is other than 200. Dictionary with below key and value pairs.</p>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p><strong>Validation Error Response</strong> :</p>
 <blockquote>
-<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -672,8 +1711,10 @@ API is other than 200. Dictionary with below key and value pairs.</p>
 <div><p>If API key error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -682,8 +1723,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API type error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -692,8 +1735,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API attribute error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -702,45 +1747,76 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API value error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
+</div></blockquote>
 </p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
 <span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.read_console_access_settings</span>
+<span class="kn">import</span> <span class="n">ReadConsoleAccessSettings</span>
 
 <span class="c1"># For Console Access Library API Usage,</span>
 <span class="c1"># edit console access setting configuration parameters with real values.</span>
 <span class="c1"># file_path: samples/console_access_settings.yaml</span>
 <span class="c1"># console_access_settings:</span>
-<span class="c1">#   base_url: &quot;__base_url__&quot;</span>
-<span class="c1">#   token_url: &quot;__token_url__&quot;</span>
-<span class="c1">#   client_secret: &#39;__client_secret__&#39;</span>
-<span class="c1">#   client_id: &#39;__client_id__&#39;</span>
+<span class="c1">#     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="c1">#     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="c1">#     client_secret: &quot;__client_secret__&quot;</span>
+<span class="c1">#     client_id: &quot;__client_id__&quot;</span>
 
 <span class="c1"># Set path for Console Access Library Setting File.</span>
-<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span><span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+                                 <span class="s2">&quot;samples&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="n">read_console_access_settings_obj</span> <span class="o">=</span> <span class="n">ReadConsoleAccessSettings</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Config.</span>
+<span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">console_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">portal_authorization_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_secret</span>
+<span class="p">)</span>
 
 <span class="c1"># Instantiate Console Access Library Client.</span>
-<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+<span class="n">client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config_obj</span><span class="p">)</span>
+
+<span class="c1"># Create Instance for DeviceManagement</span>
+<span class="n">device_management_obj</span> <span class="o">=</span> <span class="n">client_obj</span><span class="o">.</span><span class="n">get_device_management</span><span class="p">()</span>
 
 <span class="c1"># set the real value</span>
 <span class="n">device_id</span> <span class="o">=</span> <span class="s2">&quot;__device_id__&quot;</span>
 
 <span class="c1"># DeviceManagement - StartUploadInferenceResult</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">device_management</span><span class="o">.</span><span class="n">start_upload_inference_result</span><span class="p">(</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">device_management_obj</span><span class="o">.</span><span class="n">start_upload_inference_result</span><span class="p">(</span>
     <span class="n">device_id</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
@@ -752,23 +1828,11 @@ Dictionary with below key and value pairs.</p>
 </section>
 <section id="module-console_access_library.device_management.stop_upload_inference_result">
 <span id="stop-upload-inference-result"></span><h2>stop_upload_inference_result<a class="headerlink" href="#module-console_access_library.device_management.stop_upload_inference_result" title="Permalink to this headline"></a></h2>
-<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-</div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an “AS IS” BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaStopUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#SchemaStopUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
-<p>Schema for API for StopUploadInferenceResult</p>
+<p>Schema for StopUploadInferenceResult API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
@@ -777,7 +1841,7 @@ limitations under the License.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.device_id">
 <span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.device_id" title="Permalink to this definition"></a></dt>
-<dd><p>Device ID.</p>
+<dd><p>Edge AI Device ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str, required</p>
@@ -822,7 +1886,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StopUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#StopUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
-<p>This class implements API to execute instructions to stop acquiring inference result         metadata (Output Tensor) and image (Input Tensor) to the specified device.</p>
+<p>This class implements StopUploadInferenceResult API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
@@ -831,36 +1895,62 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult.stop_upload_inference_result">
 <span class="sig-name descname"><span class="pre">stop_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#StopUploadInferenceResult.stop_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult.stop_upload_inference_result" title="Permalink to this definition"></a></dt>
-<dd><p>Execute instructions to stop acquiring inference result metadata (Output Tensor)             and image (Input Tensor) to the specified device API</p>
+<dd><p>Execute inference result metadata (Output Tensor) and image (Input Tensor)             acquisition stop instruction to the specified device.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. No more than 100 characters.</p>
+<dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID. Case-sensitive</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul>
-<li><p><strong>Success Response</strong> : Dictionary with below key and value pairs.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : Result</p></li>
+<dd class="field-even"><p><p><strong>Return Type</strong></p>
+<ul class="simple">
+<li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
+<li><p>On Error Response - dict</p></li>
 </ul>
+<p><strong>Success Response Schema</strong></p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 19%" />
+<col style="width: 44%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>Level1</em></p></td>
+<td><p><em>Type</em></p></td>
+<td><p><em>Description</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">result</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">string</span></code></p></td>
+<td><p>Set “SUCCESS” pinning</p></td>
+</tr>
+</tbody>
+</table>
 </div></blockquote>
-</li>
+<p><strong>Error Response Schema</strong></p>
+<blockquote>
+<div><ul>
 <li><p><strong>Generic Error Response</strong> :</p>
 <blockquote>
-<div><p>If the http_status returned from the Low Level SDK
-API is other than 200. Dictionary with below key and value pairs.</p>
+<div><p>If Any generic error returned from the Low Level SDK
+Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Generic Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p><strong>Validation Error Response</strong> :</p>
 <blockquote>
-<div><p>If incorrect API input parameters. Dictionary with below key and value pairs.</p>
+<div><p>If incorrect API input parameters OR
+if any input string parameter found empty.
+Then, Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : validation error message for respective input parameter</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “E001”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -869,8 +1959,10 @@ API is other than 200. Dictionary with below key and value pairs.</p>
 <div><p>If API key error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Key Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -879,8 +1971,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API type error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Type Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -889,8 +1983,10 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API attribute error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Attribute Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -899,45 +1995,76 @@ Dictionary with below key and value pairs.</p>
 <div><p>If API value error returned from the Low Level SDK API.
 Dictionary with below key and value pairs.</p>
 <ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Low Level SDK API</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">error_code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : “Value Error”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>HTTP Error Response</strong> :</p>
+<blockquote>
+<div><p>If the API http_status returned from the Console Server
+is other than 200. Dictionary with below key and value pairs.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> (str) : “ERROR”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code> (str) : error message returned from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">code</span></code> (str) : error code received from the Console server.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code> (str) : Time</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
+</div></blockquote>
 </p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
 <span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span> <span class="nn">console_access_library.common.read_console_access_settings</span>
+<span class="kn">import</span> <span class="n">ReadConsoleAccessSettings</span>
 
 <span class="c1"># For Console Access Library API Usage,</span>
 <span class="c1"># edit console access setting configuration parameters with real values.</span>
 <span class="c1"># file_path: samples/console_access_settings.yaml</span>
 <span class="c1"># console_access_settings:</span>
-<span class="c1">#   base_url: &quot;__base_url__&quot;</span>
-<span class="c1">#   token_url: &quot;__token_url__&quot;</span>
-<span class="c1">#   client_secret: &#39;__client_secret__&#39;</span>
-<span class="c1">#   client_id: &#39;__client_id__&#39;</span>
+<span class="c1">#     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="c1">#     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="c1">#     client_secret: &quot;__client_secret__&quot;</span>
+<span class="c1">#     client_id: &quot;__client_id__&quot;</span>
 
 <span class="c1"># Set path for Console Access Library Setting File.</span>
-<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span><span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+<span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+                                 <span class="s2">&quot;samples&quot;</span><span class="p">,</span>
+                                 <span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="n">read_console_access_settings_obj</span> <span class="o">=</span> <span class="n">ReadConsoleAccessSettings</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+
+<span class="c1"># Instantiate Console Access Library Config.</span>
+<span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">console_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">portal_authorization_endpoint</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+    <span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">client_secret</span>
+<span class="p">)</span>
 
 <span class="c1"># Instantiate Console Access Library Client.</span>
-<span class="n">console_sdk_client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">SETTING_FILE_PATH</span><span class="p">)</span>
+<span class="n">client_obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">config_obj</span><span class="p">)</span>
+
+<span class="c1"># Create Instance for DeviceManagement</span>
+<span class="n">device_management_obj</span> <span class="o">=</span> <span class="n">client_obj</span><span class="o">.</span><span class="n">get_device_management</span><span class="p">()</span>
 
 <span class="c1"># set the real value</span>
 <span class="n">device_id</span> <span class="o">=</span> <span class="s2">&quot;__device_id__&quot;</span>
 
 <span class="c1"># DeviceManagement - StopUploadInferenceResult</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">console_sdk_client_obj</span><span class="o">.</span><span class="n">device_management</span><span class="o">.</span><span class="n">stop_upload_inference_result</span><span class="p">(</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">device_management_obj</span><span class="o">.</span><span class="n">stop_upload_inference_result</span><span class="p">(</span>
     <span class="n">device_id</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
@@ -953,7 +2080,7 @@ Dictionary with below key and value pairs.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="console_access_library.common.html" class="btn btn-neutral float-left" title="Common Package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="console_access_library.deployment.html" class="btn btn-neutral float-left" title="Deployment Package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="console_access_library.insight.html" class="btn btn-neutral float-right" title="Insight Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

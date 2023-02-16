@@ -1,0 +1,218 @@
+= Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python版 pass:[<br/>] チュートリアル pass:[<br/>]
+:sectnums:
+:sectnumlevels: 1
+:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:version-label: Version 
+:revnumber: x.x.x
+:revdate: YYYY - MM - DD
+:trademark-desc: AITRIOS™、およびそのロゴは、ソニーグループ株式会社またはその関連会社の登録商標または商標です。
+:toc:
+:toc-title: 目次
+:toclevels: 1
+:chapter-label:
+:lang: ja
+
+== 目的
+
+このチュートリアルではConsole Access Libraryが公開する各種APIについて解説します。本書を通じてLibraryをビルドして使用できるようになります。
+
+== 前提条件
+- Python 3.8.10
+- Python依存関係
+
+    * requests>=2.28.1
+    * jsonschema>=4.6.2
+    * setuptools>=63.2.0
+    * wheel>=0.37.1
+    * PyYAML>=6.0
+    * marshmallow>=3.17.0
+    * pytest>=7.1.2
+    * pytest-html-reporter>=0.2.9
+    * pytest-ordering>=0.6
+    * sphinx==4.3.2
+    * myst-parser>=0.18.0
+    * sphinx-rtd-theme>=1.0.0
+    * sphinxcontrib-napoleon>=0.7
+    * rst2pdf>=0.99
+    * streamlit==1.10.0
+    * pytest-timeout>=2.1.0
+    * PyJWT>=2.6.0
+    * nassl>=4.0
+    * cryptography>=36.0
+    * validators>=0.18
+
+=== Console Access Library API仕様
+- docs/api-reference/index.html
+
+== 使用法
+
+=== インストール
+
+. リポジトリをクローンします
+
+. デモアプリケーション用にPython依存関係をインストールします
++
+```
+    pip install -r requirements.txt
+```
+
+. 次のコマンドを実行してPython環境へのインストールを行います
++
+```
+    python -m pip install lib/python_client.
+```
+
+. 次のコマンドを実行してPython環境へのインストールを行います
++
+```
+    python -m pip install src/.
+```
+
+. ネットワークProxy設定
++
+プロキシ環境でConsole Access Libraryを使用するには `**https_proxy**` 環境変数を設定します
++
+```
+    export https_proxy=http://username:password@proxyhost:port
+```
+
+<<<
+
+=== Console Access Libraryサンプルアプリケーション開始用のパラメータ設定
+
+==== オプション1: Console Access設定ファイルを使用
+
+* 手順1: Console Access設定ファイルを作成してユーザー環境値を入力します
++
+.samples/console_access_settings.yaml
+``` 
+    console_access_settings:
+        console_endpoint: "__console_endpoint__"
+        portal_authorization_endpoint: "__portal_authorization_endpoint__"
+        client_secret: "__client_secret__"
+        client_id: "__client_id__"
+```
+* 手順2: モジュール `**ReadConsoleAccessSettings**`, `**Config**`, `**Client**` をConsole Access Libraryサンプルアプリケーションにインポートします
++
+.samples/console_access_client_api_demo.py
+```
+    from console_access_library.common.read_console_access_settings import ReadConsoleAccessSettings
+    from console_access_library.common.config import Config
+    from console_access_library.client import Client
+```
+* 手順3: Console Access設定ファイルのパスを設定し、Console Access Library `**ReadConsoleAccessSettings**` のインスタンスを生成します `**console_access_settings.yaml**` ファイルを作成するには、手順1を参照してください
++
+.samples/console_access_client_api_demo.py
+```
+    SETTING_FILE_PATH = os.path.join(os.getcwd(), "samples", "console_access_settings.yaml")
+    read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
+```
+* 手順4: Console Access Library `**Config**` のインスタンスを生成します
++
+.samples/console_access_client_api_demo.py
+```
+    config_obj = Config(console_endpoint=read_console_access_settings_obj.console_endpoint,
+                        portal_authorization_endpoint=read_console_access_settings_obj.portal_authorization_endpoint,
+                        client_id=read_console_access_settings_obj.client_id,
+                        client_secret=read_console_access_settings_obj.client_secret)
+```
+
+<<<
+
+==== オプション2: Console Access設定ファイルを作成せずにユーザー環境値を環境変数にエクスポート
+
+* 手順1: ユーザー環境値を環境変数にexportします
++
+```
+    export CONSOLE_ENDPOINT="__console_endpoint__"
+    export PORTAL_AUTHORIZATION_ENDPOINT="__portal_authorization_endpoint__"
+    export CLIENT_SECRET="__client_secret__"
+    export CLIENT_ID="__client_id__"
+```
+* 手順2: モジュール `**Config**`, `**Client**` をConsole Access Libraryサンプルアプリケーションにインポートします
++
+.samples/console_access_client_api_demo.py
+```
+    from console_access_library.common.config import Config
+    from console_access_library.client import Client
+```
+* 手順3: Console Access Library `**Config**` のインスタンスを生成します
++
+.samples/console_access_client_api_demo.py
+```
+    config_obj = Config(console_endpoint=None,
+                        portal_authorization_endpoint=None,
+                        client_id=None,
+                        client_secret=None)
+```
+
+<<<
+
+==== オプション3: Console Access Libraryへユーザー環境値設定
+
+* 手順1: モジュール `**Config**`, `**Client**` をConsole Access Libraryサンプルアプリケーションにインポートします
++
+.samples/console_access_client_api_demo.py
+```
+    from console_access_library.common.config import Config
+    from console_access_library.client import Client
+```
+* 手順2: Console Access Library `**Config**` のインスタンスをユーザー環境値で生成します
++
+.samples/console_access_client_api_demo.py
+```
+    config_obj = Config(console_endpoint="__console_endpoint__", 
+                        portal_authorization_endpoint="__portal_authorization_endpoint__",
+                        client_id="__client_id__", 
+                        client_secret="__client_secret__")
+```
+
+.samples/demo_config.yaml
+```
+    demo_configuration:
+        device_id: "__device_id__"
+        number_of_images: __number_of_images__
+        skip: __skip__
+        sub_directory_name: "__sub_directory_name__"
+        number_of_inference_results: __number_of_inference_results__
+        filter: "__filter__"
+        raw: __raw__
+        time: "__time__"
+        converted: "__converted__"
+        vendor_name: "__vendor_name__"
+        get_images_order_by: "__get_images_order_by__"
+        get_last_inference_and_image_data_order_by: "__get_last_inference_and_image_data_order_by__"
+        key: "__key__"
+        app_name: "__app_name__"
+        version_number: "__version_number__"
+        model: "__model__
+        model_id: "__model_id__"
+        compiled_flg: "__compiled_flg__"
+        file_name: "__file_name__"
+        comment: "__comment__"
+        input_format_param: "__input_format_param__"
+        network_config: "__network_config__"
+        network_type: "__network_type__"
+        labels: "__labels__"
+        config_id: "__config_id__"
+        sensor_loader_version_number: "__sensor_loader_version_number__"
+        sensor_version_number: "__sensor_version_number__"
+        model_version_number: "__model_version_number__"
+        ap_fw_version_number: "__ap_fw_version_number__"
+        device_ids: "__device_ids__"
+        deploy_parameter: "__deploy_parameter__"
+        replace_model_id: "__replace_model_id__"
+        timeout: __timeout__
+```
+
+=== API import_device_app 実行
+
+aotファイルの内容をBase64 Encodeして `**tests/unit/device_app_file_content.txt**` に配置します。
+
+=== アプリケーション開始
+
+CLIデモを実行するにはrootフォルダからcmdターミナルを開き、次のコマンドを実行します。
+
+```
+    python samples/console_access_client_api_demo.py
+```

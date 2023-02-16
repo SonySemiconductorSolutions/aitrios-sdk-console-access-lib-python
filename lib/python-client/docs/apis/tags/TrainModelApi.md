@@ -5,19 +5,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_model_func**](#delete_model_func) | **delete** /models/{model_id} | DeleteModelFunc
-[**get_base_model_status_func**](#get_base_model_status_func) | **get** /models/{model_id}/base | GetBaseModelStatusFunc
-[**get_models_func**](#get_models_func) | **get** /models | GetModelsFunc
-[**import_base_model_func**](#import_base_model_func) | **post** /models | ImportBaseModelFunc
-[**import_non_converted_model_func**](#import_non_converted_model_func) | **post** /models/{model_id} | ImportNonConvertedModelFunc
+[**delete_model**](#delete_model) | **delete** /models/{model_id} | DeleteModel
+[**get_base_model_status**](#get_base_model_status) | **get** /models/{model_id}/base | GetBaseModelStatus
+[**get_models**](#get_models) | **get** /models | GetModels
+[**import_base_model**](#import_base_model) | **post** /models | ImportBaseModel
+[**publish_model**](#publish_model) | **post** /models/{model_id} | PublishModel
 
-# **delete_model_func**
-<a name="delete_model_func"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type delete_model_func(model_id)
+# **delete_model**
+<a name="delete_model"></a>
+> SuccessResponse delete_model(model_id)
 
-DeleteModelFunc
+DeleteModel
 
-Delete model function.  Parameters: ---------- request(Request): Request from fastapi. session(Any): The result of calling Depends(get_db).  Returns: ------- ret(object): The result of calling main method of delete_model api.
+Delete model.
 
 ### Example
 
@@ -25,6 +25,7 @@ Delete model function.  Parameters: ---------- request(Request): Request from fa
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import train_model_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -42,13 +43,13 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'model_id': "model_id_example",
     }
     try:
-        # DeleteModelFunc
-        api_response = api_instance.delete_model_func(
+        # DeleteModel
+        api_response = api_instance.delete_model(
             path_params=path_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->delete_model_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->delete_model: %s\n" % e)
 ```
 ### Parameters
 
@@ -79,13 +80,13 @@ str,  | str,  |  |
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#delete_model_func.ApiResponseFor200) | Successful Response
-401 | [ApiResponseFor401](#delete_model_func.ApiResponseFor401) | Authorization Error
-403 | [ApiResponseFor403](#delete_model_func.ApiResponseFor403) | Forbidden
-500 | [ApiResponseFor500](#delete_model_func.ApiResponseFor500) | Internal Server Error
-503 | [ApiResponseFor503](#delete_model_func.ApiResponseFor503) | Service Unavailable
+200 | [ApiResponseFor200](#delete_model.ApiResponseFor200) | Successful Response
+401 | [ApiResponseFor401](#delete_model.ApiResponseFor401) | Authorization Error
+403 | [ApiResponseFor403](#delete_model.ApiResponseFor403) | Forbidden
+500 | [ApiResponseFor500](#delete_model.ApiResponseFor500) | Internal Server Error
+503 | [ApiResponseFor503](#delete_model.ApiResponseFor503) | Service Unavailable
 
-#### delete_model_func.ApiResponseFor200
+#### delete_model.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -93,13 +94,12 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
-#### delete_model_func.ApiResponseFor401
+#### delete_model.ApiResponseFor401
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -112,7 +112,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### delete_model_func.ApiResponseFor403
+#### delete_model.ApiResponseFor403
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -125,7 +125,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### delete_model_func.ApiResponseFor500
+#### delete_model.ApiResponseFor500
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -138,7 +138,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### delete_model_func.ApiResponseFor503
+#### delete_model.ApiResponseFor503
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -157,13 +157,13 @@ No authorization required
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **get_base_model_status_func**
-<a name="get_base_model_status_func"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type get_base_model_status_func(model_id)
+# **get_base_model_status**
+<a name="get_base_model_status"></a>
+> Model get_base_model_status(model_id)
 
-GetBaseModelStatusFunc
+GetBaseModelStatus
 
-Get model of base function.  Parameters: ---------- request(Request): Request from fastapi. session(Any): The result of calling Depends(get_db).  Returns: ------- ret(object): The result of calling main method of get_base_model_status api.
+Get model status of base.
 
 ### Example
 
@@ -171,6 +171,7 @@ Get model of base function.  Parameters: ---------- request(Request): Request fr
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import train_model_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.model import Model
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -190,14 +191,14 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     query_params = {
     }
     try:
-        # GetBaseModelStatusFunc
-        api_response = api_instance.get_base_model_status_func(
+        # GetBaseModelStatus
+        api_response = api_instance.get_base_model_status(
             path_params=path_params,
             query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->get_base_model_status_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->get_base_model_status: %s\n" % e)
 
     # example passing only optional values
     path_params = {
@@ -207,14 +208,14 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'latest_type': "1",
     }
     try:
-        # GetBaseModelStatusFunc
-        api_response = api_instance.get_base_model_status_func(
+        # GetBaseModelStatus
+        api_response = api_instance.get_base_model_status(
             path_params=path_params,
             query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->get_base_model_status_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->get_base_model_status: %s\n" % e)
 ```
 ### Parameters
 
@@ -261,13 +262,13 @@ str,  | str,  |  |
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_base_model_status_func.ApiResponseFor200) | Successful Response
-401 | [ApiResponseFor401](#get_base_model_status_func.ApiResponseFor401) | Authorization Error
-403 | [ApiResponseFor403](#get_base_model_status_func.ApiResponseFor403) | Forbidden
-500 | [ApiResponseFor500](#get_base_model_status_func.ApiResponseFor500) | Internal Server Error
-503 | [ApiResponseFor503](#get_base_model_status_func.ApiResponseFor503) | Service Unavailable
+200 | [ApiResponseFor200](#get_base_model_status.ApiResponseFor200) | Successful Response
+401 | [ApiResponseFor401](#get_base_model_status.ApiResponseFor401) | Authorization Error
+403 | [ApiResponseFor403](#get_base_model_status.ApiResponseFor403) | Forbidden
+500 | [ApiResponseFor500](#get_base_model_status.ApiResponseFor500) | Internal Server Error
+503 | [ApiResponseFor503](#get_base_model_status.ApiResponseFor503) | Service Unavailable
 
-#### get_base_model_status_func.ApiResponseFor200
+#### get_base_model_status.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -275,13 +276,12 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**Model**](../../models/Model.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
-#### get_base_model_status_func.ApiResponseFor401
+#### get_base_model_status.ApiResponseFor401
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -294,7 +294,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### get_base_model_status_func.ApiResponseFor403
+#### get_base_model_status.ApiResponseFor403
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -307,7 +307,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### get_base_model_status_func.ApiResponseFor500
+#### get_base_model_status.ApiResponseFor500
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -320,7 +320,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### get_base_model_status_func.ApiResponseFor503
+#### get_base_model_status.ApiResponseFor503
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -339,13 +339,13 @@ No authorization required
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **get_models_func**
-<a name="get_models_func"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type get_models_func()
+# **get_models**
+<a name="get_models"></a>
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_models()
 
-GetModelsFunc
+GetModels
 
-Get model of base function.  Parameters: ---------- request(Request): Request from fastapi. session(Any): The result of calling Depends(get_db).  Returns: ------- ret(object): The result of calling main method of get_models api.
+todo
 
 ### Example
 
@@ -353,6 +353,7 @@ Get model of base function.  Parameters: ---------- request(Request): Request fr
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import train_model_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.model import Model
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -376,13 +377,13 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'latest_type': "1",
     }
     try:
-        # GetModelsFunc
-        api_response = api_instance.get_models_func(
+        # GetModels
+        api_response = api_instance.get_models(
             query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->get_models_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->get_models: %s\n" % e)
 ```
 ### Parameters
 
@@ -462,13 +463,13 @@ str,  | str,  |  | if omitted the server will use the default value of "1"
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_models_func.ApiResponseFor200) | Successful Response
-401 | [ApiResponseFor401](#get_models_func.ApiResponseFor401) | Authorization Error
-403 | [ApiResponseFor403](#get_models_func.ApiResponseFor403) | Forbidden
-500 | [ApiResponseFor500](#get_models_func.ApiResponseFor500) | Internal Server Error
-503 | [ApiResponseFor503](#get_models_func.ApiResponseFor503) | Service Unavailable
+200 | [ApiResponseFor200](#get_models.ApiResponseFor200) | Successful Response
+401 | [ApiResponseFor401](#get_models.ApiResponseFor401) | Authorization Error
+403 | [ApiResponseFor403](#get_models.ApiResponseFor403) | Forbidden
+500 | [ApiResponseFor500](#get_models.ApiResponseFor500) | Internal Server Error
+503 | [ApiResponseFor503](#get_models.ApiResponseFor503) | Service Unavailable
 
-#### get_models_func.ApiResponseFor200
+#### get_models.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -480,9 +481,27 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
 
-#### get_models_func.ApiResponseFor401
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**[models](#models)** | list, tuple,  | tuple,  |  | [optional] 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+
+# models
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+list, tuple,  | tuple,  |  | 
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**Model**]({{complexTypePrefix}}Model.md) | [**Model**]({{complexTypePrefix}}Model.md) | [**Model**]({{complexTypePrefix}}Model.md) |  | 
+
+#### get_models.ApiResponseFor401
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -495,7 +514,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### get_models_func.ApiResponseFor403
+#### get_models.ApiResponseFor403
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -508,7 +527,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### get_models_func.ApiResponseFor500
+#### get_models.ApiResponseFor500
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -521,7 +540,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### get_models_func.ApiResponseFor503
+#### get_models.ApiResponseFor503
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -540,13 +559,13 @@ No authorization required
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **import_base_model_func**
-<a name="import_base_model_func"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type import_base_model_func(train_model_import_base_model_data_importbasemodelindto_json_body)
+# **import_base_model**
+<a name="import_base_model"></a>
+> SuccessResponse import_base_model(train_model_import_base_model_data_importbasemodelindto_json_body)
 
-ImportBaseModelFunc
+ImportBaseModel
 
-import_base_model function.  Parameters: ---------- request(Request): Request from fastapi. session(Any): The result of calling Depends(get_db).  Returns: ------- ret(object): The result of calling main method of import_base_model api.
+Import base model.
 
 ### Example
 
@@ -554,6 +573,7 @@ import_base_model function.  Parameters: ---------- request(Request): Request fr
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import train_model_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 from aitrios_console_rest_client_sdk_primitive.model.train_model_import_base_model_data_importbasemodelindto_json_body import TrainModelImportBaseModelDataImportbasemodelindtoJsonBody
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
@@ -574,19 +594,21 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         converted=False,
         vendor_name="",
         comment="",
-        network_parameter="",
+        input_format_param="",
         network_config="",
         network_type="",
-        labels=[],
+        labels=[
+            "labels_example"
+        ],
     )
     try:
-        # ImportBaseModelFunc
-        api_response = api_instance.import_base_model_func(
+        # ImportBaseModel
+        api_response = api_instance.import_base_model(
             body=body,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->import_base_model_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->import_base_model: %s\n" % e)
 ```
 ### Parameters
 
@@ -612,13 +634,13 @@ Type | Description  | Notes
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#import_base_model_func.ApiResponseFor200) | Successful Response
-401 | [ApiResponseFor401](#import_base_model_func.ApiResponseFor401) | Authorization Error
-403 | [ApiResponseFor403](#import_base_model_func.ApiResponseFor403) | Forbidden
-500 | [ApiResponseFor500](#import_base_model_func.ApiResponseFor500) | Internal Server Error
-503 | [ApiResponseFor503](#import_base_model_func.ApiResponseFor503) | Service Unavailable
+200 | [ApiResponseFor200](#import_base_model.ApiResponseFor200) | Successful Response
+401 | [ApiResponseFor401](#import_base_model.ApiResponseFor401) | Authorization Error
+403 | [ApiResponseFor403](#import_base_model.ApiResponseFor403) | Forbidden
+500 | [ApiResponseFor500](#import_base_model.ApiResponseFor500) | Internal Server Error
+503 | [ApiResponseFor503](#import_base_model.ApiResponseFor503) | Service Unavailable
 
-#### import_base_model_func.ApiResponseFor200
+#### import_base_model.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -626,13 +648,12 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**SuccessResponse**](../../models/SuccessResponse.md) |  | 
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 
-#### import_base_model_func.ApiResponseFor401
+#### import_base_model.ApiResponseFor401
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -645,7 +666,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### import_base_model_func.ApiResponseFor403
+#### import_base_model.ApiResponseFor403
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -658,7 +679,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### import_base_model_func.ApiResponseFor500
+#### import_base_model.ApiResponseFor500
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -671,7 +692,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### import_base_model_func.ApiResponseFor503
+#### import_base_model.ApiResponseFor503
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -690,13 +711,13 @@ No authorization required
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **import_non_converted_model_func**
-<a name="import_non_converted_model_func"></a>
-> bool, date, datetime, dict, float, int, list, str, none_type import_non_converted_model_func(model_id)
+# **publish_model**
+<a name="publish_model"></a>
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} publish_model(model_id)
 
-ImportNonConvertedModelFunc
+PublishModel
 
-Import NonConvert Model function.  Parameters: ---------- request(Request): Request from fastapi. session(Any): The result of calling Depends(get_db).  Returns: ------- ret(object): The result of calling main method of convert_model api.
+Publish Model.
 
 ### Example
 
@@ -723,14 +744,14 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     query_params = {
     }
     try:
-        # ImportNonConvertedModelFunc
-        api_response = api_instance.import_non_converted_model_func(
+        # PublishModel
+        api_response = api_instance.publish_model(
             path_params=path_params,
             query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->import_non_converted_model_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->publish_model: %s\n" % e)
 
     # example passing only optional values
     path_params = {
@@ -740,14 +761,14 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'device_id': "device_id_example",
     }
     try:
-        # ImportNonConvertedModelFunc
-        api_response = api_instance.import_non_converted_model_func(
+        # PublishModel
+        api_response = api_instance.publish_model(
             path_params=path_params,
             query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
-        print("Exception when calling TrainModelApi->import_non_converted_model_func: %s\n" % e)
+        print("Exception when calling TrainModelApi->publish_model: %s\n" % e)
 ```
 ### Parameters
 
@@ -794,13 +815,13 @@ str,  | str,  |  |
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#import_non_converted_model_func.ApiResponseFor200) | Successful Response
-401 | [ApiResponseFor401](#import_non_converted_model_func.ApiResponseFor401) | Authorization Error
-403 | [ApiResponseFor403](#import_non_converted_model_func.ApiResponseFor403) | Forbidden
-500 | [ApiResponseFor500](#import_non_converted_model_func.ApiResponseFor500) | Internal Server Error
-503 | [ApiResponseFor503](#import_non_converted_model_func.ApiResponseFor503) | Service Unavailable
+200 | [ApiResponseFor200](#publish_model.ApiResponseFor200) | Successful Response
+401 | [ApiResponseFor401](#publish_model.ApiResponseFor401) | Authorization Error
+403 | [ApiResponseFor403](#publish_model.ApiResponseFor403) | Forbidden
+500 | [ApiResponseFor500](#publish_model.ApiResponseFor500) | Internal Server Error
+503 | [ApiResponseFor503](#publish_model.ApiResponseFor503) | Service Unavailable
 
-#### import_non_converted_model_func.ApiResponseFor200
+#### publish_model.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -812,9 +833,16 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
 
-#### import_non_converted_model_func.ApiResponseFor401
+### Dictionary Keys
+Key | Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | ------------- | -------------
+**result** | str,  | str,  | todo | [optional] 
+**import_id** | str,  | str,  | todo | [optional] 
+**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+
+#### publish_model.ApiResponseFor401
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -827,7 +855,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### import_non_converted_model_func.ApiResponseFor403
+#### publish_model.ApiResponseFor403
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -840,7 +868,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### import_non_converted_model_func.ApiResponseFor500
+#### publish_model.ApiResponseFor500
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -853,7 +881,7 @@ Type | Description  | Notes
 [**ErrorResponse**](../../models/ErrorResponse.md) |  | 
 
 
-#### import_non_converted_model_func.ApiResponseFor503
+#### publish_model.ApiResponseFor503
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |

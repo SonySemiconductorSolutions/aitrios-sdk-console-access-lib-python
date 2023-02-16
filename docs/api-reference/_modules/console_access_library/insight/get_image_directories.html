@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.get_image_directories &mdash; Console Access Library 0.1.0 documentation</title>
+  <title>console_access_library.insight.get_image_directories &mdash; Console Access Library 0.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -27,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> Console Access Library
           </a>
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -56,9 +57,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>console_access_library.insight.get_image_directories</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.insight.get_image_directories</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -68,21 +69,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for console_access_library.insight.get_image_directories</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
-<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="sd">you may not use this file except in compliance with the License.</span>
-<span class="sd">You may obtain a copy of the License at</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
 
-<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
 
-<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
-<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="sd">See the License for the specific language governing permissions and</span>
-<span class="sd">limitations under the License.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
 
 <span class="c1"># pylint:disable=missing-module-docstring</span>
 <span class="c1"># pylint:disable=import-error</span>
@@ -94,8 +95,9 @@
 <span class="c1"># pylint:disable=too-many-locals</span>
 <span class="c1"># pylint:disable=too-many-return-statements</span>
 <span class="c1"># pylint:disable=protected-access</span>
+<span class="c1"># pylint:disable=broad-except</span>
 
-
+<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
@@ -106,12 +108,13 @@
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">console_access_library.common.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SchemaGetImageDirectories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_image_directories.SchemaGetImageDirectories">[docs]</a><span class="k">class</span> <span class="nc">SchemaGetImageDirectories</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Schema for API for GetImageDirectories.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for API for GetImageDirectories.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
@@ -120,17 +123,19 @@
 
     <span class="c1">#: str, optional : Device ID.</span>
     <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">}</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="SchemaGetImageDirectories.validate"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_image_directories.SchemaGetImageDirectories.validate">[docs]</a>    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s2">&quot;device_id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required&quot;</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="s2">&quot;device_id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="GetImageDirectories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_image_directories.GetImageDirectories">[docs]</a><span class="k">class</span> <span class="nc">GetImageDirectories</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This class implements API for each device group, a list of image storage \</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements API for each device group, a list of image storage \</span>
 <span class="sd">        directories for each device is acquired.</span>
 
 <span class="sd">    Args:</span>
@@ -139,115 +144,197 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructor Method for the class GetImageDirectories</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for the class GetImageDirectories</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            config (object): Object of Configuration Class</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">()</span><span class="o">.</span><span class="n">set_logger</span><span class="p">()</span>
 
-<div class="viewcode-block" id="GetImageDirectories.get_image_directories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_image_directories.GetImageDirectories.get_image_directories">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Image storage directory list retrieval API. For each device group, a list of image \</span>
-<span class="sd">            storage directories for each device is acquired.</span>
+<div class="viewcode-block" id="GetImageDirectories.get_image_directories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_image_directories.GetImageDirectories.get_image_directories">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Image storage directory list retrieval API. For each device group, a list of image \</span>
+<span class="sd">        storage directories for each device is acquired.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Device ID. If specified, returns a list of image</span>
-<span class="sd">                directories linked to the specified device ID.</span>
+<span class="sd">            device_id (str, optional): Device ID \</span>
+<span class="sd">                If specified, the image directory list associated with the specified \</span>
+<span class="sd">                device ID is returned. Case-sensitive</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict:</span>
-<span class="sd">                - **Success Response** : Dictionary with below key and value pairs.</span>
+<span class="sd">            **Return Type**</span>
 
-<span class="sd">                    - No key name (object) : Image save directory information</span>
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------------+------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*   | *Type*     | *Description*                 |</span>
+<span class="sd">                +------------------+------------+------------+-------------------------------+</span>
+<span class="sd">                | ``No_item_name`` |            |            | Device Affiliation Group Array|</span>
+<span class="sd">                +------------------+------------+------------+-------------------------------+</span>
+<span class="sd">                |                  |``group_id``| ``string`` | Set the device group ID.      |</span>
+<span class="sd">                +------------------+------------+------------+-------------------------------+</span>
+<span class="sd">                |                  | ``devices``| ``array``  | Refer :ref:`devices &lt;devices&gt;`|</span>
+<span class="sd">                |                  |            |            | for more details              |</span>
+<span class="sd">                +------------------+------------+------------+-------------------------------+</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | devices           | .. _devices:                                               |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | ``devices``       |  ``array``         |            | Device Array.            |</span>
+<span class="sd">                |                   |                    |            | The subordinate          |</span>
+<span class="sd">                |                   |                    |            | elements are listed      |</span>
+<span class="sd">                |                   |                    |            | in ascending order       |</span>
+<span class="sd">                |                   |                    |            | by device ID             |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_id``       | ``string`` | Device ID.               |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_name``     | ``string`` | Device name at the time  |</span>
+<span class="sd">                |                   |                    |            | of registration          |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``Image``           | ``array``  | The descendant elements  |</span>
+<span class="sd">                |                   |                    |            | are listed in ascending  |</span>
+<span class="sd">                |                   |                    |            | order by directory name. |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
 
 <span class="sd">                - **Generic Error Response** :</span>
 
-<span class="sd">                    If the http_status returned from the Low Level SDK</span>
-<span class="sd">                    API is other than 200. Dictionary with below key and value pairs.</span>
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
 
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
 <span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
-<span class="sd">                    - ``error_code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 
 <span class="sd">                - **Validation Error Response** :</span>
 
-<span class="sd">                    If incorrect API input parameters. Dictionary with below key and value pairs.</span>
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
 
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
 <span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
-<span class="sd">                    - ``error_code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 
 <span class="sd">                - **Key Error Response** :</span>
 
 <span class="sd">                    If API key error returned from the Low Level SDK API.</span>
 <span class="sd">                    Dictionary with below key and value pairs.</span>
 
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
 <span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
-<span class="sd">                    - ``error_code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 
 <span class="sd">                - **Type Error Response** :</span>
 
 <span class="sd">                    If API type error returned from the Low Level SDK API.</span>
 <span class="sd">                    Dictionary with below key and value pairs.</span>
 
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
 <span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
-<span class="sd">                    - ``error_code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 
 <span class="sd">                - **Attribute Error Response** :</span>
 
 <span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
 <span class="sd">                    Dictionary with below key and value pairs.</span>
 
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
 <span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
-<span class="sd">                    - ``error_code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 
 <span class="sd">                - **Value Error Response** :</span>
 
 <span class="sd">                    If API value error returned from the Low Level SDK API.</span>
 <span class="sd">                    Dictionary with below key and value pairs.</span>
 
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
 <span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
-<span class="sd">                    - ``error_code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 
 <span class="sd">        Example:</span>
 <span class="sd">            .. code-block:: python</span>
 
 <span class="sd">                import os</span>
 <span class="sd">                import sys</span>
-
 <span class="sd">                from pprint import pprint</span>
+
 <span class="sd">                from console_access_library.client import Client</span>
+<span class="sd">                from console_access_library.common.config import Config</span>
+<span class="sd">                from console_access_library.common.read_console_access_settings</span>
+<span class="sd">                import ReadConsoleAccessSettings</span>
 
 <span class="sd">                # For Console Access Library API Usage,</span>
 <span class="sd">                # edit console access setting configuration parameters with real values.</span>
 <span class="sd">                # file_path: samples/console_access_settings.yaml</span>
 <span class="sd">                # console_access_settings:</span>
-<span class="sd">                # 	base_url: &quot;__base_url__&quot;</span>
-<span class="sd">                # 	token_url: &quot;__token_url__&quot;</span>
-<span class="sd">                # 	client_secret: &#39;__client_secret__&#39;</span>
-<span class="sd">                # 	client_id: &#39;__client_id__&#39;</span>
+<span class="sd">                #     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
+<span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
-<span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(), &quot;samples&quot;,&quot;console_access_settings.yaml&quot;)</span>
+<span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
+<span class="sd">                                                 &quot;samples&quot;,</span>
+<span class="sd">                                                 &quot;console_access_settings.yaml&quot;)</span>
+
+<span class="sd">                # Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="sd">                read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)</span>
+
+<span class="sd">                # Instantiate Console Access Library Config.</span>
+<span class="sd">                config_obj = Config(</span>
+<span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.client_id,</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
-<span class="sd">                console_sdk_client_obj = Client(SETTING_FILE_PATH)</span>
+<span class="sd">                client_obj = Client(config_obj)</span>
+
+<span class="sd">                # Create Instance for Insight</span>
+<span class="sd">                insight_obj = client_obj.get_insight()</span>
 
 <span class="sd">                # set the real value</span>
 <span class="sd">                device_id = &quot;__device_id__&quot;</span>
 
 <span class="sd">                # Insight - GetImageDirectories</span>
-<span class="sd">                response = console_sdk_client_obj.insight.get_image_directories(device_id)</span>
+<span class="sd">                response = insight_obj.get_image_directories(device_id)</span>
 <span class="sd">                pprint(response)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
             <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
             <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s2">&quot;device_id&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span>
 
             <span class="c1"># Validate schema</span>
             <span class="n">_local_params</span> <span class="o">=</span> <span class="n">SchemaGetImageDirectories</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
@@ -269,31 +356,30 @@
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
                     <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_key_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">key_err</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">_return_get_image_directories</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiTypeError</span> <span class="k">as</span> <span class="n">type_err</span><span class="p">:</span>
                     <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_type_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">type_err</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">_return_get_image_directories</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiValueError</span> <span class="k">as</span> <span class="n">val_err</span><span class="p">:</span>
                     <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_value_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">val_err</span><span class="p">)</span>
-                    <span class="k">return</span> <span class="n">_return_get_image_directories</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiAttributeError</span> <span class="k">as</span> <span class="n">attr_err</span><span class="p">:</span>
                     <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_attribute_error_response</span><span class="p">(</span>
                         <span class="vm">__name__</span><span class="p">,</span> <span class="n">attr_err</span>
                     <span class="p">)</span>
-                    <span class="k">return</span> <span class="n">_return_get_image_directories</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiException</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                    <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_http_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
                     <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_generic_error_response</span><span class="p">(</span>
                         <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
                     <span class="p">)</span>
-                    <span class="k">return</span> <span class="n">_return_get_image_directories</span>
 
         <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">_return_get_image_directories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">_return_get_image_directories</span></div></div>
+
+        <span class="k">return</span> <span class="n">_return_get_image_directories</span></div></div>
 </pre></div>
 
            </div>

@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.insight &mdash; Console Access Library 0.1.0 documentation</title>
+  <title>console_access_library.insight.insight &mdash; Console Access Library 0.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -27,7 +28,7 @@
             <a href="../../../index.html" class="icon icon-home"> Console Access Library
           </a>
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -56,9 +57,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>console_access_library.insight.insight</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.insight.insight</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -68,21 +69,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for console_access_library.insight.insight</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
-<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class="sd">you may not use this file except in compliance with the License.</span>
-<span class="sd">You may obtain a copy of the License at</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
 
-<span class="sd">    http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
 
-<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
-<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="sd">See the License for the specific language governing permissions and</span>
-<span class="sd">limitations under the License.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
 
 <span class="c1"># pylint:disable=missing-module-docstring</span>
 <span class="c1"># pylint:disable=import-error</span>
@@ -92,16 +93,24 @@
 <span class="c1"># pylint:disable=redefined-builtin</span>
 <span class="c1"># pylint:disable=too-many-arguments</span>
 <span class="c1"># pylint:disable=too-many-locals</span>
+<span class="c1"># pylint:disable=too-many-lines</span>
 <span class="c1"># pylint:disable=too-many-return-statements</span>
+<span class="c1"># pylint:disable=anomalous-backslash-in-string</span>
 
 <span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+<span class="kn">from</span> <span class="nn">console_access_library.insight.get_image_data</span> <span class="kn">import</span> <span class="n">GetImageData</span>
 <span class="kn">from</span> <span class="nn">console_access_library.insight.get_image_directories</span> <span class="kn">import</span> <span class="n">GetImageDirectories</span>
 <span class="kn">from</span> <span class="nn">console_access_library.insight.get_images</span> <span class="kn">import</span> <span class="n">GetImages</span>
 <span class="kn">from</span> <span class="nn">console_access_library.insight.get_inference_results</span> <span class="kn">import</span> <span class="n">GetInferenceresults</span>
+<span class="kn">from</span> <span class="nn">console_access_library.insight.get_last_inference_and_image_data</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GetLastInferenceAndImageData</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">console_access_library.insight.get_last_inference_data</span> <span class="kn">import</span> <span class="n">GetLastInferenceData</span>
+<span class="kn">from</span> <span class="nn">console_access_library.insight.export_images</span> <span class="kn">import</span> <span class="n">ExportImages</span>
 
 
 <div class="viewcode-block" id="Insight"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight">[docs]</a><span class="k">class</span> <span class="nc">Insight</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library Insight component APIs from Insight component</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library Insight component APIs from Insight component</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        ConsoleAccessBaseClass (object): Inherited from \</span>
@@ -109,7 +118,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Constructor Method for Insight Abstract class</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for Insight Abstract class</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            config(object): Object of Configuration Class</span>
@@ -118,16 +127,130 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_image_directories_obj</span> <span class="o">=</span> <span class="n">GetImageDirectories</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_images_obj</span> <span class="o">=</span> <span class="n">GetImages</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_inference_results_obj</span> <span class="o">=</span> <span class="n">GetInferenceresults</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_image_data_obj</span> <span class="o">=</span> <span class="n">GetImageData</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_last_inference_data_obj</span> <span class="o">=</span> <span class="n">GetLastInferenceData</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_last_inference_and_image_data_obj</span> <span class="o">=</span> <span class="n">GetLastInferenceAndImageData</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_export_images_obj</span> <span class="o">=</span> <span class="n">ExportImages</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Insight.get_image_directories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_image_directories">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``get_image_directories`` API</span>
+<div class="viewcode-block" id="Insight.get_image_directories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_image_directories">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_image_directories`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Device ID. If specified, returns a list of image</span>
-<span class="sd">                directories linked to the specified device ID.</span>
+<span class="sd">            device_id (str, optional): Edge AI Device ID. \</span>
+<span class="sd">                If not specified, returns all device_id information.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``get_image_directories`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------------+------------+------------+--------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*   | *Type*     | *Description*                  |</span>
+<span class="sd">                +------------------+------------+------------+--------------------------------+</span>
+<span class="sd">                | ``No_item_name`` |            |            | Device Affiliation Group Array |</span>
+<span class="sd">                +------------------+------------+------------+--------------------------------+</span>
+<span class="sd">                |                  |``group_id``| ``string`` | Set the device group ID.       |</span>
+<span class="sd">                +------------------+------------+------------+--------------------------------+</span>
+<span class="sd">                |                  | ``devices``| ``array``  | Refer :ref:`devices &lt;devices1&gt;`|</span>
+<span class="sd">                |                  |            |            | for more details               |</span>
+<span class="sd">                +------------------+------------+------------+--------------------------------+</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | devices           | .. _devices1:                                              |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | ``devices``       |  ``array``         |            | Device Array.            |</span>
+<span class="sd">                |                   |                    |            | The subordinate          |</span>
+<span class="sd">                |                   |                    |            | elements are listed      |</span>
+<span class="sd">                |                   |                    |            | in ascending order       |</span>
+<span class="sd">                |                   |                    |            | by device ID             |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_id``       | ``string`` | Device ID.               |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_name``     | ``string`` | Device name at the time  |</span>
+<span class="sd">                |                   |                    |            | of registration          |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``Image``           | ``array``  | The descendant elements  |</span>
+<span class="sd">                |                   |                    |            | are listed in ascending  |</span>
+<span class="sd">                |                   |                    |            | order by directory name. |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_image_directories_obj</span><span class="o">.</span><span class="n">get_image_directories</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span></div>
 
@@ -135,24 +258,123 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">number_of_images</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">order_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">number_of_images</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ASC&quot;</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``get_images`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_images`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : The Device ID.</span>
-<span class="sd">            sub_directory_name (str, required) : The Sub Directory Name.</span>
-<span class="sd">                The subdirectory will be the directory notified in the response</span>
-<span class="sd">                of start_upload_inference_result.</span>
-
-<span class="sd">            number_of_images (int, optional) : The Number Of Images. 0-256. If not specified: 50</span>
-<span class="sd">            skip (int, optional) : The Skip. If not specified: 0</span>
-<span class="sd">            order_by (str, optional) : The Order By. DESC, ASC, desc, asc. If not specified:ASC</span>
+<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
+<span class="sd">            sub_directory_name (str, required) : Image storage subdirectory. \</span>
+<span class="sd">                The subdirectory is the directory notified by the response of \</span>
+<span class="sd">                start_upload_inference_result or the directory obtained by \</span>
+<span class="sd">                get_image_directories.</span>
+<span class="sd">            number_of_images (int, optional) : Number of images acquired. \</span>
+<span class="sd">                0-256. If not specified: 50.</span>
+<span class="sd">            skip (int, optional) : Number of images to skip fetching. \</span>
+<span class="sd">                If not specified: 0.</span>
+<span class="sd">            order_by (str, optional) : Sort Order: Sort order by date and time the \</span>
+<span class="sd">                image was created. DESC, ASC, desc, asc. \</span>
+<span class="sd">                If not specified: ASC.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``get_images`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                | ``total_image_count`` |            |  ``int``   | Set the total number of   |</span>
+<span class="sd">                |                       |            |            | images                    |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
+<span class="sd">                |                       |            |            | The descendant elements   |</span>
+<span class="sd">                |                       |            |            | are listed in ascending   |</span>
+<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
+<span class="sd">                |                       |            |            | \*Base64 encoding         |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_images_obj</span><span class="o">.</span><span class="n">get_images</span><span class="p">(</span>
             <span class="n">device_id</span><span class="p">,</span> <span class="n">sub_directory_name</span><span class="p">,</span> <span class="n">number_of_images</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">order_by</span>
@@ -162,31 +384,33 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">number_of_inference_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">raw</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">number_of_inference_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+        <span class="n">raw</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">time</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Abstract function call to ``get_inference_results`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_inference_results`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : The Device ID.</span>
-<span class="sd">            filter (str, optional) : The Filter. Search filter (same specifications as Cosmos DB UI</span>
+<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
+<span class="sd">            filter (str, optional) : The Filter. Search filter (same specifications as Cosmos DB UI\</span>
 <span class="sd">                                     on Azure portal except for the following)</span>
 
 <span class="sd">                                        - No need to prepend where string</span>
 <span class="sd">                                        - It is not necessary to add a deviceID.</span>
 
-<span class="sd">            number_of_inference_results (int, optional) :Number of acquisitions.</span>
+<span class="sd">            number_of_inference_results (int, optional) :Number of acquisitions.\</span>
 <span class="sd">                                                         If not specified: 20</span>
 
-<span class="sd">            raw (int, optional) : The Raw. Data format of inference results.</span>
+<span class="sd">            raw (int, optional) : Data format of inference results.</span>
+
 <span class="sd">                                    - 1:Append records stored in Cosmos DB.</span>
 <span class="sd">                                    - 0:Not granted.</span>
 
-<span class="sd">                                        If not specified: 0</span>
+<span class="sd">                                        If not specified: 1</span>
 
-<span class="sd">            time (str, optional) : The Time. Inference result data stored in Cosmos DB.</span>
+<span class="sd">            time (str, optional) : The Time. Inference result data stored in Cosmos DB.\</span>
 <span class="sd">                                   yyyyMMddHHmmssfff</span>
+
 <span class="sd">                                    - yyyy: 4-digit year string</span>
 <span class="sd">                                    - MM: 2-digit month string</span>
 <span class="sd">                                    - dd: 2-digit day string</span>
@@ -196,10 +420,789 @@
 <span class="sd">                                    - fff: 3-digit millisecond string</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Dictionary object returned by ``get_inference_results`` API</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">            - when time parameter is not specified</span>
+
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | ``No_item_name`` |             |           | The subordinate elements are       |</span>
+<span class="sd">                |                  |             |           | listed in descending order         |</span>
+<span class="sd">                |                  |             |           | by system registration date        |</span>
+<span class="sd">                |                  |             |           | and time.                          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``id``       | ``string``| The ID of the inference            |</span>
+<span class="sd">                |                  |             |           | result metadata.                   |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Dnn Model Version                  |</span>
+<span class="sd">                |                  |_version_id``|           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model type.                        |</span>
+<span class="sd">                |                  |_type``      |           |                                    |</span>
+<span class="sd">                |                  |             |           | 00: Image classification           |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           | 01: Object detection               |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           | In the case of imported            |</span>
+<span class="sd">                |                  |             |           | models, 01 is fixed at the         |</span>
+<span class="sd">                |                  |             |           | current level.                     |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``training   |``string`` | Name of the training_kit           |</span>
+<span class="sd">                |                  |_kit_name``  |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``_ts``      |``string`` | Timestamp. = System                |</span>
+<span class="sd">                |                  |             |           | registration date and time         |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr9&gt;`|</span>
+<span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inference_result   | .. _ifr9:                                                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
+<span class="sd">                |                    |              |            |in ascending order of project  |</span>
+<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
+<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if9&gt;`  |</span>
+<span class="sd">                |                    |              |            |for more details               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inferences         | .. _if9:                                                  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
+<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
+<span class="sd">                |                    |              |            |going through PPL              |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
+<span class="sd">            - when time parameter is specified</span>
+
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*     | *Type*    | *Description*                  |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                | ``No_item_name`` |              |           | The subordinate elements are   |</span>
+<span class="sd">                |                  |              |           | listed in descending order     |</span>
+<span class="sd">                |                  |              |           | by system registration date    |</span>
+<span class="sd">                |                  |              |           | and time.                      |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``id``        | ``string``| The ID of the inference result |</span>
+<span class="sd">                |                  |              |           | metadata. = GUID automatically |</span>
+<span class="sd">                |                  |              |           | fired by CosmosDB              |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``device_id`` | ``string``| Device ID.                     |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``model_id``  | ``string``| Model ID.                      |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``_ts``       |``string`` | Timestamp. = System            |</span>
+<span class="sd">                |                  |              |           | registration date and time     |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+<span class="sd">                |                  |``inferences``|``array``  |Refer :ref:`inferences &lt;if7&gt;`   |</span>
+<span class="sd">                |                  |              |           |for more details                |</span>
+<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_inference_results_obj</span><span class="o">.</span><span class="n">get_inference_results</span><span class="p">(</span>
             <span class="n">device_id</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">number_of_inference_results</span><span class="p">,</span> <span class="n">raw</span><span class="p">,</span> <span class="n">time</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Insight.get_image_data"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_image_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">number_of_images</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">order_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ASC&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_image_data`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
+<span class="sd">            sub_directory_name (str, required) : Image storage subdirectory. \</span>
+<span class="sd">                The subdirectory is the directory notified by the response of \</span>
+<span class="sd">                start_upload_inference_resultor the directory obtained by get_image_directories.</span>
+<span class="sd">            number_of_images (int, optional) : Number of images acquired. If not specified: 50</span>
+<span class="sd">            skip (int, optional) : number of images to skip fetching. If not specified: 0</span>
+<span class="sd">            order_by (str, optional) : Sort Order: Sort order by date \</span>
+<span class="sd">                and time the image was created. Values allowed: DESC, ASC, desc, asc. \</span>
+<span class="sd">                If not specified: ASC.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - dict</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                | ``total_image_count`` |            |  ``int``   | Set the total number of   |</span>
+<span class="sd">                |                       |            |            | images                    |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
+<span class="sd">                |                       |            |            | The descendant elements   |</span>
+<span class="sd">                |                       |            |            | are listed in ascending   |</span>
+<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
+<span class="sd">                |                       |            |            | \*Base64 encoding         |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_image_data_obj</span><span class="o">.</span><span class="n">get_image_data</span><span class="p">(</span>
+            <span class="n">device_id</span><span class="p">,</span> <span class="n">sub_directory_name</span><span class="p">,</span> <span class="n">number_of_images</span><span class="p">,</span> <span class="n">skip</span><span class="p">,</span> <span class="n">order_by</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Insight.get_last_inference_data"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_last_inference_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_inference_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_last_inference_data`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (str, required) : The Device ID.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">            - when time parameter is not specified</span>
+
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                | *Level1*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``id``       | ``string``| The ID of the inference            |</span>
+<span class="sd">                |             |           | result metadata.                   |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``device_id``| ``string``| Device ID.                         |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``model_id`` | ``string``| Model ID.                          |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``model      |``string`` | Dnn Model Version                  |</span>
+<span class="sd">                |_version_id``|           |                                    |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``model      |``string`` | Model type.                        |</span>
+<span class="sd">                |_type``      |           |                                    |</span>
+<span class="sd">                |             |           | 00: Image classification           |</span>
+<span class="sd">                |             |           |                                    |</span>
+<span class="sd">                |             |           | 01: Object detection               |</span>
+<span class="sd">                |             |           |                                    |</span>
+<span class="sd">                |             |           | In the case of imported            |</span>
+<span class="sd">                |             |           | models, 01 is fixed at the         |</span>
+<span class="sd">                |             |           | current level.                     |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``training   |``string`` | Name of the training_kit           |</span>
+<span class="sd">                |_kit_name``  |           |                                    |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``_ts``      |``string`` | Timestamp. = System                |</span>
+<span class="sd">                |             |           | registration date and time         |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr4&gt;`|</span>
+<span class="sd">                |_result``    |           |for more details                    |</span>
+<span class="sd">                +-------------+-----------+------------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inference_result   | .. _ifr4:                                                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
+<span class="sd">                |                    |              |            |in ascending order of project  |</span>
+<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
+<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if4&gt;`  |</span>
+<span class="sd">                |                    |              |            |for more details               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inferences         | .. _if4:                                                  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
+<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
+<span class="sd">                |                    |              |            |going through PPL              |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
+<span class="sd">            - when time parameter is specified</span>
+
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+<span class="sd">                | *Level1*     | *Type*    | *Description*                  |</span>
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+<span class="sd">                |``id``        | ``string``| The ID of the inference result |</span>
+<span class="sd">                |              |           | metadata. = GUID automatically |</span>
+<span class="sd">                |              |           | fired by CosmosDB              |</span>
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+<span class="sd">                |``device_id`` | ``string``| Device ID.                     |</span>
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+<span class="sd">                |``model_id``  | ``string``| Model ID.                      |</span>
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+<span class="sd">                |``_ts``       |``string`` | Timestamp. = System            |</span>
+<span class="sd">                |              |           | registration date and time     |</span>
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+<span class="sd">                |``inferences``|``array``  |Refer :ref:`inferences &lt;if4&gt;`   |</span>
+<span class="sd">                |              |           |for more details                |</span>
+<span class="sd">                +--------------+-----------+--------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_last_inference_data_obj</span><span class="o">.</span><span class="n">get_last_inference_data</span><span class="p">(</span><span class="n">device_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Insight.get_last_inference_and_image_data"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_last_inference_and_image_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_inference_and_image_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_last_inference_and_image_data`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device_id (str, required) : The Device ID.</span>
+<span class="sd">            sub_directory_name (str, required) : The Sub Directory Name.</span>
+<span class="sd">                The subdirectory will be the directory notified in the response</span>
+<span class="sd">                of start_upload_inference_result.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - dict</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                | *Level1*           | *Type*     | *Description*                      |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                | ``image_data``     |``array``   | Refer :ref:`image_data &lt;id1&gt;`      |</span>
+<span class="sd">                |                    |            | for more details                   |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                |``inference_data``  |``array``   | Refer :ref:`inference_data &lt;ifd1&gt;` |</span>
+<span class="sd">                |                    |            | for more details                   |</span>
+<span class="sd">                +--------------------+------------+------------------------------------+</span>
+
+<span class="sd">                +----------------+---------------------------------------------------------------+</span>
+<span class="sd">                | image_data     | .. _id1:                                                      |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*       | *Level2*             | *Type*     | *Description*             |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                | ``image_data`` |                      | ``array``  | image data                |</span>
+<span class="sd">                |                |                      |            |                           |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                |                | ``total_image_count``|  ``int``   | Set the total number of   |</span>
+<span class="sd">                |                |                      |            | images                    |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                |                | ``images``           | ``array``  | Refer :ref:`images &lt;im1&gt;` |</span>
+<span class="sd">                |                |                      |            | for more details          |</span>
+<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+
+<span class="sd">                +-----------------------+-----------------------------------------------------+</span>
+<span class="sd">                | images                | .. _im1:                                            |</span>
+<span class="sd">                +-----------------------+------------+----------------------------------------+</span>
+<span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
+<span class="sd">                |                       |            |            | The descendant elements   |</span>
+<span class="sd">                |                       |            |            | are listed in ascending   |</span>
+<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
+<span class="sd">                |                       |            |            | \*Base64 encoding         |</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
+
+<span class="sd">                +------------------+----------------------------------------------------------+</span>
+<span class="sd">                | inference_data   | .. _ifd1:                                                |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*         | *Type*     | *Description*            |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |``inference_data``|                  |``array``   | inference_data           |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``id``            | ``string`` | The ID of the inference  |</span>
+<span class="sd">                |                  |                  |            | result metadata.         |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``device_id``     | ``string`` | Device ID.               |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``model_id``      | ``string`` | Model ID.                |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``model           |``string``  | Dnn Model Version        |</span>
+<span class="sd">                |                  |_version_id``     |            |                          |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``model           |``string``  |Model type                |</span>
+<span class="sd">                |                  |_type``           |            |                          |</span>
+<span class="sd">                |                  |                  |            |00: Image classification  |</span>
+<span class="sd">                |                  |                  |            |                          |</span>
+<span class="sd">                |                  |                  |            |01: Object detection      |</span>
+<span class="sd">                |                  |                  |            |                          |</span>
+<span class="sd">                |                  |                  |            |In the case of imported   |</span>
+<span class="sd">                |                  |                  |            |models, 01 is fixed at the|</span>
+<span class="sd">                |                  |                  |            |current level.            |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``training        |``string``  |Name of the training_kit  |</span>
+<span class="sd">                |                  |_kit_name``       |            |                          |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``_ts``           |``string``  |Timestamp. = System       |</span>
+<span class="sd">                |                  |                  |            |registration date and time|</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                |                  |``inference       |``string``  | Raw data for inference   |</span>
+<span class="sd">                |                  |_result``         |            | result metadata          |</span>
+<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_last_inference_and_image_data_obj</span><span class="o">.</span><span class="n">get_last_inference_and_image_data</span><span class="p">(</span>
+            <span class="n">device_id</span><span class="o">=</span><span class="n">device_id</span><span class="p">,</span> <span class="n">sub_directory_name</span><span class="o">=</span><span class="n">sub_directory_name</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Insight.export_images"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.export_images">[docs]</a>    <span class="k">def</span> <span class="nf">export_images</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">from_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">file_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``export_images`` API</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str, required) : The public key. \</span>
+<span class="sd">                Base64-encoded format of the entire contents of the public key PEM file</span>
+<span class="sd">            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm</span>
+<span class="sd">            to_datetime (str, optional) : Date and time (To). Form: yyyyMMddhhmm</span>
+<span class="sd">            device_id (str, optional) : Device ID.</span>
+<span class="sd">            file_format (str, optional) : Image file format. \</span>
+<span class="sd">                If not specified, no filtering. \</span>
+<span class="sd">                Value definition</span>
+
+<span class="sd">                - JPG</span>
+<span class="sd">                - BMP</span>
+<span class="sd">                - RAW</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*    | *Type*     | *Description*             |</span>
+<span class="sd">                +-------------+------------+---------------------------+</span>
+<span class="sd">                | ``key``     | ``string`` | A common key for image    |</span>
+<span class="sd">                |             |            | decryption encrypted with |</span>
+<span class="sd">                |             |            | a public key.             |</span>
+<span class="sd">                +-------------+------------+---------------------------+</span>
+<span class="sd">                | ``url``     | ``string`` | SUS URI for download      |</span>
+<span class="sd">                +-------------+------------+---------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_export_images_obj</span><span class="o">.</span><span class="n">export_images</span><span class="p">(</span>
+            <span class="n">key</span><span class="p">,</span>
+            <span class="n">from_datetime</span><span class="p">,</span>
+            <span class="n">to_datetime</span><span class="p">,</span>
+            <span class="n">device_id</span><span class="p">,</span>
+            <span class="n">file_format</span><span class="p">,</span>
         <span class="p">)</span></div></div>
 </pre></div>
 

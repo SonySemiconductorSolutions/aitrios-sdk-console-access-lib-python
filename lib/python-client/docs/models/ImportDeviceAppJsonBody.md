@@ -13,7 +13,7 @@ Key | Input Type | Accessed Type | Description | Notes
 **app_name** | str,  | str,  | App name | 
 **file_content** | str,  | str,  | File content | 
 **compiled_flg** | str,  | str,  | Compiled flg(0:not compiled, 1:Compiled) | 
-**file_name** | str,  | str,  | File name | 
+**file_name** | str,  | str,  | FileName | 
 **version_number** | str,  | str,  | App version number123 | 
 **entry_point** | str,  | str,  | App entry point | [optional] if omitted the server will use the default value of "ppl"
 **comment** | str,  | str,  | Comment | [optional] 

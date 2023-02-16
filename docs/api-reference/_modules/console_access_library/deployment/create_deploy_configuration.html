@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>console_access_library.deployment.create_deploy_configuration &mdash; Console Access Library 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.2.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.deployment.create_deploy_configuration</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for console_access_library.deployment.create_deploy_configuration</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
+
+<span class="c1"># pylint:disable=missing-module-docstring</span>
+<span class="c1"># pylint:disable=import-error</span>
+<span class="c1"># pylint:disable=wrong-import-position</span>
+<span class="c1"># pylint:disable=duplicate-code</span>
+<span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=redefined-builtin</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
+<span class="c1"># pylint:disable=too-many-branches</span>
+<span class="c1"># pylint:disable=too-many-locals</span>
+<span class="c1"># pylint:disable=too-many-return-statements</span>
+<span class="c1"># pylint:disable=protected-access</span>
+<span class="c1"># pylint:disable=no-value-for-parameter</span>
+<span class="c1"># pylint:disable=broad-except</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">aitrios_console_rest_client_sdk_primitive</span>
+<span class="kn">from</span> <span class="nn">aitrios_console_rest_client_sdk_primitive.apis.tags</span> <span class="kn">import</span> <span class="n">deploy_api</span>
+<span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validates_schema</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SchemaCreateDeployConfiguration"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.create_deploy_configuration.SchemaCreateDeployConfiguration">[docs]</a><span class="k">class</span> <span class="nc">SchemaCreateDeployConfiguration</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for API to create deployment configuration.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: str, required : config_id.</span>
+    <span class="n">config_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for config_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Config Description.</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : SensorLoader version number</span>
+    <span class="n">sensor_loader_version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for sensor_loader_version_number&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Sensor version number</span>
+    <span class="n">sensor_version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for sensor_version_number&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Model ID</span>
+    <span class="n">model_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Model version number</span>
+    <span class="n">model_version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model_version_number&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : ApFw version number</span>
+    <span class="n">ap_fw_version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for ap_fw_version_number&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="SchemaCreateDeployConfiguration.validate"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.create_deploy_configuration.SchemaCreateDeployConfiguration.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;config_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;config_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;comment is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;sensor_loader_version_number&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensor_loader_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensor_loader_version_number&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;sensor_loader_version_number is required or can&#39;t be empty string&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;sensor_version_number&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensor_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sensor_version_number&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;sensor_version_number is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;model_id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;model_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;model_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;model_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;model_version_number&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;model_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;model_version_number&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;model_version_number is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;ap_fw_version_number&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ap_fw_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;ap_fw_version_number&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;ap_fw_version_number is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CreateDeployConfiguration"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.create_deploy_configuration.CreateDeployConfiguration">[docs]</a><span class="k">class</span> <span class="nc">CreateDeployConfiguration</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements CreateDeployConfiguration API.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ConsoleAccessBaseClass (object): Inherited from \</span>
+<span class="sd">            :class:`~console_access_library.common.ConsoleAccessBaseClass`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for the class CreateDeployConfiguration</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): Object of Configuration Class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+
+<div class="viewcode-block" id="CreateDeployConfiguration.create_deploy_configuration"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.create_deploy_configuration.CreateDeployConfiguration.create_deploy_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">create_deploy_configuration</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">config_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sensor_loader_version_number</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">sensor_version_number</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">model_version_number</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ap_fw_version_number</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;	Register the deployment config information to deploy the following to the device. \</span>
+<span class="sd">        ・Firmware ・AI model</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config_id (str, required) : The config ID. Up to 20 characters \</span>
+<span class="sd">                half-width only. \</span>
+<span class="sd">                The following characters are allowed \</span>
+<span class="sd">                Alphanumeric characters \</span>
+<span class="sd">                -hyphen \</span>
+<span class="sd">                _ Underscore \</span>
+<span class="sd">                () Small parentheses \</span>
+<span class="sd">                . dot</span>
+<span class="sd">            comment (str, optional) : 100 characters or less</span>
+<span class="sd">            sensor_loader_version_number (str, optional) : If -1 is specified \</span>
+<span class="sd">                the default version is applied The default value is system setting &quot;DVC0017&quot;</span>
+<span class="sd">            sensor_version_number (str, optional) : If -1 is specified \</span>
+<span class="sd">                the default version is applied The default value is system setting &quot;DVC0018&quot;</span>
+<span class="sd">            model_id (str, optional) : The model_id. \</span>
+<span class="sd">                If not specified, no model deployment.</span>
+<span class="sd">            model_version_number (str, optional) : The Model version number. \</span>
+<span class="sd">                If not specified, the latest version is applied.</span>
+<span class="sd">            ap_fw_version_number (str, optional) : The ApFw version number. \</span>
+<span class="sd">                If not specified, no firmware deployment.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
+<span class="sd">                +------------+------------+-------------------------------+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +------------+------------+-------------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import os</span>
+<span class="sd">                import sys</span>
+<span class="sd">                from pprint import pprint</span>
+
+<span class="sd">                from console_access_library.client import Client</span>
+<span class="sd">                from console_access_library.common.config import Config</span>
+<span class="sd">                from console_access_library.common.read_console_access_settings</span>
+<span class="sd">                import ReadConsoleAccessSettings</span>
+
+<span class="sd">                # For Console Access Library API Usage,</span>
+<span class="sd">                # edit console access setting configuration parameters with real values.</span>
+<span class="sd">                # file_path: samples/console_access_settings.yaml</span>
+<span class="sd">                # console_access_settings:</span>
+<span class="sd">                #     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
+<span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+
+<span class="sd">                # Set path for Console Access Library Setting File.</span>
+<span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
+<span class="sd">                                                 &quot;samples&quot;,</span>
+<span class="sd">                                                 &quot;console_access_settings.yaml&quot;)</span>
+
+<span class="sd">                # Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="sd">                read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)</span>
+
+<span class="sd">                # Instantiate Console Access Library Config.</span>
+<span class="sd">                config_obj = Config(</span>
+<span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.client_id,</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                )</span>
+
+<span class="sd">                # Instantiate Console Access Library Client.</span>
+<span class="sd">                client_obj = Client(config_obj)</span>
+
+<span class="sd">                # Create Instance for Deployment</span>
+<span class="sd">                deployment_obj = client_obj.get_deployment()</span>
+
+<span class="sd">                # set the real value</span>
+<span class="sd">                config_id = &quot;__config_id__&quot;</span>
+<span class="sd">                comment = &quot;__comment__&quot;</span>
+<span class="sd">                sensor_loader_version_number = &quot;__sensor_loader_version_number__&quot;</span>
+<span class="sd">                sensor_version_number = &quot;__sensor_version_number__&quot;</span>
+<span class="sd">                model_id = &quot;__model_id__&quot;</span>
+<span class="sd">                model_version_number = &quot;__model_version_number__&quot;</span>
+<span class="sd">                ap_fw_version_number = &quot;__ap_fw_version_number__&quot;</span>
+
+<span class="sd">                # Deployment - CreateDeployConfiguration</span>
+<span class="sd">                response = deployment_obj.create_deploy_configuration(</span>
+<span class="sd">                    config_id,</span>
+<span class="sd">                    comment,</span>
+<span class="sd">                    sensor_loader_version_number,</span>
+<span class="sd">                    sensor_version_number,</span>
+<span class="sd">                    model_id,</span>
+<span class="sd">                    model_version_number,</span>
+<span class="sd">                    ap_fw_version_number,</span>
+<span class="sd">                )</span>
+<span class="sd">                pprint(response)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
+            <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
+
+            <span class="c1"># set default values, if not passed.</span>
+            <span class="k">if</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;sensor_loader_version_number&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
+                <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;sensor_loader_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;sensor_loader_version_number&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;sensor_version_number&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
+                <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;sensor_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;sensor_version_number&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s2">&quot;model_id&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;model_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;model_id&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;model_version_number&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
+                <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;model_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;model_version_number&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;ap_fw_version_number&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
+                <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;ap_fw_version_number&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;ap_fw_version_number&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Validate Schema</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="n">SchemaCreateDeployConfiguration</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
+
+            <span class="c1"># config_id</span>
+            <span class="c1"># Characters other than the following are forbidden characters</span>
+            <span class="c1"># ・Alphanumeric・Underscore ·Dot ·Hyphen ·Small parentheses</span>
+            <span class="k">if</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;config_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^[A-Za-z0-9_()-.]*$&quot;</span><span class="p">,</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;config_id&quot;</span><span class="p">]))</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;config_id has forbidden characters&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Enter a context with an instance of the API client</span>
+            <span class="k">with</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
+                <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+                <span class="c1"># Create an instance of the API class</span>
+                <span class="n">create_deploy_configurations_api_instance</span> <span class="o">=</span> <span class="n">deploy_api</span><span class="o">.</span><span class="n">DeployApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">create_deploy_configurations_api_instance</span><span class="o">.</span><span class="n">create_deploy_configuration</span><span class="p">(</span>
+                            <span class="n">query_params</span><span class="o">=</span><span class="n">_local_params</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">_return_create_deploy_configurations</span><span class="o">.</span><span class="n">body</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_key_error_response</span><span class="p">(</span>
+                        <span class="vm">__name__</span><span class="p">,</span> <span class="n">key_err</span>
+                    <span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiTypeError</span> <span class="k">as</span> <span class="n">type_err</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_type_error_response</span><span class="p">(</span>
+                        <span class="vm">__name__</span><span class="p">,</span> <span class="n">type_err</span>
+                    <span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiValueError</span> <span class="k">as</span> <span class="n">val_err</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_value_error_response</span><span class="p">(</span>
+                        <span class="vm">__name__</span><span class="p">,</span> <span class="n">val_err</span>
+                    <span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiAttributeError</span> <span class="k">as</span> <span class="n">attr_err</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_attribute_error_response</span><span class="p">(</span>
+                        <span class="vm">__name__</span><span class="p">,</span> <span class="n">attr_err</span>
+                    <span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiException</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_http_error_response</span><span class="p">(</span>
+                        <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
+                    <span class="p">)</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                    <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_generic_error_response</span><span class="p">(</span>
+                        <span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span>
+                    <span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">_return_create_deploy_configurations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_return_create_deploy_configurations</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

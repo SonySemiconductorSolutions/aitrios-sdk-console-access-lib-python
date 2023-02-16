@@ -21,6 +21,7 @@ Get Devices
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import manage_devices_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
+from aitrios_console_rest_client_sdk_primitive.model.device import Device
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -148,101 +149,7 @@ list, tuple,  | tuple,  |  |
 ### Tuple Items
 Class Name | Input Type | Accessed Type | Description | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-[items](#items) | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-# items
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**ins_date** | str,  | str,  | todo | 
-**upd_id** | str,  | str,  | todo | 
-**device_id** | str,  | str,  | todo | 
-**upd_date** | str,  | str,  | todo | 
-**connectionState** | str,  | str,  | todo | 
-**ins_id** | str,  | str,  | todo | 
-**lastActivityTime** | str,  | str,  | todo | 
-**place** | str,  | str,  | todo | [optional] 
-**comment** | str,  | str,  | todo | [optional] 
-**[property](#property)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | [optional] 
-**[models](#models)** | list, tuple,  | tuple,  |  | [optional] 
-**[device_groups](#device_groups)** | list, tuple,  | tuple,  |  | [optional] 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# property
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**device_name** | str,  | str,  | todo | 
-**internal_device_id** | str,  | str,  | todo | 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# models
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-list, tuple,  | tuple,  |  | 
-
-### Tuple Items
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[items](#items) | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-# items
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**model_version_id** | str,  | str,  | todo | [optional] 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# device_groups
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-list, tuple,  | tuple,  |  | 
-
-### Tuple Items
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[items](#items) | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-# items
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**ins_date** | str,  | str,  | todo | 
-**upd_id** | str,  | str,  | todo | 
-**device_group_id** | str,  | str,  | todo | 
-**upd_date** | str,  | str,  | todo | 
-**device_type** | str,  | str,  | todo | 
-**ins_id** | str,  | str,  | todo | 
-**comment** | str,  | str,  | todo | [optional] 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
+[**Device**]({{complexTypePrefix}}Device.md) | [**Device**]({{complexTypePrefix}}Device.md) | [**Device**]({{complexTypePrefix}}Device.md) |  | 
 
 #### get_devices.ApiResponseFor400
 Name | Type | Description  | Notes

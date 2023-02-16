@@ -1,18 +1,18 @@
-"""
-Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# ------------------------------------------------------------------------
+# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+# http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-"""
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ------------------------------------------------------------------------
 
 # pylint:disable=wrong-import-position
 # pylint:disable=duplicate-code
@@ -21,26 +21,33 @@ limitations under the License.
 # pylint:disable=import-error
 # pylint:disable=missing-function-docstring
 # pylint:disable=wrong-import-order
+# pylint:disable=too-many-arguments
+# pylint:disable=broad-except
+# pylint:disable=unused-argument
 
-import json
+import logging
 import os
 import sys
+import time
 import warnings
+from enum import Enum
 
 import aitrios_console_rest_client_sdk_primitive
+import jwt
 import requests
-import yaml
-from marshmallow import Schema, ValidationError, fields
+from marshmallow import Schema, ValidationError, fields, validates_schema
 
 warnings.filterwarnings("ignore")
 sys.path.append(".")
 
 from console_access_library.common.error_codes import ErrorCodes
-from console_access_library.common.logger import Logger
+from console_access_library.third_party.ocsp_checker import ocspchecker
+
+logger = logging.getLogger(__name__)
 
 
-class SchemaAppConfiguration(Schema):
-    """Schema for AppConfiguration
+class SchemaConsoleAccessSettingsConfiguration(Schema):
+    """Schema for ConsoleAccessSettingsConfiguration.
 
     Args:
         Schema (object): Inherited from Schema class of marshmallow
@@ -48,110 +55,196 @@ class SchemaAppConfiguration(Schema):
     """
 
     #: string, required : Console access URL
-    base_url = fields.String(required=False, missing=None)
+    console_endpoint = fields.String(
+        required=True,
+        error_messages={"invalid": "Invalid string for console_endpoint"},
+        strict=True,
+    )
 
     #: string, required : Access token issuance URL required for Console access
-    token_url = fields.String(required=False, missing=None)
+    portal_authorization_endpoint = fields.String(
+        required=True,
+        error_messages={"invalid": "Invalid string for portal_authorization_endpoint"},
+        strict=True,
+    )
 
     #: string, required : Client ID required to issue an access token
-    client_secret = fields.String(required=False, missing=None)
+    client_secret = fields.String(
+        required=True, error_messages={"invalid": "Invalid string for client_secret"}, strict=True
+    )
 
     #: string, required : Client Secret required to issue an access token
-    client_id = fields.String(required=False, missing=None)
+    client_id = fields.String(
+        required=True, error_messages={"invalid": "Invalid string for client_id"}, strict=True
+    )
+
+    @validates_schema
+    def validate(self, data, **_):
+        if str(data["console_endpoint"]).strip() == "":
+            raise ValidationError("console_endpoint is required")
+
+        if str(data["portal_authorization_endpoint"]).strip() == "":
+            raise ValidationError("portal_authorization_endpoint is required")
+
+        if str(data["client_secret"]).strip() == "":
+            raise ValidationError("client_secret is required")
+
+        if str(data["client_id"]).strip() == "":
+            raise ValidationError("client_id is required")
 
 
-class SchemaAppConfig(Schema):
-    """Schema for AppConfiguration
+class TokenValidationEnum(Enum):
+    """Access Token Validation Status Enum Value"""
 
-    Args:
-        Schema (object): Inherited from Schema class of marshmallow
-
-    """
-
-    #: app_configuration : Nested AppConfiguration schema
-    console_access_settings = fields.Nested(SchemaAppConfiguration())
+    VALID_TOKEN = "00"
+    TOKEN_EXPIRED = "01"
+    INVALID_TOKEN = "02"
 
 
 class Config:
     """This class obtains the configuration details needed for APIs from user."""
 
-    def __init__(self, settings_file_path):
+    def __init__(
+        self,
+        console_endpoint: str = None,
+        portal_authorization_endpoint: str = None,
+        client_id: str = None,
+        client_secret: str = None,
+    ):
         """Constructor method for config class
 
         Args:
-            settings_file_path (str, required): Path for the app configuration file.
+            console_endpoint (str, optional): Console access URL.
+            If not specified, read from environment variables.
+
+            portal_authorization_endpoint (str, optional): Access token issuance URL
+            required for console access.
+            If not specified, read from environment variables.
+
+            client_id (str, optional): Client ID required to issue an access token.
+            If not specified, read from environment variables.
+
+            client_secret (str, optional): Client Secret required to issue an access token.
+            If not specified, read from environment variables.
         """
-        self.base_url = None
-        self.configuration = None
+        self._console_endpoint = console_endpoint
+        self._portal_authorization_endpoint = portal_authorization_endpoint
+        self._client_secret = client_secret
+        self._client_id = client_id
+        self._save_last_access_token = None
+        self._proxy = None
 
-        self._token_url = None
-        self._client_secret = None
-        self._client_id = None
-        self._settings_file_path = settings_file_path
-        self.logger = Logger().set_logger()
+        #  If not specified, read from environment variables.
+        if self._console_endpoint is None:
+            self._console_endpoint = os.environ.get("CONSOLE_ENDPOINT")
 
-    def read_settings_file(self):
-        """Read App configuration file for configurations details needed for APIs.
+        if self._portal_authorization_endpoint is None:
+            self._portal_authorization_endpoint = os.environ.get("PORTAL_AUTHORIZATION_ENDPOINT")
+
+        if self._client_secret is None:
+            self._client_secret = os.environ.get("CLIENT_SECRET")
+
+        if self._client_id is None:
+            self._client_id = os.environ.get("CLIENT_ID")
+
+        # Validate Console Access Setting Configuration Parameters
+        self.validate_config_parameters(
+            self._console_endpoint,
+            self._portal_authorization_endpoint,
+            self._client_secret,
+            self._client_id,
+        )
+
+        # Read Proxy from environment 
+        self._proxy = self.get_https_proxy()
+
+        # Set configuration parameters.
+        self.configuration = aitrios_console_rest_client_sdk_primitive.Configuration(
+            host=self._console_endpoint, proxy=self._proxy
+        )
+
+    def validate_config_parameters(
+        self,
+        console_endpoint: str,
+        portal_authorization_endpoint: str,
+        client_id: str,
+        client_secret: str,
+    ):
+        """
+        Validation for Console Access Setting Configuration Parameters.
 
         Returns:
-            - "Success" - On Success
-            - "Generic Error" - If an error occurs when reading the configuration file
+            - "Throw exception on event of error occur" - On Error
         """
 
-        _return_value = ErrorCodes.SUCCESS
-        _settings = None
-
         try:
-            # Read the Configuration File
-            with open(self._settings_file_path, "r", encoding="utf-8") as file:
-                _yaml_data = yaml.safe_load(file)
+            # delete local argument 'self' form locals() for validation.
+            _local_params = locals()
+            if "self" in _local_params:
+                del _local_params["self"]
 
-                # Validate schema of demo configuration file
-                _settings = SchemaAppConfig().load(_yaml_data)
-                self.logger.info("App Configuration loaded successfully!!")
+            # Validate schema
+            SchemaConsoleAccessSettingsConfiguration().load(_local_params)
 
-        except ValidationError as err:
-            self.logger.error(str(err.messages))
-            self.logger.error("Configuration not loaded!!")
-            _return_value = ErrorCodes.GENERIC_ERROR
+        except Exception as ex:
+            logger.error(str(ex))
+            raise ex
 
+    def get_https_proxy(self):
+        """
+        Get proxy setting from environment variable
+
+        Returns:
+            - "__proxy_str__" - Proxy string
+        """
+
+        key = "https_proxy"
+        return os.environ.get(key) or os.environ.get(key.upper())
+
+    def validate_access_token(self, access_token: str):
+        """Function to Validate Access Token
+
+        Args:
+            access_token (str): Access Token for Authentication
+
+        Returns:
+            str : Enum value
+
+                - "00" for Valid Token
+                - "01" for Token expired
+                - "02" for Invalid token.
+        """
         try:
-            if _settings is not None:
+            access_token = access_token.split(" ")[1]
+            decoded_access_token = jwt.decode(access_token, options={"verify_signature": False})
+            exp = decoded_access_token.get("exp")
+            if exp - round(time.time()) <= 180 or exp < time.time():
+                logger.debug("Less than 3 mins for Token Expiry or Token Already expired")
+                return TokenValidationEnum.TOKEN_EXPIRED.value
+        except Exception as ex:
+            logger.debug("Invalid AccessToken %s", ex)
+            return TokenValidationEnum.INVALID_TOKEN.value
+        return TokenValidationEnum.VALID_TOKEN.value
 
-                # Store yaml configuration
-                self.base_url = _settings["console_access_settings"]["base_url"]
-                if self.base_url is None:
-                    self.base_url = os.environ.get("BASE_URL")
+    def _get_ocsp_status(self, host_url):
+        """Get OCSP status for the host_url"""
+        retval = False
+        try:
+            result = ocspchecker.get_ocsp_status(host=host_url)
+            if result[2] == "OCSP Status: GOOD":
+                retval = True
+        except Exception as ex:
+            logger.error(str(ex))
+        return retval
 
-                self._token_url = _settings["console_access_settings"]["token_url"]
-                if self._token_url is None:
-                    self._token_url = os.environ.get("TOKEN_URL")
-
-                self._client_secret = _settings["console_access_settings"]["client_secret"]
-                if self._client_secret is None:
-                    self._client_secret = os.environ.get("CLIENT_SECRET")
-
-                self._client_id = _settings["console_access_settings"]["client_id"]
-                if self._client_id is None:
-                    self._client_id = os.environ.get("CLIENT_ID")
-
-                # Set configuration parameters.
-                self.configuration = aitrios_console_rest_client_sdk_primitive.Configuration(
-                    host=self.base_url
-                )
-
-        except KeyError as err:
-            self.logger.error(str(err))
-            _return_value = ErrorCodes.GENERIC_ERROR
-
-        return _return_value
-
-    def get_access_token(self):
+    def _get_access_token(
+        self,
+    ):
         """Get Access Token from Token Server needed for API.
 
         Returns:
             - "__access_token_str__" - On Success
-            - "Generic Error" - If an error occurs when obtaining an access token
+            - "Throw exception on event of error occur" - On Error
         """
 
         _return_value = ErrorCodes.SUCCESS
@@ -172,39 +265,50 @@ class Config:
 
             # Create an instance of the API class
             _response = requests.post(
-                url=self._token_url, headers=_headers, data=_data, timeout=180
+                url=self._portal_authorization_endpoint, headers=_headers, data=_data, timeout=180
             )
             _response_json = _response.json()
             _return_value = "bearer " + _response_json["access_token"]
 
-        except requests.exceptions.HTTPError as ex:
-            self.logger.error(str(ex.response.text))
-            _return_value = ErrorCodes.GENERIC_ERROR
+        except Exception as ex:
+            logger.error(str(ex))
+            raise ex
 
         return _return_value
 
-    def _get_access_token(self):
-        _access_token = None
-        _headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
-        _data = {
-            "grant_type": "client_credentials",
-            "client_secret": self._client_secret,
-            "scope": "system",
-            "client_id": self._client_id,
-        }
-        print(_headers)
-        print(_data)
-        print(self._token_url)
+    def get_access_token(
+        self,
+    ):
+        """Check if access token is available or not, and check its validity.
 
-        with aitrios_console_rest_client_sdk_primitive.ApiClient() as _api_client:
-            # Create an instance of the API class
-            _response = _api_client.rest_client.request(
-                url=self._token_url, method="POST", headers=_headers, body=_data
+        Returns:
+            - "__access_token_str__" - On Success
+            - "Generic Error" - If an error occurs when obtaining an access token
+        """
+
+        # If proxy is not set, Check for OCSP Status
+        if self._proxy is None:
+            # verify revocation of certificate before urllib3 request,
+            _console_endpoint_ocsp_status = self._get_ocsp_status(self._console_endpoint)
+            _portal_authorization_endpoint_ocsp_status = self._get_ocsp_status(
+                self._portal_authorization_endpoint
             )
-            _response_json = json.loads(_response.data)
-            print(_response_json)
-            _access_token = "bearer " + _response_json["access_token"]
+            if not _console_endpoint_ocsp_status:
+                raise Exception(f"OCSP Status of URL {self._console_endpoint} is not good")
 
-        return _access_token
+            if not _portal_authorization_endpoint_ocsp_status:
+                raise Exception(f"OCSP Status of URL {self._portal_authorization_endpoint} is not good")
+        else:
+            logger.info("Bypass verification of revocation of certificate before urllib3 request")
+
+        _validation_code = self.validate_access_token(self._save_last_access_token)
+        # If the Access token variable has a token, check the validity of the token,
+        # if expired or invalid token found generate new access token
+        if _validation_code in [
+            TokenValidationEnum.TOKEN_EXPIRED.value,
+            TokenValidationEnum.INVALID_TOKEN.value,
+        ]:
+            self._save_last_access_token = self._get_access_token()
+
+        # Return the access token stored the Access token variable
+        return self._save_last_access_token

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>console_access_library.insight.export_images &mdash; Console Access Library 0.2.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+          </a>
+              <div class="version">
+                0.2.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Console Access Library</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">console_access_library.insight.export_images</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for console_access_library.insight.export_images</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ------------------------------------------------------------------------</span>
+<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------</span>
+
+<span class="c1"># pylint:disable=missing-module-docstring</span>
+<span class="c1"># pylint:disable=import-error</span>
+<span class="c1"># pylint:disable=wrong-import-position</span>
+<span class="c1"># pylint:disable=duplicate-code</span>
+<span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=redefined-builtin</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
+<span class="c1"># pylint:disable=too-many-locals</span>
+<span class="c1"># pylint:disable=too-many-return-statements</span>
+<span class="c1"># pylint:disable=protected-access</span>
+<span class="c1"># pylint:disable=broad-except</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">aitrios_console_rest_client_sdk_primitive</span>
+<span class="kn">from</span> <span class="nn">aitrios_console_rest_client_sdk_primitive.apis.tags</span> <span class="kn">import</span> <span class="n">insight_api</span>
+<span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validates_schema</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SchemaExportImages"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.export_images.SchemaExportImages">[docs]</a><span class="k">class</span> <span class="nc">SchemaExportImages</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for API to export images.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: str, required : The public key.</span>
+    <span class="c1">#:                 Base64-encoded format of the entire contents of the public key PEM file</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for key&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Date and time (From). Form: yyyyMMddhhmm</span>
+    <span class="n">from_datetime</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for from_datetime&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Date and time (To). Form: yyyyMMddhhmm</span>
+    <span class="n">to_datetime</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for to_datetime&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Device ID.</span>
+    <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Image file format. If not specified, no filtering.</span>
+    <span class="c1">#:                 Value definition</span>
+    <span class="c1">#:                 JPG</span>
+    <span class="c1">#:                 BMP</span>
+    <span class="c1">#:                 RAW</span>
+    <span class="n">file_format</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for file_format&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="SchemaExportImages.validate"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.export_images.SchemaExportImages.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;key is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="n">date_format</span> <span class="o">=</span> <span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">%H%M&quot;</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">&quot;from_datetime&quot;</span> <span class="ow">in</span> <span class="n">data</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">],</span> <span class="n">date_format</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Invalid time format&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span>
+        <span class="k">elif</span> <span class="s2">&quot;from_datetime&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;from_datetime is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">&quot;to_datetime&quot;</span> <span class="ow">in</span> <span class="n">data</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">],</span> <span class="n">date_format</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Invalid time format&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">ex</span>
+        <span class="k">elif</span> <span class="s2">&quot;to_datetime&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;to_datetime is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;device_id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;file_format&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;file_format&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;file_format&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;file_format is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ExportImages"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.export_images.ExportImages">[docs]</a><span class="k">class</span> <span class="nc">ExportImages</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements API to export images.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ConsoleAccessBaseClass (object): Inherited from \</span>
+<span class="sd">            :class:`~console_access_library.common.ConsoleAccessBaseClass`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for the class ExportImages</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (object): Object of Configuration Class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+
+<div class="viewcode-block" id="ExportImages.export_images"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.export_images.ExportImages.export_images">[docs]</a>    <span class="k">def</span> <span class="nf">export_images</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">from_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">file_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the URL to export the image with the specified conditions in zip file format.\</span>
+<span class="sd">            * Pre-encrypted, for learning images in other environments</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (str, required) : The public key. \</span>
+<span class="sd">                Base64-encoded format of the entire contents of the public key PEM file</span>
+<span class="sd">            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm</span>
+<span class="sd">            to_datetime (str, optional) : Date and time (To). Form: yyyyMMddhhmm</span>
+<span class="sd">            device_id (str, optional) : Device ID.</span>
+<span class="sd">            file_format (str, optional) : Image file format. \</span>
+<span class="sd">                If not specified, no filtering. \</span>
+<span class="sd">                Value definition</span>
+
+<span class="sd">                - JPG</span>
+<span class="sd">                - BMP</span>
+<span class="sd">                - RAW</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            **Return Type**</span>
+
+<span class="sd">            - On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</span>
+<span class="sd">            - On Error Response - dict</span>
+
+<span class="sd">            **Success Response Schema**</span>
+
+<span class="sd">                +-------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*    | *Type*     | *Description*             |</span>
+<span class="sd">                +-------------+------------+---------------------------+</span>
+<span class="sd">                | ``key``     | ``string`` | A common key for image    |</span>
+<span class="sd">                |             |            | decryption encrypted with |</span>
+<span class="sd">                |             |            | a public key.             |</span>
+<span class="sd">                +-------------+------------+---------------------------+</span>
+<span class="sd">                | ``url``     | ``string`` | SUS URI for download      |</span>
+<span class="sd">                +-------------+------------+---------------------------+</span>
+
+<span class="sd">            **Error Response Schema**</span>
+
+<span class="sd">                - **Generic Error Response** :</span>
+
+<span class="sd">                    If Any generic error returned from the Low Level SDK</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Generic Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Validation Error Response** :</span>
+
+<span class="sd">                    If incorrect API input parameters OR</span>
+<span class="sd">                    if any input string parameter found empty.</span>
+<span class="sd">                    Then, Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : validation error message for respective input parameter</span>
+<span class="sd">                    - ``code`` (str) : &quot;E001&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Key Error Response** :</span>
+
+<span class="sd">                    If API key error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Key Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Type Error Response** :</span>
+
+<span class="sd">                    If API type error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Type Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Attribute Error Response** :</span>
+
+<span class="sd">                    If API attribute error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Attribute Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **Value Error Response** :</span>
+
+<span class="sd">                    If API value error returned from the Low Level SDK API.</span>
+<span class="sd">                    Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Low Level SDK API</span>
+<span class="sd">                    - ``code`` (str) : &quot;Value Error&quot;</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">                - **HTTP Error Response** :</span>
+
+<span class="sd">                    If the API http_status returned from the Console Server</span>
+<span class="sd">                    is other than 200. Dictionary with below key and value pairs.</span>
+
+<span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
+<span class="sd">                    - ``message`` (str) : error message returned from the Console server.</span>
+<span class="sd">                    - ``code`` (str) : error code received from the Console server.</span>
+<span class="sd">                    - ``datetime`` (str) : Time</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                import os</span>
+<span class="sd">                import sys</span>
+<span class="sd">                from pprint import pprint</span>
+
+<span class="sd">                from console_access_library.client import Client</span>
+<span class="sd">                from console_access_library.common.config import Config</span>
+<span class="sd">                from console_access_library.common.read_console_access_settings</span>
+<span class="sd">                import ReadConsoleAccessSettings</span>
+
+<span class="sd">                # For Console Access Library API Usage,</span>
+<span class="sd">                # edit console access setting configuration parameters with real values.</span>
+<span class="sd">                # file_path: samples/console_access_settings.yaml</span>
+<span class="sd">                # console_access_settings:</span>
+<span class="sd">                #     console_endpoint: &quot;__console_endpoint__&quot;</span>
+<span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
+<span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
+<span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+
+<span class="sd">                # Set path for Console Access Library Setting File.</span>
+<span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
+<span class="sd">                                                 &quot;samples&quot;,</span>
+<span class="sd">                                                 &quot;console_access_settings.yaml&quot;)</span>
+
+<span class="sd">                # Instantiate Console Access Library ReadConsoleAccessSettings.</span>
+<span class="sd">                read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)</span>
+
+<span class="sd">                # Instantiate Console Access Library Config.</span>
+<span class="sd">                config_obj = Config(</span>
+<span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
+<span class="sd">                    read_console_access_settings_obj.client_id,</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                )</span>
+
+<span class="sd">                # Instantiate Console Access Library Client.</span>
+<span class="sd">                client_obj = Client(config_obj)</span>
+
+<span class="sd">                # Create Instance for Insight</span>
+<span class="sd">                insight_obj = client_obj.get_insight()</span>
+
+<span class="sd">                # set the real value</span>
+<span class="sd">                key =  &quot;__key__&quot;</span>
+<span class="sd">                from_datetime =  &quot;__from_datetime__&quot;</span>
+<span class="sd">                to_datetime =  &quot;__to_datetime__&quot;</span>
+<span class="sd">                device_id =  &quot;__device_id__&quot;</span>
+<span class="sd">                file_format =  &quot;__file_format__&quot;</span>
+
+<span class="sd">                # Insight - ExportImages</span>
+<span class="sd">                response = insight_obj.export_images(</span>
+<span class="sd">                    key,</span>
+<span class="sd">                    from_datetime,</span>
+<span class="sd">                    to_datetime,</span>
+<span class="sd">                    device_id,</span>
+<span class="sd">                    file_format</span>
+<span class="sd">                )</span>
+<span class="sd">                pprint(response)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
+            <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
+
+            <span class="c1"># set default values, if not passed.</span>
+            <span class="k">if</span> <span class="s2">&quot;from_datetime&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s2">&quot;to_datetime&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s2">&quot;device_id&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s2">&quot;file_format&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;file_format&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;file_format&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Validate schema</span>
+            <span class="n">_query_params</span> <span class="o">=</span> <span class="n">SchemaExportImages</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
+
+            <span class="c1"># Enter a context with an instance of the API client</span>
+            <span class="k">with</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
+                <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+                <span class="c1"># Create an instance of the API class</span>
+                <span class="n">insight_api_instance</span> <span class="o">=</span> <span class="n">insight_api</span><span class="o">.</span><span class="n">InsightApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="n">insight_api_instance</span><span class="o">.</span><span class="n">export_images</span><span class="p">(</span>
+                        <span class="n">query_params</span><span class="o">=</span><span class="n">_query_params</span>
+                    <span class="p">)</span>
+                    <span class="k">return</span> <span class="n">_return_export_images</span><span class="o">.</span><span class="n">body</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_key_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">key_err</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiTypeError</span> <span class="k">as</span> <span class="n">type_err</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_type_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">type_err</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiValueError</span> <span class="k">as</span> <span class="n">val_err</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_value_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">val_err</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiAttributeError</span> <span class="k">as</span> <span class="n">attr_err</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_attribute_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">attr_err</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiException</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_http_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+                    <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_generic_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">_return_export_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">_return_export_images</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

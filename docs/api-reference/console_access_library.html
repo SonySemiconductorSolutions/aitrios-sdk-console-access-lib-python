@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library package &mdash; Console Access Library 0.1.0 documentation</title>
+  <title>Console Access Library Package &mdash; Console Access Library 0.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -18,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Common Package" href="console_access_library.common.html" />
+    <link rel="next" title="AI Model Package" href="console_access_library.ai_model.html" />
     <link rel="prev" title="Console Access Library" href="modules.html" /> 
 </head>
 
@@ -30,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> Console Access Library
           </a>
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -43,9 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Console Access Library</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">console_access_library package</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Console Access Library Package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#console-access-library-subpackages">Console Access Library Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.ai_model.html">AI Model Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="console_access_library.common.html">Common Package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="console_access_library.deployment.html">Deployment Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="console_access_library.device_management.html">Device Management Package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="console_access_library.insight.html">Insight Package</a></li>
 </ul>
@@ -71,9 +74,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">Console Access Library</a> &raquo;</li>
-      <li>console_access_library package</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Console Access Library</a></li>
+      <li class="breadcrumb-item active">Console Access Library Package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/console_access_library.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -84,16 +87,44 @@
            <div itemprop="articleBody">
              
   <section id="console-access-library-package">
-<h1>console_access_library package<a class="headerlink" href="#console-access-library-package" title="Permalink to this headline"></a></h1>
+<h1>Console Access Library Package<a class="headerlink" href="#console-access-library-package" title="Permalink to this headline"></a></h1>
 <section id="console-access-library-subpackages">
 <h2>Console Access Library Subpackages<a class="headerlink" href="#console-access-library-subpackages" title="Permalink to this headline"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="console_access_library.ai_model.html">AI Model Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.ai_model">ai_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.delete_model">delete_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.get_base_model_status">get_base_model_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.get_models">get_models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.import_base_model">import_base_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.publish_model">publish_model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.ai_model.html#module-console_access_library.ai_model.publish_model_wait_response">publish_model_wait_response</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="console_access_library.common.html">Common Package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.config">Config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.error_codes">error_codes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.logger">logger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.config">config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.console_access_base_class">console_access_base_class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.error_codes">error_codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.common.html#module-console_access_library.common.read_console_access_settings">read_console_access_settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="console_access_library.deployment.html">Deployment Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.deployment">deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.cancel_deployment">cancel_deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.create_deploy_configuration">create_deploy_configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.delete_deploy_configuration">delete_deploy_configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.delete_device_app">delete_device_app</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.deploy_by_configuration">deploy_by_configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.deploy_device_app">deploy_device_app</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.get_deploy_configurations">get_deploy_configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.get_deploy_history">get_deploy_history</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.get_device_app_deploys">get_device_app_deploys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.get_device_apps">get_device_apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.import_device_app">import_device_app</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.undeploy_device_app">undeploy_device_app</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.deploy_by_configuration_wait_response">deploy_by_configuration_wait_response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.deployment.html#module-console_access_library.deployment.deploy_device_app_wait_response">deploy_device_app_wait_response</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="console_access_library.device_management.html">Device Management Package</a><ul>
@@ -105,10 +136,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="console_access_library.insight.html">Insight Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.insight">insight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.export_images">export_images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.get_image_data">get_image_data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.get_image_directories">get_image_directories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.get_images">get_images</a></li>
 <li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.get_inference_results">get_inference_results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.insight">insight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.get_last_inference_and_image_data">get_last_inference_and_image_data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="console_access_library.insight.html#module-console_access_library.insight.get_last_inference_data">get_last_inference_data</a></li>
 </ul>
 </li>
 </ul>
@@ -116,29 +151,67 @@
 </section>
 <section id="module-console_access_library.client">
 <span id="console-access-library-client"></span><h2>console_access_library.client<a class="headerlink" href="#module-console_access_library.client" title="Permalink to this headline"></a></h2>
-<p>Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</p>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
-</div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an “AS IS” BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.client.Client">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings_file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.Client" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#Client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.Client" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Abstract class for Console Access Library</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.client.Client.get_device_management">
+<span class="sig-name descname"><span class="pre">get_device_management</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#Client.get_device_management"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.Client.get_device_management" title="Permalink to this definition"></a></dt>
+<dd><p>Get Instance that provides DeviceManagement API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Instance that provides the DeviceManagement API</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="console_access_library.client.set_logger">
-<span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#set_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.set_logger" title="Permalink to this definition"></a></dt>
-<dd><p>Set log level</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.client.Client.get_ai_model">
+<span class="sig-name descname"><span class="pre">get_ai_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#Client.get_ai_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.Client.get_ai_model" title="Permalink to this definition"></a></dt>
+<dd><p>Get Instance that provides AIModel API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Instance that provides the AIModel API</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.client.Client.get_deployment">
+<span class="sig-name descname"><span class="pre">get_deployment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#Client.get_deployment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.Client.get_deployment" title="Permalink to this definition"></a></dt>
+<dd><p>Get Instance that provides Deployment API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Instance that provides the Deployment API</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="console_access_library.client.Client.get_insight">
+<span class="sig-name descname"><span class="pre">get_insight</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/client.html#Client.get_insight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.client.Client.get_insight" title="Permalink to this definition"></a></dt>
+<dd><p>Get Instance that provides Insight API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Instance that provides the Insight API</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -149,7 +222,7 @@ limitations under the License.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="modules.html" class="btn btn-neutral float-left" title="Console Access Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="console_access_library.common.html" class="btn btn-neutral float-right" title="Common Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="console_access_library.ai_model.html" class="btn btn-neutral float-right" title="AI Model Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

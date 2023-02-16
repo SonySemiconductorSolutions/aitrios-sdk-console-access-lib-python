@@ -1,0 +1,1803 @@
+= Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python pass:[<br/>] Functional Specifications pass:[<br/>]
+:sectnums:
+:sectnumlevels: 1
+:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:version-label: Version 
+:revnumber: x.x.x
+:revdate: YYYY - MM - DD
+:trademark-desc1: AITRIOS™ and AITRIOS logos are the registered trademarks or trademarks
+:trademark-desc2: of Sony Group Corporation or its affiliated companies.
+:toc:
+:toc-title: TOC
+:toclevels: 1
+:chapter-label:
+:lang: en
+
+== Change history
+
+|===
+|Date |What/Why
+
+|2022/11/16
+|Initial draft
+
+|2023/1/30
+|Changed for Cloud SDK 0.2.0 +
+Unified the swinging of expressions + 
+Updated the PDF build environment
+
+|===
+
+== Introduction
+
+* This book is functional specifications for the Console Access Library that provides access to the Console. + 
+Use Python for feature development language.
+
+== Terms/Abbreviations
+|===
+|Terms/Abbreviations |Meaning 
+
+|Console for AITRIOS
+|A cloud service that provides various functions (Deployment, Retraining, Edge AI Device Management etc.) to efficiently implement solutions from edge to cloud +
+Hereafter referred to as Console in the text
+
+|Low Level SDK
+|Client generated automatically by OpenAPI Generator from the API specification (yaml) of the Console REST API
+
+|Cloud App
+|Applications that use the Console Access Library
+
+|SAS
+|Shared Access Signatures +
+URI that grant limited access to Azure storage resources
+
+|
+|
+
+|===
+
+== Expected use case
+* Use the Console Access Library to:
+** Get information about edge AI devices
+** Start inference (Start to upload inference results), stop inference (stop to upload inference results) of edge AI devices
+** Get edge AI device output results (images, inference results)
+** Upload AI models created by users to the Console
+*** Review and delete uploaded AI models
+** Convert AI models to a format deployable to edge AI devices
+** Deploy AI models to edge AI devices
+** Upload DeviceApps created by users to the Console
+*** Review and delete uploaded DeviceApps
+** Deploy DeviceApps to edge AI devices
+
+== Functional overview/Algorithm
+[#_Functional-Overview]
+=== Functional overview
+* Generate a Client accessible to the Console
+** Set the information needed to access the Console in a Config, and set the Config to the Client
++
+The information needed to access the Console is as follows
++
+|===
+|Name |Description
+
+|Console endpoint
+|API server/base URL
+
+|Authorization endpoint
+|URL of an authentication server that issues an access token
+
+|Client ID
+|Client ID needed to issue an access token
+
+|Client Secret
+|Client secret needed to issue an access token
+
+|===
+
+* Execute Console REST API classified by function from the Client
++
+[TIP]
+====
+The functional classification follows the API classification of the Low Level SDK provided by the Console. + 
+Get and update an access token needed to access the Console.（Wrap）
+====
++
+[TIP]
+====
+API without a timeout parameter will not timeout
+====
+** DeviceManagement
+*** get_devices / Get edge AI device info list
+*** start_upload_inference_result / Start to upload inference results
+*** stop_upload_inference_result / Stop to upload inference results
+*** get_command_parameter_file / Get list of command parameter files registered in the Console
+** AI Model
+*** import_base_model / Import base model
+*** get_models / Get model info list
+*** get_base_model_status / Get base model status
+*** delete_model / Delete model
+*** publish_model / Publish model
+** Deployment
+*** import_device_app / Import DeviceApp
+*** get_device_apps / Get DeviceApp info list
+*** delete_device_app / Delete DeviceApp
+*** get_deploy_configurations / Get deployment configuration list
+*** create_deploy_configuration / Create deployment configuration
+*** deploy_by_configuration / Deploy
+*** get_deploy_history / Get deployment history
+*** delete_deploy_configuration / Delete deployment configuration
+*** cancel_deployment / Force cancel deployment state
+*** deploy_device_app / Deploy DeviceApp
+*** undeploy_device_app / Undeploy DeviceApp
+*** get_device_app_deploys / Get DeviceApp deployment history
+** Insight
+*** get_image_directories / Get image save directory list
+*** get_images / Get saved images
+*** get_inference_results / Get list of saved inference result metadata
+*** export_images / Export saved images
+
+* High Level API that combine Low Level SDK API for each use case can be executed.
+** AI Model
+*** publish_model_wait_response / Publish model and wait for response
+** Deployment
+*** deploy_by_configuration_wait_response / Deploy and wait for response
+*** deploy_device_app_wait_response / Deploy DeviceApp and wait for response
+** Insight
+*** get_image_data / Get saved images
+**** Because the get_images gets up to 256 images, this API calls the get_images multiple times to cover up the restriction
+*** get_last_inference_data / Get the latest saved inference results
+*** get_last_inference_and_image_data / Get the latest saved inference results and images
+**** Get images with the most recent date, find and return inference results tied to images
+
+* Log to the console when the Console Access Library is running
+** The log format is defined as follows
+*** [Log time] [Log level] [Client name] : Message body
+*** Log time uses the system time of user environment
+*** Log time outputs date + time + time zone in ISO 8601 format
+*** Sample log output: + 
+2022-06-21T11:31:42.612+0900 ERROR ConsoleAccessClient : Failed to log request
+
+** The log level can be switched
+*** Log levels are defined as follows
++
+[%header%autowidth]
+|===
+|Level |Summary 
+
+|ERROR
+|Use when the Console Access Library can't finish processing successfully
+
+|WARNING
+|Use when some unexpected problem occurs that is not necessarily an error but is also not normal
+
+|INFO
+|Use when the Console Access Library executes events
+
+|DEBUG
+|Use when outputting detailed debugging information, such as how the Console Access Library is working
+
+|OFF
+|Turn off all logging
+|===
+*** Output logs at or above a specified log level +
+Example: Output INFO/WARNING/ERROR, not DEBUG when the specified log level is INFO
+*** Do not output all log levels when the specified log level is OFF
+*** Set the default log level to OFF
+*** Log levels are specified in the procedure specified for each language by the application using the library.
++
+[%header]
+|===
+|Example specification in Python
+a|
+[source, python]
+----
+import console_access_library
+
+# Set the desired logging level
+console_access_library.set_logger(level=logging.WARNING)
+----
+|===
+
+* Check for error conditions when running the Console Access Library
+** Judge as an error under the following conditions
+*** Bad API input parameters
+*** The API input parameters are good, but the response from the Console Low Level SDK is not as expected (such as timeout/error)
+*** Unable to connect to the Console successfully (authentication error, wrong URL, etc.)
+
+=== Algorithm
+* Start to use the Console Access Library
+. Cloud App creates a Config
++
+. Cloud App creates a Client
++
+Get an access token and generate the Low Level SDK during Client generation
+. From the Client instance, use API wrapped around Low Level SDK API, and functional complex API (High Level API) 
++
+Get and update an access token needed to access the Console using an API wrapped around Low Level SDK API
++
+- The access token expires in 1 hour and is renewed if it expires in less than 180 seconds.
+
+* Start to get inference result metadata - Stop
+. Find the device ID using the `**get_devices**` API
+. Start to get inference result metadata using the `**start_upload_inference_result**` API
+. Use the `**Insight**` API to get inference results and images
+. Stop to get inference result metadata using the `**stop_upload_inference_result**` API
+
+
+=== Under what condition
+* Use the Low Level SDK to access the Console REST API
+
+=== API
+* Config
+** constructor(console_endpoint: str, portal_authorization_endpoint: str, client_id: str, client_secret: str)
+
+* Client
+** constructor(config)
+** get_device_management()
+** get_ai_model()
+** get_deployment()
+** get_insight()
+
+* DeviceManagement
+** get_devices(device_id: str, device_name: str, connection_state: str, device_group_id: str)
+** start_upload_inference_result(device_id: str)
+** stop_upload_inference_result(device_id: str)
+** get_command_parameter_file()
+
+* AI Model
+** import_base_model(model_id: str, model: str, converted: bool, vendor_name: str, comment: str, input_format_param: str, network_config: str, network_type: str, labels: [])
+** get_models(model_id: str, comment: str, project_name: str, model_platform: str, project_type: str, device_id: str, latest_type: str)
+** get_base_model_status(model_id: str, latest_type: str)
+** delete_model(model_id: str)
+** publish_model(model_id: str, device_id: str)
+
+* AI Model High Level API
+** publish_model_wait_response(model_id: str, device_id: str, callback: publish_model_wait_response_callback)
+*** publish_model_wait_response_callback(status: str)
+
+* Deployment
+** import_device_app(compiled_flg: str, app_name: str, version_number: str, file_name: str, file_content: str, entry_point: str, comment: str)
+** get_device_apps()
+** delete_device_app(app_name: str, version_number: str)
+** get_deploy_configurations()
+** create_deploy_configuration(config_id: str, comment: str, sensor_loader_version_number: str, sensor_version_number: str, model_id: str, model_version_number: str, ap_fw_version_number: str)
+** deploy_by_configuration(config_id: str, device_ids: str, replace_model_id: str, comment: str)
+** get_deploy_history(device_id: str)
+** delete_deploy_configuration(config_id: str)
+** cancel_deployment(device_id: str, deploy_id: int)
+** deploy_device_app(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str)
+** undeploy_device_app(device_ids: str)
+** get_device_app_deploys(app_name: str, version_number: str)
+
+* Deployment High Level API
+** deploy_by_configuration_wait_response(config_id: str, device_ids: str, replace_model_id: str, comment: str, timeout: int, callback: deploy_by_configuration_wait_response_callback)
+*** deploy_by_configuration_wait_response_callback(device_status_array: list)
+** deploy_device_app_wait_response(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str, callback: deploy_device_app_wait_response_callback)
+*** deploy_device_app_wait_response_callback(device_status_array: list)
+
+* Insight
+** get_image_directories(device_id: str)
+** get_images(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_inference_results(device_id: str, filter: str, number_of_inference_results: int, raw: int, time: str)
+** export_images(key: str, from_datetime: str, to_datetime: str, device_id: str, file_format: str)
+
+* Insight High Level API
+** get_image_data(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_last_inference_data(device_id: str)
+** get_last_inference_and_image_data(device_id: str, sub_directory_name: str)
+
+=== Others exclusive conditions/Specifications
+* Command parameter file has been applied to the edge AI device
+
+== User interface specifications
+* None
+
+== API parameters in each block
+Each error message has a different function name depending on the language (represented in this document by an error message in Python).
+
+* Config
+** constructor
++
+【Error: console_endpoint is empty】E001 : console_endpoint is required.
++
+【Error: portal_authorization_endpoint is empty】E001 : portal_authorization_endpoint is required.
++
+【Error: client_id is empty】E001 : client_id is required.
++
+【Error: client_secret is empty】E001 : client_secret is required.
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|console_endpoint
+|URL to access the Console
+|None +
+If not specified, read from environment variable
+
+|portal_authorization_endpoint
+|URL to issue an access token needed to access the Console
+|None +
+If not specified, read from environment variable
+
+|client_id
+|Client ID needed to issue an access token
+|None +
+If not specified, read from environment variable
+
+|client_secret
+|Client secret needed to issue an access token
+|None +
+If not specified, read from environment variable
+
+|===
++
+|===
+|Return value|Meaning
+
+|Config instance
+|Config instance with information needed to access the Console
+|===
+
+* Client
+** constructor
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|config
+|Config instance with information needed to access the Console
+|None
+
+|===
++
+|===
+|Return value|Meaning
+
+|Client instance
+|Client that can execute API wrapped around Low Level SDK API, and functional complex API (High Level API) instance
+|===
+
+** get_device_management: Get the instance that provides DeviceManagement API
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|DeviceManagement instance
+|Instance that provides DeviceManagement API
+|===
+
+** get_ai_model: Get the instance that provides AI Model API
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|AI Model instance
+|Instance that provides AI Model API
+|===
+
+** get_deployment: Get the instance that provides Deployment API
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|Deployment instance
+|Instance that provides Deployment API
+|===
+
+** get_insight: Get the instance that provides Insight API
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|Insight instance
+|Instance that provides Insight API
+|===
+
+* DeviceManagement
+** get_devices: Get edge AI device info list
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Partial search, case insensitive +
+If not specified, search all device_id
+
+|device_name
+|Name of the edge AI device
+|Partial search, case insensitive +
+If not specified, search all device_name
+
+|connection_state
+|Connection state
+|Connected +
+Disconnected +
+Exact match search, case insensitive +
+If not specified, search all connection_state
+
+|device_group_id
+|Affiliation group of the edge AI device
+|Exact match search, case insensitive +
+If not specified, search all device_group_id
+
+|===
++
+|===
+|Return value|Meaning
+
+|Device information
+|Edge AI device information
+|===
+
+** start_upload_inference_result: Start to upload inference results
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|outputSubDirectory
+|Input image save path、UploadMethod:Blob Storage only
+
+|===
+
+** stop_upload_inference_result: Stop to upload inference results
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** get_command_parameter_file: Get list of command parameter files registered in the Console
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|List of command parameter files registered in the Console
+
+|===
+
+* AI Model
+** import_base_model: Import base model
++
+【Error: model_id is empty】E001 : model_id is required.
++
+【Error: model is empty】E001 : model is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+[cols="1,2,2"]
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|model_id
+|Model ID(specify by new save or upgrade)
+|100 characters or less +
+Forbidden characters except for the following +
+Half-width alphanumeric characters +
+- Hyphen +
+_ Underbar +
+() Parenthesis +
+. Dot
+
+|model
+|Model file SAS URI
+|None
+
+|converted
+|Option to indicate converted
+|True: Post-conversion model +
+False: Pre-conversion model +
+If not specified, False
+
+|vendor_name
+|Vendor name（Specify by new save）
+|100 characters or less +
+Not specified in case of version upgrade +
+If not specified, no vendor name
+
+|comment
+|Description of the model to enter when registering a new model +
+Set as description of the model and version on new save +
+Set as description of the version when upgrading +
+|100 characters or less
+If not specified, no description of the model to enter when registering a new model
+
+|input_format_param
+|URI of input format param file (json format) +
+Evaluate the following +
+Azure: SAS URI +
+AWS:   Presigned URI +
+Usage: Packager conversion information (image format information)
+|Forbidden characters except SAS URI format +
+Json format is an object array (each object contains the following values) +
+Example: +
+ordinal: Order of DNN input to converter (value range: 0 ~ 2) +
+format: "RGB" or "BGR" +
+If not specified, do not evaluate
+
+|network_config
+|URI of network config file in json format +
+Evaluate the following +
+Azure: SAS URI +
+AWS:   Presigned URI +
+Specify for a pre-conversion model(Ignore for a post-conversion model) +
+Application: Conversion parameter information for the model converter
+|Forbidden characters except SAS URI format +
+If not specified, do not evaluate
+
+|network_type
+|Network type (specify only for new model registration)
+|0: Custom Vision +
+1: Non Custom Vision +
+If not specified, 1
+
+
+|labels
+|Label name
+|Example: ["label01","label02","label03"]
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** get_models: Get model info list
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|model_id
+|Model ID
+|Partial search +
+If not specified, search all model_id
+
+|comment
+|Model description
+|Partial search +
+If not specified, search all comment
+
+|project_name
+|Project name
+|Partial search +
+If not specified, search all project_name
+
+|model_platform
+|Model platform
+|0 : Custom Vision +
+1 : Non Custom Vision +
+2 : Model Retrainer +
+Exact match search +
+If not specified, search all model_platform
+
+|project_type
+|Project type
+|0 : Base project +
+1 : Device project +
+Exact match search +
+If not specified, search all project_type
+
+|device_id
+|Edge AI device ID (specify if you want to search for a device model)
+|Exact match search +
+Case sensitive +
+If not specified, search all device_id
+
+|latest_type
+|Type of the latest version
+|0 : Latest published version +
+1 : Latest version, including during conversion/publishing +
+Exact match search +
+If not specified, 1
+
+|===
++
+|===
+|Return value|Meaning
+
+|Model information
+|Same as return value name
+
+|===
+
+** get_base_model_status: Get base model status
++
+【Error: model_id is empty】E001 : model_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|model_id
+|Model ID
+|None
+
+|latest_type
+|Type of the latest version
+|0 : Latest published version +
+1 : Latest version, including during conversion/publishing +
+Exact match search +
+If not specified, 1
+
+|===
++
+|===
+|Return value|Meaning
+
+|Base model information
+|Same as return value name
+
+|===
+
+** delete_model: Delete model
++
+【Error: model_id is empty】E001 : model_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|model_id
+|Model ID
+|None
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** publish_model: Publish model
++
+【Error: model_id is empty】E001 : model_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|model_id
+|Model ID
+|None
+
+|device_id
+|Edge AI device ID
+|Case sensitive +
+Specify for device models +
+If the base model is the target, do not specify
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|import_id
+|Import ID
+
+|===
+
+** publish_model_wait_response: Publish model and wait for response
++
+【Error: model_id is empty】E001 : model_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|model_id
+|Model ID
+|None
+
+|device_id
+|Edge AI device ID
+|Case sensitive +
+Specify for device models +
+If the base model is the target, do not specify
+
+|callback
+|Callback function
+|Check the processing result with the get_base_model_status and call the callback function to notify the processing status
+If not specified, no notification by the callback function
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|process time
+|Processing time
+
+|===
+
+** publish_model_wait_response_callback: Status notification callback function for the publish_model_wait_response
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|status
+|Publish status
+|'01': 'Before conversion' +
+'02': 'Converting' +
+'03': 'Conversion failed' +
+'04': 'Conversion complete' +
+'05': 'Adding to configuration' +
+'06': 'Add to configuration failed' +
+'07': 'Add to configuration complete' +
+'11': 'Saving'(Model saving status for Model Retainer)
+
+|===
++
+|===
+|Return value|Meaning
+
+|-
+|-
+
+|===
+
+* Deployment
+** import_device_app: Import DeviceApp
++
+【Error: compiled_flg is empty】E001 : compiled_flg is required.
++
+【Error: app_name is empty】E001 : app_name is required.
++
+【Error: version_number is empty】E001 : version_number is required.
++
+【Error: file_name is empty】E001 : file_name is required.
++
+【Error: file_content is empty】E001 : file_content is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+[cols="1,2,2"]
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|compiled_flg
+|Option to indicate compiled
+|0:Not compiled(will be compiled) +
+1:Compiled(will not be compiled)
+
+|app_name
+|Name of the DeviceApp
+|The maximum character limit is "app_name + version_number <=31" +
+Forbidden characters except for the following +
+・Alphanumeric characters +
+・Underbar +
+・Dot
+
+|version_number
+|DeviceApp version
+|The maximum character limit is "app_name + version_number <=31" +
+Forbidden characters except for the following +
+・Alphanumeric characters +
+・Underbar +
+・Dot
+
+|file_name
+|Name of the DeviceApp file
+|None
+
+|file_content
+|File contents of the DeviceApp
+|Base64 encoded string
+
+|entry_point
+|EVP module entry point
+|None +
+If not specified, "ppl"
+
+|comment
+|Description of the DeviceApp
+|100 characters or less +
+If not specified, no comment
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** get_device_apps: Get DeviceApp info list
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|DeviceApp information
+|Same as return value name
+
+|===
+
+** delete_device_app: Delete DeviceApp
++
+【Error: app_name is empty】E001 : app_name is required.
++
+【Error: version_number is empty】E001 : version_number is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|app_name
+|Name of the DeviceApp
+|None
+
+|version_number
+|DeviceApp version
+|None
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** get_deploy_configurations: Get deployment configuration list
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|-
+|-
+|-
+
+|===
++
+|===
+|Return value|Meaning
+
+|Deployment configuration
+|Same as return value name
+
+|===
+
+** create_deploy_configuration: Create deployment configuration
++
+【Error: config_id is empty】E001 : config_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|config_id
+|Config ID
+|20 characters or less +
+Forbidden characters except for the following +
+Half-width alphanumeric characters +
+- Hyphen +
+_ Underbar +
+() Parenthesis +
+. Dot
+
+|comment
+|Config description
+|100 characters or less +
+If not specified, no comment
+
+|sensor_loader_version_number
+|SensorLoader version number
+|If -1 is specified, the default version (system setting "DVC0017") is applied +
+If not specified, no SensorLoader deployment
+
+|sensor_version_number
+|Sensor version number
+|If -1 is specified, the default version (system setting "DVC0018") is applied +
+If not specified, no Sensor deployment
+
+|model_id
+|Model ID
+|If not specified, no model deployment
+
+|model_version_number
+|Model version number
+|If not specified, the latest version applies
+
+|ap_fw_version_number
+|ApFw version number
+|If not specified, no firmware deployment
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** deploy_by_configuration: Deploy
++
+【Error: config_id is empty】E001 : config_id is required.
++
+【Error: device_ids is empty】E001 : device_ids is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|config_id
+|Config ID
+|None
+
+|device_ids
+|Edge AI device IDs
+|Specify multiple edge AI device IDs separated by commas +
+Case sensitive
+
+|replace_model_id
+|ID of the model being replaced
+|Specify the model_id or network_id +
+If the specified model ID is not in the DB, treat the input value as network_id (Console internal management ID) +
+If not specified, do not replace.
+
+|comment
+|Deployment comment
+|100 characters or less +
+If not specified, no comment
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** get_deploy_history: Get deployment history
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|===
++
+|===
+|Return value|Meaning
+
+|Deployment history
+|Same as return value name
+
+|===
+
+** delete_deploy_configuration: Delete deployment configuration
++
+【Error: config_id is empty】E001 : config_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|config_id
+|Config ID
+|None
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** cancel_deployment: Force cancel deployment state
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: deploy_id is empty】E001 : deploy_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|deploy_id
+|Deploy ID
+|ID that can be gotten using the get_deploy_history
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** deploy_device_app: Deploy DeviceApp
++
+【Error: app_name is empty】E001 : app_name is required.
++
+【Error: version_number is empty】E001 : version_number is required.
++
+【Error: device_ids is empty】E001 : device_ids is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|app_name
+|App name
+|None
+
+|version_number
+|App version
+|None
+
+|device_ids
+|Edge AI device IDs
+|Specify multiple edge AI device IDs separated by commas +
+Case sensitive
+
+|deploy_parameter
+|Deploy parameters
+|A Base64 encoded string in Json format +
+If not specified, no parameter
+
+|comment
+|Deployment comment
+|100 characters or less +
+If not specified, no comment
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** undeploy_device_app: Undeploy DeviceApp
++
+【Error: device_ids is empty】E001 : device_ids is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_ids
+|Edge AI device ID
+|Specify multiple edge AI device IDs separated by commas +
+Case sensitive
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|===
+
+** get_device_app_deploys: Get DeviceApp deployment history
++
+【Error: app_name is empty】E001 : app_name is required.
++
+【Error: version_number is empty】E001 : version_number is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|app_name
+|App name
+|None
+
+|version_number
+|App version
+|None
+
+|===
++
+|===
+|Return value|Meaning
+
+|DeviceApp deployment history
+|Same as return value name
+
+|===
+
+** deploy_by_configuration_wait_response: Deploy and wait for response
++
+【Error: config_id is empty】E001 : config_id is required.
++
+【Error: device_ids is empty】E001 : device_ids is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|config_id
+|Config ID
+|None
+
+|device_ids
+|Edge AI device IDs
+|Specify multiple edge AI device IDs separated by commas +
+Case sensitive
+
+|replace_model_id
+|ID of the model being replaced
+|Specify the model_id or network_id +
+If the specified model ID is not in the DB, treat the input value as network_id (Console internal management ID) +
+If not specified, do not replace.
+
+|comment
+|Deployment comment
+|100 characters or less +
+If not specified, no comment
+
+|timeout
+|timeout waiting for completion +
+Set the timeout to exit the deployment process because it may remain in progress, such as when edge AI device hangs.
+|None +
+If not specified, 3600 seconds
+
+|callback
+|Callback function +
+Check the processing result with the get_deploy_history and call the callback function to notify the processing status
+|If not specified, no notification by the callback function
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|process time
+|Processing time
+
+|===
+
+** deploy_by_configuration_wait_response_callback: Status notification callback function for the deploy_by_configuration_wait_response
++
+[cols="1,1,2"]
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_status_array
+|List of deployment state of edge AI devices
+|The format is as follows: +
+[ +
+　{ +
+　　<device_id>: { +
+　　　"status":<status> +
+　　} +
+　}, +
+] +
+
+Fill in data for device_id specified by device_ids in devloy_by_configuration_wait_response +
+
+<device_id>: Edge AI device ID +
+<status>: Fill in the following deployment states +
+　0: Deploying +
+　1: Success +
+　2: Failure +
+　3: Cancel +
+　9: DeviceApp is undeployed
+
+|===
++
+|===
+|Return value|Meaning
+
+|-
+|-
+
+|===
+
+** deploy_device_app_wait_response: Deploy DeviceApp and wait for response
++
+【Error: app_name is empty】E001 : app_name is required.
++
+【Error: version_number is empty】E001 : version_number is required.
++
+【Error: device_ids is empty】E001 : device_ids is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|app_name
+|App name
+|None
+
+|version_number
+|App version
+|None
+
+|device_ids
+|Edge AI device IDs
+|Specify multiple edge AI device IDs separated by commas +
+Case sensitive
+
+|deploy_parameter
+|Deploy parameters
+|A Base64 encoded string in Json format +
+If not specified, no parameter
+
+|comment
+|Deployment comment
+|100 characters or less +
+If not specified, no comment
+
+|callback
+|Callback function +
+Check the processing result with the get_device_app_deploys and call the callback function to notify the processing status
+|If not specified, no notification by the callback function
+
+|===
++
+|===
+|Return value|Meaning
+
+|result
+|Execution result
+
+|process time
+|Processing time
+
+|===
+
+** deploy_device_app_wait_response_callback: Status notification callback function for the deploy_device_app_wait_response
++
+[cols="1,1,2"]
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_status_array
+|List of deployment state of edge AI devices
+|The format is as follows: +
+[ +
+　{ +
+　　<device_id>: { +
+　　　"status":<status>, +
+　　　"found_position":<found_position>, +
+　　　"skip":<skip> +
+　　} +
+　}, +
+] +
+
+Fill in data for device_id specified by device_ids in deploy_device_app_wait_response +
+
+<device_id>: Edge AI device ID +
+<found_position>: Index of the device_id stored in the get_device_app_deploys response +
+<skip>: Fill in the following values +
+　0: For the most recent status stored in the get_device_app_deploys response +
+　1: For the non-most recent status stored in the get_device_app_deploys response +
+<status>: Fill in the following deployment states +
+　0: Deploying +
+　1: Success +
+　2: Failure +
+　3: Cancel +
+
+|===
++
+|===
+|Return value|Meaning
+
+|-
+|-
+
+|===
+
+* Insight
+** get_image_directories: Get image save directory list
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive +
+If not specified, return information for all device_ids
+
+|===
++
+|===
+|Return value|Meaning
+
+|Image save directory information
+|Same as return value name
+|===
+
+** get_images: Get saved images
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: sub_directory_name is empty】E001 : sub_directory_name is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|sub_directory_name
+|Image save subdirectory
+|None +
+The subdirectory is either the directory notified in the response to the start_upload_inference_result or the directory gotten by the get_image_directories
+
+|number_of_images
+|Number of images to get
+|0-256 +
+If not specified:50
+
+|skip
+|Number of images to skip getting
+|None +
+If not specified:0
+
+|order_by
+|Sort order: Sort order by date and time the image was created
+|DESC、ASC、desc、asc +
+If not specified:ASC
+
+|===
++
+|===
+|Return value|Meaning
+
+|Total image count
+|Same as return value name
+
+|Image file name and image file data
+|Same as return value name, image data is Base64 encoded
+|===
+
+** get_inference_results: Get list of saved inference result metadata
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+[cols="1,2,2"]
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|filter
+|Search filter (same specifications as Cosmos DB UI in Azure portal except for the following)) +
+- The where string need not be prepended +
+- No need to attach device_id
+|None
+
+|number_of_inference_results
+|Number of inference results gotten
+|None +
+If not specified:20
+
+|raw
+|Data format of inference results
+|1:Append records as they are saved in Cosmos DB +
+0:Do not append +
+If not specified:1
+
+|time
+|Timestamp of the inference results saved in Cosmos DB
+|yyyyMMddHHmmssfff +
+- yyyy: 4-digit string of the year +
+- MM: 2-digit string of the month +
+- dd: 2-digit string of the day +
+- HH: 2-digit string of the time +
+- mm: 2-digit string of the minute +
+- ss: 2-digit string of the second +
+- fff: 3-digit string of the millisecond
+
+|===
++
+|===
+|Return value|Meaning
+
+|Inference results
+|Same as return value name
+|===
+
+** export_images: Export saved images
++
+【Error: key is empty】E001 : key is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|key
+|RSA public key
+|Base64 encoded string
+
+|from_datetime
+|Date and time(From)
+|yyyyMMddhhmm format +
+If not specified, no start date and time is set
+
+|to_datetime
+|Date and time(To)
+|yyyyMMddhhmm format +
+If not specified, no end date and time is set
+
+|device_id
+|Edge AI device ID
+|Case sensitive +
+If not specified, specify all device_id
+
+|file_format
+|Image file format
+|JPG, BMP, RAW +
+If not specified, specify all file format
+
+|===
++
+|===
+|Return value|Meaning
+
+|key
+|Common key +
+A common key for decrypting images encrypted with a public key
+
+|url
+|SUS URI for download
+
+|===
+
+** get_image_data: Get saved images
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: sub_directory_name is empty】E001 : sub_directory_name is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|sub_directory_name
+|Image save subdirectory
+|None +
+The subdirectory is either the directory notified in the response to the start_upload_inference_result or the directory gotten by the get_image_directories
+
+|number_of_images
+|Number of images to get
+|None +
+If not specified:50
+
+|skip
+|Number of images to skip getting
+|None +
+If not specified:0
+
+|order_by
+|Sort order: Sort order by date and time the image was created
+|DESC、ASC、desc、asc +
+If not specified:ASC
+
+|===
++
+|===
+|Return value|Meaning
+
+|Total image count
+|Same as return value name
+
+|Image file name and image file data
+|Same as return value name, image data is Base64 encoded
+|===
+
+** get_last_inference_data: Get the latest saved inference results
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|===
++
+|===
+|Return value|Meaning
+
+|Inference results
+|Same as return value name
+|===
+
+** get_last_inference_and_image_data(): Get the latest saved inference results and images
++
+【Error: device_id is empty】E001 : device_id is required.
++
+【Error: sub_directory_name is empty】E001 : sub_directory_name is required.
++
+【Error: When an error occurs in the Low Level SDK】Raise an error defined in the Console Access Library
++
+【Error: When http_status returned from Low Level SDK API is not 200】Raise an error defined in the Console Access Library
++
+|===
+|Parameter’s name|Meaning|Range of parameter
+
+|device_id
+|Edge AI device ID
+|Case sensitive
+
+|sub_directory_name
+|Image save subdirectory
+|None +
+The subdirectory is either the directory notified in the response to the start_upload_inference_result or the directory gotten by the get_image_directories
+
+|===
++
+|===
+|Return value|Meaning
+
+|Inference results and image data
+|Same as return value name, image data is Base64 encoded
+|===
+
+== Log output messages
+The messages to be displayed for each level are defined as follows
+
+=== ERROR level
+[%header%autowidth]
+|===
+|MessageID |Conditions |Message |Parameter
+|E001
+|Output when a required parameter is not passed
+|{0} is required.
+|{0}:Parameter name not passed
+|===
+
+=== WARNING level
+[%header%autowidth]
+|===
+|MessageID |Conditions |Message |Parameter
+|W001
+|Output when calling a deprecated class or function
+|{0} has been deprecated.
+|{0}:Name of the called class or function
+|===
+
+=== INFO level
+T.B.D.
+
+=== DEBUG level
+T.B.D.
+
+== Target performances/Impact on performances
+* None
+
+== Assumption/Restriction
+* None
+
+== Remarks
+* None
+
+== Unconfirmed items
+* None

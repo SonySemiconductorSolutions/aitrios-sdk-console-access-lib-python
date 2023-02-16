@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestDevicesDeviceIdDeploysDeployId(ApiTestMixin, unittest.TestCase):
     """
     DevicesDeviceIdDeploysDeployId unit test stubs
-        DeployDeviceCancel  # noqa: E501
+        CancelDeployment  # noqa: E501
     """
     _configuration = configuration.Configuration()
 
