@@ -43,7 +43,7 @@ except Exception as err:
     logging.error("Configuration not loaded!!")
     raise err
 
-SDK_SPECIFICATION_VERSION = "0.2.0"
+SDK_SPECIFICATION_VERSION = "1.0.0"
 PACKAGE_VERSION = f"{SDK_SPECIFICATION_VERSION}"
 PACKAGE_NAME = "console_access_library"
 AUTHOR_NAME = "Sony Semiconductor Solutions Corp"
@@ -60,10 +60,10 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=[
         "marshmallow>=3.17.0",
-        "requests>=2.25.1",
+        "requests>=2.31.0",
         "jsonschema>=4.6.2",
         "PyYAML>=6.0",
-        "setuptools>=63.1.0",
+        "setuptools>=65.5.1",
         "wheel>=0.37.1",
         "PyJWT>=2.6.0",
         "nassl>=4.0",

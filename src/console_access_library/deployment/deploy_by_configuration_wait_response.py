@@ -487,12 +487,10 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
 
                 _count = 0
                 if _return_deploy_by_configuration["result"] == "SUCCESS":
-
                     # Wait till Deploy status is canceled, failed or success
                     while True:
                         # Check deployment status for individual device_id
                         for _device_id in device_ids_list:
-
                             _total_status = None
 
                             # get deploy history for all devices
@@ -507,7 +505,6 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                                 # total number of deploy history configurations
                                 _no_of_configs = len(_return_get_deploy_history["deploys"])
                                 if _no_of_configs > 0:
-
                                     # loop through all deploy configurations to check the
                                     # deploy status of `config_id` passed as parameter
                                     for _config_id_index in range(_no_of_configs):

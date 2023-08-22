@@ -1,15 +1,46 @@
+# This library contains following modification to OCSPChecker
+# - Add OCSPResponse.next_update to return value
+#
+# Original source code is below
+#   https://github.com/MetLife/OCSPChecker/blob/master/ocspchecker/ocspchecker.py
+
+# ------------------------------------------------------------------------
+# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ------------------------------------------------------------------------
+
+# pylint:disable=broad-exception-raised
+# pylint:disable=unnecessary-pass
+# pylint:disable=no-name-in-module
+# pylint:disable=too-many-branches
+# pylint:disable=unnecessary-dunder-call
+# pylint:disable=duplicate-code
+
 """ A full cert chain is required to make a proper OCSP request. However,
  the ssl module for python 3.x does not support the get_peer_cert_chain()
  method. get_peer_cert_chain() is in flight: https://github.com/python/cpython/pull/17938
 
  For a short-term fix, I will use nassl to grab the full cert chain. """
 
+import logging
 from pathlib import Path
 from socket import AF_INET, SOCK_STREAM, gaierror, socket, timeout
 from typing import Any, List
 from urllib import error, request
 from urllib.parse import urlparse
 
+from base64 import b64encode
 import certifi
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
@@ -27,6 +58,8 @@ from nassl.ssl_client import (
 )
 from validators import domain, url
 
+logger = logging.getLogger(__name__)
+
 
 class InitialConnectionError(Exception):
     """Custom exception class to differentiate between
@@ -40,30 +73,25 @@ path_to_ca_certs = Path(certifi.where())
 
 openssl_errors: dict = {
     # https://github.com/openssl/openssl/issues/6805
-    "1408F10B": "The remote host is not using SSL/TLS on the port specified."
+    "1408F10B": "The remote host is not using SSL/TLS on the port specified.",
     # TLS Fatal Alert 40 - sender was unable to negotiate an acceptable set of security
     # parameters given the options available
-    ,
-    "14094410": "SSL/TLS Handshake Failure."
+    "14094410": "SSL/TLS Handshake Failure.",
     # TLS Fatal Alert 112 - the server understood the ClientHello but did not recognize
     # the server name per: https://datatracker.ietf.org/doc/html/rfc6066#section-3
-    ,
-    "14094458": "Unrecognized server name provided. Check your target and try again."
+    "14094458": "Unrecognized server name provided. Check your target and try again.",
     # TLS Fatal Alert 50 - a field was out of the specified range
     # or the length of the message was incorrect
-    ,
-    "1417B109": "Decode Error. Check your target and try again."
+    "1417B109": "Decode Error. Check your target and try again.",
     # TLS Fatal Alert 80 - Internal Error
-    ,
-    "14094438": "TLS Fatal Alert 80 - Internal Error."
+    "14094438": "TLS Fatal Alert 80 - Internal Error.",
     # Unable to find public key parameters
-    ,
     "140070EF": "Unable to find public key parameters.",
 }
 
 
-def get_ocsp_status(host: str, port: Any = None) -> list:
-    """Main function with two inputs: host, and port.
+def get_ocsp_status(host: str, port: Any = None, proxy=None) -> list:
+    """Main function with three inputs: host, port and proxy
     Port defaults to TCP 443"""
 
     port = port or 443
@@ -92,19 +120,21 @@ def get_ocsp_status(host: str, port: Any = None) -> list:
 
     try:
         # Get the remote certificate chain
-        cert_chain = get_certificate_chain(host, port)
+        cert_chain = get_certificate_chain(host, port, proxy)
 
         # Extract OCSP URL from leaf certificate
         ocsp_url = extract_ocsp_url(cert_chain)
+        logger.debug("OCSP URL: %s", ocsp_url)
 
         # Build OCSP request
         ocsp_request = build_ocsp_request(cert_chain)
 
         # Send OCSP request to responder and get result
-        ocsp_response = get_ocsp_response(ocsp_url, ocsp_request)
+        ocsp_response = get_ocsp_response(ocsp_url, ocsp_request, proxy)
 
         # Extract OCSP result from OCSP response
         ocsp_result, next_update = extract_ocsp_result(ocsp_response)
+        logger.debug("Result %s", ocsp_result)
 
     except Exception as err:
         results.append("Error: " + str(err))
@@ -117,8 +147,7 @@ def get_ocsp_status(host: str, port: Any = None) -> list:
     return results
 
 
-def get_certificate_chain(host: str, port: int) -> List[str]:
-
+def get_certificate_chain(host: str, port: int, proxy=None) -> List[str]:
     """Connect to the host on the port and obtain certificate chain"""
 
     func_name: str = "get_certificate_chain"
@@ -131,7 +160,24 @@ def get_certificate_chain(host: str, port: int) -> List[str]:
     soc.settimeout(3)
 
     try:
-        soc.connect((host, port))
+        if proxy is not None:
+            # Make headers for proxy connection
+            send_buffer = f"CONNECT {host}:{port} HTTP/1.1\r\n".encode()
+            parsed_proxy = urlparse(proxy)
+            if parsed_proxy.username and parsed_proxy.password is not None :
+                token = b64encode(f"{parsed_proxy.username}:{parsed_proxy.password}".encode())
+                send_buffer += "Proxy-Authorization: Basic ".encode() + token + "\r\n".encode()
+            send_buffer += "Connection: close\r\n\r\n".encode()
+
+            # Connect to proxy
+            soc.connect((parsed_proxy.hostname, parsed_proxy.port))
+            soc.send(send_buffer)
+
+            # Wait for response from proxy
+            soc.recv(4096)
+
+        else:
+            soc.connect((host, port))
 
     except gaierror:
         raise InitialConnectionError(
@@ -192,7 +238,6 @@ def get_certificate_chain(host: str, port: int) -> List[str]:
 
 
 def extract_ocsp_url(cert_chain: List[str]) -> str:
-
     """Parse the leaf certificate and extract the access method and
     access location AUTHORITY_INFORMATION_ACCESS extensions to
     get the ocsp url"""
@@ -227,7 +272,6 @@ def extract_ocsp_url(cert_chain: List[str]) -> str:
 
 
 def build_ocsp_request(cert_chain: List[str]) -> bytes:
-
     """Build an OCSP request out of the leaf and issuer pem certificates
     see: https://cryptography.io/en/latest/x509/ocsp/#cryptography.x509.ocsp.OCSPRequestBuilder
     for more information"""
@@ -250,8 +294,7 @@ def build_ocsp_request(cert_chain: List[str]) -> bytes:
     return ocsp_request_data
 
 
-def get_ocsp_response(ocsp_url: str, ocsp_request_data: bytes):
-
+def get_ocsp_response(ocsp_url: str, ocsp_request_data: bytes, proxy=None):
     """Send OCSP request to ocsp responder and retrieve response"""
 
     func_name: str = "get_ocsp_response"
@@ -261,13 +304,23 @@ def get_ocsp_response(ocsp_url: str, ocsp_request_data: bytes):
         raise Exception(f"{func_name}: URL failed validation for {ocsp_url}")
 
     try:
+        if proxy is not None:
+            logger.debug("Proxy %s", proxy)
+
+            proxy_support = request.ProxyHandler({"http": proxy, "https": proxy})
+        else:
+            proxy_support = request.ProxyHandler({})
+
+        opener = request.build_opener(proxy_support)
+        request.install_opener(opener)
+
         ocsp_request = request.Request(
             ocsp_url,
             data=ocsp_request_data,
             headers={"Content-Type": "application/ocsp-request"},
         )
 
-        with request.urlopen(ocsp_request, timeout=3) as resp:
+        with opener.open(ocsp_request, timeout=3) as resp:
             ocsp_response = resp.read()
 
     except error.URLError as err:
@@ -283,7 +336,6 @@ def get_ocsp_response(ocsp_url: str, ocsp_request_data: bytes):
 
 
 def extract_ocsp_result(ocsp_response):
-
     """Extract the OCSP result from the provided ocsp_response"""
 
     func_name: str = "extract_ocsp_result"

@@ -103,7 +103,6 @@ class SchemaImportDeviceApp(Schema):
 
     @validates_schema
     def validate(self, data, **kwargs):
-
         if "compiled_flg" in data and (
             data["compiled_flg"] is None or str(data["compiled_flg"]).strip() == ""
         ):
@@ -168,7 +167,6 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
         entry_point: str = None,
         comment: str = None,
     ):
-
         """Import DeviceApp
 
         Args:
@@ -380,21 +378,12 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
                 if bool(re.match("^[A-Za-z0-9_.]*$", _body_params["version_number"])) is False:
                     raise ValidationError("version_number has forbidden characters")
 
-            # app_name, version_number
-            # The maximum number of characters is app_name + version_number ⇐31.
-            if _body_params["app_name"] is not None and _body_params["version_number"] is not None:
-                if (len(_body_params["app_name"]) + len(_body_params["version_number"])) > 32:
-                    raise ValidationError(
-                        "Exceed the maximum number of characters is app_name + version_number ⇐31"
-                    )
-
             # Enter a context with an instance of the API client
             with aitrios_console_rest_client_sdk_primitive.ApiClient(
                 self._config.configuration,
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
-
                 # Create an instance of the API class
                 manage_devices_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:

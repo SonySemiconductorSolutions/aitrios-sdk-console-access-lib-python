@@ -87,7 +87,8 @@ class Configuration(object):
                  disabled_client_side_validations="",
                  server_index=None, server_variables=None,
                  server_operation_index=None, server_operation_variables=None,
-                 proxy=None
+                 proxy=None,
+                 proxy_headers=None
                  ):
         """Constructor
         """
@@ -177,7 +178,7 @@ class Configuration(object):
         self.proxy = proxy
         """Proxy URL
         """
-        self.proxy_headers = None
+        self.proxy_headers = proxy_headers
         """Proxy headers
         """
         self.safe_chars_for_path_param = ''

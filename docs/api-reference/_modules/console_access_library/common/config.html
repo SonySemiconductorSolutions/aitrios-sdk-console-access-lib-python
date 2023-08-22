@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.common.config &mdash; Console Access Library 0.2.0 documentation</title>
+  <title>console_access_library.common.config &mdash; Console Access Library 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -25,14 +25,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Console Access Library
           </a>
               <div class="version">
-                0.2.0
+                1.0.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -41,7 +45,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>“Console Access Library” - Quick Start Guide</strong></a></li>
 </ul>
 
         </div>
@@ -57,7 +61,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">console_access_library.common.config</li>
       <li class="wy-breadcrumbs-aside">
@@ -95,6 +99,8 @@
 <span class="c1"># pylint:disable=too-many-arguments</span>
 <span class="c1"># pylint:disable=broad-except</span>
 <span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=broad-exception-raised</span>
+
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -169,7 +175,8 @@
 
     <span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;00&quot;</span>
     <span class="n">TOKEN_EXPIRED</span> <span class="o">=</span> <span class="s2">&quot;01&quot;</span>
-    <span class="n">INVALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;02&quot;</span></div>
+    <span class="n">INVALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;02&quot;</span>
+    <span class="n">EMPTY_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;03&quot;</span></div>
 
 
 <div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
@@ -226,7 +233,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="c1"># Read Proxy from environment </span>
+        <span class="c1"># Read Proxy from environment</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_https_proxy</span><span class="p">()</span>
 
         <span class="c1"># Set configuration parameters.</span>
@@ -269,8 +276,8 @@
 <span class="sd">            - &quot;__proxy_str__&quot; - Proxy string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;https_proxy&quot;</span>
-        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
+        <span class="n">proxy_env_var</span> <span class="o">=</span> <span class="s2">&quot;https_proxy&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proxy_env_var</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proxy_env_var</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Config.validate_access_token"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_access_token">[docs]</a>    <span class="k">def</span> <span class="nf">validate_access_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to Validate Access Token</span>
@@ -284,24 +291,30 @@
 <span class="sd">                - &quot;00&quot; for Valid Token</span>
 <span class="sd">                - &quot;01&quot; for Token expired</span>
 <span class="sd">                - &quot;02&quot; for Invalid token.</span>
+<span class="sd">                - &quot;03&quot; for Empty token.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">decoded_access_token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verify_signature&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-            <span class="n">exp</span> <span class="o">=</span> <span class="n">decoded_access_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;exp&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">exp</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="mi">180</span> <span class="ow">or</span> <span class="n">exp</span> <span class="o">&lt;</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">():</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Less than 3 mins for Token Expiry or Token Already expired&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">TOKEN_EXPIRED</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid AccessToken </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">INVALID_TOKEN</span><span class="o">.</span><span class="n">value</span>
+        <span class="c1"># Check if access token is Empty</span>
+        <span class="k">if</span> <span class="n">access_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">access_token</span> <span class="o">=</span> <span class="n">access_token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">decoded_access_token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verify_signature&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+                <span class="n">exp</span> <span class="o">=</span> <span class="n">decoded_access_token</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;exp&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">exp</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="mi">180</span> <span class="ow">or</span> <span class="n">exp</span> <span class="o">&lt;</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">():</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Less than 3 mins for Token Expiry or Token Already expired&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">TOKEN_EXPIRED</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid AccessToken </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">INVALID_TOKEN</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">EMPTY_TOKEN</span><span class="o">.</span><span class="n">value</span>
+
         <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">VALID_TOKEN</span><span class="o">.</span><span class="n">value</span></div>
 
     <span class="k">def</span> <span class="nf">_get_ocsp_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host_url</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get OCSP status for the host_url&quot;&quot;&quot;</span>
         <span class="n">retval</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="n">ocspchecker</span><span class="o">.</span><span class="n">get_ocsp_status</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host_url</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">ocspchecker</span><span class="o">.</span><span class="n">get_ocsp_status</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host_url</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_https_proxy</span><span class="p">())</span>
             <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;OCSP Status: GOOD&quot;</span><span class="p">:</span>
                 <span class="n">retval</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
@@ -355,10 +368,22 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            - &quot;__access_token_str__&quot; - On Success</span>
 <span class="sd">            - &quot;Generic Error&quot; - If an error occurs when obtaining an access token</span>
+
+<span class="sd">            - Throws error if OCSP status &quot;is not good&quot; for any of the URLs(console_endpoint or \</span>
+<span class="sd">                    portal_authorization_endpoint)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c1"># If proxy is not set, Check for OCSP Status</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_validation_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_access_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span><span class="p">)</span>
+        <span class="c1"># If the Access token variable has a token, check the validity of the token,</span>
+        <span class="c1"># if expired or invalid or empty token found generate new access token</span>
+        <span class="k">if</span> <span class="n">_validation_code</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">TOKEN_EXPIRED</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">INVALID_TOKEN</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">EMPTY_TOKEN</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="p">]:</span>
+            <span class="c1"># To avoid multiple OCSP request, check OCSP status for _console_endpoint</span>
+            <span class="c1"># and _portal_authorization_endpoint when requesting for access token</span>
             <span class="c1"># verify revocation of certificate before urllib3 request,</span>
             <span class="n">_console_endpoint_ocsp_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ocsp_status</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_console_endpoint</span><span class="p">)</span>
             <span class="n">_portal_authorization_endpoint_ocsp_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ocsp_status</span><span class="p">(</span>
@@ -368,17 +393,9 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OCSP Status of URL </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_console_endpoint</span><span class="si">}</span><span class="s2"> is not good&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="ow">not</span> <span class="n">_portal_authorization_endpoint_ocsp_status</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OCSP Status of URL </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span><span class="si">}</span><span class="s2"> is not good&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Bypass verification of revocation of certificate before urllib3 request&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;OCSP Status of URL </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span><span class="si">}</span><span class="s2"> is not good&quot;</span><span class="p">)</span>
 
-        <span class="n">_validation_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_access_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span><span class="p">)</span>
-        <span class="c1"># If the Access token variable has a token, check the validity of the token,</span>
-        <span class="c1"># if expired or invalid token found generate new access token</span>
-        <span class="k">if</span> <span class="n">_validation_code</span> <span class="ow">in</span> <span class="p">[</span>
-            <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">TOKEN_EXPIRED</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-            <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">INVALID_TOKEN</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-        <span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">()</span>
 
         <span class="c1"># Return the access token stored the Access token variable</span>
