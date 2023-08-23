@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Console Access Library - Quick Start Guide &mdash; Console Access Library 0.2.0 documentation</title>
+  <title>“Console Access Library” - Quick Start Guide &mdash; Console Access Library 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -27,14 +27,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Console Access Library
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Console Access Library
           </a>
               <div class="version">
-                0.2.0
+                1.0.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,11 +47,15 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Console Access Library</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Console Access Library - Quick Start Guide</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#steps-to-install-console-access-library-and-get-started-with-demo-application">Steps to install Console Access Library and get started with Demo application.</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>“Console Access Library” - Quick Start Guide</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#steps-to-install-console-access-library-and-get-started-with-demo-application">Steps to install “<strong>Console Access Library</strong>” and get started with “<strong>Demo application</strong>”.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#restrictions">Restrictions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-support">Get support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#see-also">See also</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#trademark">Trademark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#branch">Branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#security">Security</a></li>
 </ul>
 </li>
 </ul>
@@ -65,8 +73,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active"><strong>Console Access Library - Quick Start Guide</strong></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><strong>“Console Access Library” - Quick Start Guide</strong></li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -77,9 +85,9 @@
            <div itemprop="articleBody">
              
   <section id="console-access-library-quick-start-guide">
-<h1><strong>Console Access Library - Quick Start Guide</strong><a class="headerlink" href="#console-access-library-quick-start-guide" title="Permalink to this headline"></a></h1>
+<h1><strong>“Console Access Library” - Quick Start Guide</strong><a class="headerlink" href="#console-access-library-quick-start-guide" title="Permalink to this headline"></a></h1>
 <section id="steps-to-install-console-access-library-and-get-started-with-demo-application">
-<h2>Steps to install Console Access Library and get started with Demo application.<a class="headerlink" href="#steps-to-install-console-access-library-and-get-started-with-demo-application" title="Permalink to this headline"></a></h2>
+<h2>Steps to install “<strong>Console Access Library</strong>” and get started with “<strong>Demo application</strong>”.<a class="headerlink" href="#steps-to-install-console-access-library-and-get-started-with-demo-application" title="Permalink to this headline"></a></h2>
 <ol class="arabic">
 <li><p>Create virtual environment</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">venv_console_access_library</span>
@@ -101,28 +109,28 @@
 </li>
 </ul>
 <ol class="arabic" start="3">
-<li><p>Install python dependencies for demo application</p>
+<li><p>Install python dependencies for “<strong>demo application</strong>”</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </li>
-<li><p>Install dependency python package of Console for AITRIOS REST Client SDK(Primitive) for Console Access Library</p>
+<li><p>Install dependency python package of “<strong>Console for AITRIOS REST Client SDK(Primitive)</strong>” for “<strong>Console Access Library</strong>”</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">lib</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">client</span><span class="o">/.</span>
 </pre></div>
 </div>
 </li>
-<li><p>Install Console Access Library</p>
+<li><p>Install “<strong>Console Access Library</strong>”</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">src</span><span class="o">/.</span>
 </pre></div>
 </div>
 </li>
 <li><p>Network proxy setting</p>
-<p>To use the Console Access Library in a proxy environment, set the <strong><code class="docutils literal notranslate"><span class="pre">https_proxy</span></code></strong> environment variable.</p>
+<p>To use the “<strong>Console Access Library</strong>” in a proxy environment, set the <strong><code class="docutils literal notranslate"><span class="pre">https_proxy</span></code></strong> environment variable.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">https_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">username</span><span class="p">:</span><span class="n">password</span><span class="nd">@proxyhost</span><span class="p">:</span><span class="n">port</span>
 </pre></div>
 </div>
 </li>
-<li><p>To run Console Access Library sample application, set configuration parameters and edit sample application.</p>
+<li><p>To run “<strong>Console Access Library</strong>” sample application, set configuration parameters and edit sample application.</p>
 <ul>
 <li><p>Option 1: Using console access setting configuration file</p>
 <ul>
@@ -136,7 +144,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>Step 2: Import modules <strong><code class="docutils literal notranslate"><span class="pre">ReadConsoleAccessSettings</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">Client</span></code></strong> into Console Access Library sample application</p>
+<li><p>Step 2: Import modules <strong><code class="docutils literal notranslate"><span class="pre">ReadConsoleAccessSettings</span></code></strong>, <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">Client</span></code></strong> into “<strong>Console Access Library</strong>” sample application</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">console_access_library.common.read_console_access_settings</span> <span class="kn">import</span> <span class="n">ReadConsoleAccessSettings</span>
 <span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
@@ -144,7 +152,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>Step 3: Set path for Console Access Library setting file, and then instantiate Console Access Library <strong><code class="docutils literal notranslate"><span class="pre">ReadConsoleAccessSettings</span></code></strong>.</p>
+<li><p>Step 3: Set path for “<strong>Console Access Library</strong>” setting file, and then instantiate “<strong>Console Access Library</strong>” <strong><code class="docutils literal notranslate"><span class="pre">ReadConsoleAccessSettings</span></code></strong>.</p>
 <p>To create console_access_settings.yaml file, please refer step 1</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SETTING_FILE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="s2">&quot;console_access_settings.yaml&quot;</span><span class="p">)</span>
@@ -152,7 +160,7 @@
 </pre></div>
 </div>
 </li>
-<li><p>Step 4: Instantiate Console Access Library <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong>.</p>
+<li><p>Step 4: Instantiate “<strong>Console Access Library</strong>” <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong>.</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">console_endpoint</span><span class="o">=</span><span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">console_endpoint</span><span class="p">,</span> 
                     <span class="n">portal_authorization_endpoint</span><span class="o">=</span><span class="n">read_console_access_settings_obj</span><span class="o">.</span><span class="n">portal_authorization_endpoint</span><span class="p">,</span> 
@@ -173,14 +181,14 @@
 </pre></div>
 </div>
 </li>
-<li><p>Step 2: Import modules <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">Client</span></code></strong> into Console Access Library sample application</p>
+<li><p>Step 2: Import modules <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">Client</span></code></strong> into “<strong>Console Access Library</strong>” sample application</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
 </pre></div>
 </div>
 </li>
-<li><p>Step 3: Instantiate Console Access Library <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong>.</p>
+<li><p>Step 3: Instantiate “<strong>Console Access Library</strong>” <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong>.</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">console_endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
                     <span class="n">portal_authorization_endpoint</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
@@ -191,16 +199,16 @@
 </li>
 </ul>
 </li>
-<li><p>Option 3: Passing real values to Console Access Library <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong>.</p>
+<li><p>Option 3: Passing real values to “<strong>Console Access Library</strong>” <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong>.</p>
 <ul>
-<li><p>Step 1: Import modules <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">Client</span></code></strong> into Console Access Library sample application</p>
+<li><p>Step 1: Import modules <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> and <strong><code class="docutils literal notranslate"><span class="pre">Client</span></code></strong> into “<strong>Console Access Library</strong>” sample application</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">console_access_library.common.config</span> <span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span> <span class="nn">console_access_library.client</span> <span class="kn">import</span> <span class="n">Client</span>
 </pre></div>
 </div>
 </li>
-<li><p>Step 2: Instantiate Console Access Library <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> with real values.</p>
+<li><p>Step 2: Instantiate “<strong>Console Access Library</strong>” <strong><code class="docutils literal notranslate"><span class="pre">Config</span></code></strong> with real values.</p>
 <p>(samples\console_access_client_api_demo.py)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config_obj</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">console_endpoint</span><span class="o">=</span><span class="s2">&quot;__console_endpoint__&quot;</span><span class="p">,</span> 
                     <span class="n">portal_authorization_endpoint</span><span class="o">=</span><span class="s2">&quot;__portal_authorization_endpoint__&quot;</span><span class="p">,</span>
@@ -213,7 +221,7 @@
 </li>
 </ul>
 </li>
-<li><p>To run Console Access Library sample application, edit demo configuration parameters with real values.
+<li><p>To run “<strong>Console Access Library</strong>” sample application, edit demo configuration parameters with real values.
 (samples\demo_config.yaml).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">demo_configuration</span><span class="p">:</span>
     <span class="n">device_id</span><span class="p">:</span> <span class="s2">&quot;__device_id__&quot;</span>
@@ -252,12 +260,12 @@
 </pre></div>
 </div>
 </li>
-<li><p>To run API “import_device_app” in Console Access Library sample application</p>
+<li><p>To run API “import_device_app” in “<strong>Console Access Library</strong>” sample application</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Place</span> <span class="n">the</span> <span class="n">contents</span> <span class="n">of</span> <span class="n">wasm</span> <span class="n">file</span> <span class="k">as</span> <span class="n">base64</span> <span class="ow">in</span> <span class="n">samples</span><span class="o">/</span><span class="n">device_app_file_content</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </li>
-<li><p>Run demo application using the following command</p>
+<li><p>Run “<strong>demo application</strong>” using the following command</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">samples</span><span class="o">/</span><span class="n">console_access_client_api_demo</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
@@ -273,13 +281,38 @@
 <section id="get-support">
 <h2>Get support<a class="headerlink" href="#get-support" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://developer.aitrios.sony-semicon.com/contact-us/">Contact us</a></p></li>
+<li><p><a class="reference external" href="https://developer.aitrios.sony-semicon.com/en/contact-us-en">Contact us</a></p></li>
+</ul>
+</section>
+<section id="see-also">
+<h2>See also<a class="headerlink" href="#see-also" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://developer.aitrios.sony-semicon.com/en">“<strong>Developer Site</strong>”</a></p></li>
 </ul>
 </section>
 <section id="trademark">
 <h2>Trademark<a class="headerlink" href="#trademark" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://developer.aitrios.sony-semicon.com/development-guides/documents/manuals/">Read This First</a></p></li>
+<li><p><a class="reference external" href="https://developer.aitrios.sony-semicon.com/en/documents/read-this-first">“<strong>Read This First</strong>”</a></p></li>
+</ul>
+</section>
+<section id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Permalink to this headline"></a></h2>
+<p>This repository aims to adhere to Semantic Versioning 2.0.0.</p>
+</section>
+<section id="branch">
+<h2>Branch<a class="headerlink" href="#branch" title="Permalink to this headline"></a></h2>
+<p>See the “<strong>Release Note</strong>” from [<strong>Releases</strong>] for this repository.</p>
+<p>Each release is generated in the main branch. Pre-releases are generated in the develop branch. Releases will not be provided by other branches.</p>
+</section>
+<section id="security">
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline"></a></h2>
+<p>Before using Codespaces, please read the Site Policy of GitHub and understand the usage conditions.</p>
+<p>This software is Beta version. Please note the following when using it.</p>
+<p>Regarding the use of Beta version:</p>
+<ul class="simple">
+<li><p>Beta version is released with the assumption for use in development.</p></li>
+<li><p>Beta version may contain errors or defects that obstruct regular operation of the device.</p></li>
 </ul>
 </section>
 </section>

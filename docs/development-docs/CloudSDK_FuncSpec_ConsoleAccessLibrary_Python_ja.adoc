@@ -16,7 +16,6 @@
 
 |===
 |Date |What/Why 
-
 |2022/11/16
 |初版作成
 
@@ -25,26 +24,29 @@
 表現統一 + 
 PDFビルド環境更新
 
+|2023/5/26
+|version 1.0.0 修正対応
+
 |===
 
 == はじめに
 
-* 本書は、Consoleへのアクセスを提供するConsole Access Libraryについての機能仕様である。 + 
+* 本書は、「**Console**」へのアクセスを提供する「**Console Access Library**」についての機能仕様である。 + 
 機能開発言語には、Pythonを使用する。
 
 == 用語・略語
 |===
 |Terms/Abbreviations |Meaning 
 
-|Console for AITRIOS
+|「**Console for AITRIOS**」
 |エッジからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、エッジAIデバイスマネジメント機能など）を提供するクラウドサービス +
-以降、本文中ではConsoleと記載する
+以降、本文中では「**Console**」と記載する
 
-|Low Level SDK
-|ConsoleのREST APIのAPI仕様（yaml）からOpenAPI Generatorで自動生成したClient
+|「**Low Level SDK**」
+|「**Console REST API**」のAPI仕様（yaml）からOpenAPI Generatorで自動生成したClient
 
-|Cloud App
-|Console Access Libraryを使用するアプリケーション
+|「**Cloud App**」
+|「**Console Access Library**」を使用するアプリケーション
 
 |SAS
 |Shared Access Signatures +
@@ -56,25 +58,25 @@ Azure Storage リソースへの制限付きアクセス権を付与する URI
 |===
 
 == 想定ユースケース
-* Console Access Libraryを使用して、下記を実施する
+* 「**Console Access Library**」を使用して、下記を実施する
 ** エッジAIデバイスの情報を取得
 ** エッジAIデバイスに推論開始（推論結果アップロード開始）、推論停止（推論結果アップロード停止）
 ** エッジAIデバイスの出力結果（画像、推論結果）の取得
-** ユーザーが自分で作成したAI ModelをConsoleにアップロード
+** ユーザーが自分で作成したAI Modelを「**Console**」にアップロード
 *** アップロードしたAI Modelの確認と削除
 ** AI ModelをエッジAIデバイスにデプロイ可能な形式に変換
 ** AI ModelをエッジAIデバイスにデプロイ
-** ユーザーが自分で作成したDeviceAppをConsoleにアップロード
-*** アップロードしたDeviceAppの確認と削除
-** DeviceAppをエッジAIデバイスにデプロイ
+** ユーザーが自分で作成した「**DeviceApp**」を「**Console**」にアップロード
+*** アップロードした「**DeviceApp**」の確認と削除
+** 「**DeviceApp**」をエッジAIデバイスにデプロイ
 
 == 機能概要、アルゴリズム
 [#_Functional-Overview]
 === Functional Overview
-* Consoleにアクセス可能なClientを生成する
-** Consoleアクセスに必要な情報をConfigに設定し、ConfigをClientに設定する
+* 「**Console**」にアクセス可能なClientを生成する
+** 「**Console**」アクセスに必要な情報をConfigに設定し、ConfigをClientに設定する
 +
-Consoleアクセスに必要な情報は下記である
+「**Console**」アクセスに必要な情報は下記である
 +
 |===
 |Name |Description
@@ -93,12 +95,12 @@ Consoleアクセスに必要な情報は下記である
 
 |===
 
-* Clientから機能毎に分類されたConsoleのAPIを実行する
+* Clientから機能毎に分類された「**Console**」のAPIを実行する
 +
 [TIP]
 ====
-機能毎の分類は、Consoleが提供するLow Level SDKのAPIの分類に従います。 +
-Consoleアクセスに必要なアクセストークンの取得と更新をします。（Wrap）
+機能毎の分類は、「**Console**」が提供する「**Low Level SDK**」のAPIの分類に従います。 +
+「**Console**」アクセスに必要なアクセストークンの取得と更新をします。（Wrap）
 ====
 +
 [TIP]
@@ -109,7 +111,7 @@ APIにtimeoutの引数がない場合にはtimeoutしない。
 *** get_devices / エッジAIデバイスの情報一覧取得
 *** start_upload_inference_result / 推論結果メタデータ取得開始
 *** stop_upload_inference_result / 推論結果メタデータ取得停止
-*** get_command_parameter_file / Consoleに登録されたcommand parameter fileの一覧取得
+*** get_command_parameter_file / 「**Console**」に登録されたcommand parameter fileの一覧取得
 ** AI Model
 *** import_base_model / ベースモデルのインポート
 *** get_models / モデル情報一覧取得
@@ -117,30 +119,30 @@ APIにtimeoutの引数がない場合にはtimeoutしない。
 *** delete_model / モデル削除
 *** publish_model / モデル発行
 ** Deployment
-*** import_device_app / DeviceAppインポート
-*** get_device_apps / DeviceApp情報一覧取得
-*** delete_device_app / DeviceApp削除
+*** import_device_app / 「**DeviceApp**」のインポート
+*** get_device_apps / 「**DeviceApp**」の情報一覧取得
+*** delete_device_app / 「**DeviceApp**」の削除
 *** get_deploy_configurations / デプロイconfig情報一覧取得
 *** create_deploy_configuration / デプロイconfig情報登録
 *** deploy_by_configuration / デプロイ
 *** get_deploy_history / デプロイ履歴取得
 *** delete_deploy_configuration / デプロイconfig情報削除
 *** cancel_deployment / デプロイ状態強制キャンセル
-*** deploy_device_app / DeviceAppデプロイ
-*** undeploy_device_app / DeviceAppアンデプロイ
-*** get_device_app_deploys / DeviceAppデプロイ履歴取得
+*** deploy_device_app / 「**DeviceApp**」のデプロイ
+*** undeploy_device_app / 「**DeviceApp**」のアンデプロイ
+*** get_device_app_deploys / 「**DeviceApp**」のデプロイ履歴取得
 ** Insight
 *** get_image_directories / 画像保存ディレクトリ一覧取得
 *** get_images / 保存済み画像取得
 *** get_inference_results / 保存済み推論結果メタデータ一覧取得
 *** export_images / 保存済み画像エクスポート
 
-* Low Level SDKのAPIをユースケースでまとめたHigh Level APIを実行することができます。
+* 「**Low Level SDK**」のAPIをユースケースでまとめたHigh Level APIを実行することができます。
 ** AI Model
 *** publish_model_wait_response / モデル発行し、完了待ち
 ** Deployment
 *** deploy_by_configuration_wait_response / デプロイし、完了待ち
-*** deploy_device_app_wait_response / DeviceAppデプロイし、完了待ち
+*** deploy_device_app_wait_response / 「**DeviceApp**」をデプロイし、完了待ち
 ** Insight
 *** get_image_data / 保存済み画像取得
 **** get_imagesは、最大256件取得のため、本APIはget_imagesを複数回呼び出し、制限を隠蔽
@@ -148,7 +150,7 @@ APIにtimeoutの引数がない場合にはtimeoutしない。
 *** get_last_inference_and_image_data / 保存済み推論結果と画像の最新データ取得
 **** Dateの最も新しい画像を取得し、画像に紐づく推論結果を探して返却
 
-* Console Access Libraryの実行時、コンソールにログの出力を行う
+* 「**Console Access Library**」の実行時、コンソールにログの出力を行う
 ** ログフォーマットは下記の通りに定義する
 *** [ログ出力時刻] [ログレベル] [クライアント名] : メッセージ本文
 *** ログ出力時刻は、ユーザーが利用する環境のシステム時刻を使用する
@@ -164,16 +166,16 @@ APIにtimeoutの引数がない場合にはtimeoutしない。
 |Level |Summary 
 
 |ERROR
-|Console Access Libraryの実行時、正常に処理を終了できなかった場合に使用する
+|「**Console Access Library**」の実行時、正常に処理を終了できなかった場合に使用する
 
 |WARNING
 |異常とは言い切れないが正常とも異なる、何らかの予期しない問題が発生したときに使用する
 
 |INFO
-|Console Access Libraryがイベントを実行する際に使用する
+|「**Console Access Library**」がイベントを実行する際に使用する
 
 |DEBUG
-|Console Access Libraryの動作状況等、詳細なデバッグ情報を使用する
+|「**Console Access Library**」の動作状況等、詳細なデバッグ情報を使用する
 
 |OFF
 |全てのログを無効にする
@@ -197,22 +199,22 @@ console_access_library.set_logger(level=logging.WARNING)
 ----
 |===
 
-* Console Access Libraryの実行時、エラー条件の確認を行う
+* 「**Console Access Library**」の実行時、エラー条件の確認を行う
 ** 下記の条件でエラーと判断する
 *** APIの入力パラメータが不適
-*** APIの入力パラメータは適切だが、 Console Low Level SDKからの応答が期待通りではない(Timeout/Errorなど)
-*** Consoleに正常に接続できない(認証エラー、URL誤り、など)
+*** APIの入力パラメータは適切だが、 「**Low Level SDK**」からの応答が期待通りではない(Timeout/Errorなど)
+*** 「**Console**」に正常に接続できない(認証エラー、URL誤り、など)
 
 === Algorithm
-* Console Access Library使用開始
-. Cloud AppでConfigを作成
+* 「**Console Access Library**」使用開始
+. 「**Cloud App**」でConfigを作成
 +
-. Cloud AppからのClientを作成
+. 「**Cloud App**」からのClientを作成
 +
-Client生成時には、アクセストークンの取得、Low Level SDKの生成
-. Client instanceからLow Level SDKのAPIをWrapしたAPI、機能複合したAPI（High Level API）を利用
+Client生成時には、アクセストークンの取得、「**Low Level SDK**」の生成
+. Client instanceから「**Low Level SDK**」のAPIをWrapしたAPI、機能複合したAPI（High Level API）を利用
 +
-Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なアクセストークンの取得、更新
+「**Low Level SDK**」のAPIをWrapしたAPI内で、「**Console**」へのアクセスに必要なアクセストークンの取得、更新
 +
 - アクセストークンの有効期限は1時間となっており、有効期限が残り180秒以下の場合、アクセストークンの更新
 
@@ -224,7 +226,7 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 
 
 === Under what condition
-* ConsoleのAPIへのアクセスはLow Level SDKを使用すること
+* 「**Console**」のAPIへのアクセスは「**Low Level SDK**」を使用すること
 
 === API
 * Config
@@ -263,7 +265,7 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 ** deploy_by_configuration(config_id: str, device_ids: str, replace_model_id: str, comment: str)
 ** get_deploy_history(device_id: str)
 ** delete_deploy_configuration(config_id: str)
-** cancel_deployment(device_id: str, deploy_id: int)
+** cancel_deployment(device_id: str, deploy_id: str)
 ** deploy_device_app(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str)
 ** undeploy_device_app(device_ids: str)
 ** get_device_app_deploys(app_name: str, version_number: str)
@@ -309,12 +311,12 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 |Parameter’s name|Meaning|Range of parameter
 
 |console_endpoint
-|Consoleのアクセス先URL
+|「**Console**」のアクセス先URL
 |なし +
 指定なしの場合、環境変数から読み出す
 
 |portal_authorization_endpoint
-|Consoleアクセスに必要なアクセストークン発行先URL
+|「**Console**」へのアクセスに必要なアクセストークン発行先URL
 |なし +
 指定なしの場合、環境変数から読み出す
 
@@ -334,7 +336,7 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 |Return value|Meaning
 
 |Config instance
-|Consoleアクセスに必要な情報を保持したconfig instance
+|「**Console**」へのアクセスに必要な情報を保持したconfig instance
 |===
 
 * Client
@@ -344,7 +346,7 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 |Parameter’s name|Meaning|Range of parameter
 
 |config
-|Consoleアクセスに必要な情報を保持したconfig instance
+|「**Console**」へのアクセスに必要な情報を保持したconfig instance
 |なし
 
 |===
@@ -353,7 +355,7 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 |Return value|Meaning
 
 |Client instance
-|Low Level SDKのAPIをWrapしたAPI、機能複合したAPI（High Level API）を実行可能なclient instance
+|「**Low Level SDK**」のAPIをWrapしたAPI、機能複合したAPI（High Level API）を実行可能なclient instance
 |===
 
 ** get_device_management: DeviceManagement APIを提供するInstanceの取得
@@ -431,9 +433,9 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 * DeviceManagement
 ** get_devices: エッジAIデバイスの情報一覧取得
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -473,9 +475,9 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 +
 【Error：device_idが空の場合】E001 : device_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -501,9 +503,9 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 +
 【Error：device_idが空の場合】E001 : device_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -522,11 +524,11 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 
 |===
 
-** get_command_parameter_file: Consoleに登録されたcommand parameter fileの一覧取得
+** get_command_parameter_file: 「**Console**」に登録されたcommand parameter fileの一覧取得
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -541,7 +543,7 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 |Return value|Meaning
 
 |result
-|Consoleに登録されているCommandParameterの一覧
+|「**Console**」に登録されているCommandParameterの一覧
 
 |===
 
@@ -552,9 +554,9 @@ Low Level SDKのAPIをWrapしたAPI内で、Consoleアクセスに必要なア�
 +
 【Error：modelが空の場合】E001 : model is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -638,9 +640,9 @@ format: フォーマット（"RGB" or "BGR"） +
 
 ** get_models: モデル情報一覧取得
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -702,9 +704,9 @@ format: フォーマット（"RGB" or "BGR"） +
 +
 【Error：model_idが空の場合】E001 : model_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -734,9 +736,9 @@ format: フォーマット（"RGB" or "BGR"） +
 +
 【Error：model_idが空の場合】E001 : model_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -759,9 +761,9 @@ format: フォーマット（"RGB" or "BGR"） +
 +
 【Error：model_idが空の場合】E001 : model_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -793,9 +795,9 @@ format: フォーマット（"RGB" or "BGR"） +
 +
 【Error：model_idが空の場合】E001 : model_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -855,7 +857,7 @@ format: フォーマット（"RGB" or "BGR"） +
 |===
 
 * Deployment
-** import_device_app: DeviceAppインポート
+** import_device_app: 「**DeviceApp**」インポート
 +
 【Error：compiled_flgが空の場合】E001 : compiled_flg is required.
 +
@@ -867,9 +869,9 @@ format: フォーマット（"RGB" or "BGR"） +
 +
 【Error：file_contentが空の場合】E001 : file_content is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -880,7 +882,7 @@ format: フォーマット（"RGB" or "BGR"） +
 1:コンパイル済み(コンパイル処理を行わない)
 
 |app_name
-|DeviceApp名
+|「**DeviceApp**」名
 |文字数上限は、app_name + version_number <=31 とする +
 下記以外は禁則文字 +
 ・英数字 +
@@ -888,7 +890,7 @@ format: フォーマット（"RGB" or "BGR"） +
 ・ドット
 
 |version_number
-|DeviceAppバージョン
+|「**DeviceApp**」バージョン
 |文字数上限は、app_name + version_number <=31 とする +
 下記以外は禁則文字 +
 ・英数字 +
@@ -896,20 +898,20 @@ format: フォーマット（"RGB" or "BGR"） +
 ・ドット
 
 |file_name
-|DeviceAppファイル名
+|「**DeviceApp**」ファイル名
 |なし
 
 |file_content
-|DeviceAppファイル内容
+|「**DeviceApp**」ファイル内容
 |Base64 Encodeされた文字列
 
 |entry_point
-|EVPモジュールのエントリポイント
+|「**EVPモジュール**」のエントリポイント
 |なし +
 指定なしの場合、"ppl"
 
 |comment
-|DeviceApp説明
+|「**DeviceApp**」説明
 |100文字以内 +
 指定なしの場合、コメントなし
 
@@ -923,11 +925,11 @@ format: フォーマット（"RGB" or "BGR"） +
 
 |===
 
-** get_device_apps: DeviceApp情報一覧取得
+** get_device_apps: 「**DeviceApp**」情報一覧取得
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -942,29 +944,29 @@ format: フォーマット（"RGB" or "BGR"） +
 |Return value|Meaning
 
 |DeviceApp information
-|DeviceApp情報
+|「**DeviceApp**」情報
 
 |===
 
-** delete_device_app: DeviceApp削除
+** delete_device_app: 「**DeviceApp**」削除
 +
 【Error：app_nameが空の場合】E001 : app_name is required.
 +
 【Error：version_numberが空の場合】E001 : version_number is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
 
 |app_name
-|DeviceApp名
+|「**DeviceApp**」名
 |なし
 
 |version_number
-|DeviceAppバージョン
+|「**DeviceApp**」バージョン
 |なし
 
 |===
@@ -979,9 +981,9 @@ format: フォーマット（"RGB" or "BGR"） +
 
 ** get_deploy_configurations: デプロイconfig情報一覧取得
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1004,9 +1006,9 @@ format: フォーマット（"RGB" or "BGR"） +
 +
 【Error：config_idが空の場合】E001 : config_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1064,9 +1066,9 @@ _ アンダーバー +
 +
 【Error：device_idsが空の場合】E001 : device_ids is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1083,7 +1085,7 @@ _ アンダーバー +
 |replace_model_id
 |入替対象モデルID
 |「model_id」または「network_id」を指定 +
-指定されたモデルIDのものがDBに存在しない場合、入力された値をnetwork_id(Consoleの内部管理ID)としてみなし、処理を行う +
+指定されたモデルIDのものがDBに存在しない場合、入力された値をnetwork_id(「**Console**」の内部管理ID)としてみなし、処理を行う +
 指定なしの場合、入替しない.
 
 |comment
@@ -1105,9 +1107,9 @@ _ アンダーバー +
 +
 【Error：device_idが空の場合】E001 : device_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1130,9 +1132,9 @@ _ アンダーバー +
 +
 【Error：config_idが空の場合】E001 : config_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1157,9 +1159,9 @@ _ アンダーバー +
 +
 【Error：deploy_idが空の場合】E001 : deploy_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1182,7 +1184,7 @@ _ アンダーバー +
 
 |===
 
-** deploy_device_app: DeviceAppデプロイ
+** deploy_device_app: 「**DeviceApp**」デプロイ
 +
 【Error：app_nameが空の場合】E001 : app_name is required.
 +
@@ -1190,9 +1192,9 @@ _ アンダーバー +
 +
 【Error：device_idsが空の場合】E001 : device_ids is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1230,13 +1232,13 @@ _ アンダーバー +
 
 |===
 
-** undeploy_device_app: DeviceAppアンデプロイ
+** undeploy_device_app: 「**DeviceApp**」アンデプロイ
 +
 【Error：device_idsが空の場合】E001 : device_ids is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1256,15 +1258,15 @@ _ アンダーバー +
 
 |===
 
-** get_device_app_deploys: DeviceAppデプロイ履歴取得
+** get_device_app_deploys: 「**DeviceApp**」デプロイ履歴取得
 +
 【Error：app_nameが空の場合】E001 : app_name is required.
 +
 【Error：version_numberが空の場合】E001 : version_number is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1283,7 +1285,7 @@ _ アンダーバー +
 |Return value|Meaning
 
 |DeviceApp deploy history
-|DeviceAppデプロイ履歴
+|「**DeviceApp**」デプロイ履歴
 
 |===
 
@@ -1293,9 +1295,9 @@ _ アンダーバー +
 +
 【Error：device_idsが空の場合】E001 : device_ids is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1312,7 +1314,7 @@ _ アンダーバー +
 |replace_model_id
 |入替対象モデルID
 |「model_id」または「network_id」を指定 +
-指定されたモデルIDのものがDBに存在しない場合、入力された値をnetwork_id(Consoleの内部管理ID)としてみなし、処理を行う +
+指定されたモデルIDのものがDBに存在しない場合、入力された値をnetwork_id(「**Console**」の内部管理ID)としてみなし、処理を行う +
 指定なしの場合、入替しない.
 
 |comment
@@ -1368,7 +1370,7 @@ deploy_by_configuration_wait_responseのdevice_idsで指定したdevice_id分の
 　1：正常終了 +
 　2：失敗 +
 　3：キャンセル +
-　9：DeviceAppアンデプロイ
+　9：「**DeviceApp**」アンデプロイ
 
 |===
 +
@@ -1380,7 +1382,7 @@ deploy_by_configuration_wait_responseのdevice_idsで指定したdevice_id分の
 
 |===
 
-** deploy_device_app_wait_response: DeviceAppデプロイし、完了待ち
+** deploy_device_app_wait_response: 「**DeviceApp**」デプロイし、完了待ち
 +
 【Error：app_nameが空の場合】E001 : app_name is required.
 +
@@ -1388,9 +1390,9 @@ deploy_by_configuration_wait_responseのdevice_idsで指定したdevice_id分の
 +
 【Error：device_idsが空の場合】E001 : device_ids is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1480,9 +1482,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 * Insight
 ** get_image_directories: 画像保存ディレクトリ一覧取得
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1507,9 +1509,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 +
 【Error：sub_directory_nameが空の場合】E001 : sub_directory_name is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1554,9 +1556,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 +
 【Error：device_idが空の場合】E001 : device_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1606,9 +1608,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 +
 【Error：keyが空の場合】E001 : key is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1657,9 +1659,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 +
 【Error：sub_directory_nameが空の場合】E001 : sub_directory_name is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1704,9 +1706,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 +
 【Error：device_idが空の場合】E001 : device_id is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -1730,9 +1732,9 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 +
 【Error：sub_directory_nameが空の場合】E001 : sub_directory_name is required.
 +
-【Error：Low Level SDKにてErrorが発生した場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
-【Error：Low Level SDKのAPIから返却されたhttp_statusが200以外の場合】Console Access Libraryで定義したErrorを発生させる
+【Error：「**Low Level SDK**」のAPIから返却されたhttp_statusが200以外の場合】「**Console Access Library**」で定義したErrorを発生させる
 +
 |===
 |Parameter’s name|Meaning|Range of parameter

@@ -58,18 +58,17 @@ class SchemaCancelDeployment(Schema):
     )
 
     #: str, required : The Deployment id.
-    deploy_id = fields.Integer(
-        required=True, error_messages={"invalid": "Invalid integer for deploy_id"}, strict=True
+    deploy_id = fields.String(
+        required=True, error_messages={"invalid": "Invalid string for deploy_id"}, strict=True
     )
 
     @validates_schema
     def validate(self, data, **kwargs):
-
         if str(data["device_id"]).strip() == "":
             raise ValidationError("device_id is required or can't be empty string")
 
-        if isinstance(data["deploy_id"], int) is False or data["deploy_id"] < 0:
-            raise ValidationError("deploy_id is required or must be integer or can't be negative")
+        if str(data["deploy_id"]).strip() == "":
+            raise ValidationError("deploy_id is required or can't be empty string")
 
 
 class CancelDeployment(ConsoleAccessBaseClass):
@@ -92,7 +91,7 @@ class CancelDeployment(ConsoleAccessBaseClass):
     def cancel_deployment(
         self,
         device_id: str,
-        deploy_id: int,
+        deploy_id: str,
     ):
         """Force cancel deployment state. It only restores the \
         state of the database being deployed, but cannot return the deployed state to the \
@@ -101,7 +100,7 @@ class CancelDeployment(ConsoleAccessBaseClass):
 
         Args:
             device_id (str, required) : Device ID. Case-sensitive
-            deploy_id (int, required) : The Deployment id. \
+            deploy_id (str, required) : The Deployment id. \
                 Id that can be obtained with get_deploy_history.
 
         Returns:
@@ -268,8 +267,6 @@ class CancelDeployment(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 cancel_deployment_api_instance = deploy_api.DeployApi(api_client)
                 try:
-                    # Low Level SDK accepts deploy_id as string
-                    _local_params["deploy_id"] = str(_local_params["deploy_id"])
                     _return_cancel_deployment = cancel_deployment_api_instance.cancel_deployment(
                         path_params=_local_params
                     )

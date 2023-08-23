@@ -60,6 +60,28 @@ class SchemaGetInferenceresults(Schema):
     #: str, optional : Search filter (same specifications as CosmosDB UI on Azure portal except for
     #:                 the following) - No need to prepend the where string.
     #:                 - No need to add deviceID.
+    #:
+    #:                Filter Samples:
+    #:
+    #:                  * ModelID: string  match filter
+    #:
+    #:                      eg. "c.ModelID=\"0300000001590100\""
+    #:
+    #:                  * Image: boolean  match filter eg. "c.Image=true"
+    #:
+    #:                  * T: string  match or more filter
+    #:
+    #:                      eg. "c.Inferences[0].T>=\"20230412140050618\""
+    #:
+    #:                  * T: string  range filter \
+    #:
+    #:                      eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences
+    #:                      WHERE i.T >= \"20230412140023098\" AND
+    #:                      i.T <= \"20230412140029728\")"
+    #:
+    #:                  * _ts: number  match filter
+    #:
+    #:                       eg. "c._ts=1681308028"
     filter = fields.String(
         required=False, error_messages={"invalid": "Invalid string for filter"}, strict=True
     )
@@ -160,6 +182,28 @@ class GetInferenceresults(ConsoleAccessBaseClass):
 
                                         - No need to prepend where string
                                         - It is not necessary to add a deviceID.
+
+                                    Filter Samples:
+
+                                    * ModelID: string  match filter
+
+                                        eg. "c.ModelID=\"0300000001590100\""
+
+                                    * Image: boolean  match filter eg. "c.Image=true"
+
+                                    * T: string  match or more filter
+
+                                        eg. "c.Inferences[0].T>=\"20230412140050618\""
+
+                                    * T: string  range filter
+
+                                        eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences \
+                                            WHERE i.T >= \"20230412140023098\" AND \
+                                            i.T <= \"20230412140029728\")"
+
+                                    * _ts: number  match filter
+
+                                        eg. "c._ts=1681308028"
 
             number_of_inference_results (int, optional) :Number of acquisitions.\
                                                          If not specified: 20

@@ -14,15 +14,15 @@
 
 == 目的
 
-このチュートリアルではConsole Access Libraryが公開する各種APIについて解説します。本書を通じてLibraryをビルドして使用できるようになります。
+このチュートリアルでは「**Console Access Library**」が公開する各種APIについて解説します。本書を通じてLibraryをビルドして使用できるようになります。
 
 == 前提条件
 - Python 3.8.10
 - Python依存関係
 
-    * requests>=2.28.1
+    * requests>=2.31.0
     * jsonschema>=4.6.2
-    * setuptools>=63.2.0
+    * setuptools>=65.5.1
     * wheel>=0.37.1
     * PyYAML>=6.0
     * marshmallow>=3.17.0
@@ -34,15 +34,20 @@
     * sphinx-rtd-theme>=1.0.0
     * sphinxcontrib-napoleon>=0.7
     * rst2pdf>=0.99
-    * streamlit==1.10.0
+    * streamlit==1.11.1
     * pytest-timeout>=2.1.0
     * PyJWT>=2.6.0
     * nassl>=4.0
     * cryptography>=36.0
     * validators>=0.18
 
-=== Console Access Library API仕様
-- docs/api-reference/index.html
+=== 「**Console Access Library**」 API仕様
+「**Console Access Library**」のAPI仕様を参照する方法については、下記の手順を参照してください。
+
+1. リポジトリをクローンします
+    ** https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python
+
+2. クローンしたディレクトリ内に存在する `docs/api-reference/index.html` をウェブブラウザで開きます
 
 == 使用法
 
@@ -70,7 +75,7 @@
 
 . ネットワークProxy設定
 +
-プロキシ環境でConsole Access Libraryを使用するには `**https_proxy**` 環境変数を設定します
+プロキシ環境で「**Console Access Library**」を使用するには `**https_proxy**` 環境変数を設定します
 +
 ```
     export https_proxy=http://username:password@proxyhost:port
@@ -78,7 +83,7 @@
 
 <<<
 
-=== Console Access Libraryサンプルアプリケーション開始用のパラメータ設定
+=== 「**Console Access Library**」サンプルアプリケーション開始用のパラメータ設定
 
 ==== オプション1: Console Access設定ファイルを使用
 
@@ -92,7 +97,7 @@
         client_secret: "__client_secret__"
         client_id: "__client_id__"
 ```
-* 手順2: モジュール `**ReadConsoleAccessSettings**`, `**Config**`, `**Client**` をConsole Access Libraryサンプルアプリケーションにインポートします
+* 手順2: モジュール `**ReadConsoleAccessSettings**`, `**Config**`, `**Client**` を「**Console Access Library**」サンプルアプリケーションにインポートします
 +
 .samples/console_access_client_api_demo.py
 ```
@@ -100,14 +105,14 @@
     from console_access_library.common.config import Config
     from console_access_library.client import Client
 ```
-* 手順3: Console Access設定ファイルのパスを設定し、Console Access Library `**ReadConsoleAccessSettings**` のインスタンスを生成します `**console_access_settings.yaml**` ファイルを作成するには、手順1を参照してください
+* 手順3: Console Access設定ファイルのパスを設定し、「**Console Access Library**」 `**ReadConsoleAccessSettings**` のインスタンスを生成します `**console_access_settings.yaml**` ファイルを作成するには、手順1を参照してください
 +
 .samples/console_access_client_api_demo.py
 ```
     SETTING_FILE_PATH = os.path.join(os.getcwd(), "samples", "console_access_settings.yaml")
     read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
 ```
-* 手順4: Console Access Library `**Config**` のインスタンスを生成します
+* 手順4: 「**Console Access Library**」 `**Config**` のインスタンスを生成します
 +
 .samples/console_access_client_api_demo.py
 ```
@@ -129,14 +134,14 @@
     export CLIENT_SECRET="__client_secret__"
     export CLIENT_ID="__client_id__"
 ```
-* 手順2: モジュール `**Config**`, `**Client**` をConsole Access Libraryサンプルアプリケーションにインポートします
+* 手順2: モジュール `**Config**`, `**Client**` を「**Console Access Library**」サンプルアプリケーションにインポートします
 +
 .samples/console_access_client_api_demo.py
 ```
     from console_access_library.common.config import Config
     from console_access_library.client import Client
 ```
-* 手順3: Console Access Library `**Config**` のインスタンスを生成します
+* 手順3: 「**Console Access Library**」 `**Config**` のインスタンスを生成します
 +
 .samples/console_access_client_api_demo.py
 ```
@@ -148,16 +153,16 @@
 
 <<<
 
-==== オプション3: Console Access Libraryへユーザー環境値設定
+==== オプション3: 「**Console Access Library**」へユーザー環境値設定
 
-* 手順1: モジュール `**Config**`, `**Client**` をConsole Access Libraryサンプルアプリケーションにインポートします
+* 手順1: モジュール `**Config**`, `**Client**` を「**Console Access Library**」サンプルアプリケーションにインポートします
 +
 .samples/console_access_client_api_demo.py
 ```
     from console_access_library.common.config import Config
     from console_access_library.client import Client
 ```
-* 手順2: Console Access Library `**Config**` のインスタンスをユーザー環境値で生成します
+* 手順2: 「**Console Access Library**」 `**Config**` のインスタンスをユーザー環境値で生成します
 +
 .samples/console_access_client_api_demo.py
 ```

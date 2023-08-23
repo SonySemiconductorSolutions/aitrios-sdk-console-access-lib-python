@@ -505,7 +505,6 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
 
                         # Check Get Device App Deploys Status is not None
                         if _return_get_device_app_deploy_status:
-
                             # Get the length of the "deploys" array
                             deploy_response_length = len(
                                 _return_get_device_app_deploy_status["deploys"]
@@ -532,7 +531,6 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                     # check if the device_id is present in user provided
                                     # devices list
                                     if devices_id_from_response in device_ids_list:
-
                                         # Check if the device_id is not present in global array,
                                         # Then, add the first occurence of device_id to the
                                         # global array.

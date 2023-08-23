@@ -23,6 +23,7 @@
 # pylint:disable=redefined-builtin
 # pylint:disable=no-name-in-module
 # pylint:disable=global-statement
+# pylint:disable=superfluous-parens
 
 import logging
 import os
@@ -49,7 +50,7 @@ if __name__ == "__main__":
 
     # Set path for Console Access Library Setting File.
     SETTING_FILE_PATH = os.path.join(os.getcwd(), "samples", "console_access_settings.yaml")
-    if (os.path.exists(SETTING_FILE_PATH)):
+    if os.path.exists(SETTING_FILE_PATH):
         # Instantiate Console Access Library ReadConsoleAccessSettings.
         read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
 
@@ -62,10 +63,12 @@ if __name__ == "__main__":
         )
     else:
         # Instantiate Console Access Library Config.
-        config_obj = Config(console_endpoint=None,
-                            portal_authorization_endpoint=None,
-                            client_id=None,
-                            client_secret=None)
+        config_obj = Config(
+            console_endpoint=None,
+            portal_authorization_endpoint=None,
+            client_id=None,
+            client_secret=None,
+        )
 
     # Instantiate Console Access Library Client.
     client_obj = Client(config_obj)
@@ -221,14 +224,12 @@ if __name__ == "__main__":
     print("GET BASE MODEL STATUS:", response)
 
     # AIModel - PublishModelWaitModel
-    response = ai_model_obj.publish_model_wait_response(
-        model_id, callback=publish_callback
-    )
+    response = ai_model_obj.publish_model_wait_response(model_id, callback=publish_callback)
     print("PUBLISH MODEL WAIT RESPONSE:", response)
 
     # Deployment - CreateDeployConfiguration
     response = deployment_obj.create_deploy_configuration(
-        config_id, sensor_version_number=sensor_version_number
+        config_id, model_id=model_id
     )
     print("CREATE DEPLOY CONFIGURATION", response)
 
@@ -248,8 +249,8 @@ if __name__ == "__main__":
 
     # Deployment - ImportDeviceApp
     if os.path.exists(file_content_path):
-        with open (file_content_path, "r") as file:
-            file_content=file.read()
+        with open(file_content_path, "r", encoding="utf-8") as file:
+            file_content = file.read()
         response = deployment_obj.import_device_app(
             compiled_flg=compiled_flg,
             app_name=app_name,
@@ -282,7 +283,7 @@ if __name__ == "__main__":
         if config_id == response_get_deploy_history["deploys"][i]["config_id"]:
             deploy_id = response_get_deploy_history["deploys"][i]["id"]
             break
-    response = deployment_obj.cancel_deployment(device_id, int(deploy_id))
+    response = deployment_obj.cancel_deployment(device_id, str(deploy_id))
     print("CANCEL DEPLOYMENT", response)
 
     # DeviceManagement - GetDevices

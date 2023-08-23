@@ -634,7 +634,6 @@ class GetDeployHistory(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
-
                 # Create an instance of the API class
                 get_deploy_history_api_instance = deploy_api.DeployApi(api_client)
                 try:
