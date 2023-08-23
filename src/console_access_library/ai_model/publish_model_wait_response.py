@@ -315,7 +315,6 @@ class PublishModelWaitResponse(ConsoleAccessBaseClass):
                     "result" in _return_publish_model
                     and _return_publish_model["result"] == "SUCCESS"
                 ):
-
                     # Wait till publish status is failed or success
                     _publish_status = None
                     while True:

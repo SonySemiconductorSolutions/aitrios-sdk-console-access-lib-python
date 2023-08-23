@@ -338,7 +338,6 @@ class AIModel(ConsoleAccessBaseClass):
         network_type: str = "1",
         labels: list = None,
     ):
-
         """Abstract function call to ``import_base_model`` API
 
         Args:
@@ -1032,7 +1031,7 @@ class AIModel(ConsoleAccessBaseClass):
                     - ``datetime`` (str) : Time
         """
 
-        return self._publish_model_obj.publish_model(model_id)
+        return self._publish_model_obj.publish_model(model_id, device_id)
 
     def publish_model_wait_response(self, model_id: str, device_id: str = None, callback=None):
         """Abstract function call to ``publish_model_wait_response`` API

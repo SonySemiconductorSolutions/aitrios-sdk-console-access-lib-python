@@ -24,6 +24,7 @@
 # pylint:disable=too-many-locals
 # pylint:disable=invalid-name
 # pylint:disable=broad-except
+# pylint:disable=too-many-branches
 
 import logging
 import sys
@@ -387,6 +388,11 @@ class GetDevices(ConsoleAccessBaseClass):
 
             # Validate schema
             _query_params = SchemaGetDevices().load(_local_params)
+
+            # Update the connectionState in query params with connection_state from _local_params
+            if "connection_state" in _local_params and "connection_state" in _query_params:
+                del _query_params["connection_state"]
+                _query_params["connectionState"] = _local_params["connection_state"]
             logger.info(_query_params)
 
             # Enter a context with an instance of the API client

@@ -17,6 +17,7 @@
 # pylint:disable=missing-module-docstring
 # pylint:disable=global-statement
 # pylint:disable=global-variable-not-assigned
+# pylint:disable=duplicate-code
 
 import logging
 from datetime import datetime

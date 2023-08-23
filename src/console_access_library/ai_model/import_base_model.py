@@ -22,6 +22,7 @@
 # pylint:disable=too-many-return-statements
 # pylint:disable=protected-access
 # pylint:disable=too-many-arguments
+# pylint:disable=too-many-statements
 # pylint:disable=too-many-locals
 # pylint:disable=too-many-branches
 # pylint:disable=broad-except
@@ -163,7 +164,6 @@ class ImportBaseModel(ConsoleAccessBaseClass):
         network_type: str = "1",
         labels: list = None,
     ):
-
         """Import the base model. For a new model ID, save it as a new one. \
         If a model ID already registered in the system is specified, the version is upgraded. \
         Note that it is not possible to create a device model based on the base model \
@@ -398,6 +398,24 @@ class ImportBaseModel(ConsoleAccessBaseClass):
 
             if "labels" in _local_params and _local_params["labels"] is None:
                 del _local_params["labels"]
+
+            # Checking the datatype of input paramter "labels" before schema validation
+            # as Marshmallow is converting tuple to list
+            if (
+                "labels" in _local_params
+                and _local_params["labels"] is not None
+                and not isinstance(_local_params["labels"], list)
+            ):
+                raise ValidationError("Invalid type for labels")
+
+            # Checking the datatype of input paramter "converted" before schema validation
+            # as Marshmallow is converting all truthy and falsy value to boolean type
+            if (
+                "converted" in _local_params
+                and _local_params["converted"] is not None
+                and not isinstance(_local_params["converted"], bool)
+            ):
+                raise ValidationError("Invalid type for converted")
 
             # Validate schema
             _body_params = SchemaImportBaseModel().load(_local_params)

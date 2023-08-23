@@ -119,7 +119,6 @@ class ReadConsoleAccessSettings:
 
         try:
             if _settings is not None:
-
                 # Read yaml configuration
                 self._console_endpoint = _settings["console_access_settings"]["console_endpoint"]
                 self._portal_authorization_endpoint = _settings["console_access_settings"][

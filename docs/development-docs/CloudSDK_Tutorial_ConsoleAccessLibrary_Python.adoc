@@ -15,15 +15,15 @@
 
 == Objective
 
-To explain the various APIs exposed by Console Access Library and help the user to build and use the library.
+To explain the various APIs exposed by "**Console Access Library**" and help the user to build and use the library.
 
 == Prerequisites
 - Python 3.8.10
 - Python dependency modules
 
-    * requests>=2.28.1
+    * requests>=2.31.0
     * jsonschema>=4.6.2
-    * setuptools>=63.2.0
+    * setuptools>=65.5.1
     * wheel>=0.37.1
     * PyYAML>=6.0
     * marshmallow>=3.17.0
@@ -35,15 +35,20 @@ To explain the various APIs exposed by Console Access Library and help the user 
     * sphinx-rtd-theme>=1.0.0
     * sphinxcontrib-napoleon>=0.7
     * rst2pdf>=0.99
-    * streamlit==1.10.0
+    * streamlit==1.11.1
     * pytest-timeout>=2.1.0
     * PyJWT>=2.6.0
     * nassl>=4.0
     * cryptography>=36.0
     * validators>=0.18
 
-=== Console Access Library API Specification
-- docs/api-reference/index.html
+=== "**Console Access Library**" API Specification
+Please refer the below procedure regarding how to refer the "**Console Access Library**" API specifications. 
+
+1. Clone the repository
+    ** https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python
+
+2.  Open `**docs/api-reference/index.html**` available in the cloned directory via browser
 
 == Usage
 
@@ -71,7 +76,7 @@ To explain the various APIs exposed by Console Access Library and help the user 
 
 . Network proxy setting
 +
-To use the Console Access Library in a proxy environment, set the `**https_proxy**` environment variable
+To use the "**Console Access Library**" in a proxy environment, set the `**https_proxy**` environment variable
 +
 ```
     export https_proxy=http://username:password@proxyhost:port
@@ -79,7 +84,7 @@ To use the Console Access Library in a proxy environment, set the `**https_proxy
 
 <<<
 
-=== Set configuration parameter to start Console Access Library sample application
+=== Set configuration parameter to start "**Console Access Library**" sample application
 
 ==== Option 1: Using console access setting file
 
@@ -93,7 +98,7 @@ To use the Console Access Library in a proxy environment, set the `**https_proxy
         client_secret: "__client_secret__"
         client_id: "__client_id__"
 ```
-* Step 2: Import modules `**ReadConsoleAccessSettings**`, `**Config**` and `**Client**` into Console Access Library sample application
+* Step 2: Import modules `**ReadConsoleAccessSettings**`, `**Config**` and `**Client**` into "**Console Access Library**" sample application
 +
 .samples/console_access_client_api_demo.py
 ```
@@ -101,7 +106,7 @@ To use the Console Access Library in a proxy environment, set the `**https_proxy
     from console_access_library.common.config import Config
     from console_access_library.client import Client
 ```
-* Step 3: Set path for console access setting file, and then instantiate Console Access Library `**ReadConsoleAccessSettings**` +
+* Step 3: Set path for console access setting file, and then instantiate "**Console Access Library**" `**ReadConsoleAccessSettings**` + 
 To create `**console_access_settings.yaml file**`, please refer step 1
 +
 .samples/console_access_client_api_demo.py
@@ -109,7 +114,7 @@ To create `**console_access_settings.yaml file**`, please refer step 1
     SETTING_FILE_PATH = os.path.join(os.getcwd(), "samples", "console_access_settings.yaml")
     read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
 ```
-* Step 4: Instantiate Console Access Library `**Config**`
+* Step 4: Instantiate "**Console Access Library**" `**Config**`
 +
 .samples/console_access_client_api_demo.py
 ```
@@ -131,14 +136,14 @@ To create `**console_access_settings.yaml file**`, please refer step 1
     export CLIENT_SECRET="__client_secret__"
     export CLIENT_ID="__client_id__"
 ```
-* Step 2: Import modules `**Config**` and `**Client**` into Console Access Library sample application
+* Step 2: Import modules `**Config**` and `**Client**` into "**Console Access Library**" sample application
 +
 .samples/console_access_client_api_demo.py
 ```
     from console_access_library.common.config import Config
     from console_access_library.client import Client
 ```
-* Step 3: Instantiate Console Access Library `**Config**` with real values
+* Step 3: Instantiate "**Console Access Library**" `**Config**` with real values
 +
 .samples/console_access_client_api_demo.py
 ```
@@ -150,16 +155,16 @@ To create `**console_access_settings.yaml file**`, please refer step 1
 
 <<<
 
-==== Option 3: Passing real values to Console Access Library Config
+==== Option 3: Passing real values to "**Console Access Library**" Config
 
-* Step 1: Import modules `**Config**` and `**Client**` into Console Access Library sample application
+* Step 1: Import modules `**Config**` and `**Client**` into "**Console Access Library**" sample application
 +
 .samples/console_access_client_api_demo.py
 ```
     from console_access_library.common.config import Config
     from console_access_library.client import Client
 ```
-* Step 2: Instantiate Console Access Library `**Config**` with real values
+* Step 2: Instantiate "**Console Access Library**" `**Config**` with real values
 +
 .samples/console_access_client_api_demo.py
 ```

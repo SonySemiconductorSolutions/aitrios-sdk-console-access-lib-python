@@ -24,6 +24,8 @@
 # pylint:disable=too-many-arguments
 # pylint:disable=broad-except
 # pylint:disable=unused-argument
+# pylint:disable=broad-exception-raised
+
 
 import logging
 import os
@@ -36,6 +38,8 @@ import aitrios_console_rest_client_sdk_primitive
 import jwt
 import requests
 from marshmallow import Schema, ValidationError, fields, validates_schema
+from urllib3 import util
+from urllib.parse import urlparse
 
 warnings.filterwarnings("ignore")
 sys.path.append(".")
@@ -99,6 +103,7 @@ class TokenValidationEnum(Enum):
     VALID_TOKEN = "00"
     TOKEN_EXPIRED = "01"
     INVALID_TOKEN = "02"
+    EMPTY_TOKEN = "03"
 
 
 class Config:
@@ -155,12 +160,14 @@ class Config:
             self._client_id,
         )
 
-        # Read Proxy from environment 
+        # Read Proxy from environment
         self._proxy = self.get_https_proxy()
 
         # Set configuration parameters.
         self.configuration = aitrios_console_rest_client_sdk_primitive.Configuration(
-            host=self._console_endpoint, proxy=self._proxy
+            host=self._console_endpoint, 
+            proxy=self._proxy,
+            proxy_headers=self.get_proxy_auth_header(self._proxy)
         )
 
     def validate_config_parameters(
@@ -198,8 +205,25 @@ class Config:
             - "__proxy_str__" - Proxy string
         """
 
-        key = "https_proxy"
-        return os.environ.get(key) or os.environ.get(key.upper())
+        proxy_env_var = "https_proxy"
+        return os.environ.get(proxy_env_var) or os.environ.get(proxy_env_var.upper())
+
+    def get_proxy_auth_header(self, proxy=None):
+        """Get proxy headers for authorization
+
+        Args:
+            - Proxy string
+        Returns:
+            - Proxy headers for proxy_basic_auth
+        """
+        if proxy is None:
+            return None
+
+        parsed_proxy = urlparse(proxy)
+        if parsed_proxy.username and parsed_proxy.password is not None:
+            return util.make_headers(
+                proxy_basic_auth=f"{parsed_proxy.username}:{parsed_proxy.password}")
+        return None
 
     def validate_access_token(self, access_token: str):
         """Function to Validate Access Token
@@ -213,24 +237,30 @@ class Config:
                 - "00" for Valid Token
                 - "01" for Token expired
                 - "02" for Invalid token.
+                - "03" for Empty token.
         """
-        try:
-            access_token = access_token.split(" ")[1]
-            decoded_access_token = jwt.decode(access_token, options={"verify_signature": False})
-            exp = decoded_access_token.get("exp")
-            if exp - round(time.time()) <= 180 or exp < time.time():
-                logger.debug("Less than 3 mins for Token Expiry or Token Already expired")
-                return TokenValidationEnum.TOKEN_EXPIRED.value
-        except Exception as ex:
-            logger.debug("Invalid AccessToken %s", ex)
-            return TokenValidationEnum.INVALID_TOKEN.value
+        # Check if access token is Empty
+        if access_token is not None:
+            try:
+                access_token = access_token.split(" ")[1]
+                decoded_access_token = jwt.decode(access_token, options={"verify_signature": False})
+                exp = decoded_access_token.get("exp")
+                if exp - round(time.time()) <= 180 or exp < time.time():
+                    logger.debug("Less than 3 mins for Token Expiry or Token Already expired")
+                    return TokenValidationEnum.TOKEN_EXPIRED.value
+            except Exception as ex:
+                logger.debug("Invalid AccessToken %s", ex)
+                return TokenValidationEnum.INVALID_TOKEN.value
+        else:
+            return TokenValidationEnum.EMPTY_TOKEN.value
+
         return TokenValidationEnum.VALID_TOKEN.value
 
     def _get_ocsp_status(self, host_url):
         """Get OCSP status for the host_url"""
         retval = False
         try:
-            result = ocspchecker.get_ocsp_status(host=host_url)
+            result = ocspchecker.get_ocsp_status(host=host_url, proxy=self.get_https_proxy())
             if result[2] == "OCSP Status: GOOD":
                 retval = True
         except Exception as ex:
@@ -284,10 +314,22 @@ class Config:
         Returns:
             - "__access_token_str__" - On Success
             - "Generic Error" - If an error occurs when obtaining an access token
+
+            - Throws error if OCSP status "is not good" for any of the URLs(console_endpoint or \
+                    portal_authorization_endpoint)
         """
 
-        # If proxy is not set, Check for OCSP Status
-        if self._proxy is None:
+        _validation_code = self.validate_access_token(self._save_last_access_token)
+        # If the Access token variable has a token, check the validity of the token,
+        # if expired or invalid or empty token found generate new access token
+        if _validation_code in [
+            TokenValidationEnum.TOKEN_EXPIRED.value,
+            TokenValidationEnum.INVALID_TOKEN.value,
+            TokenValidationEnum.EMPTY_TOKEN.value
+
+        ]:
+            # To avoid multiple OCSP request, check OCSP status for _console_endpoint
+            # and _portal_authorization_endpoint when requesting for access token
             # verify revocation of certificate before urllib3 request,
             _console_endpoint_ocsp_status = self._get_ocsp_status(self._console_endpoint)
             _portal_authorization_endpoint_ocsp_status = self._get_ocsp_status(
@@ -297,17 +339,9 @@ class Config:
                 raise Exception(f"OCSP Status of URL {self._console_endpoint} is not good")
 
             if not _portal_authorization_endpoint_ocsp_status:
-                raise Exception(f"OCSP Status of URL {self._portal_authorization_endpoint} is not good")
-        else:
-            logger.info("Bypass verification of revocation of certificate before urllib3 request")
+                raise Exception(
+                    f"OCSP Status of URL {self._portal_authorization_endpoint} is not good")
 
-        _validation_code = self.validate_access_token(self._save_last_access_token)
-        # If the Access token variable has a token, check the validity of the token,
-        # if expired or invalid token found generate new access token
-        if _validation_code in [
-            TokenValidationEnum.TOKEN_EXPIRED.value,
-            TokenValidationEnum.INVALID_TOKEN.value,
-        ]:
             self._save_last_access_token = self._get_access_token()
 
         # Return the access token stored the Access token variable

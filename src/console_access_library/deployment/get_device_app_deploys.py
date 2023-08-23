@@ -302,7 +302,6 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
-
                 # Create an instance of the API class
                 get_device_app_deploys_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:

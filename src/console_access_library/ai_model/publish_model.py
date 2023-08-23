@@ -280,7 +280,7 @@ class PublishModel(ConsoleAccessBaseClass):
                 ai_model_api_instance = train_model_api.TrainModelApi(api_client)
                 try:
                     _return_publish_model = ai_model_api_instance.publish_model(
-                        path_params=_path_params
+                        path_params=_path_params, query_params=_query_params
                     )
                     return _return_publish_model.body
 

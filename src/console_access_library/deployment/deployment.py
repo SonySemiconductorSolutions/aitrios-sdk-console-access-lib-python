@@ -1692,13 +1692,13 @@ class Deployment(ConsoleAccessBaseClass):
     def cancel_deployment(
         self,
         device_id: str,
-        deploy_id: int,
+        deploy_id: str,
     ):
         """Abstract function call to ``cancel_deployment`` API
 
         Args:
             device_id (str, required) : ID of edge AI device.
-            deploy_id (int, required) : Deploy ID \
+            deploy_id (str, required) : Deploy ID \
                 id that can be obtained with get_deploy_history
 
         Returns:

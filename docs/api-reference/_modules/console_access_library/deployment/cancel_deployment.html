@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.cancel_deployment &mdash; Console Access Library 0.2.0 documentation</title>
+  <title>console_access_library.deployment.cancel_deployment &mdash; Console Access Library 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -25,14 +25,18 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> Console Access Library
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Console Access Library
           </a>
               <div class="version">
-                0.2.0
+                1.0.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -41,7 +45,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Console Access Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>Console Access Library - Quick Start Guide</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html"><strong>“Console Access Library” - Quick Start Guide</strong></a></li>
 </ul>
 
         </div>
@@ -57,7 +61,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a></li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
       <li class="breadcrumb-item active">console_access_library.deployment.cancel_deployment</li>
       <li class="wy-breadcrumbs-aside">
@@ -129,18 +133,17 @@
     <span class="p">)</span>
 
     <span class="c1">#: str, required : The Deployment id.</span>
-    <span class="n">deploy_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid integer for deploy_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">deploy_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for deploy_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="SchemaCancelDeployment.validate"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.cancel_deployment.SchemaCancelDeployment.validate">[docs]</a>    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_id&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">or</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_id&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;deploy_id is required or must be integer or can&#39;t be negative&quot;</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;deploy_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="CancelDeployment"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.cancel_deployment.CancelDeployment">[docs]</a><span class="k">class</span> <span class="nc">CancelDeployment</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
@@ -163,7 +166,7 @@
 <div class="viewcode-block" id="CancelDeployment.cancel_deployment"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.cancel_deployment.CancelDeployment.cancel_deployment">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_deployment</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">deploy_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">deploy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Force cancel deployment state. It only restores the \</span>
 <span class="sd">        state of the database being deployed, but cannot return the deployed state to the \</span>
@@ -172,7 +175,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            device_id (str, required) : Device ID. Case-sensitive</span>
-<span class="sd">            deploy_id (int, required) : The Deployment id. \</span>
+<span class="sd">            deploy_id (str, required) : The Deployment id. \</span>
 <span class="sd">                Id that can be obtained with get_deploy_history.</span>
 
 <span class="sd">        Returns:</span>
@@ -339,8 +342,6 @@
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">cancel_deployment_api_instance</span> <span class="o">=</span> <span class="n">deploy_api</span><span class="o">.</span><span class="n">DeployApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="c1"># Low Level SDK accepts deploy_id as string</span>
-                    <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;deploy_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;deploy_id&quot;</span><span class="p">])</span>
                     <span class="n">_return_cancel_deployment</span> <span class="o">=</span> <span class="n">cancel_deployment_api_instance</span><span class="o">.</span><span class="n">cancel_deployment</span><span class="p">(</span>
                         <span class="n">path_params</span><span class="o">=</span><span class="n">_local_params</span>
                     <span class="p">)</span>
