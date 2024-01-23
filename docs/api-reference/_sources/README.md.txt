@@ -188,7 +188,7 @@
 - [Contact us](https://developer.aitrios.sony-semicon.com/en/contact-us-en)
 
 ## See also
-- ["**Developer Site**"](https://developer.aitrios.sony-semicon.com/en)
+- ["**Developer Site**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/)
 
 ## Trademark
 - ["**Read This First**"](https://developer.aitrios.sony-semicon.com/en/documents/read-this-first)
