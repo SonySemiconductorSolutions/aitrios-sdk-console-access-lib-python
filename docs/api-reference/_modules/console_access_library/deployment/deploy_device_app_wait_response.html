@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.deploy_device_app_wait_response &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.deployment.deploy_device_app_wait_response &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.deployment.deploy_device_app_wait_response</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -140,25 +140,17 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for app_name&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, required : App version</span>
+    <span class="c1">#: str, required : App version Number</span>
     <span class="n">version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for version_number&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, required : IDs of edge AI devices</span>
+    <span class="c1">#: str, required : Device IDS. Specify multiple device IDs separated by commas.</span>
     <span class="n">device_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid Value for device_ids&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Deployment parameters</span>
-    <span class="n">deploy_parameter</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
-        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for deploy_parameter&quot;</span><span class="p">},</span>
-        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1">#: str, optional : deploy comment</span>
+    <span class="c1">#: str, optional : Comment. Max. 100 characters.</span>
     <span class="n">comment</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span>
@@ -206,11 +198,6 @@
 
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_ids is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="s2">&quot;deploy_parameter&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
-            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_parameter&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;deploy_parameter&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
-        <span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;deploy_parameter is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;comment is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
@@ -307,7 +294,6 @@
         <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">deploy_parameter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
@@ -315,14 +301,10 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            app_name (str, required) : App name</span>
-<span class="sd">            version_number (str, required) : App version</span>
-<span class="sd">            device_ids (str, required) : IDs of edge AI devices \</span>
-<span class="sd">                Specify multiple device IDs separated by commas</span>
-<span class="sd">            deploy_parameter (str, optional) : Deployment parameters \</span>
-<span class="sd">                Base64 encoded string in Json format No parameters if not specified.</span>
-<span class="sd">            comment (str, optional) : deploy comment \</span>
-<span class="sd">                up to 100 characters \</span>
-<span class="sd">                No comment if not specified.</span>
+<span class="sd">            version_number (str, required) : App version number</span>
+<span class="sd">            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\</span>
+<span class="sd">                by commas.</span>
+<span class="sd">            comment (str, optional) : Comment. Max. 100 characters.</span>
 <span class="sd">            callback (function, optional) : A function handle of the form - \</span>
 <span class="sd">                ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\</span>
 <span class="sd">                is the array of the dictionary for each device :</span>
@@ -360,7 +342,7 @@
 
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*          | *Type*     | *Description*              |</span>
-<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                +===================+===================+============+============================+</span>
 <span class="sd">                | ``No_item_name``  |                   | ``array``  | deploy device app          |</span>
 <span class="sd">                |                   |                   |            | wait response array        |</span>
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
@@ -387,7 +369,7 @@
 
 <span class="sd">                    If incorrect API input parameters OR</span>
 <span class="sd">                    if any input string parameter found empty OR</span>
-<span class="sd">                    if type of callback paramter not a function.</span>
+<span class="sd">                    if type of callback parameter not a function.</span>
 <span class="sd">                    Then, Dictionary with below key and value pairs.</span>
 
 <span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
@@ -465,6 +447,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -479,7 +462,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -492,7 +476,6 @@
 <span class="sd">                app_name = &quot;__app_name__&quot;,</span>
 <span class="sd">                version_number = &quot;__version_number__&quot;,</span>
 <span class="sd">                device_ids = &quot;__device_ids__&quot;,</span>
-<span class="sd">                deploy_parameter = &quot;__deploy_parameter__&quot;,</span>
 <span class="sd">                comment = &quot;__comment__&quot;</span>
 <span class="sd">                callback = &quot;__callback__&quot;</span>
 
@@ -523,7 +506,6 @@
 <span class="sd">                    app_name,</span>
 <span class="sd">                    version_number,</span>
 <span class="sd">                    device_ids,</span>
-<span class="sd">                    deploy_parameter,</span>
 <span class="sd">                    comment,</span>
 <span class="sd">                    callback</span>
 <span class="sd">                )</span>
@@ -557,7 +539,6 @@
                     <span class="n">app_name</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;app_name&quot;</span><span class="p">],</span>
                     <span class="n">version_number</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;version_number&quot;</span><span class="p">],</span>
                     <span class="n">device_ids</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">],</span>
-                    <span class="n">deploy_parameter</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;deploy_parameter&quot;</span><span class="p">],</span>
                     <span class="n">comment</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="p">(</span>
@@ -607,9 +588,9 @@
                                     <span class="c1"># devices list</span>
                                     <span class="k">if</span> <span class="n">devices_id_from_response</span> <span class="ow">in</span> <span class="n">device_ids_list</span><span class="p">:</span>
                                         <span class="c1"># Check if the device_id is not present in global array,</span>
-                                        <span class="c1"># Then, add the first occurence of device_id to the</span>
+                                        <span class="c1"># Then, add the first occurrence of device_id to the</span>
                                         <span class="c1"># global array.</span>
-                                        <span class="c1"># Set found_position of the first occurence of device_id</span>
+                                        <span class="c1"># Set found_position of the first occurrence of device_id</span>
                                         <span class="c1"># to the global array</span>
                                         <span class="k">if</span> <span class="n">devices_id_from_response</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
                                             <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
@@ -624,9 +605,9 @@
                                             <span class="p">)</span>
 
                                         <span class="c1"># Check if the device_id is present in global array,</span>
-                                        <span class="c1"># Then get the found_position of the first occurence</span>
+                                        <span class="c1"># Then get the found_position of the first occurrence</span>
                                         <span class="c1"># of device_id from the global array</span>
-                                        <span class="c1"># and get the skip value of the first occurence of</span>
+                                        <span class="c1"># and get the skip value of the first occurrence of</span>
                                         <span class="c1"># device_id from the global array</span>
                                         <span class="k">elif</span> <span class="p">(</span>
                                             <span class="n">devices_id_from_response</span>
@@ -644,7 +625,7 @@
                                             <span class="n">_found_position</span> <span class="o">=</span> <span class="n">array_device_json</span><span class="p">[</span><span class="s2">&quot;found_position&quot;</span><span class="p">]</span>
                                             <span class="n">_skip</span> <span class="o">=</span> <span class="n">array_device_json</span><span class="p">[</span><span class="s2">&quot;skip&quot;</span><span class="p">]</span>
 
-                                            <span class="c1"># Check whether it&#39;s first occurence</span>
+                                            <span class="c1"># Check whether it&#39;s first occurrence</span>
                                             <span class="c1"># Then Add status of the added device to</span>
                                             <span class="c1"># the global array</span>
                                             <span class="k">if</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">_found_position</span> <span class="ow">and</span> <span class="n">_skip</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -785,7 +766,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

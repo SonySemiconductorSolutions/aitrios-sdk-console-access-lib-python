@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -93,94 +93,89 @@ class GetLastInferenceData(ConsoleAccessBaseClass):
 
             **Success Response Schema**
 
-            - when time parameter is not specified
-
-                +-------------+-----------+------------------------------------+
-                | *Level1*    | *Type*    | *Description*                      |
-                +-------------+-----------+------------------------------------+
-                |``id``       | ``string``| The ID of the inference            |
-                |             |           | result metadata.                   |
-                +-------------+-----------+------------------------------------+
-                |``device_id``| ``string``| Device ID.                         |
-                +-------------+-----------+------------------------------------+
-                |``model_id`` | ``string``| Model ID.                          |
-                +-------------+-----------+------------------------------------+
-                |``model      |``string`` | Dnn Model Version                  |
-                |_version_id``|           |                                    |
-                +-------------+-----------+------------------------------------+
-                |``model      |``string`` | Model type.                        |
-                |_type``      |           |                                    |
-                |             |           | 00: Image classification           |
-                |             |           |                                    |
-                |             |           | 01: Object detection               |
-                |             |           |                                    |
-                |             |           | In the case of imported            |
-                |             |           | models, 01 is fixed at the         |
-                |             |           | current level.                     |
-                +-------------+-----------+------------------------------------+
-                |``training   |``string`` | Name of the training_kit           |
-                |_kit_name``  |           |                                    |
-                +-------------+-----------+------------------------------------+
-                |``_ts``      |``string`` | Timestamp. = System                |
-                |             |           | registration date and time         |
-                +-------------+-----------+------------------------------------+
-                |``inference  |``string`` |Refer :ref:`inference_result <ifr5>`|
-                |_result``    |           |for more details                    |
-                +-------------+-----------+------------------------------------+
+                +------------------+-------------+-----------+------------------------------------+
+                | *Level1*         | *Level2*    | *Type*    | *Description*                      |
+                +==================+============+============+====================================+
+                | ``No_item_name`` |             |           |                                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``id``       | ``string``| Inference result metadata ID.      |
+                |                  |             |           | =GUID generated automatically by   |
+                |                  |             |           | CosmosDB                           |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``device_id``| ``string``| Device ID.                         |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``model_id`` | ``string``| Model ID.                          |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``version    | ``string``| Version number.                    |
+                |                  |_number``    |           |                                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``model      |``string`` | Model version ID.                  |
+                |                  |_version_id``|           |                                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``model      |``string`` | Model type                         |
+                |                  |_type``      |           |                                    |
+                |                  |             |           | 00: Image category                 |
+                |                  |             |           |                                    |
+                |                  |             |           | 01: Object detection               |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``training   |``string`` |                                    |
+                |                  |_kit_name``  |           |                                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``_ts``      |``integer``| Timestamp.                         |
+                |                  |             |           | =_ts of CosmosDB                   |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``inference  |``string`` |Refer :ref:`inference_result <ifr0>`|
+                |                  |_result``    |           |for more details                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``inferenc   |``array``  |Refer :ref:`inferences <if0>`       |
+                |                  |es``         |           |for more details                    |
+                +------------------+-------------+-----------+------------------------------------+
 
                 +--------------------+--------------+------------+-------------------------------+
-                | inference_result   | .. _ifr5:                                                 |
+                | inference_result   | .. _ifr0:                                                 |
                 +--------------------+--------------+------------+-------------------------------+
                 | *Level1*           | *Level2*     | *Type*     | *Description*                 |
-                +--------------------+--------------+------------+-------------------------------+
-                |``inference_result``|              | ``array``  |Raw data for inference result  |
-                |                    |              |            |in ascending order of project  |
-                |                    |              |            |type and model project name.   |
+                +====================+==============+============+===============================+
+                |``inference_result``|              | ``array``  |                               |
                 +--------------------+--------------+------------+-------------------------------+
                 |                    |``device_id`` | ``string`` |Device ID                      |
                 +--------------------+--------------+------------+-------------------------------+
                 |                    |``model_id``  |``string``  |DnnModelVersion                |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``image``     |``boolean`` |Is it synchronized with        |
-                |                    |              |            |the output of InputTensor?     |
+                |                    |``image``     |``boolean`` |Synchronized to the            |
+                |                    |              |            |InputTensor output.            |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``inferences``|``array``   |Refer :ref:`inferences <if5>`  |
+                |                    |``inferences``|``array``   |Refer :ref:`inferences <if0>`  |
                 |                    |              |            |for more details               |
                 +--------------------+--------------+------------+-------------------------------+
+                |                    |``id``        |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``ttl``       |``integer`` |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_rid``      |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_self``     |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_etag``     |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_attachm    |``string``  |                               |
+                |                    |ents``        |            |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_ts``       |``integer`` |                               |
+                +--------------------+--------------+------------+-------------------------------+
 
                 +--------------------+--------------+------------+-------------------------------+
-                | inferences         | .. _if5:                                                  |
+                | inferences         | .. _if0:                                                  |
                 +--------------------+--------------+------------+-------------------------------+
                 | *Level1*           | *Level2*     | *Type*     | *Description*                 |
+                +====================+==============+============+===============================+
+                |``inferences``      |              | ``array``  |                               |
                 +--------------------+--------------+------------+-------------------------------+
-                |``inferences``      |              | ``array``  |Inference result Array         |
+                |                    |``T``         | ``string`` |Time when retrieving           |
+                |                    |              |            |data from the sensor.          |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``T``         | ``string`` |The time at which the data     |
-                |                    |              |            |was acquired from the sensor.  |
+                |                    |``O``         |``string``  |Output tensor (Encoding format)|
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``O``         |``string``  |Outputtensor output without    |
-                |                    |              |            |going through PPL              |
-                +--------------------+--------------+------------+-------------------------------+
-
-            - when time parameter is specified
-
-                +--------------+-----------+--------------------------------+
-                | *Level1*     | *Type*    | *Description*                  |
-                +--------------+-----------+--------------------------------+
-                |``id``        | ``string``| The ID of the inference result |
-                |              |           | metadata. = GUID automatically |
-                |              |           | fired by CosmosDB              |
-                +--------------+-----------+--------------------------------+
-                |``device_id`` | ``string``| Device ID.                     |
-                +--------------+-----------+--------------------------------+
-                |``model_id``  | ``string``| Model ID.                      |
-                +--------------+-----------+--------------------------------+
-                |``_ts``       |``string`` | Timestamp. = System            |
-                |              |           | registration date and time     |
-                +--------------+-----------+--------------------------------+
-                |``inferences``|``array``  |Refer :ref:`inferences <if5>`   |
-                |              |           |for more details                |
-                +--------------+-----------+--------------------------------+
 
             **Error Response Schema**
 
@@ -275,6 +270,7 @@ class GetLastInferenceData(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -289,7 +285,8 @@ class GetLastInferenceData(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -325,6 +322,8 @@ class GetLastInferenceData(ConsoleAccessBaseClass):
                     device_id=_local_params["device_id"],
                     number_of_inference_results=_number_of_inference_results,
                 )
+                if "result" in _return_get_last_inference_data:
+                    return _return_get_last_inference_data
                 if len(_return_get_last_inference_data) != 0:
                     _latest_inference_data = _return_get_last_inference_data[0]
                 return _latest_inference_data

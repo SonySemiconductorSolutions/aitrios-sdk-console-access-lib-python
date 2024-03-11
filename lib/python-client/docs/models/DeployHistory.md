@@ -8,23 +8,24 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**current_target** | str,  | str,  | todo | 
-**deploy_status** | str,  | str,  | todo | 
-**deploy_type** | str,  | str,  | todo | 
-**ins_date** | str,  | str,  | todo | 
-**upd_id** | str,  | str,  | todo | 
-**replace_network_id** | str,  | str,  | todo | 
-**config_id** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
-**upd_date** | str,  | str,  | todo | 
-**[model](#model)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-**id** | decimal.Decimal, int,  | decimal.Decimal,  | todo | 
-**ins_id** | str,  | str,  | todo | 
-**[custom_setting](#custom_setting)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
+**ins_date** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+**upd_id** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+**replace_network_id** | str,  | str,  | Set the replace network ID. | 
+**current_target** | str,  | str,  | Set the current target. | 
+**upd_date** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+**model** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+**id** | decimal.Decimal, int,  | decimal.Decimal,  | Deploy ID. | 
+**deploy_status** | str,  | str,  | Set the deploy status. *Target device deployment status. - Value definition   0: Deploying   1: Success   2: Fail   3: Cancel   App: DeviceApp undeploy | 
+**deploy_type** | str,  | str,  | Set the deploy type. - Value definition   0: Deploy config   1: Device Model   App: DeviceApp | 
+**ins_id** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
+**custom_setting** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 **[firmware](#firmware)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-**deploy_comment** | str,  | str,  | todo | [optional] 
-**total_status** | str,  | str,  | todo | [optional] 
-**app_name** | str,  | str,  | todo | [optional] 
-**version_number** | str,  | str,  | todo | [optional] 
+**update_progress** | str,  | str,  | Set the update progress in percentage. | [optional] 
+**deploy_comment** | str,  | str,  | Set the deploy comment. | [optional] 
+**config_id** | str,  | str,  | Set the deploy config ID. | [optional] 
+**total_status** | str,  | str,  | Set the deploy status. *Total status of devices deployed together. - Value definition   0: Deploying   1: Success   2: Fail   3: Cancel | [optional] 
+**app_name** | str,  | str,  | Set the app name. | [optional] 
+**version_number** | str,  | str,  | Set the version number. | [optional] 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 # firmware
@@ -37,113 +38,27 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**sensor_loader_target_flg** | str,  | str,  | todo | [optional] 
-**sensor_loader_status** | str,  | str,  | todo | [optional] 
-**sensor_loader_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**sensor_loader_start_date** | str,  | str,  | todo | [optional] 
-**sensor_loader_end_date** | str,  | str,  | todo | [optional] 
-**sensor_loader_version_number** | str,  | str,  | todo | [optional] 
-**sensor_loader_version_comment** | str,  | str,  | todo | [optional] 
-**sensor_target_flg** | str,  | str,  | todo | [optional] 
-**sensor_status** | str,  | str,  | todo | [optional] 
-**sensor_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**sensor_start_date** | str,  | str,  | todo | [optional] 
-**sensor_end_date** | str,  | str,  | todo | [optional] 
-**sensor_version_number** | str,  | str,  | todo | [optional] 
-**sensor_version_comment** | str,  | str,  | todo | [optional] 
-**apfw_target_flg** | str,  | str,  | todo | [optional] 
-**apfw_status** | str,  | str,  | todo | [optional] 
-**apfw_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**apfw_start_date** | str,  | str,  | todo | [optional] 
-**apfw_end_date** | str,  | str,  | todo | [optional] 
-**apfw_version_number** | str,  | str,  | todo | [optional] 
-**apfw_version_comment** | str,  | str,  | todo | [optional] 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# model
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**model_target_flg** | str,  | str,  | todo | [optional] 
-**model_status** | str,  | str,  | todo | [optional] 
-**model_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**model_start_date** | str,  | str,  | todo | [optional] 
-**model_end_date** | str,  | str,  | todo | [optional] 
-**model_id** | str,  | str,  | todo | [optional] 
-**model_version_number** | str,  | str,  | todo | [optional] 
-**model_comment** | str,  | str,  | todo | [optional] 
-**model_version_comment** | str,  | str,  | todo | [optional] 
-**dnn_param_setting_target_flg** | str,  | str,  | todo | [optional] 
-**dnn_param_setting_status** | str,  | str,  | todo | [optional] 
-**dnn_param_setting_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**dnn_param_setting_start_date** | str,  | str,  | todo | [optional] 
-**dnn_param_setting_end_date\&quot;** | str,  | str,  | todo | [optional] 
-**any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
-
-# custom_setting
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
-
-### Dictionary Keys
-Key | Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | ------------- | -------------
-**color_matrix_target_flg** | str,  | str,  | todo | [optional] 
-**color_matrix_status** | str,  | str,  | todo | [optional] 
-**color_matrix_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**color_matrix_start_date** | str,  | str,  | todo | [optional] 
-**color_matrix_end_date** | str,  | str,  | todo | [optional] 
-**color_matrix_mode** | str,  | str,  | todo | [optional] 
-**color_matrix_file_name** | str,  | str,  | todo | [optional] 
-**color_matrix_comment** | str,  | str,  | todo | [optional] 
-**gamma_target_flg** | str,  | str,  | todo | [optional] 
-**gamma_status** | str,  | str,  | todo | [optional] 
-**gamma_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**gamma_start_date** | str,  | str,  | todo | [optional] 
-**gamma_end_date** | str,  | str,  | todo | [optional] 
-**gamma_mode** | str,  | str,  | todo | [optional] 
-**gamma_file_name** | str,  | str,  | todo | [optional] 
-**gamma_comment** | str,  | str,  | todo | [optional] 
-**lscisp_target_flg** | str,  | str,  | todo | [optional] 
-**lscisp_status** | str,  | str,  | todo | [optional] 
-**lscisp_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**lscisp_start_date** | str,  | str,  | todo | [optional] 
-**lscisp_end_date** | str,  | str,  | todo | [optional] 
-**lscisp_mode** | str,  | str,  | todo | [optional] 
-**lscisp_file_name** | str,  | str,  | todo | [optional] 
-**lscisp_comment** | str,  | str,  | todo | [optional] 
-**lscraw_target_flg** | str,  | str,  | todo | [optional] 
-**lscraw_status** | str,  | str,  | todo | [optional] 
-**lscraw_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**lscraw_start_date** | str,  | str,  | todo | [optional] 
-**lscraw_end_date** | str,  | str,  | todo | [optional] 
-**lscraw_mode** | str,  | str,  | todo | [optional] 
-**lscraw_file_name** | str,  | str,  | todo | [optional] 
-**lscraw_comment** | str,  | str,  | todo | [optional] 
-**prewb_target_flg** | str,  | str,  | todo | [optional] 
-**prewb_status** | str,  | str,  | todo | [optional] 
-**prewb_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**prewb_start_date** | str,  | str,  | todo | [optional] 
-**prewb_end_date** | str,  | str,  | todo | [optional] 
-**prewb_mode** | str,  | str,  | todo | [optional] 
-**prewb_file_name** | str,  | str,  | todo | [optional] 
-**prewb_comment** | str,  | str,  | todo | [optional] 
-**dewarp_target_flg** | str,  | str,  | todo | [optional] 
-**dewarp_status** | str,  | str,  | todo | [optional] 
-**dewarp_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | todo | [optional] 
-**dewarp_start_date** | str,  | str,  | todo | [optional] 
-**dewarp_end_date** | str,  | str,  | todo | [optional] 
-**dewarp_mode** | str,  | str,  | todo | [optional] 
-**dewarp_file_name** | str,  | str,  | todo | [optional] 
-**dewarp_comment** | str,  | str,  | todo | [optional] 
+**sensor_loader_target_flg** | str,  | str,  | Set the deploy target flg. - Value definition   0: Not for deployment   1: Deployment target | [optional] 
+**sensor_loader_status** | str,  | str,  | Set the deploy status. - Value definition   0: Waiting   1: Deploying   2: Success   3: Fail | [optional] 
+**sensor_loader_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | Set the sensor loader retry count. | [optional] 
+**sensor_loader_start_date** | str,  | str,  | Set the sensor loader start date. | [optional] 
+**sensor_loader_end_date** | str,  | str,  | Set the sensor loader end date. | [optional] 
+**sensor_loader_version_number** | str,  | str,  | Set the sensor loader version number. | [optional] 
+**sensor_loader_version_comment** | str,  | str,  | Set the sensor loader version comment. | [optional] 
+**sensor_target_flg** | str,  | str,  | Set the deploy target flg. - Value definition   0: Not for deployment   1: Deployment target | [optional] 
+**sensor_status** | str,  | str,  | Set the deploy status. - Value definition   0: Waiting   1: Deploying   2: Success   3: Fail | [optional] 
+**sensor_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | Set the sensor retry count. | [optional] 
+**sensor_start_date** | str,  | str,  | Set the sensor start date. | [optional] 
+**sensor_end_date** | str,  | str,  | Set the sensor end date. | [optional] 
+**sensor_version_number** | str,  | str,  | Set the sensor version number. | [optional] 
+**sensor_version_comment** | str,  | str,  | Set the sensor version comment. | [optional] 
+**apfw_target_flg** | str,  | str,  | Set the deploy target flg. - Value definition   0: Not for deployment   1: Deployment target | [optional] 
+**apfw_status** | str,  | str,  | Set the deploy status. - Value definition   0: Waiting   1: Deploying   2: Success   3: Fail | [optional] 
+**apfw_retry_count** | decimal.Decimal, int,  | decimal.Decimal,  | Set the appfw retry count. | [optional] 
+**apfw_start_date** | str,  | str,  | Set the appfw start date. | [optional] 
+**apfw_end_date** | str,  | str,  | Set the appfw end date. | [optional] 
+**apfw_version_number** | str,  | str,  | Set the appfw version number. | [optional] 
+**apfw_version_comment** | str,  | str,  | Set the appfw version comment. | [optional] 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

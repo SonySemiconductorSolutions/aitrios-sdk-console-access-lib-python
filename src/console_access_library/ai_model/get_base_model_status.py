@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,16 @@ class SchemaGetBaseModelStatus(Schema):
         required=True, error_messages={"invalid": "Invalid string for model_id"}, strict=True
     )
 
-    #: str, optional : Latest version type.
+    #: str, optional : latest_type (str, optional) : Latest version type.
+    #:
+    #:                   - Value definition
+    #:
+    #:                      - 0: Latest published version
+    #:                      - 1: Latest version (latest including model version being
+    #:
+    #:                          converted/published)
+    #:
+    #:                   default: 1
     latest_type = fields.String(
         required=False, error_messages={"invalid": "Invalid string for latest_type"}, strict=True
     )
@@ -93,17 +102,19 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
         model_id: str,
         latest_type: str = "1",
     ):
-        """Retrieves the specified base model information
+        """Get the specified base model information
 
         Args:
-            model_id (str, required) : The Model ID.
+            model_id (str, required) : Model ID.
             latest_type (str, optional) : Latest version type.
 
-                - 0: latest published version
-                - 1: Latest version (latest including model version in process of \
-                conversion/publishing)
+                - Value definition
 
-                Exact search, 1 if not specified.
+                    - 0: Latest published version
+                    - 1: Latest version (latest including model version being \
+                    converted/published)
+
+                default: 1
 
         Returns:
             **Return Type**
@@ -115,21 +126,32 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
 
                 +-----------------+----------+----------+-----------------------------------------+
                 | *Level1*        | *Level2* | *Type*   |*Description*                            |
-                +-----------------+----------+----------+-----------------------------------------+
+                +=================+==========+==========+=========================================+
                 |``model_id``     |          |``string``|Set the model ID                         |
                 +-----------------+----------+----------+-----------------------------------------+
-                |``device_type``  |          |``string``|Set the model type                       |
+                |``model_type``   |          |``string``|Set the model type                       |
                 +-----------------+----------+----------+-----------------------------------------+
-                |``functionality``|          |``string``|Set the feature                          |
-                |                 |          |          |description                              |
+                |``functionality``|          |``string``|Set the function                         |
+                |                 |          |          |descriptions                             |
                 +-----------------+----------+----------+-----------------------------------------+
                 |``vendor_name``  |          |``string``|Set the vendor name                      |
                 +-----------------+----------+----------+-----------------------------------------+
                 |``model_comment``|          |``string``|Set the description                      |
                 +-----------------+----------+----------+-----------------------------------------+
-                |``network_type`` |          |``string``|0: Custom Vision                         |
-                |                 |          |          |                                         |
-                |                 |          |          |1: Non Custom Vision                     |
+                |``network_type`` |          |``string``|Set the network type.                    |
+                +-----------------+----------+----------+-----------------------------------------+
+                |``create_by``    |          |``string``| Set the create_by.                      |
+                |                 |          |          | - Value definition                      |
+                |                 |          |          | Self: Self-training models              |
+                |                 |          |          | Marketplace: Marketplace purchasing     |
+                |                 |          |          | model                                   |
+                +-----------------+----------+----------+-----------------------------------------+
+                |``package_id``   |          |``string``|Set the marketplace package ID.          |
+                +-----------------+----------+----------+-----------------------------------------+
+                |``product_id``   |          |``string``|Set the marketplace product ID.          |
+                +-----------------+----------+----------+-----------------------------------------+
+                |``metadata_format|          |``string``|Set the metadata_format_id               |
+                |_id``            |          |          |                                         |
                 +-----------------+----------+----------+-----------------------------------------+
                 |``projects``     |          |``array`` |                                         |
                 +-----------------+----------+----------+-----------------------------------------+
@@ -162,10 +184,9 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
                 | versions   | .. _versions_element1:                                             |
                 +------------+--------------------+-----------+-----------------------------------+
                 | *Level1*   | *Level2*           | *Type*    | *Description*                     |
-                +------------+--------------------+-----------+-----------------------------------+
-                |``versions``|                    | ``array`` |Although it is a subordinate       |
-                |            |                    |           |element, in the case of this       |
-                |            |                    |           |API, there is always one.          |
+                +============+====================+===========+===================================+
+                |``versions``|                    | ``array`` |There must be one subordinate      |
+                |            |                    |           |element for this API.              |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``version_number``  | ``string``|Set the version number             |
                 +------------+--------------------+-----------+-----------------------------------+
@@ -173,17 +194,17 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``iteration_name``  |``string`` |Set the iteration name             |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``accuracy``        |``string`` |Set the precision                  |
+                |            |``accuracy``        |``string`` |Set the accuracy                   |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``model_            |``string`` |Refer :ref:`model_performance <m2>`|
-                |            |performance``       |           |for more details                   |
+                |            |``model_            |``object`` |Set the the performance information|
+                |            |performances``      |           |of the model.                      |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``latest_flg``      |``string`` |Set the latest flag                |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``publish_latest_   |``string`` |Set the latest published flag      |
                 |            |flg``               |           |                                   |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``version_status``  |``string`` |Set your status                    |
+                |            |``version_status``  |``string`` |Set the status                     |
                 |            |                    |           |                                   |
                 |            |                    |           |'01': 'Before conversion'          |
                 |            |                    |           |                                   |
@@ -203,166 +224,51 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
                 |            |                    |           |'11': 'Saving' Model saving        |
                 |            |                    |           |status in Model Retrainer case     |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``org_file_name``   |``string`` |Set the file name of the model     |
-                |            |                    |           |before conversion                  |
+                |            |``org_file_name``   |``string`` |Set the preconversion model        |
+                |            |                    |           |filename.                          |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``org_file_size``   |``integer``|Set the publishing model file size |
+                |            |``org_file_size``   |``integer``|Set the publish model file size    |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``publish_file_     |``string`` |Set the publishing model file name |
+                |            |``publish_file_     |``string`` |Set the publish model file name    |
                 |            |name``              |           |                                   |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``publish_file_     |``integer``|Set the publishing model file size |
+                |            |``publish_file_     |``integer``|Set the publish model file size    |
                 |            |size``              |           |                                   |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``model_file_size`` |``integer``|Deployment model file size         |
-                |            |                    |           |* However, TBD is set as the       |
-                |            |                    |           |calculation method                 |
+                |            |``model_file_size`` |``integer``|Set the model file size.           |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``model_framework`` |``string`` |Set up the model framework         |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``conv_id``         |``string`` |Set the conversion request ID      |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``labels``          |``string`` |Set the label array                |
+                |            |``labels``          |``array``  |Set the label array                |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``stage``           |``string`` |Set the conversion stage           |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``result``          |``string`` |Set the conversion result          |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``kpi``             |``string`` |Refer :ref:`kpi <kpi>`             |
-                |            |                    |           |for more details                   |
+                |            |``kpi``             |``object`` |                                   |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``convert_start_    |``string`` |Set the conversion start date and  |
-                |            |date``              |           |time                               |
+                |            |``converter_log``   |``array``  |converter log.                     |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``convert_end_date``|``string`` |Set the conversion end date and    |
-                |            |                    |           |time                               |
-                +------------+--------------------+-----------+-----------------------------------+
-                |            |``publish_start_    |``string`` |Set the publish start date and time|
+                |            |``convert_start_    |``string`` |Set the conversion start date      |
                 |            |date``              |           |                                   |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``publish_end_date``|``string`` |Set the publication end date and   |
-                |            |                    |           |time                               |
+                |            |``convert_end_date``|``string`` |Set the conversion end date        |
+                +------------+--------------------+-----------+-----------------------------------+
+                |            |``publish_start_    |``string`` |Set the publish start date         |
+                |            |date``              |           |                                   |
+                +------------+--------------------+-----------+-----------------------------------+
+                |            |``publish_end_date``|``string`` |Set the publish end date           |
                 +------------+--------------------+-----------+-----------------------------------+
                 |            |``version_comment`` |``string`` |Set the description                |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``version_ins_date``|``date``   |Set the version creation time      |
+                |            |``version_ins_date``|``string`` |Set the created time of the        |
+                |            |                    |           |version.                           |
                 +------------+--------------------+-----------+-----------------------------------+
-                |            |``version_upd_date``|``date``   |Set the version creation time      |
+                |            |``version_upd_date``|``string`` |Set the created time of the        |
+                |            |                    |           |version.                           |
                 +------------+--------------------+-----------+-----------------------------------+
-
-                +------------+--------------------+------------+----------------------------------+
-                |``model_p   | .. _m2:                                                            |
-                |erformance``|                                                                    |
-                +------------+--------------------+------------+----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                    |
-                +------------+--------------------+------------+----------------------------------+
-                |``model_p   |                    | ``string`` |Set model performance             |
-                |erformance``|                    |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``perTag            |``string``  |Refer :ref:`pTP <pTP_element4>`   |
-                |            |Performance``       |            |for more details                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``precision``       |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``precisionStd      |``string``  |                                  |
-                |            |Deviation``         |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``recall``          |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``recallStd         |``string``  |                                  |
-                |            |Deviation``         |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``averagePrecision``|``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-
-                +------------+--------------------+------------+----------------------------------+
-                | kpi        | .. _kpi:                                                           |
-                +------------+--------------------+------------+----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                    |
-                +------------+--------------------+------------+----------------------------------+
-                |``kpi``     |                    | ``string`` |Set KPIs                          |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Memory Report``   |``string``  |Refer :ref:`MP <MP_element5>`     |
-                |            |                    |            |for more details                  |
-                +------------+--------------------+------------+----------------------------------+
-
-                +------------+--------------------+------------+----------------------------------+
-                | pTP        | .. _pTP_element4:                                                  |
-                +------------+--------------------+------------+----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                    |
-                +------------+--------------------+------------+----------------------------------+
-                |``perTagP   |                    | ``string`` |                                  |
-                |erformance``|                    |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``id``              |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``name``            |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``precision``       |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``precisionStd      |``string``  |                                  |
-                |            |Deviation``         |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``recallStd         |``string``  |                                  |
-                |            |Deviation``         |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``averagePrecision``|``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-
-                +------------+--------------------+------------+----------------------------------+
-                |MP          |.. _MP_element5:                                                    |
-                +------------+--------------------+------------+----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                    |
-                +------------+--------------------+------------+----------------------------------+
-                |``Memory    |                    | ``string`` |                                  |
-                |Report``    |                    |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Name``            |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Runtime Memory    |``string``  |                                  |
-                |            |Physical Size``     |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Model Memory      |``string``  |                                  |
-                |            |Physical Size``     |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Reserved Memory`` |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Memory Usage``    |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Total Memory      |``string``  |                                  |
-                |            |Available On Chip`` |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Memory            |``string``  |                                  |
-                |            |Utilization``       |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Fit In Chip``     |``string``  |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Input Persistent``|            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Networks``        |            |Refer :ref:`Networks <Ne>`        |
-                |            |                    |            |for more details                  |
-                +------------+--------------------+------------+----------------------------------+
-
-                +------------+--------------------+------------+----------------------------------+
-                |Networks    |.. _Ne:                                                             |
-                +------------+--------------------+------------+----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                    |
-                +------------+--------------------+------------+----------------------------------+
-                |``Networks``|                    |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Hash``            |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Name``            |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Runtime Memory    |            |                                  |
-                |            |Physical Size``     |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Model Memory      |            |                                  |
-                |            |Physical Size``     |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
-                |            |``Input Persistence |            |                                  |
-                |            |Cost``              |            |                                  |
-                +------------+--------------------+------------+----------------------------------+
 
            **Error Response Schema**
 
@@ -457,6 +363,7 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -471,7 +378,8 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -518,6 +426,11 @@ class GetBaseModelStatus(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 ai_model_api_instance = train_model_api.TrainModelApi(api_client)
                 try:

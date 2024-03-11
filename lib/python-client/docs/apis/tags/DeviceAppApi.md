@@ -1,4 +1,4 @@
-<a name="__pageTop"></a>
+<a id="__pageTop"></a>
 # aitrios_console_rest_client_sdk_primitive.apis.tags.device_app_api.DeviceAppApi
 
 All URIs are relative to *http://localhost*
@@ -13,7 +13,7 @@ Method | HTTP request | Description
 [**undeploy_device_app**](#undeploy_device_app) | **delete** /device_apps_deploys | UndeployDeviceApp
 
 # **delete_device_app**
-<a name="delete_device_app"></a>
+<a id="delete_device_app"></a>
 > SuccessResponse delete_device_app(app_nameversion_number)
 
 DeleteDeviceApp
@@ -44,10 +44,31 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'app_name': "app_name_example",
         'version_number': "version_number_example",
     }
+    query_params = {
+    }
     try:
         # DeleteDeviceApp
         api_response = api_instance.delete_device_app(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceAppApi->delete_device_app: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'app_name': "app_name_example",
+        'version_number': "version_number_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # DeleteDeviceApp
+        api_response = api_instance.delete_device_app(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -57,11 +78,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -186,7 +223,7 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **deploy_device_app**
-<a name="deploy_device_app"></a>
+<a id="deploy_device_app"></a>
 > SuccessResponse deploy_device_app(deploy_device_app_json_body)
 
 DeployDeviceApp
@@ -214,16 +251,38 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     api_instance = device_app_api.DeviceAppApi(api_client)
 
     # example passing only required values which don't have defaults set
+    query_params = {
+    }
     body = DeployDeviceAppJsonBody(
         app_name="app_name_example",
         version_number="version_number_example",
         device_ids="device_ids_example",
-        deploy_parameter="deploy_parameter_example",
         comment="comment_example",
     )
     try:
         # DeployDeviceApp
         api_response = api_instance.deploy_device_app(
+            query_params=query_params,
+            body=body,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceAppApi->deploy_device_app: %s\n" % e)
+
+    # example passing only optional values
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    body = DeployDeviceAppJsonBody(
+        app_name="app_name_example",
+        version_number="version_number_example",
+        device_ids="device_ids_example",
+        comment="comment_example",
+    )
+    try:
+        # DeployDeviceApp
+        api_response = api_instance.deploy_device_app(
+            query_params=query_params,
             body=body,
         )
         pprint(api_response)
@@ -235,6 +294,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 body | typing.Union[SchemaForRequestBodyApplicationJson] | required |
+query_params | RequestQueryParams | |
 content_type | str | optional, default is 'application/json' | Selects the schema and serialization of the request body
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
@@ -248,6 +308,21 @@ Type | Description  | Notes
 ------------- | ------------- | -------------
 [**DeployDeviceAppJsonBody**](../../models/DeployDeviceAppJsonBody.md) |  | 
 
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### Return Types, Responses
 
@@ -360,7 +435,7 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_device_app_deploys**
-<a name="get_device_app_deploys"></a>
+<a id="get_device_app_deploys"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_device_app_deploys(app_nameversion_number)
 
 GetDeviceAppDeploys
@@ -391,10 +466,31 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'app_name': "app_name_example",
         'version_number': "version_number_example",
     }
+    query_params = {
+    }
     try:
         # GetDeviceAppDeploys
         api_response = api_instance.get_device_app_deploys(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceAppApi->get_device_app_deploys: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'app_name': "app_name_example",
+        'version_number': "version_number_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # GetDeviceAppDeploys
+        api_response = api_instance.get_device_app_deploys(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -404,11 +500,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -420,21 +532,21 @@ version_number | VersionNumberSchema | |
 
 # AppNameSchema
 
-App name
+App name.
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | App name | 
+str,  | str,  | App name. | 
 
 # VersionNumberSchema
 
-App version number
+App version number.
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | App version number | 
+str,  | str,  | App version number. | 
 
 ### Return Types, Responses
 
@@ -552,12 +664,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_device_apps**
-<a name="get_device_apps"></a>
+<a id="get_device_apps"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_device_apps()
 
 GetDeviceApps
 
-Get device apps.
+Get the device app list information.
 
 ### Example
 
@@ -578,16 +690,43 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     # Create an instance of the API class
     api_instance = device_app_api.DeviceAppApi(api_client)
 
-    # example, this endpoint has no required or optional parameters
+    # example passing only optional values
+    query_params = {
+        'grant_type': "client_credentials",
+    }
     try:
         # GetDeviceApps
-        api_response = api_instance.get_device_apps()
+        api_response = api_instance.get_device_apps(
+            query_params=query_params,
+        )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
         print("Exception when calling DeviceAppApi->get_device_apps: %s\n" % e)
 ```
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
+accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### Return Types, Responses
 
@@ -691,7 +830,7 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **import_device_app**
-<a name="import_device_app"></a>
+<a id="import_device_app"></a>
 > SuccessResponse import_device_app(import_device_app_json_body)
 
 ImportDeviceApp
@@ -719,6 +858,8 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     api_instance = device_app_api.DeviceAppApi(api_client)
 
     # example passing only required values which don't have defaults set
+    query_params = {
+    }
     body = ImportDeviceAppJsonBody(
         compiled_flg="compiled_flg_example",
         entry_point="ppl",
@@ -727,10 +868,52 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         comment="comment_example",
         file_name="file_name_example",
         file_content="file_content_example",
+        schema_info=dict(
+            interfaces=dict(
+                _in=[
+                    dict(
+                        metadata_format_id="metadata_format_id_example",
+                    )
+                ],
+            ),
+        ),
     )
     try:
         # ImportDeviceApp
         api_response = api_instance.import_device_app(
+            query_params=query_params,
+            body=body,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceAppApi->import_device_app: %s\n" % e)
+
+    # example passing only optional values
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    body = ImportDeviceAppJsonBody(
+        compiled_flg="compiled_flg_example",
+        entry_point="ppl",
+        app_name="app_name_example",
+        version_number="version_number_example",
+        comment="comment_example",
+        file_name="file_name_example",
+        file_content="file_content_example",
+        schema_info=dict(
+            interfaces=dict(
+                _in=[
+                    dict(
+                        metadata_format_id="metadata_format_id_example",
+                    )
+                ],
+            ),
+        ),
+    )
+    try:
+        # ImportDeviceApp
+        api_response = api_instance.import_device_app(
+            query_params=query_params,
             body=body,
         )
         pprint(api_response)
@@ -742,6 +925,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 body | typing.Union[SchemaForRequestBodyApplicationJson] | required |
+query_params | RequestQueryParams | |
 content_type | str | optional, default is 'application/json' | Selects the schema and serialization of the request body
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
@@ -755,6 +939,21 @@ Type | Description  | Notes
 ------------- | ------------- | -------------
 [**ImportDeviceAppJsonBody**](../../models/ImportDeviceAppJsonBody.md) |  | 
 
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### Return Types, Responses
 
@@ -853,7 +1052,7 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **undeploy_device_app**
-<a name="undeploy_device_app"></a>
+<a id="undeploy_device_app"></a>
 > SuccessResponse undeploy_device_app(device_ids)
 
 UndeployDeviceApp
@@ -891,6 +1090,20 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
         print("Exception when calling DeviceAppApi->undeploy_device_app: %s\n" % e)
+
+    # example passing only optional values
+    query_params = {
+        'grant_type': "client_credentials",
+        'device_ids': "device_ids_example",
+    }
+    try:
+        # UndeployDeviceApp
+        api_response = api_instance.undeploy_device_app(
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceAppApi->undeploy_device_app: %s\n" % e)
 ```
 ### Parameters
 
@@ -907,17 +1120,25 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 device_ids | DeviceIdsSchema | | 
 
 
-# DeviceIdsSchema
-
-Device IDs
+# GrantTypeSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Device IDs | 
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
+
+# DeviceIdsSchema
+
+Specify multiple device IDs separated by commas.
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  | Specify multiple device IDs separated by commas. | 
 
 ### Return Types, Responses
 

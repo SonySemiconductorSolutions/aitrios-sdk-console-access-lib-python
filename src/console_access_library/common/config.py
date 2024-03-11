@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import os
 import sys
 import time
 import warnings
+import msal
 from enum import Enum
 
 import aitrios_console_rest_client_sdk_primitive
@@ -82,6 +83,11 @@ class SchemaConsoleAccessSettingsConfiguration(Schema):
         required=True, error_messages={"invalid": "Invalid string for client_id"}, strict=True
     )
 
+    #: string, allow_none : Application ID required to issue an access token
+    application_id = fields.String(
+        required=False, allow_none=True
+    )
+
     @validates_schema
     def validate(self, data, **_):
         if str(data["console_endpoint"]).strip() == "":
@@ -115,6 +121,7 @@ class Config:
         portal_authorization_endpoint: str = None,
         client_id: str = None,
         client_secret: str = None,
+        application_id: str = None,
     ):
         """Constructor method for config class
 
@@ -131,11 +138,16 @@ class Config:
 
             client_secret (str, optional): Client Secret required to issue an access token.
             If not specified, read from environment variables.
+
+            application_id (str, optional): Application ID required to issue an access token.
+            If not specified, read from environment variables.
+
         """
         self._console_endpoint = console_endpoint
         self._portal_authorization_endpoint = portal_authorization_endpoint
         self._client_secret = client_secret
         self._client_id = client_id
+        self._application_id = application_id
         self._save_last_access_token = None
         self._proxy = None
 
@@ -152,12 +164,16 @@ class Config:
         if self._client_id is None:
             self._client_id = os.environ.get("CLIENT_ID")
 
+        if self._application_id is None:
+            self._application_id = os.environ.get("APPLICATION_ID")
+
         # Validate Console Access Setting Configuration Parameters
         self.validate_config_parameters(
             self._console_endpoint,
             self._portal_authorization_endpoint,
             self._client_secret,
             self._client_id,
+            self._application_id,
         )
 
         # Read Proxy from environment
@@ -165,7 +181,7 @@ class Config:
 
         # Set configuration parameters.
         self.configuration = aitrios_console_rest_client_sdk_primitive.Configuration(
-            host=self._console_endpoint, 
+            host=self._console_endpoint,
             proxy=self._proxy,
             proxy_headers=self.get_proxy_auth_header(self._proxy)
         )
@@ -176,6 +192,7 @@ class Config:
         portal_authorization_endpoint: str,
         client_id: str,
         client_secret: str,
+        application_id: str,
     ):
         """
         Validation for Console Access Setting Configuration Parameters.
@@ -286,20 +303,34 @@ class Config:
             }
 
             # Set payload
-            _data = {
-                "grant_type": "client_credentials",
-                "client_secret": self._client_secret,
-                "scope": "system",
-                "client_id": self._client_id,
-            }
+            if self._application_id is None:
+                _data = {
+                    "grant_type": "client_credentials",
+                    "client_secret": self._client_secret,
+                    "scope": "system",
+                    "client_id": self._client_id,
+                }
+                # Create an instance of the Console API class
+                _response = requests.post(
+                    url=self._portal_authorization_endpoint, headers=_headers, data=_data, timeout=180
+                )
+                _response_json = _response.json()
+                _return_value = f"bearer {_response_json.get('access_token')}"
+            else:
+                client_id = self._client_id
+                authority = self._portal_authorization_endpoint
+                client_credential = self._client_secret
+                scope = ["api://" + self._application_id + "/.default"]
 
-            # Create an instance of the API class
-            _response = requests.post(
-                url=self._portal_authorization_endpoint, headers=_headers, data=_data, timeout=180
-            )
-            _response_json = _response.json()
-            _return_value = "bearer " + _response_json["access_token"]
-
+                # Create an instance of the Azure API class
+                _data = msal.ConfidentialClientApplication(
+                    client_id=client_id, authority=authority, client_credential=client_credential
+                )
+                _response = _data.acquire_token_silent(scopes=scope, account=None)
+                if not _response:
+                    _response = _data.acquire_token_for_client(scopes=scope)
+                _return_value = f"bearer {_response.get('access_token')}"
+                self._application_id_flg = True
         except Exception as ex:
             logger.error(str(ex))
             raise ex
@@ -341,6 +372,12 @@ class Config:
             if not _portal_authorization_endpoint_ocsp_status:
                 raise Exception(
                     f"OCSP Status of URL {self._portal_authorization_endpoint} is not good")
+            # Case of Azure API. OCSP check of "login.microsoftonline.com"
+            if self._application_id is not None:
+                _url = "https://login.microsoftonline.com"
+                _ocsp_status = self._get_ocsp_status(_url)
+                if not _ocsp_status:
+                    raise Exception(f"OCSP Status of URL {_url} is not good")
 
             self._save_last_access_token = self._get_access_token()
 

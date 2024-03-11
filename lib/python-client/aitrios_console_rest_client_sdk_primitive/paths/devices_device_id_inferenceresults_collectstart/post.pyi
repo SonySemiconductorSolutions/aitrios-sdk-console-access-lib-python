@@ -27,6 +27,32 @@ from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 
+# Query params
+GrantTypeSchema = schemas.StrSchema
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 # Path params
 DeviceIdSchema = schemas.StrSchema
 RequestRequiredPathParams = typing_extensions.TypedDict(
@@ -68,9 +94,11 @@ class SchemaFor200ResponseBodyApplicationJson(
         class properties:
             result = schemas.StrSchema
             outputSubDirectory = schemas.StrSchema
+            outputSubDirectoryIR = schemas.StrSchema
             __annotations__ = {
                 "result": result,
                 "outputSubDirectory": outputSubDirectory,
+                "outputSubDirectoryIR": outputSubDirectoryIR,
             }
     
     result: MetaOapg.properties.result
@@ -82,9 +110,12 @@ class SchemaFor200ResponseBodyApplicationJson(
     def __getitem__(self, name: typing_extensions.Literal["outputSubDirectory"]) -> MetaOapg.properties.outputSubDirectory: ...
     
     @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["outputSubDirectoryIR"]) -> MetaOapg.properties.outputSubDirectoryIR: ...
+    
+    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
     
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["result", "outputSubDirectory", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["result", "outputSubDirectory", "outputSubDirectoryIR", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
     
@@ -96,25 +127,30 @@ class SchemaFor200ResponseBodyApplicationJson(
     def get_item_oapg(self, name: typing_extensions.Literal["outputSubDirectory"]) -> typing.Union[MetaOapg.properties.outputSubDirectory, schemas.Unset]: ...
     
     @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["outputSubDirectoryIR"]) -> typing.Union[MetaOapg.properties.outputSubDirectoryIR, schemas.Unset]: ...
+    
+    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
     
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["result", "outputSubDirectory", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["result", "outputSubDirectory", "outputSubDirectoryIR", ], str]):
         return super().get_item_oapg(name)
     
 
     def __new__(
         cls,
-        *args: typing.Union[dict, frozendict.frozendict, ],
+        *_args: typing.Union[dict, frozendict.frozendict, ],
         result: typing.Union[MetaOapg.properties.result, str, ],
         outputSubDirectory: typing.Union[MetaOapg.properties.outputSubDirectory, str, schemas.Unset] = schemas.unset,
+        outputSubDirectoryIR: typing.Union[MetaOapg.properties.outputSubDirectoryIR, str, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            *args,
+            *_args,
             result=result,
             outputSubDirectory=outputSubDirectory,
+            outputSubDirectoryIR=outputSubDirectoryIR,
             _configuration=_configuration,
             **kwargs,
         )
@@ -240,6 +276,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _start_upload_inference_result_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -253,6 +290,7 @@ class BaseApi(api_client.Api):
     def _start_upload_inference_result_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -262,6 +300,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _start_upload_inference_result_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -274,6 +313,7 @@ class BaseApi(api_client.Api):
 
     def _start_upload_inference_result_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -286,6 +326,7 @@ class BaseApi(api_client.Api):
             api_response.body and api_response.headers will not be deserialized into schema
             class instances
         """
+        self._verify_typed_dict_inputs_oapg(RequestQueryParams, query_params)
         self._verify_typed_dict_inputs_oapg(RequestPathParams, path_params)
         used_path = path.value
 
@@ -301,6 +342,19 @@ class BaseApi(api_client.Api):
 
         for k, v in _path_params.items():
             used_path = used_path.replace('{%s}' % k, v)
+
+        prefix_separator_iterator = None
+        for parameter in (
+            request_query_grant_type,
+        ):
+            parameter_data = query_params.get(parameter.name, schemas.unset)
+            if parameter_data is schemas.unset:
+                continue
+            if prefix_separator_iterator is None:
+                prefix_separator_iterator = parameter.get_prefix_separator_iterator()
+            serialized_data = parameter.serialize(parameter_data, prefix_separator_iterator)
+            for serialized_value in serialized_data.values():
+                used_path += serialized_value
 
         _headers = HTTPHeaderDict()
         # TODO add cookie handling
@@ -326,7 +380,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 
@@ -337,6 +395,7 @@ class StartUploadInferenceResult(BaseApi):
     @typing.overload
     def start_upload_inference_result(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -350,6 +409,7 @@ class StartUploadInferenceResult(BaseApi):
     def start_upload_inference_result(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -359,6 +419,7 @@ class StartUploadInferenceResult(BaseApi):
     @typing.overload
     def start_upload_inference_result(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -371,6 +432,7 @@ class StartUploadInferenceResult(BaseApi):
 
     def start_upload_inference_result(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -378,6 +440,7 @@ class StartUploadInferenceResult(BaseApi):
         skip_deserialization: bool = False,
     ):
         return self._start_upload_inference_result_oapg(
+            query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,
@@ -392,6 +455,7 @@ class ApiForpost(BaseApi):
     @typing.overload
     def post(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -405,6 +469,7 @@ class ApiForpost(BaseApi):
     def post(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -414,6 +479,7 @@ class ApiForpost(BaseApi):
     @typing.overload
     def post(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -426,6 +492,7 @@ class ApiForpost(BaseApi):
 
     def post(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -433,6 +500,7 @@ class ApiForpost(BaseApi):
         skip_deserialization: bool = False,
     ):
         return self._start_upload_inference_result_oapg(
+            query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,

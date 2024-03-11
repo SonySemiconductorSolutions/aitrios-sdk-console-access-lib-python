@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,34 +55,35 @@ class SchemaGetImageData(Schema):
 
     """
 
-    #: str, required : Edge AI Device ID
+    #: str, required : Device ID
     device_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
 
-    #: str, required : Image storage subdirectory. The subdirectory is the directory
-    #:                 notified by the response of start_upload_inference_result or the
-    #:                 directory obtained by get_image_directories.
+    #: str, required : Directory name
     sub_directory_name = fields.String(
         required=True,
         error_messages={"invalid": "Invalid string for sub_directory_name"},
         strict=True,
     )
 
-    #: int, optional : Number of images acquired. If not specified defauls to 50.
+    #: int, optional : Number of images to fetch.
+    #:                  Value range:0 to 256.
+    #:                  If not specified defaults to 50.
     number_of_images = fields.Integer(
         required=False,
         error_messages={"invalid": "Invalid integer for number_of_images"},
         strict=True,
     )
 
-    #: int, optional : Skip.
+    #: int, optional : Number of images to skip fetching.
+    #:                 Default:0
     skip = fields.Integer(
         required=False, error_messages={"invalid": "Invalid integer for skip"}, strict=True
     )
 
-    #: str, optional : Sort Order, Sort order by date and time the image was created.
-    #:                 Values allowed: DESC, ASC, desc, asc. If not specified defauls to ASC.
+    #: str, optional : Sort Order - Sorted by date image was created.
+    #:                 Values allowed: DESC, ASC. If not specified defaults to ASC.
     order_by = fields.String(
         required=False, error_messages={"invalid": "Invalid string for order_by"}, strict=True
     )
@@ -165,14 +166,14 @@ class GetImageData(ConsoleAccessBaseClass):
         """Get a (saved) image of the specified device.
 
         Args:
-            device_id (str, required) : Edge AI Device ID.
-            sub_directory_name (str, required) : Image storage subdirectory. \
-                The subdirectory is the directory notified by the response of \
-                start_upload_inference_resultor the directory obtained by get_image_directories.
-            number_of_images (int, optional) : Number of images acquired. If not specified: 50
-            skip (int, optional) : number of images to skip fetching. If not specified: 0
-            order_by (str, optional) : Sort Order: Sort order by date \
-                and time the image was created. Values allowed: DESC, ASC, desc, asc. \
+            device_id (str, required) : Device ID.
+            sub_directory_name (str, required) : Directory name.
+            number_of_images (int, optional) : Number of images to fetch. \
+                Value range: 0-256. If not specified: 50.
+            skip (int, optional) : Number of images to skip fetching. \
+                If not specified: 0.
+            order_by (str, optional) : Sort Order: Sort order by date image was created. \
+                Value range: DESC, ASC.
                 If not specified: ASC.
 
         Returns:
@@ -185,19 +186,16 @@ class GetImageData(ConsoleAccessBaseClass):
 
                 +-----------------------+------------+------------+---------------------------+
                 | *Level1*              | *Level2*   | *Type*     | *Description*             |
-                +-----------------------+------------+------------+---------------------------+
+                +=======================+============+============+===========================+
                 | ``total_image_count`` |            |  ``int``   | Set the total number of   |
                 |                       |            |            | images                    |
                 +-----------------------+------------+------------+---------------------------+
-                |``images``             |            | ``array``  | Image file name array     |
-                |                       |            |            | The descendant elements   |
-                |                       |            |            | are listed in ascending   |
-                |                       |            |            | order by image file name. |
+                |``images``             |            | ``array``  |                           |
                 +-----------------------+------------+------------+---------------------------+
-                |                       | ``name``   | ``string`` | Set the image file name.  |
+                |                       | ``name``   | ``string`` | Set the image filename.   |
                 +-----------------------+------------+------------+---------------------------+
-                |                       |``contents``| ``string`` | Image file contents       |
-                |                       |            |            | \*Base64 encoding         |
+                |                       |``contents``| ``string`` | Images file contents      |
+                |                       |            |            | (BASE64 encoding)         |
                 +-----------------------+------------+------------+---------------------------+
 
             **Error Response Schema**
@@ -295,6 +293,7 @@ class GetImageData(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -309,7 +308,8 @@ class GetImageData(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -369,6 +369,8 @@ class GetImageData(ConsoleAccessBaseClass):
                         skip=_skip,
                         order_by=order_by,
                     )
+                    if "result" in response:
+                        return response
                     if response["total_image_count"] > 0:
                         if get_image_data_response["total_image_count"] == 0:
                             get_image_data_response["total_image_count"] = response[

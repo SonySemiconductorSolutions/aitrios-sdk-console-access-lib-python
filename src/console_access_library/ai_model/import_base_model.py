@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,54 +52,76 @@ class SchemaImportBaseModel(Schema):
 
     """
 
-    #: str, required : Model ID.
+    #: str, required : Model ID for new registration or version upgrade. Max.
+    #:            100 characters.
     model_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for model_id"}, strict=True
     )
 
-    #: str, required : Model.
+    #: str, required : SAS URI or Presigned URI of the model file.
     model = fields.String(
         required=True, error_messages={"invalid": "Invalid string for model"}, strict=True
     )
 
-    #: bool, optional : Convert flag.
+    #: bool, optional : Specify whether to convert the specified model file.
     converted = fields.Boolean(
         required=False, error_messages={"invalid": "Invalid boolean for converted"}, strict=True
     )
 
-    #: str, optional : Vendor Name.
+    #: str, optional : Vendor Name. Max. 100 characters.
+    #:
+    #:                  - Specify only when registering a new base model.
     vendor_name = fields.String(
         required=False, error_messages={"invalid": "Invalid string for vendor_name"}, strict=True
     )
 
-    #: str, optional : Comment.
+    #: str, optional : Description. Max. 100 characters.
+    #:
+    #:                  - When saving new, it is set as a description of the model and version.
+    #:                  - When saving version-up, it is set as a description of the version.
     comment = fields.String(
         required=False, error_messages={"invalid": "Invalid string for comment"}, strict=True
     )
 
-    #: str, optional : Input format param file.
+    #: str, optional : SAS URI or Presigned URI of the input format param file.
+    #:
+    #:                    - Usage: Packager conversion information (image format information).
+    #:                    - The json format is an array of objects. Each object contains the
+    #:                      following values.
+    #:
+    #:                        - ordinal: Order of DNN input to converter (value range: 0 to 2)
+    #:                        - format: Format ("RGB" or "BGR")
     input_format_param = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for input_format_param"},
         strict=True,
     )
 
-    #: str, optional : network_config.
+    #: str, optional : SAS URI or Presigned URI of the network config file.
+    #:
+    #:                  - Usage: Conversion parameter information of modelconverter.
+    #:
+    #:                  Therefore, it is not necessary to specify when specifying the
+    #:                  model before conversion.
     network_config = fields.String(
         required=False, error_messages={"invalid": "Invalid string for network_config"}, strict=True
     )
 
-    #: str, optional : network_type.
+    #: str, optional : Specify whether or not application is required for the model.
+    #:
+    #:                  - Value definition
+    #:
+    #:                     - 0 : Model required application
+    #:                     - 1 : Model do not required application
     network_type = fields.String(
         required=False, error_messages={"invalid": "Invalid string for network_type"}, strict=True
     )
 
-    #: list, optional : labels.
-    labels = fields.List(
-        fields.String(),
+    #: metadata_format_id, optional : metadata_format_id. Max. 100 characters.
+    metadata_format_id = fields.String(
         required=False,
-        error_messages={"invalid": "Invalid list for labels"},
-        strict=True,
+        error_messages={"invalid": "Invalid string for metadata_format_id"},
+        strict=True
     )
 
     @validates_schema
@@ -131,8 +153,10 @@ class SchemaImportBaseModel(Schema):
         ):
             raise ValidationError("network_type is required or can't be empty string")
 
-        if "labels" in data and data["labels"] is None:
-            raise ValidationError("labels is required")
+        if "metadata_format_id" in data and (
+            data["metadata_format_id"] is None or str(data["metadata_format_id"]).strip() == ""
+        ):
+            raise ValidationError("metadata_format_id is required or can't be empty string")
 
 
 class ImportBaseModel(ConsoleAccessBaseClass):
@@ -162,54 +186,58 @@ class ImportBaseModel(ConsoleAccessBaseClass):
         input_format_param: str = None,
         network_config: str = None,
         network_type: str = "1",
-        labels: list = None,
+        metadata_format_id: str = None,
     ):
-        """Import the base model. For a new model ID, save it as a new one. \
-        If a model ID already registered in the system is specified, the version is upgraded. \
-        Note that it is not possible to create a device model based on the base model \
-        imported with this API.
+        """Import the base model. In addition, in the case of a new model \
+        ID, it is newly saved. If you specify a model ID that has already been registered \
+        in the system, the version will be upgraded.
 
         Args:
-            model_id (str, required) : Model ID. \
-                The model ID to be saved or upgraded. 100 characters or less \
+            model_id (str, required) : Model ID for new registration or version upgrade. \
+                Max. 100 characters. \
                 The following characters are allowed \
                 Alphanumeric characters \
-                -hyphen \
+                - hyphen \
                 _ Underscore \
                 () Small parentheses \
                 . dot
-            model (str, required) : Model file SAS URI
-            converted (bool, optional) : Convert flag. True: Converted Model \
-                False: Unconverted Model \
-                False if not specified
-            vendor_name (str, optional) : Vendor Name.  (specified when saving as new) \
-                Up to 100 characters. Not specified for version upgrade. \
-                No vendor name if not specified.
-            comment (str, optional) : Explanation about the model to be entered when \
-                registering a new model. When newly saved, it is set as \
-                a description of the model and version. \
-                When the version is upgraded, it is set as the \
-                description of the version. Within 100 characters If not specified, there is no \
-                explanation about the model to be entered when registering a new model.
-            input_format_param (str, optional) : input format param file (json format) URI \
-                Evaluate Azure: SAS URI+ AWS: Presigned URIs Usage: Packager conversion \
-                information (image format information). Illegal characters except for SAS URI \
-                format json format is an array of objects (each object contains the following \
-                values). Example ordinal: Order of DNN input to converter (value range: 0-2) \
-                format: format ("RGB" or "BGR") If not specified, do not evaluate.
-            network_config (str, optional) : URI of network config file (json format) \
-                Evaluate Azure: SAS URI+ AWS: Presigned URIs In case of pre-conversion \
-                model, specify. (=Ignored for post-conversion model) Usage: Conversion parameter \
-                information of model converter. Illegal characters except for SAS URI format \
-                If not specified, do not evaluate.
-            network_type (str, optional) : The Network Type. (Valid only for \
-                new model registration).
+            model (str, required) : SAS URI or Presigned URI of the model file.
+            converted (bool, optional) : Specify whether to convert the specified model file.
+            vendor_name (str, optional) : Vendor Name. Max. 100 characters.
 
-                - 0: Custom Vision
-                - 1: Non Custom Vision
+                - Specify only when registering a new base model.
+            comment (str, optional) : Description. Max. 100 characters.
 
-                1 if not specified.
-            labels (list, optional) : Label Name. Example: ["label01","label02","label03"]
+                - When saving new, it is set as a description of the model and version.
+                - When saving version-up, it is set as a description of the version.
+            input_format_param (str, optional) : SAS URI or Presigned URI of the input format \
+              param file.
+
+                 - Usage: Packager conversion information (image format information).
+                 - The json format is an array of objects. Each object contains the following \
+                 values.
+
+                     - ordinal: Order of DNN input to converter (value range: 0 to 2)
+                     - format: Format ("RGB" or "BGR") \
+                       Example: [{ "ordinal": 0, "format": "RGB" }, { "ordinal": 1, "format": "RGB" }]
+            network_config (str, optional) : SAS URI or Presigned URI of the network config file.
+
+                - Usage: Conversion parameter information of modelconverter.
+
+                Therefore, it is not necessary to specify when specifying the model before \
+                  conversion. \
+                  Example: { "Postprocessor": { "params": { "background": false, "scale_factors": \
+                    [ 10.0, 10.0, 5.0, 5.0 ], "score_thresh": 0.01, "max_size_per_class": 64, \
+                    "max_total_size": 64, "clip_window": [ 0, 0, 1, 1 ], "iou_threshold": 0.45 } } }
+            network_type (str, optional) : Specify whether or not application is required \
+            for the model.
+
+                - Value definition
+
+                    - 0 : Model required application
+                    - 1 : Model do not required application
+            metadata_format_id (str, optional) : Metadata Format ID
+                Max. 100 characters.
 
         Returns:
             **Return Type**
@@ -221,8 +249,8 @@ class ImportBaseModel(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -318,6 +346,7 @@ class ImportBaseModel(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -332,7 +361,8 @@ class ImportBaseModel(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -350,7 +380,7 @@ class ImportBaseModel(ConsoleAccessBaseClass):
                 input_format_param =  "__input_format_param__"
                 network_config =  "__network_config__"
                 network_type =  "__network_type__"
-                labels =  "__labels__"
+                metadata_format_id =  "__metadata_format_id__"
 
                 # AIModels - ImportBaseModel
                 response = ai_model_obj.import_base_model(model_id,
@@ -361,7 +391,7 @@ class ImportBaseModel(ConsoleAccessBaseClass):
                                                           input_format_param,
                                                           network_config,
                                                           network_type,
-                                                          labels)
+                                                          metadata_format_id)
                 pprint(response)
         """
 
@@ -369,6 +399,7 @@ class ImportBaseModel(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
@@ -396,19 +427,13 @@ class ImportBaseModel(ConsoleAccessBaseClass):
             if "network_type" in _local_params and _local_params["network_type"] is None:
                 _local_params["network_type"] = "1"
 
-            if "labels" in _local_params and _local_params["labels"] is None:
-                del _local_params["labels"]
-
-            # Checking the datatype of input paramter "labels" before schema validation
-            # as Marshmallow is converting tuple to list
             if (
-                "labels" in _local_params
-                and _local_params["labels"] is not None
-                and not isinstance(_local_params["labels"], list)
+                "metadata_format_id" in _local_params
+                and _local_params["metadata_format_id"] is None
             ):
-                raise ValidationError("Invalid type for labels")
+                del _local_params["metadata_format_id"]
 
-            # Checking the datatype of input paramter "converted" before schema validation
+            # Checking the datatype of input parameter "converted" before schema validation
             # as Marshmallow is converting all truthy and falsy value to boolean type
             if (
                 "converted" in _local_params
@@ -436,9 +461,16 @@ class ImportBaseModel(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 manage_devices_api_instance = train_model_api.TrainModelApi(api_client)
                 try:
-                    _return_import_base_model = manage_devices_api_instance.import_base_model(
-                        body=_body_params
-                    )
+                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    if self._config._application_id:
+                        _query_params["grant_type"] = "client_credentials"
+                        _return_import_base_model = manage_devices_api_instance.import_base_model(
+                            body=_body_params, query_params=_query_params
+                        )
+                    else:
+                        _return_import_base_model = manage_devices_api_instance.import_base_model(
+                            body=_body_params
+                        )
                     return _return_import_base_model.body
 
                 except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

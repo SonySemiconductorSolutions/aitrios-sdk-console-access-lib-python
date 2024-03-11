@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.get_last_inference_data &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.insight.get_last_inference_data &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.insight.get_last_inference_data</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -168,94 +168,89 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">            - when time parameter is not specified</span>
-
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                | *Level1*    | *Type*    | *Description*                      |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``id``       | ``string``| The ID of the inference            |</span>
-<span class="sd">                |             |           | result metadata.                   |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``device_id``| ``string``| Device ID.                         |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``model_id`` | ``string``| Model ID.                          |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``model      |``string`` | Dnn Model Version                  |</span>
-<span class="sd">                |_version_id``|           |                                    |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``model      |``string`` | Model type.                        |</span>
-<span class="sd">                |_type``      |           |                                    |</span>
-<span class="sd">                |             |           | 00: Image classification           |</span>
-<span class="sd">                |             |           |                                    |</span>
-<span class="sd">                |             |           | 01: Object detection               |</span>
-<span class="sd">                |             |           |                                    |</span>
-<span class="sd">                |             |           | In the case of imported            |</span>
-<span class="sd">                |             |           | models, 01 is fixed at the         |</span>
-<span class="sd">                |             |           | current level.                     |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``training   |``string`` | Name of the training_kit           |</span>
-<span class="sd">                |_kit_name``  |           |                                    |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``_ts``      |``string`` | Timestamp. = System                |</span>
-<span class="sd">                |             |           | registration date and time         |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr5&gt;`|</span>
-<span class="sd">                |_result``    |           |for more details                    |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +==================+============+============+====================================+</span>
+<span class="sd">                | ``No_item_name`` |             |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``id``       | ``string``| Inference result metadata ID.      |</span>
+<span class="sd">                |                  |             |           | =GUID generated automatically by   |</span>
+<span class="sd">                |                  |             |           | CosmosDB                           |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``version    | ``string``| Version number.                    |</span>
+<span class="sd">                |                  |_number``    |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model version ID.                  |</span>
+<span class="sd">                |                  |_version_id``|           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model type                         |</span>
+<span class="sd">                |                  |_type``      |           |                                    |</span>
+<span class="sd">                |                  |             |           | 00: Image category                 |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           | 01: Object detection               |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``training   |``string`` |                                    |</span>
+<span class="sd">                |                  |_kit_name``  |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``_ts``      |``integer``| Timestamp.                         |</span>
+<span class="sd">                |                  |             |           | =_ts of CosmosDB                   |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr0&gt;`|</span>
+<span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inferenc   |``array``  |Refer :ref:`inferences &lt;if0&gt;`       |</span>
+<span class="sd">                |                  |es``         |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                | inference_result   | .. _ifr5:                                                 |</span>
+<span class="sd">                | inference_result   | .. _ifr0:                                                 |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
-<span class="sd">                |                    |              |            |in ascending order of project  |</span>
-<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inference_result``|              | ``array``  |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
-<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
+<span class="sd">                |                    |``image``     |``boolean`` |Synchronized to the            |</span>
+<span class="sd">                |                    |              |            |InputTensor output.            |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if5&gt;`  |</span>
+<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if0&gt;`  |</span>
 <span class="sd">                |                    |              |            |for more details               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``id``        |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``ttl``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_rid``      |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_self``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_etag``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_attachm    |``string``  |                               |</span>
+<span class="sd">                |                    |ents``        |            |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_ts``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                | inferences         | .. _if5:                                                  |</span>
+<span class="sd">                | inferences         | .. _if0:                                                  |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                |                    |``T``         | ``string`` |Time when retrieving           |</span>
+<span class="sd">                |                    |              |            |data from the sensor.          |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
-<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                |                    |``O``         |``string``  |Output tensor (Encoding format)|</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
-<span class="sd">                |                    |              |            |going through PPL              |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-
-<span class="sd">            - when time parameter is specified</span>
-
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                | *Level1*     | *Type*    | *Description*                  |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``id``        | ``string``| The ID of the inference result |</span>
-<span class="sd">                |              |           | metadata. = GUID automatically |</span>
-<span class="sd">                |              |           | fired by CosmosDB              |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``device_id`` | ``string``| Device ID.                     |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``model_id``  | ``string``| Model ID.                      |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``_ts``       |``string`` | Timestamp. = System            |</span>
-<span class="sd">                |              |           | registration date and time     |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``inferences``|``array``  |Refer :ref:`inferences &lt;if5&gt;`   |</span>
-<span class="sd">                |              |           |for more details                |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -350,6 +345,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -364,7 +360,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -400,6 +397,8 @@
                     <span class="n">device_id</span><span class="o">=</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">],</span>
                     <span class="n">number_of_inference_results</span><span class="o">=</span><span class="n">_number_of_inference_results</span><span class="p">,</span>
                 <span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;result&quot;</span> <span class="ow">in</span> <span class="n">_return_get_last_inference_data</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">_return_get_last_inference_data</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_return_get_last_inference_data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="n">_latest_inference_data</span> <span class="o">=</span> <span class="n">_return_get_last_inference_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="k">return</span> <span class="n">_latest_inference_data</span>
@@ -439,7 +438,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

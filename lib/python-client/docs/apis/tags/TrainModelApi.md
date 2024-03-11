@@ -1,4 +1,4 @@
-<a name="__pageTop"></a>
+<a id="__pageTop"></a>
 # aitrios_console_rest_client_sdk_primitive.apis.tags.train_model_api.TrainModelApi
 
 All URIs are relative to *http://localhost*
@@ -12,12 +12,12 @@ Method | HTTP request | Description
 [**publish_model**](#publish_model) | **post** /models/{model_id} | PublishModel
 
 # **delete_model**
-<a name="delete_model"></a>
+<a id="delete_model"></a>
 > SuccessResponse delete_model(model_id)
 
 DeleteModel
 
-Delete model.
+Deletes the base model, device model, and project associated with the specified model ID.
 
 ### Example
 
@@ -42,10 +42,30 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     path_params = {
         'model_id': "model_id_example",
     }
+    query_params = {
+    }
     try:
         # DeleteModel
         api_response = api_instance.delete_model(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling TrainModelApi->delete_model: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'model_id': "model_id_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # DeleteModel
+        api_response = api_instance.delete_model(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -55,11 +75,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -158,12 +194,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_base_model_status**
-<a name="get_base_model_status"></a>
-> Model get_base_model_status(model_id)
+<a id="get_base_model_status"></a>
+> ModelInfo get_base_model_status(model_id)
 
 GetBaseModelStatus
 
-Get model status of base.
+Get the specified base model information.
 
 ### Example
 
@@ -171,7 +207,7 @@ Get model status of base.
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import train_model_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
-from aitrios_console_rest_client_sdk_primitive.model.model import Model
+from aitrios_console_rest_client_sdk_primitive.model.model_info import ModelInfo
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -205,6 +241,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'model_id': "model_id_example",
     }
     query_params = {
+        'grant_type': "client_credentials",
         'latest_type': "1",
     }
     try:
@@ -233,8 +270,16 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 latest_type | LatestTypeSchema | | optional
 
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 # LatestTypeSchema
 
@@ -278,7 +323,7 @@ headers | Unset | headers were not defined |
 # SchemaFor200ResponseBodyApplicationJson
 Type | Description  | Notes
 ------------- | ------------- | -------------
-[**Model**](../../models/Model.md) |  | 
+[**ModelInfo**](../../models/ModelInfo.md) |  | 
 
 
 #### get_base_model_status.ApiResponseFor401
@@ -340,12 +385,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_models**
-<a name="get_models"></a>
+<a id="get_models"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_models()
 
 GetModels
 
-todo
+Get the model list information.
 
 ### Example
 
@@ -368,6 +413,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
     # example passing only optional values
     query_params = {
+        'grant_type': "client_credentials",
         'model_id': "model_id_example",
         'comment': "comment_example",
         'project_name': "project_name_example",
@@ -400,6 +446,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 model_id | ModelIdSchema | | optional
 comment | CommentSchema | | optional
 project_name | ProjectNameSchema | | optional
@@ -408,6 +455,13 @@ project_type | ProjectTypeSchema | | optional
 device_id | DeviceIdSchema | | optional
 latest_type | LatestTypeSchema | | optional
 
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 # ModelIdSchema
 
@@ -560,12 +614,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **import_base_model**
-<a name="import_base_model"></a>
-> SuccessResponse import_base_model(train_model_import_base_model_data_importbasemodelindto_json_body)
+<a id="import_base_model"></a>
+> SuccessResponse import_base_model(import_base_model_json_body)
 
 ImportBaseModel
 
-Import base model.
+Import the base model. In addition, in the case of a new model ID, it is newly saved. If you specify a model ID that has already been registered in the system, the version will be upgraded.
 
 ### Example
 
@@ -574,7 +628,7 @@ import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import train_model_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
-from aitrios_console_rest_client_sdk_primitive.model.train_model_import_base_model_data_importbasemodelindto_json_body import TrainModelImportBaseModelDataImportbasemodelindtoJsonBody
+from aitrios_console_rest_client_sdk_primitive.model.import_base_model_json_body import ImportBaseModelJsonBody
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -588,22 +642,48 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     api_instance = train_model_api.TrainModelApi(api_client)
 
     # example passing only required values which don't have defaults set
-    body = TrainModelImportBaseModelDataImportbasemodelindtoJsonBody(
-        model_id="",
-        model="",
+    query_params = {
+    }
+    body = ImportBaseModelJsonBody(
+        model="model_example",
+        input_format_param="input_format_param_example",
+        network_config="network_config_example",
+        model_id="model_id_example",
         converted=False,
-        vendor_name="",
-        comment="",
-        input_format_param="",
-        network_config="",
-        network_type="",
-        labels=[
-            "labels_example"
-        ],
+        vendor_name="vendor_name_example",
+        comment="comment_example",
+        network_type="1",
+        metadata_format_id="metadata_format_id_example",
     )
     try:
         # ImportBaseModel
         api_response = api_instance.import_base_model(
+            query_params=query_params,
+            body=body,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling TrainModelApi->import_base_model: %s\n" % e)
+
+    # example passing only optional values
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    body = ImportBaseModelJsonBody(
+        model="model_example",
+        input_format_param="input_format_param_example",
+        network_config="network_config_example",
+        model_id="model_id_example",
+        converted=False,
+        vendor_name="vendor_name_example",
+        comment="comment_example",
+        network_type="1",
+        metadata_format_id="metadata_format_id_example",
+    )
+    try:
+        # ImportBaseModel
+        api_response = api_instance.import_base_model(
+            query_params=query_params,
             body=body,
         )
         pprint(api_response)
@@ -615,6 +695,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 body | typing.Union[SchemaForRequestBodyApplicationJson] | required |
+query_params | RequestQueryParams | |
 content_type | str | optional, default is 'application/json' | Selects the schema and serialization of the request body
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
@@ -626,8 +707,23 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 # SchemaForRequestBodyApplicationJson
 Type | Description  | Notes
 ------------- | ------------- | -------------
-[**TrainModelImportBaseModelDataImportbasemodelindtoJsonBody**](../../models/TrainModelImportBaseModelDataImportbasemodelindtoJsonBody.md) |  | 
+[**ImportBaseModelJsonBody**](../../models/ImportBaseModelJsonBody.md) |  | 
 
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### Return Types, Responses
 
@@ -712,12 +808,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **publish_model**
-<a name="publish_model"></a>
+<a id="publish_model"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} publish_model(model_id)
 
 PublishModel
 
-Publish Model.
+Provide a function to publish a conversion model. As model publishing takes time, this is performed asynchronously. *Check the processing status in the result of the GetBaseModelStatus API or GetDeviceModelStatus API response. If the result is 'Import completed', the process is completed.
 
 ### Example
 
@@ -758,6 +854,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'model_id': "model_id_example",
     }
     query_params = {
+        'grant_type': "client_credentials",
         'device_id': "device_id_example",
     }
     try:
@@ -786,8 +883,16 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 device_id | DeviceIdSchema | | optional
 
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 # DeviceIdSchema
 
@@ -838,8 +943,8 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**result** | str,  | str,  | todo | [optional] 
-**import_id** | str,  | str,  | todo | [optional] 
+**result** | str,  | str,  | Set \&quot;SUCCESS\&quot; fixing | [optional] 
+**import_id** | str,  | str,  | Set the conv ID. | [optional] 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 #### publish_model.ApiResponseFor401

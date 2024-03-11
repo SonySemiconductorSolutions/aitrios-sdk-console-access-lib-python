@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 # pylint:disable=redefined-builtin
 # pylint:disable=too-many-arguments
 # pylint:disable=too-many-locals
+# pylint:disable=too-many-branches
 # pylint:disable=too-many-return-statements
 # pylint:disable=protected-access
 # pylint:disable=broad-except
@@ -49,18 +50,20 @@ class SchemaExportImages(Schema):
         Schema (object): Inherited from Schema class of marshmallow
     """
 
-    #: str, required : The public key.
-    #:                 Base64-encoded format of the entire contents of the public key PEM file
+    #: str, required : Public key.
+    #:                 Base64-encoded format of the entire pem file contents of the public key
     key = fields.String(
         required=True, error_messages={"invalid": "Invalid string for key"}, strict=True
     )
 
-    #: str, optional : Date and time (From). Form: yyyyMMddhhmm
+    #: str, optional : Date and time (From).
+    #:                 Form: yyyyMMddhhmm. Default:""
     from_datetime = fields.String(
         required=False, error_messages={"invalid": "Invalid string for from_datetime"}, strict=True
     )
 
-    #: str, optional : Date and time (To). Form: yyyyMMddhhmm
+    #: str, optional : Date and time (To).
+    #:                 Form: yyyyMMddhhmm. Default:""
     to_datetime = fields.String(
         required=False, error_messages={"invalid": "Invalid string for to_datetime"}, strict=True
     )
@@ -70,11 +73,13 @@ class SchemaExportImages(Schema):
         required=False, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
 
-    #: str, optional : Image file format. If not specified, no filtering.
-    #:                 Value definition
-    #:                 JPG
-    #:                 BMP
-    #:                 RAW
+    #: str, optional : Image file format. If this is not specified, there is no filtering.
+    #:                 Default:""
+    #:
+    #:                 - Value definition
+    #:
+    #:                  - JPG
+    #:                  - BMP
     file_format = fields.String(
         required=False, error_messages={"invalid": "Invalid string for file_format"}, strict=True
     )
@@ -151,22 +156,51 @@ class ExportImages(ConsoleAccessBaseClass):
         device_id: str = None,
         file_format: str = None,
     ):
-        """Get the URL to export the image with the specified conditions in zip file format.\
-            * Pre-encrypted, for learning images in other environments
+        """Get the URL to export the images of specified conditions in zip file format. \
+            For encrypted images for learning in other environments
+
+            [Prerequisites]
+
+            - The encryption method is public key cryptography.
+            - A zip file containing the target images can be downloaded by accessing a URL. \
+                Each image is encoded using the method described hereafter.
+            - The key used for encryption is a shared key of 32 characters issued randomly by \
+                the API each time.
+            - The image encryption method is AES128, MODE_CBC
+            - The iv (initial vector, 16 digits) and encrypted data are stored in a zip file.
+
+            [Generating a Key]
+
+            - Private keys are issued by Sier itself.
+            - Public and private keys are issued with a length of 1024 or 2048.
+            - The public key (key) specified to the parameter of this API passes the pem file\
+                content of the public key in a base64 encoded format.
+
+            Example: Base64 encode the entire string as follows:
+
+            -----BEGIN PUBLIC KEY-----
+
+            MIGfMA0GCSqGSIb3DQEBAQUAA4GNADC
+
+            ...
+
+            -----END PUBLIC KEY-----
 
         Args:
-            key (str, required) : The public key. \
-                Base64-encoded format of the entire contents of the public key PEM file
-            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm
-            to_datetime (str, optional) : Date and time (To). Form: yyyyMMddhhmm
+            key (str, required) : Public key. \
+                Base64-encoded format of the entire pem file contents of the public key
+            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm \
+                Default:""
+            to_datetime (str, optional) : Date/Time (To). Form: yyyyMMddhhmm \
+                Default:""
             device_id (str, optional) : Device ID.
-            file_format (str, optional) : Image file format. \
-                If not specified, no filtering. \
-                Value definition
+            file_format (str, optional) : Image file format. Default:""\
+                If this is not specified, there is no filtering.
 
-                - JPG
-                - BMP
-                - RAW
+                - Value definition
+
+                    - JPG
+                    - BMP
 
         Returns:
             **Return Type**
@@ -178,12 +212,12 @@ class ExportImages(ConsoleAccessBaseClass):
 
                 +-------------+------------+---------------------------+
                 | *Level1*    | *Type*     | *Description*             |
-                +-------------+------------+---------------------------+
-                | ``key``     | ``string`` | A common key for image    |
-                |             |            | decryption encrypted with |
+                +=============+============+===========================+
+                | ``key``     | ``string`` | Shared key for decrypting |
+                |             |            | images encrypted by       |
                 |             |            | a public key.             |
                 +-------------+------------+---------------------------+
-                | ``url``     | ``string`` | SUS URI for download      |
+                | ``url``     | ``string`` | SUS URI for downloading   |
                 +-------------+------------+---------------------------+
 
             **Error Response Schema**
@@ -279,6 +313,7 @@ class ExportImages(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -293,7 +328,8 @@ class ExportImages(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -350,6 +386,11 @@ class ExportImages(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 insight_api_instance = insight_api.InsightApi(api_client)
 

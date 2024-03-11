@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,22 +55,32 @@ class SchemaGetModels(Schema):
         required=False, error_messages={"invalid": "Invalid string for model_id"}, strict=True
     )
 
-    #: str, optional : Model Description.
+    #: str, optional : Model description.
     comment = fields.String(
         required=False, error_messages={"invalid": "Invalid string for comment"}, strict=True
     )
 
-    #: str, optional : Project Name.
+    #: str, optional : Project name.
     project_name = fields.String(
         required=False, error_messages={"invalid": "Invalid string for project_name"}, strict=True
     )
 
-    #: str, optional : Model Platform.
+    #: str, optional : Model platform.
+    #:
+    #:                   - Value definition
+    #:
+    #:                      - 0 : Custom Vision
+    #:                      - 1 : Non Custom Vision
     model_platform = fields.String(
         required=False, error_messages={"invalid": "Invalid string for model_platform"}, strict=True
     )
 
     #: str, optional : Project Type.
+    #:
+    #:                  - Value definition
+    #:
+    #:                     - 0 : Base model
+    #:                     - 1 : Device model
     project_type = fields.String(
         required=False, error_messages={"invalid": "Invalid string for project_type"}, strict=True
     )
@@ -81,6 +91,15 @@ class SchemaGetModels(Schema):
     )
 
     #: str, optional : Latest version type.
+    #:
+    #:                  - Value definition
+    #:
+    #:                     - 0: Latest published version
+    #:                     - 1: Latest version (latest including model version being
+    #:
+    #:                       converted/published)
+    #:
+    #:                  default: 1
     latest_type = fields.String(
         required=False, error_messages={"invalid": "Invalid string for latest_type"}, strict=True
     )
@@ -146,41 +165,37 @@ class GetModels(ConsoleAccessBaseClass):
         device_id: str = None,
         latest_type: str = "1",
     ):
-        """Get model information list
+        """Get the model list information
 
         Args:
-            model_id (str, optional) : Model ID. Partial search \
-                If not specified, all model_id searches.
-            comment (str, optional) : Model Description. Partial search \
-                If not specified, search all comments.
-            project_name(str, optional) : Project Name. Partial search \
-                Search all project_name if not specified.
+            model_id (str, optional) : Model ID. Partial match search
+            comment (str, optional) : Model description. Partial match search
+            project_name(str, optional) : Project name. Partial match search
             model_platform(str, optional) : Model platform
 
-                - 0 : Custom Vision
-                - 1 : Non Custom Vision
-                - 2 : Model Retrainer
+                - Value definition
 
-                Exact search, If not specified, search all model_platforms.
+                    - 0 : Custom Vision
+                    - 1 : Non Custom Vision
 
             project_type (str, optional) : Project Type.
 
-                - 0 : Base
-                - 1 : Device
+                - Value definition
 
-                Exact search, Search all project_types if not specified.
+                    - 0 : Base model
+                    - 1 : Device model
 
             device_id (str, optional) : Device Id. \
-                Specify when you want to search for device models. \
-                Exact match search criteria. Case-sensitive.
 
             latest_type (str, optional) : Latest version type.
 
-                - 0 : latest published version
-                - 1 : Latest version (latest including model version in process of \
-                conversion/publishing)
+                - Value definition
 
-                Exact search, 1 if not specified.
+                    - 0 : latest published version
+                    - 1 : Latest version (latest including model version being \
+                    converted/published)
+
+                default: 1
 
         Returns:
             **Return Type**
@@ -192,24 +207,33 @@ class GetModels(ConsoleAccessBaseClass):
 
                 +------------+-------------------+------------+-------------------------------+
                 | *Level1*   | *Level2*          | *Type*     | *Description*                 |
-                +------------+-------------------+------------+-------------------------------+
-                | ``models`` |                   | ``array``  | The subordinate elements are  |
-                |            |                   |            | listed in ascending order of  |
-                |            |                   |            | model ID                      |
+                +============+===================+============+===============================+
+                | ``models`` |                   | ``array``  |                               |
                 +------------+-------------------+------------+-------------------------------+
                 |            | ``model_id``      | ``string`` | Set the model ID              |
                 +------------+-------------------+------------+-------------------------------+
-                |            | ``device_type``   | ``string`` | Set the model type            |
+                |            | ``model_type``    | ``string`` | Set the model type            |
                 +------------+-------------------+------------+-------------------------------+
-                |            | ``functionality`` | ``string`` | Set the feature description   |
+                |            | ``functionality`` | ``string`` | Set the feature descriptions  |
                 +------------+-------------------+------------+-------------------------------+
                 |            | ``vendor_name``   | ``string`` | Set the vendor name           |
                 +------------+-------------------+------------+-------------------------------+
                 |            | ``model_comment`` | ``string`` | Set the description           |
                 +------------+-------------------+------------+-------------------------------+
-                |            | ``network_type``  | ``string`` | 0: Custom Vision              |
-                |            |                   |            |                               |
-                |            |                   |            | 1: Non Custom Vision          |
+                |            | ``network_type``  | ``string`` | Set the network type.         |
+                +------------+-------------------+------------+-------------------------------+
+                |            | ``create_by``     | ``string`` | Set the create_by.            |
+                |            |                   |            | - Value definition            |
+                |            |                   |            | Self: Self-training models    |
+                |            |                   |            | Marketplace: Marketplace      |
+                |            |                   |            | purchacing model              |
+                +------------+-------------------+------------+-------------------------------+
+                |            | ``package_id``    | ``string`` | Set the marketplace package ID|
+                +------------+-------------------+------------+-------------------------------+
+                |            | ``product_id``    | ``string`` | Set the marketplace product ID|
+                +------------+-------------------+------------+-------------------------------+
+                |            |``metadata_format_ | ``string`` | Set the metadata_format_id.   |
+                |            |id``               |            |                               |
                 +------------+-------------------+------------+-------------------------------+
                 |            | ``projects``      | ``array``  | Refer :ref:`projects <p1>`    |
                 |            |                   |            | for more details              |
@@ -219,22 +243,22 @@ class GetModels(ConsoleAccessBaseClass):
                 | projects   | .. _p1:                                                             |
                 +------------+--------------------+------------+-----------------------------------+
                 | *Level1*   | *Level2*           | *Type*     | *Description*                     |
-                +------------+--------------------+------------+-----------------------------------+
-                |``projects``|                    | ``array``  |The subordinate elements are listed|
-                |            |                    |            |in ascending order of project type |
-                |            |                    |            |and model project name.            |
+                +============+====================+============+===================================+
+                |``projects``|                    | ``array``  |                                   |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``model_project_    | ``string`` |Set the model project name         |
                 |            |name``              |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``model_platform``  |``string``  |Set up the model platform          |
+                |            |``model_project_    | ``string`` |Set the model project id           |
+                |            |id``                |            |                                   |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``model_platform``  |``string``  |Set the model platform             |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``model_type``      |``string``  |Set the model type                 |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``project_type``    |``string``  |Set the project type               |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``device_id``       |``string``  |Set the device ID * This is not an |
-                |            |                    |            |internal ID                        |
+                |            |``device_id``       |``string``  |Set the device ID                  |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``versions``        |``array``   |Refer :ref:`versions <v1>`         |
                 |            |                    |            |for more details                   |
@@ -244,10 +268,9 @@ class GetModels(ConsoleAccessBaseClass):
                 | versions   | .. _v1:                                                             |
                 +------------+--------------------+------------+-----------------------------------+
                 | *Level1*   | *Level2*           | *Type*     | *Description*                     |
-                +------------+--------------------+------------+-----------------------------------+
-                |``versions``|                    | ``array``  |Although it is a subordinate       |
-                |            |                    |            |element, in the case of this API,  |
-                |            |                    |            |there is always one.               |
+                +============+====================+============+===================================+
+                |``versions``|                    | ``array``  |There must be one subordinate      |
+                |            |                    |            |element for this API.              |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``version_number``  | ``string`` |Set the version number             |
                 +------------+--------------------+------------+-----------------------------------+
@@ -255,14 +278,17 @@ class GetModels(ConsoleAccessBaseClass):
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``iteration_name``  |``string``  |Set the iteration name             |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``accuracy``        |``string``  |Set the precision                  |
+                |            |``accuracy``        |``string``  |Set the accuracy                   |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``model_performan   |``object``  |Set the performance information    |
+                |            |ces``               |            |of the model.                      |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``latest_flg``      |``string``  |Set the latest flag                |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``publish_latest    |``string``  |Set the latest published flag      |
                 |            |_flg``              |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``version_status``  |``string``  |Set your status                    |
+                |            |``version_status``  |``string``  |Set the status                     |
                 |            |                    |            |                                   |
                 |            |                    |            |'01': 'Before conversion'          |
                 |            |                    |            |                                   |
@@ -282,20 +308,20 @@ class GetModels(ConsoleAccessBaseClass):
                 |            |                    |            |'11': 'Saving' Model saving        |
                 |            |                    |            |status in Model Retrainer case     |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``org_file_name``   |``string``  |Set the file name of the model     |
-                |            |                    |            |before conversion                  |
+                |            |``org_file_name``   |``string``  |Set the preconversion model        |
+                |            |                    |            |filename.                          |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``org_file_size``   |``integer`` |Set the publishing model file size |
+                |            |``org_file_size``   |``integer`` |Set the publish model file size    |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``publish_file_     |``string``  |Set the publishing model file name |
+                |            |``publish_file_     |``string``  |Set the publish model filename     |
                 |            |name``              |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``publish_file_     |``integer`` |Set the publishing model file size |
+                |            |``publish_file_     |``integer`` |Set the publish model file size    |
                 |            |size``              |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``model_file_size`` |``integer`` |Set the model file size            |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``model_framework`` |``string``  |Set up the model framework         |
+                |            |``model_framework`` |``string``  |Set the model framework            |
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``conv_id``         |``string``  |Set the conversion request ID      |
                 +------------+--------------------+------------+-----------------------------------+
@@ -303,25 +329,7 @@ class GetModels(ConsoleAccessBaseClass):
                 +------------+--------------------+------------+-----------------------------------+
                 |            |``stage``           |``string``  |Set the conversion stage           |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``result``          |``string``  |Set the conversion result          |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``convert_start_    |``string``  |Set the conversion start date and  |
-                |            |date``              |            |time                               |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``convert_end_date``|``string``  |Set the conversion end date and    |
-                |            |                    |            |time                               |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``publish_start     |``string``  |Set the publish start date and time|
-                |            |_date``             |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``publish_end_date``|``string``  |Set the publication end date and   |
-                |            |                    |            |time                               |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``version_comment`` |``string``  |Set the description                |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``version_ins_date``|``date``    |Set the version creation time      |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``version_upd_date``|``date``    |Set the version creation time      |
+                |            |``kpi``             |``array``   |                                   |
                 +------------+--------------------+------------+-----------------------------------+
 
            **Error Response Schema**
@@ -417,6 +425,7 @@ class GetModels(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -431,9 +440,9 @@ class GetModels(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
-
                 # Instantiate Console Access Library Client.
                 client_obj = Client(config_obj)
 
@@ -492,6 +501,11 @@ class GetModels(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 manage_devices_api_instance = train_model_api.TrainModelApi(api_client)
                 try:

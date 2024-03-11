@@ -27,6 +27,32 @@ from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 
+# Query params
+GrantTypeSchema = schemas.StrSchema
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 
 
 class SchemaFor200ResponseBodyApplicationJson(
@@ -245,7 +271,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                                                                 
                                                                     def __new__(
                                                                         cls,
-                                                                        *args: typing.Union[dict, frozendict.frozendict, ],
+                                                                        *_args: typing.Union[dict, frozendict.frozendict, ],
                                                                         Mode: typing.Union[MetaOapg.properties.Mode, decimal.Decimal, int, schemas.Unset] = schemas.unset,
                                                                         UploadMethod: typing.Union[MetaOapg.properties.UploadMethod, str, schemas.Unset] = schemas.unset,
                                                                         FileFormat: typing.Union[MetaOapg.properties.FileFormat, str, schemas.Unset] = schemas.unset,
@@ -265,7 +291,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                                                                     ) -> 'parameters':
                                                                         return super().__new__(
                                                                             cls,
-                                                                            *args,
+                                                                            *_args,
                                                                             Mode=Mode,
                                                                             UploadMethod=UploadMethod,
                                                                             FileFormat=FileFormat,
@@ -320,7 +346,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                                                     
                                                         def __new__(
                                                             cls,
-                                                            *args: typing.Union[dict, frozendict.frozendict, ],
+                                                            *_args: typing.Union[dict, frozendict.frozendict, ],
                                                             command_name: typing.Union[MetaOapg.properties.command_name, str, ],
                                                             parameters: typing.Union[MetaOapg.properties.parameters, dict, frozendict.frozendict, ],
                                                             _configuration: typing.Optional[schemas.Configuration] = None,
@@ -328,7 +354,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                                                         ) -> 'items':
                                                             return super().__new__(
                                                                 cls,
-                                                                *args,
+                                                                *_args,
                                                                 command_name=command_name,
                                                                 parameters=parameters,
                                                                 _configuration=_configuration,
@@ -337,12 +363,12 @@ class SchemaFor200ResponseBodyApplicationJson(
                                             
                                                 def __new__(
                                                     cls,
-                                                    arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
+                                                    _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
                                                     _configuration: typing.Optional[schemas.Configuration] = None,
                                                 ) -> 'commands':
                                                     return super().__new__(
                                                         cls,
-                                                        arg,
+                                                        _arg,
                                                         _configuration=_configuration,
                                                     )
                                             
@@ -377,14 +403,14 @@ class SchemaFor200ResponseBodyApplicationJson(
                                 
                                     def __new__(
                                         cls,
-                                        *args: typing.Union[dict, frozendict.frozendict, ],
+                                        *_args: typing.Union[dict, frozendict.frozendict, ],
                                         commands: typing.Union[MetaOapg.properties.commands, list, tuple, ],
                                         _configuration: typing.Optional[schemas.Configuration] = None,
                                         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
                                     ) -> 'parameter':
                                         return super().__new__(
                                             cls,
-                                            *args,
+                                            *_args,
                                             commands=commands,
                                             _configuration=_configuration,
                                             **kwargs,
@@ -404,12 +430,12 @@ class SchemaFor200ResponseBodyApplicationJson(
                                 
                                     def __new__(
                                         cls,
-                                        arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, str, ]], typing.List[typing.Union[MetaOapg.items, str, ]]],
+                                        _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, str, ]], typing.List[typing.Union[MetaOapg.items, str, ]]],
                                         _configuration: typing.Optional[schemas.Configuration] = None,
                                     ) -> 'device_ids':
                                         return super().__new__(
                                             cls,
-                                            arg,
+                                            _arg,
                                             _configuration=_configuration,
                                         )
                                 
@@ -510,7 +536,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                     
                         def __new__(
                             cls,
-                            *args: typing.Union[dict, frozendict.frozendict, ],
+                            *_args: typing.Union[dict, frozendict.frozendict, ],
                             ins_date: typing.Union[MetaOapg.properties.ins_date, str, ],
                             upd_id: typing.Union[MetaOapg.properties.upd_id, str, ],
                             upd_date: typing.Union[MetaOapg.properties.upd_date, str, ],
@@ -525,7 +551,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                         ) -> 'items':
                             return super().__new__(
                                 cls,
-                                *args,
+                                *_args,
                                 ins_date=ins_date,
                                 upd_id=upd_id,
                                 upd_date=upd_date,
@@ -541,12 +567,12 @@ class SchemaFor200ResponseBodyApplicationJson(
             
                 def __new__(
                     cls,
-                    arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
+                    _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
                     _configuration: typing.Optional[schemas.Configuration] = None,
                 ) -> 'parameter_list':
                     return super().__new__(
                         cls,
-                        arg,
+                        _arg,
                         _configuration=_configuration,
                     )
             
@@ -581,14 +607,14 @@ class SchemaFor200ResponseBodyApplicationJson(
 
     def __new__(
         cls,
-        *args: typing.Union[dict, frozendict.frozendict, ],
+        *_args: typing.Union[dict, frozendict.frozendict, ],
         parameter_list: typing.Union[MetaOapg.properties.parameter_list, list, tuple, ],
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            *args,
+            *_args,
             parameter_list=parameter_list,
             _configuration=_configuration,
             **kwargs,
@@ -694,8 +720,9 @@ _all_accept_content_types = (
 
 class BaseApi(api_client.Api):
     @typing.overload
-    def _get_command_parameter_oapg(
+    def _get_command_parameter_file_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -705,17 +732,19 @@ class BaseApi(api_client.Api):
     ]: ...
 
     @typing.overload
-    def _get_command_parameter_oapg(
+    def _get_command_parameter_file_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def _get_command_parameter_oapg(
+    def _get_command_parameter_file_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -725,20 +754,35 @@ class BaseApi(api_client.Api):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def _get_command_parameter_oapg(
+    def _get_command_parameter_file_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
         """
-        GetCommandParameter
+        GetCommandParameterFile
         :param skip_deserialization: If true then api_response.response will be set but
             api_response.body and api_response.headers will not be deserialized into schema
             class instances
         """
+        self._verify_typed_dict_inputs_oapg(RequestQueryParams, query_params)
         used_path = path.value
+
+        prefix_separator_iterator = None
+        for parameter in (
+            request_query_grant_type,
+        ):
+            parameter_data = query_params.get(parameter.name, schemas.unset)
+            if parameter_data is schemas.unset:
+                continue
+            if prefix_separator_iterator is None:
+                prefix_separator_iterator = parameter.get_prefix_separator_iterator()
+            serialized_data = parameter.serialize(parameter_data, prefix_separator_iterator)
+            for serialized_value in serialized_data.values():
+                used_path += serialized_value
 
         _headers = HTTPHeaderDict()
         # TODO add cookie handling
@@ -764,17 +808,22 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 
 
-class GetCommandParameter(BaseApi):
+class GetCommandParameterFile(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
     @typing.overload
-    def get_command_parameter(
+    def get_command_parameter_file(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -784,17 +833,19 @@ class GetCommandParameter(BaseApi):
     ]: ...
 
     @typing.overload
-    def get_command_parameter(
+    def get_command_parameter_file(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def get_command_parameter(
+    def get_command_parameter_file(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -804,14 +855,16 @@ class GetCommandParameter(BaseApi):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def get_command_parameter(
+    def get_command_parameter_file(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_command_parameter_oapg(
+        return self._get_command_parameter_file_oapg(
+            query_params=query_params,
             accept_content_types=accept_content_types,
             stream=stream,
             timeout=timeout,
@@ -825,6 +878,7 @@ class ApiForget(BaseApi):
     @typing.overload
     def get(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -837,6 +891,7 @@ class ApiForget(BaseApi):
     def get(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -845,6 +900,7 @@ class ApiForget(BaseApi):
     @typing.overload
     def get(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -856,12 +912,14 @@ class ApiForget(BaseApi):
 
     def get(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_command_parameter_oapg(
+        return self._get_command_parameter_file_oapg(
+            query_params=query_params,
             accept_content_types=accept_content_types,
             stream=stream,
             timeout=timeout,

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.ai_model.import_base_model &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.ai_model.import_base_model &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.ai_model.import_base_model</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -127,54 +127,76 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, required : Model ID.</span>
+    <span class="c1">#: str, required : Model ID for new registration or version upgrade. Max.</span>
+    <span class="c1">#:            100 characters.</span>
     <span class="n">model_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, required : Model.</span>
+    <span class="c1">#: str, required : SAS URI or Presigned URI of the model file.</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: bool, optional : Convert flag.</span>
+    <span class="c1">#: bool, optional : Specify whether to convert the specified model file.</span>
     <span class="n">converted</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid boolean for converted&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Vendor Name.</span>
+    <span class="c1">#: str, optional : Vendor Name. Max. 100 characters.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - Specify only when registering a new base model.</span>
     <span class="n">vendor_name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for vendor_name&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Comment.</span>
+    <span class="c1">#: str, optional : Description. Max. 100 characters.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - When saving new, it is set as a description of the model and version.</span>
+    <span class="c1">#:                  - When saving version-up, it is set as a description of the version.</span>
     <span class="n">comment</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Input format param file.</span>
+    <span class="c1">#: str, optional : SAS URI or Presigned URI of the input format param file.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                    - Usage: Packager conversion information (image format information).</span>
+    <span class="c1">#:                    - The json format is an array of objects. Each object contains the</span>
+    <span class="c1">#:                      following values.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                        - ordinal: Order of DNN input to converter (value range: 0 to 2)</span>
+    <span class="c1">#:                        - format: Format (&quot;RGB&quot; or &quot;BGR&quot;)</span>
     <span class="n">input_format_param</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for input_format_param&quot;</span><span class="p">},</span>
         <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : network_config.</span>
+    <span class="c1">#: str, optional : SAS URI or Presigned URI of the network config file.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - Usage: Conversion parameter information of modelconverter.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  Therefore, it is not necessary to specify when specifying the</span>
+    <span class="c1">#:                  model before conversion.</span>
     <span class="n">network_config</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for network_config&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : network_type.</span>
+    <span class="c1">#: str, optional : Specify whether or not application is required for the model.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                     - 0 : Model required application</span>
+    <span class="c1">#:                     - 1 : Model do not required application</span>
     <span class="n">network_type</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for network_type&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: list, optional : labels.</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
-        <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(),</span>
+    <span class="c1">#: metadata_format_id, optional : metadata_format_id. Max. 100 characters.</span>
+    <span class="n">metadata_format_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid list for labels&quot;</span><span class="p">},</span>
-        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for metadata_format_id&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="SchemaImportBaseModel.validate"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.import_base_model.SchemaImportBaseModel.validate">[docs]</a>    <span class="nd">@validates_schema</span>
@@ -206,8 +228,10 @@
         <span class="p">):</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;network_type is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="s2">&quot;labels&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;labels is required&quot;</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="s2">&quot;metadata_format_id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;metadata_format_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;metadata_format_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;metadata_format_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ImportBaseModel"><a class="viewcode-back" href="../../../console_access_library.ai_model.html#console_access_library.ai_model.import_base_model.ImportBaseModel">[docs]</a><span class="k">class</span> <span class="nc">ImportBaseModel</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
@@ -237,54 +261,58 @@
         <span class="n">input_format_param</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">network_config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">network_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-        <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata_format_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import the base model. For a new model ID, save it as a new one. \</span>
-<span class="sd">        If a model ID already registered in the system is specified, the version is upgraded. \</span>
-<span class="sd">        Note that it is not possible to create a device model based on the base model \</span>
-<span class="sd">        imported with this API.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import the base model. In addition, in the case of a new model \</span>
+<span class="sd">        ID, it is newly saved. If you specify a model ID that has already been registered \</span>
+<span class="sd">        in the system, the version will be upgraded.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            model_id (str, required) : Model ID. \</span>
-<span class="sd">                The model ID to be saved or upgraded. 100 characters or less \</span>
+<span class="sd">            model_id (str, required) : Model ID for new registration or version upgrade. \</span>
+<span class="sd">                Max. 100 characters. \</span>
 <span class="sd">                The following characters are allowed \</span>
 <span class="sd">                Alphanumeric characters \</span>
-<span class="sd">                -hyphen \</span>
+<span class="sd">                - hyphen \</span>
 <span class="sd">                _ Underscore \</span>
 <span class="sd">                () Small parentheses \</span>
 <span class="sd">                . dot</span>
-<span class="sd">            model (str, required) : Model file SAS URI</span>
-<span class="sd">            converted (bool, optional) : Convert flag. True: Converted Model \</span>
-<span class="sd">                False: Unconverted Model \</span>
-<span class="sd">                False if not specified</span>
-<span class="sd">            vendor_name (str, optional) : Vendor Name.  (specified when saving as new) \</span>
-<span class="sd">                Up to 100 characters. Not specified for version upgrade. \</span>
-<span class="sd">                No vendor name if not specified.</span>
-<span class="sd">            comment (str, optional) : Explanation about the model to be entered when \</span>
-<span class="sd">                registering a new model. When newly saved, it is set as \</span>
-<span class="sd">                a description of the model and version. \</span>
-<span class="sd">                When the version is upgraded, it is set as the \</span>
-<span class="sd">                description of the version. Within 100 characters If not specified, there is no \</span>
-<span class="sd">                explanation about the model to be entered when registering a new model.</span>
-<span class="sd">            input_format_param (str, optional) : input format param file (json format) URI \</span>
-<span class="sd">                Evaluate Azure: SAS URI+ AWS: Presigned URIs Usage: Packager conversion \</span>
-<span class="sd">                information (image format information). Illegal characters except for SAS URI \</span>
-<span class="sd">                format json format is an array of objects (each object contains the following \</span>
-<span class="sd">                values). Example ordinal: Order of DNN input to converter (value range: 0-2) \</span>
-<span class="sd">                format: format (&quot;RGB&quot; or &quot;BGR&quot;) If not specified, do not evaluate.</span>
-<span class="sd">            network_config (str, optional) : URI of network config file (json format) \</span>
-<span class="sd">                Evaluate Azure: SAS URI+ AWS: Presigned URIs In case of pre-conversion \</span>
-<span class="sd">                model, specify. (=Ignored for post-conversion model) Usage: Conversion parameter \</span>
-<span class="sd">                information of model converter. Illegal characters except for SAS URI format \</span>
-<span class="sd">                If not specified, do not evaluate.</span>
-<span class="sd">            network_type (str, optional) : The Network Type. (Valid only for \</span>
-<span class="sd">                new model registration).</span>
+<span class="sd">            model (str, required) : SAS URI or Presigned URI of the model file.</span>
+<span class="sd">            converted (bool, optional) : Specify whether to convert the specified model file.</span>
+<span class="sd">            vendor_name (str, optional) : Vendor Name. Max. 100 characters.</span>
 
-<span class="sd">                - 0: Custom Vision</span>
-<span class="sd">                - 1: Non Custom Vision</span>
+<span class="sd">                - Specify only when registering a new base model.</span>
+<span class="sd">            comment (str, optional) : Description. Max. 100 characters.</span>
 
-<span class="sd">                1 if not specified.</span>
-<span class="sd">            labels (list, optional) : Label Name. Example: [&quot;label01&quot;,&quot;label02&quot;,&quot;label03&quot;]</span>
+<span class="sd">                - When saving new, it is set as a description of the model and version.</span>
+<span class="sd">                - When saving version-up, it is set as a description of the version.</span>
+<span class="sd">            input_format_param (str, optional) : SAS URI or Presigned URI of the input format \</span>
+<span class="sd">              param file.</span>
+
+<span class="sd">                 - Usage: Packager conversion information (image format information).</span>
+<span class="sd">                 - The json format is an array of objects. Each object contains the following \</span>
+<span class="sd">                 values.</span>
+
+<span class="sd">                     - ordinal: Order of DNN input to converter (value range: 0 to 2)</span>
+<span class="sd">                     - format: Format (&quot;RGB&quot; or &quot;BGR&quot;) \</span>
+<span class="sd">                       Example: [{ &quot;ordinal&quot;: 0, &quot;format&quot;: &quot;RGB&quot; }, { &quot;ordinal&quot;: 1, &quot;format&quot;: &quot;RGB&quot; }]</span>
+<span class="sd">            network_config (str, optional) : SAS URI or Presigned URI of the network config file.</span>
+
+<span class="sd">                - Usage: Conversion parameter information of modelconverter.</span>
+
+<span class="sd">                Therefore, it is not necessary to specify when specifying the model before \</span>
+<span class="sd">                  conversion. \</span>
+<span class="sd">                  Example: { &quot;Postprocessor&quot;: { &quot;params&quot;: { &quot;background&quot;: false, &quot;scale_factors&quot;: \</span>
+<span class="sd">                    [ 10.0, 10.0, 5.0, 5.0 ], &quot;score_thresh&quot;: 0.01, &quot;max_size_per_class&quot;: 64, \</span>
+<span class="sd">                    &quot;max_total_size&quot;: 64, &quot;clip_window&quot;: [ 0, 0, 1, 1 ], &quot;iou_threshold&quot;: 0.45 } } }</span>
+<span class="sd">            network_type (str, optional) : Specify whether or not application is required \</span>
+<span class="sd">            for the model.</span>
+
+<span class="sd">                - Value definition</span>
+
+<span class="sd">                    - 0 : Model required application</span>
+<span class="sd">                    - 1 : Model do not required application</span>
+<span class="sd">            metadata_format_id (str, optional) : Metadata Format ID</span>
+<span class="sd">                Max. 100 characters.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -296,8 +324,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -393,6 +421,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -407,7 +436,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -425,7 +455,7 @@
 <span class="sd">                input_format_param =  &quot;__input_format_param__&quot;</span>
 <span class="sd">                network_config =  &quot;__network_config__&quot;</span>
 <span class="sd">                network_type =  &quot;__network_type__&quot;</span>
-<span class="sd">                labels =  &quot;__labels__&quot;</span>
+<span class="sd">                metadata_format_id =  &quot;__metadata_format_id__&quot;</span>
 
 <span class="sd">                # AIModels - ImportBaseModel</span>
 <span class="sd">                response = ai_model_obj.import_base_model(model_id,</span>
@@ -436,7 +466,7 @@
 <span class="sd">                                                          input_format_param,</span>
 <span class="sd">                                                          network_config,</span>
 <span class="sd">                                                          network_type,</span>
-<span class="sd">                                                          labels)</span>
+<span class="sd">                                                          metadata_format_id)</span>
 <span class="sd">                pprint(response)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -444,6 +474,7 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="n">_query_params</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
             <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
@@ -471,19 +502,13 @@
             <span class="k">if</span> <span class="s2">&quot;network_type&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;network_type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;network_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
 
-            <span class="k">if</span> <span class="s2">&quot;labels&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
-
-            <span class="c1"># Checking the datatype of input paramter &quot;labels&quot; before schema validation</span>
-            <span class="c1"># as Marshmallow is converting tuple to list</span>
             <span class="k">if</span> <span class="p">(</span>
-                <span class="s2">&quot;labels&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
-                <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span>
+                <span class="s2">&quot;metadata_format_id&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
+                <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;metadata_format_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
             <span class="p">):</span>
-                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Invalid type for labels&quot;</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;metadata_format_id&quot;</span><span class="p">]</span>
 
-            <span class="c1"># Checking the datatype of input paramter &quot;converted&quot; before schema validation</span>
+            <span class="c1"># Checking the datatype of input parameter &quot;converted&quot; before schema validation</span>
             <span class="c1"># as Marshmallow is converting all truthy and falsy value to boolean type</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="s2">&quot;converted&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span>
@@ -511,9 +536,16 @@
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">manage_devices_api_instance</span> <span class="o">=</span> <span class="n">train_model_api</span><span class="o">.</span><span class="n">TrainModelApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">_return_import_base_model</span> <span class="o">=</span> <span class="n">manage_devices_api_instance</span><span class="o">.</span><span class="n">import_base_model</span><span class="p">(</span>
-                        <span class="n">body</span><span class="o">=</span><span class="n">_body_params</span>
-                    <span class="p">)</span>
+                    <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                        <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+                        <span class="n">_return_import_base_model</span> <span class="o">=</span> <span class="n">manage_devices_api_instance</span><span class="o">.</span><span class="n">import_base_model</span><span class="p">(</span>
+                            <span class="n">body</span><span class="o">=</span><span class="n">_body_params</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="n">_query_params</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_return_import_base_model</span> <span class="o">=</span> <span class="n">manage_devices_api_instance</span><span class="o">.</span><span class="n">import_base_model</span><span class="p">(</span>
+                            <span class="n">body</span><span class="o">=</span><span class="n">_body_params</span>
+                        <span class="p">)</span>
                     <span class="k">return</span> <span class="n">_return_import_base_model</span><span class="o">.</span><span class="n">body</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
@@ -547,7 +579,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
