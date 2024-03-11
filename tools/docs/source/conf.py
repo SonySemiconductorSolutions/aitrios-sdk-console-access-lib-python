@@ -59,12 +59,12 @@ except ImportError:
 # -- Project information -----------------------------------------------------
 
 project = "Console Access Library"
-copyright = "2022 Sony Semiconductor Solutions Corp"
+copyright = "2022, 2023 Sony Semiconductor Solutions Corp"
 author = "SARD"
 
 # The full version, including alpha/beta/rc tags
-release = "1.0.0"
-version = "1.0.0"
+release = "1.1.0"
+version = "1.1.0"
 
 # -- General configuration ---------------------------------------------------
 
@@ -94,7 +94,7 @@ autodoc_default_options = {
 }
 autosummary_generate = True
 
-# latex and pdf generation (to remove blank pages generated after runing 'make latexpdf' command)
+# latex and pdf generation (to remove blank pages generated after running 'make latexpdf' command)
 latex_elements = {
     "extraclassoptions": "openany,oneside",
     "preamble": r"""

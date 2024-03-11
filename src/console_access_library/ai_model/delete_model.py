@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -82,10 +82,11 @@ class DeleteModel(ConsoleAccessBaseClass):
         self,
         model_id: str,
     ):
-        """Deletes the specified model and associated projects.
+        """Deletes the base model, device model, and project associated with
+        the specified model ID.
 
         Args:
-            model_id (str, required) : The Model ID.
+            model_id (str, required) : Model ID.
 
         Returns:
             **Return Type**
@@ -97,8 +98,8 @@ class DeleteModel(ConsoleAccessBaseClass):
 
                     +------------+------------+-------------------------------+
                     | *Level1*   | *Type*     | *Description*                 |
-                    +------------+------------+-------------------------------+
-                    | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                    +============+============+===============================+
+                    | ``result`` | ``string`` | Set "SUCCESS" fixing.         |
                     +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -194,6 +195,7 @@ class DeleteModel(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -208,7 +210,8 @@ class DeleteModel(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -229,6 +232,7 @@ class DeleteModel(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
@@ -249,9 +253,16 @@ class DeleteModel(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 ai_model_api_instance = train_model_api.TrainModelApi(api_client)
                 try:
-                    _return_delete_model = ai_model_api_instance.delete_model(
-                        path_params=_path_params
-                    )
+                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    if self._config._application_id:
+                        _query_params["grant_type"] = "client_credentials"
+                        _return_delete_model = ai_model_api_instance.delete_model(
+                            path_params=_path_params, query_params=_query_params
+                        )
+                    else:
+                        _return_delete_model = ai_model_api_instance.delete_model(
+                            path_params=_path_params
+                        )
                     return _return_delete_model.body
 
                 except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

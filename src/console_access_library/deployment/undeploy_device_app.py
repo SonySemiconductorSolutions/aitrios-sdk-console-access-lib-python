@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ class SchemaUndeployDeviceApp(Schema):
 
     """
 
-    #: str, required : Multiple IDs of edge AI devices separated by commas.
+    #: str, required : Device IDs, Specify multiple device IDs separated by commas.
     device_ids = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_ids"}, strict=True
     )
@@ -76,11 +76,10 @@ class UndeployDeviceApp(ConsoleAccessBaseClass):
         self._config = config
 
     def undeploy_device_app(self, device_ids: str):
-        """Undeploy the device app.
+        """Undeploy device app
 
         Args:
-            device_ids (str, required): Specify multiple device IDs separated by commas \
-                Case-sensitive
+            device_ids (str, required): Device IDs.
 
         Returns:
             **Return Type**
@@ -92,8 +91,8 @@ class UndeployDeviceApp(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -189,6 +188,7 @@ class UndeployDeviceApp(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -203,7 +203,8 @@ class UndeployDeviceApp(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -237,6 +238,11 @@ class UndeployDeviceApp(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _local_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 device_app_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:

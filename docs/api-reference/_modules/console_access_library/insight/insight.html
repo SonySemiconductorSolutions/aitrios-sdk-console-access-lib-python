@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.insight &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.insight.insight &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.insight.insight</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -137,11 +137,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_export_images_obj</span> <span class="o">=</span> <span class="n">ExportImages</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Insight.get_image_directories"><a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_image_directories">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_image_directories`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the image save directory list of the devices for each device group</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, optional): Edge AI Device ID. \</span>
-<span class="sd">                If not specified, returns all device_id information.</span>
+<span class="sd">            device_id (str, optional): Device ID. \</span>
+<span class="sd">                If this is specified, return an image directory list linked\</span>
+<span class="sd">                    to the specified device ID.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -153,8 +154,8 @@
 
 <span class="sd">                +------------------+------------+------------+--------------------------------+</span>
 <span class="sd">                | *Level1*         | *Level2*   | *Type*     | *Description*                  |</span>
-<span class="sd">                +------------------+------------+------------+--------------------------------+</span>
-<span class="sd">                | ``No_item_name`` |            |            | Device Affiliation Group Array |</span>
+<span class="sd">                +==================+============+============+================================+</span>
+<span class="sd">                | ``No_item_name`` |            | ``array``  |                                |</span>
 <span class="sd">                +------------------+------------+------------+--------------------------------+</span>
 <span class="sd">                |                  |``group_id``| ``string`` | Set the device group ID.       |</span>
 <span class="sd">                +------------------+------------+------------+--------------------------------+</span>
@@ -166,21 +167,25 @@
 <span class="sd">                | devices           | .. _devices1:                                              |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``devices``       |  ``array``         |            |                          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                | ``devices``       |  ``array``         |            | Device Array.            |</span>
-<span class="sd">                |                   |                    |            | The subordinate          |</span>
-<span class="sd">                |                   |                    |            | elements are listed      |</span>
-<span class="sd">                |                   |                    |            | in ascending order       |</span>
-<span class="sd">                |                   |                    |            | by device ID             |</span>
+<span class="sd">                |                   |``device_id``       | ``string`` | Set the device ID.       |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``device_id``       | ``string`` | Device ID.               |</span>
+<span class="sd">                |                   |``device_name``     | ``string`` | Set the device name.     |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``device_name``     | ``string`` | Device name at the time  |</span>
-<span class="sd">                |                   |                    |            | of registration          |</span>
+<span class="sd">                |                   |``Image``           | ``array``  | Refer :ref:`img &lt;img1&gt;`  |</span>
+<span class="sd">                |                   |                    |            | for more details         |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``Image``           | ``array``  | The descendant elements  |</span>
-<span class="sd">                |                   |                    |            | are listed in ascending  |</span>
-<span class="sd">                |                   |                    |            | order by directory name. |</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | Image             | .. _img1:                                                  |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``Image``         |  ``array``         |            |                          |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |  ``No_item_name``  | ``string`` | Set the directory name.  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -266,21 +271,20 @@
         <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">order_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ASC&quot;</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_images`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the (saved) images for a specified device. \</span>
+<span class="sd">            Application: Use to display an image in a UI</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
-<span class="sd">            sub_directory_name (str, required) : Image storage subdirectory. \</span>
-<span class="sd">                The subdirectory is the directory notified by the response of \</span>
-<span class="sd">                start_upload_inference_result or the directory obtained by \</span>
-<span class="sd">                get_image_directories.</span>
-<span class="sd">            number_of_images (int, optional) : Number of images acquired. \</span>
-<span class="sd">                0-256. If not specified: 50.</span>
+<span class="sd">            device_id (str, required) : Device ID.</span>
+<span class="sd">            sub_directory_name (str, required) : Directory name.</span>
+<span class="sd">            number_of_images (int, optional) : Number of images to fetch. \</span>
+<span class="sd">                Value range: 0-256. \</span>
+<span class="sd">                default: 50</span>
 <span class="sd">            skip (int, optional) : Number of images to skip fetching. \</span>
-<span class="sd">                If not specified: 0.</span>
-<span class="sd">            order_by (str, optional) : Sort Order: Sort order by date and time the \</span>
-<span class="sd">                image was created. DESC, ASC, desc, asc. \</span>
-<span class="sd">                If not specified: ASC.</span>
+<span class="sd">                default: 0</span>
+<span class="sd">            order_by (str, optional) : Sort Order: Sort order by date image was created. \</span>
+<span class="sd">                Value range: DESC, ASC.</span>
+<span class="sd">                default: ASC</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -292,19 +296,16 @@
 
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
-<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                | ``total_image_count`` |            |  ``int``   | Set the total number of   |</span>
+<span class="sd">                +=======================+============+============+===========================+</span>
+<span class="sd">                | ``total_image_count`` |            | ``integer``| Set the total number of   |</span>
 <span class="sd">                |                       |            |            | images                    |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
-<span class="sd">                |                       |            |            | The descendant elements   |</span>
-<span class="sd">                |                       |            |            | are listed in ascending   |</span>
-<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                |``images``             |            | ``array``  |                           |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image filename.   |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
-<span class="sd">                |                       |            |            | \*Base64 encoding         |</span>
+<span class="sd">                |                       |``contents``| ``string`` | Images file contents      |</span>
+<span class="sd">                |                       |            |            | (BASE64 encoding)         |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -392,58 +393,64 @@
         <span class="n">raw</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">time</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_inference_results`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the (saved) inference result metadata list information for a specified device</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
-<span class="sd">            filter (str, optional) : The Filter. Search filter (same specifications as Cosmos DB UI\</span>
-<span class="sd">                                     on Azure portal except for the following)</span>
+<span class="sd">            device_id (str, required) : Device ID</span>
+<span class="sd">            filter (str, optional) : Search filter.</span>
+<span class="sd">                The specifications are the same except for those of Cosmos DB UI \</span>
+<span class="sd">                    of the Azure portal and those listed below.</span>
 
-<span class="sd">                                        - No need to prepend where string</span>
-<span class="sd">                                        - It is not necessary to add a deviceID.</span>
+<span class="sd">                - A where string does not need to be added to the heading.</span>
+<span class="sd">                - deviceID does not need to be added.</span>
 
-<span class="sd">                                    Filter Samples:</span>
+<span class="sd">                        Filter Example:</span>
 
-<span class="sd">                                    * ModelID: string  match filter</span>
+<span class="sd">                            * ModelID: string  match filter</span>
+<span class="sd">                                eg. &quot;c.ModelID=\&quot;0300000001590100\&quot;&quot;</span>
+<span class="sd">                            * Image: boolean  match filter eg. &quot;c.Image=true&quot;</span>
+<span class="sd">                            * T: string  match or more filter</span>
+<span class="sd">                                eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
+<span class="sd">                            * T: string  range filter</span>
+<span class="sd">                                eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences \</span>
+<span class="sd">                                    WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND \</span>
+<span class="sd">                                    i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
+<span class="sd">                            * _ts: number  match filter</span>
+<span class="sd">                                eg. &quot;c._ts=1681308028&quot;</span>
 
-<span class="sd">                                        eg. &quot;c.ModelID=\&quot;0300000001590100\&quot;&quot;</span>
+<span class="sd">                Default = &#39;&#39;</span>
 
-<span class="sd">                                    * Image: boolean  match filter eg. &quot;c.Image=true&quot;</span>
+<span class="sd">            number_of_inference_results (int, optional) :Number of cases to get.</span>
+<span class="sd">                Return the latest record of the specified number of cases. Maximum value: 10000.</span>
+<span class="sd">                default: 20</span>
 
-<span class="sd">                                    * T: string  match or more filter</span>
+<span class="sd">            raw (int, optional) : If 1 is specified, add a record stored to Cosmos DB and return it.</span>
 
-<span class="sd">                                        eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
+<span class="sd">                - Value definitions</span>
 
-<span class="sd">                                    * T: string  range filter</span>
+<span class="sd">                    - 0: Do not add</span>
+<span class="sd">                    - 1: Add</span>
 
-<span class="sd">                                        eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences \</span>
-<span class="sd">                                            WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND \</span>
-<span class="sd">                                            i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
+<span class="sd">                default: 1</span>
 
-<span class="sd">                                    * _ts: number  match filter</span>
+<span class="sd">            time (str, optional) : When this value is specified,\</span>
+<span class="sd">                    extract the inference result metadata within the following range. \</span>
+<span class="sd">                    Default:&quot;&quot;</span>
 
-<span class="sd">                                        eg. &quot;c._ts=1681308028&quot;</span>
+<span class="sd">                    - Extraction range:</span>
+<span class="sd">                      (time - threshold) &lt;= T</span>
 
-<span class="sd">            number_of_inference_results (int, optional) :Number of acquisitions.\</span>
-<span class="sd">                                                         If not specified: 20</span>
+<span class="sd">                      Time in inference result metadata &lt; (time + threshold)</span>
 
-<span class="sd">            raw (int, optional) : Data format of inference results.</span>
+<span class="sd">                    - Value definition</span>
 
-<span class="sd">                                    - 1:Append records stored in Cosmos DB.</span>
-<span class="sd">                                    - 0:Not granted.</span>
-
-<span class="sd">                                        If not specified: 1</span>
-
-<span class="sd">            time (str, optional) : The Time. Inference result data stored in Cosmos DB.\</span>
-<span class="sd">                                   yyyyMMddHHmmssfff</span>
-
-<span class="sd">                                    - yyyy: 4-digit year string</span>
-<span class="sd">                                    - MM: 2-digit month string</span>
-<span class="sd">                                    - dd: 2-digit day string</span>
-<span class="sd">                                    - HH: 2-digit hour string</span>
-<span class="sd">                                    - mm: 2-digit minute string</span>
-<span class="sd">                                    - ss: 2-digit seconds string</span>
-<span class="sd">                                    - fff: 3-digit millisecond string</span>
+<span class="sd">                        - yyyy: 4-digit year string</span>
+<span class="sd">                        - MM: 2-digit month string</span>
+<span class="sd">                        - dd: 2-digit day string</span>
+<span class="sd">                        - HH: 2-digit hour string</span>
+<span class="sd">                        - mm: 2-digit minute string</span>
+<span class="sd">                        - ss: 2-digit seconds string</span>
+<span class="sd">                        - fff: 3-digit millisecond string</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -453,103 +460,89 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">            - when time parameter is not specified</span>
-
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +==================+============+============+====================================+</span>
+<span class="sd">                | ``No_item_name`` |             |           |                                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                | ``No_item_name`` |             |           | The subordinate elements are       |</span>
-<span class="sd">                |                  |             |           | listed in descending order         |</span>
-<span class="sd">                |                  |             |           | by system registration date        |</span>
-<span class="sd">                |                  |             |           | and time.                          |</span>
-<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``id``       | ``string``| The ID of the inference            |</span>
-<span class="sd">                |                  |             |           | result metadata.                   |</span>
+<span class="sd">                |                  |``id``       | ``string``| Inference result metadata ID.      |</span>
+<span class="sd">                |                  |             |           | =GUID generated automatically by   |</span>
+<span class="sd">                |                  |             |           | CosmosDB                           |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``model      |``string`` | Dnn Model Version                  |</span>
+<span class="sd">                |                  |``version    | ``string``| Version number.                    |</span>
+<span class="sd">                |                  |_number``    |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model version ID.                  |</span>
 <span class="sd">                |                  |_version_id``|           |                                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``model      |``string`` | Model type.                        |</span>
+<span class="sd">                |                  |``model      |``string`` | Model type                         |</span>
 <span class="sd">                |                  |_type``      |           |                                    |</span>
-<span class="sd">                |                  |             |           | 00: Image classification           |</span>
+<span class="sd">                |                  |             |           | 00: Image category                 |</span>
 <span class="sd">                |                  |             |           |                                    |</span>
 <span class="sd">                |                  |             |           | 01: Object detection               |</span>
-<span class="sd">                |                  |             |           |                                    |</span>
-<span class="sd">                |                  |             |           | In the case of imported            |</span>
-<span class="sd">                |                  |             |           | models, 01 is fixed at the         |</span>
-<span class="sd">                |                  |             |           | current level.                     |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``training   |``string`` | Name of the training_kit           |</span>
+<span class="sd">                |                  |``training   |``string`` |                                    |</span>
 <span class="sd">                |                  |_kit_name``  |           |                                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``_ts``      |``string`` | Timestamp. = System                |</span>
-<span class="sd">                |                  |             |           | registration date and time         |</span>
+<span class="sd">                |                  |``_ts``      |``integer``| Timestamp.                         |</span>
+<span class="sd">                |                  |             |           | =_ts of CosmosDB                   |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr9&gt;`|</span>
+<span class="sd">                |                  |``inference  |           |Refer :ref:`inference_result &lt;ifr9&gt;`|</span>
 <span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inferenc   |``array``  |Refer :ref:`inferences &lt;if9&gt;`       |</span>
+<span class="sd">                |                  |es``         |           |for more details                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | inference_result   | .. _ifr9:                                                 |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inference_result``|              |            |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
-<span class="sd">                |                    |              |            |in ascending order of project  |</span>
-<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                |                    |``DeviceID``  | ``string`` |Device ID                      |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
+<span class="sd">                |                    |``ModelID``   |``string``  |DnnModelVersion                |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
+<span class="sd">                |                    |``Image``     |``boolean`` |Synchronized to the            |</span>
+<span class="sd">                |                    |              |            |InputTensor output.            |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
-<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if9&gt;`  |</span>
+<span class="sd">                |                    |``Inferences``|``array``   |Refer :ref:`inferences &lt;if9&gt;`  |</span>
 <span class="sd">                |                    |              |            |for more details               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``id``        |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``ttl``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_rid``      |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_self``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_etag``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_attachm    |``string``  |                               |</span>
+<span class="sd">                |                    |ents``        |            |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_ts``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | inferences         | .. _if9:                                                  |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                |                    |``T``         | ``string`` |Time when retrieving           |</span>
+<span class="sd">                |                    |              |            |data from the sensor.          |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
-<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                |                    |``O``         |``string``  |Output tensor (Encoding format)|</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
-<span class="sd">                |                    |              |            |going through PPL              |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-
-<span class="sd">            - when time parameter is specified</span>
-
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                | *Level1*         | *Level2*     | *Type*    | *Description*                  |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                | ``No_item_name`` |              |           | The subordinate elements are   |</span>
-<span class="sd">                |                  |              |           | listed in descending order     |</span>
-<span class="sd">                |                  |              |           | by system registration date    |</span>
-<span class="sd">                |                  |              |           | and time.                      |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``id``        | ``string``| The ID of the inference result |</span>
-<span class="sd">                |                  |              |           | metadata. = GUID automatically |</span>
-<span class="sd">                |                  |              |           | fired by CosmosDB              |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``device_id`` | ``string``| Device ID.                     |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``model_id``  | ``string``| Model ID.                      |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``_ts``       |``string`` | Timestamp. = System            |</span>
-<span class="sd">                |                  |              |           | registration date and time     |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``inferences``|``array``  |Refer :ref:`inferences &lt;if7&gt;`   |</span>
-<span class="sd">                |                  |              |           |for more details                |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -639,14 +632,14 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_image_data`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : Edge AI Device ID.</span>
-<span class="sd">            sub_directory_name (str, required) : Image storage subdirectory. \</span>
-<span class="sd">                The subdirectory is the directory notified by the response of \</span>
-<span class="sd">                start_upload_inference_resultor the directory obtained by get_image_directories.</span>
-<span class="sd">            number_of_images (int, optional) : Number of images acquired. If not specified: 50</span>
-<span class="sd">            skip (int, optional) : number of images to skip fetching. If not specified: 0</span>
-<span class="sd">            order_by (str, optional) : Sort Order: Sort order by date \</span>
-<span class="sd">                and time the image was created. Values allowed: DESC, ASC, desc, asc. \</span>
+<span class="sd">            device_id (str, required) : Device ID.</span>
+<span class="sd">            sub_directory_name (str, required) : Directory name.</span>
+<span class="sd">            number_of_images (int, optional) : Number of images to fetch. \</span>
+<span class="sd">                Value range: 0-256. If not specified: 50.</span>
+<span class="sd">            skip (int, optional) : Number of images to skip fetching. \</span>
+<span class="sd">                If not specified: 0.</span>
+<span class="sd">            order_by (str, optional) : Sort Order: Sort order by date image was created. \</span>
+<span class="sd">                Value range: DESC, ASC.</span>
 <span class="sd">                If not specified: ASC.</span>
 
 <span class="sd">        Returns:</span>
@@ -659,19 +652,16 @@
 
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
-<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                | ``total_image_count`` |            |  ``int``   | Set the total number of   |</span>
+<span class="sd">                +=======================+============+============+===========================+</span>
+<span class="sd">                | ``total_image_count`` |            | ``integer``| Set the total number of   |</span>
 <span class="sd">                |                       |            |            | images                    |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
-<span class="sd">                |                       |            |            | The descendant elements   |</span>
-<span class="sd">                |                       |            |            | are listed in ascending   |</span>
-<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                |``images``             |            | ``array``  |                           |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image filename.   |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
-<span class="sd">                |                       |            |            | \*Base64 encoding         |</span>
+<span class="sd">                |                       |``contents``| ``string`` | Images file contents      |</span>
+<span class="sd">                |                       |            |            | (BASE64 encoding)         |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -758,7 +748,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_last_inference_data`` API</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : The Device ID.</span>
+<span class="sd">            device_id (str, required) : Device ID</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -768,94 +758,89 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">            - when time parameter is not specified</span>
-
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                | *Level1*    | *Type*    | *Description*                      |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``id``       | ``string``| The ID of the inference            |</span>
-<span class="sd">                |             |           | result metadata.                   |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``device_id``| ``string``| Device ID.                         |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``model_id`` | ``string``| Model ID.                          |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``model      |``string`` | Dnn Model Version                  |</span>
-<span class="sd">                |_version_id``|           |                                    |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``model      |``string`` | Model type.                        |</span>
-<span class="sd">                |_type``      |           |                                    |</span>
-<span class="sd">                |             |           | 00: Image classification           |</span>
-<span class="sd">                |             |           |                                    |</span>
-<span class="sd">                |             |           | 01: Object detection               |</span>
-<span class="sd">                |             |           |                                    |</span>
-<span class="sd">                |             |           | In the case of imported            |</span>
-<span class="sd">                |             |           | models, 01 is fixed at the         |</span>
-<span class="sd">                |             |           | current level.                     |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``training   |``string`` | Name of the training_kit           |</span>
-<span class="sd">                |_kit_name``  |           |                                    |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``_ts``      |``string`` | Timestamp. = System                |</span>
-<span class="sd">                |             |           | registration date and time         |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
-<span class="sd">                |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr4&gt;`|</span>
-<span class="sd">                |_result``    |           |for more details                    |</span>
-<span class="sd">                +-------------+-----------+------------------------------------+</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +==================+============+============+====================================+</span>
+<span class="sd">                | ``No_item_name`` |             |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``id``       | ``string``| Inference result metadata ID.      |</span>
+<span class="sd">                |                  |             |           | =GUID generated automatically by   |</span>
+<span class="sd">                |                  |             |           | CosmosDB                           |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``version    | ``string``| Version number.                    |</span>
+<span class="sd">                |                  |_number``    |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model version ID.                  |</span>
+<span class="sd">                |                  |_version_id``|           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model type                         |</span>
+<span class="sd">                |                  |_type``      |           |                                    |</span>
+<span class="sd">                |                  |             |           | 00: Image category                 |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           | 01: Object detection               |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``training   |``string`` |                                    |</span>
+<span class="sd">                |                  |_kit_name``  |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``_ts``      |``integer``| Timestamp.                         |</span>
+<span class="sd">                |                  |             |           | =_ts of CosmosDB                   |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inference  |           |Refer :ref:`inference_result &lt;ifr4&gt;`|</span>
+<span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inferenc   |``array``  |Refer :ref:`inferences &lt;if4&gt;`       |</span>
+<span class="sd">                |                  |es``         |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | inference_result   | .. _ifr4:                                                 |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inference_result``|              |            |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
-<span class="sd">                |                    |              |            |in ascending order of project  |</span>
-<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                |                    |``DeviceID``  | ``string`` |Device ID                      |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
+<span class="sd">                |                    |``ModelID``   |``string``  |DnnModelVersion                |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
+<span class="sd">                |                    |``Image``     |``boolean`` |Synchronized to the            |</span>
+<span class="sd">                |                    |              |            |InputTensor output.            |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
-<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if4&gt;`  |</span>
+<span class="sd">                |                    |``Inferences``|``array``   |Refer :ref:`inferences &lt;if4&gt;`  |</span>
 <span class="sd">                |                    |              |            |for more details               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``id``        |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``ttl``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_rid``      |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_self``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_etag``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_attachm    |``string``  |                               |</span>
+<span class="sd">                |                    |ents``        |            |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_ts``       |``integer`` |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | inferences         | .. _if4:                                                  |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                |                    |``T``         | ``string`` |Time when retrieving           |</span>
+<span class="sd">                |                    |              |            |data from the sensor.          |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
-<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                |                    |``O``         |``string``  |Output tensor (Encoding format)|</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
-<span class="sd">                |                    |              |            |going through PPL              |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-
-<span class="sd">            - when time parameter is specified</span>
-
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                | *Level1*     | *Type*    | *Description*                  |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``id``        | ``string``| The ID of the inference result |</span>
-<span class="sd">                |              |           | metadata. = GUID automatically |</span>
-<span class="sd">                |              |           | fired by CosmosDB              |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``device_id`` | ``string``| Device ID.                     |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``model_id``  | ``string``| Model ID.                      |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``_ts``       |``string`` | Timestamp. = System            |</span>
-<span class="sd">                |              |           | registration date and time     |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
-<span class="sd">                |``inferences``|``array``  |Refer :ref:`inferences &lt;if4&gt;`   |</span>
-<span class="sd">                |              |           |for more details                |</span>
-<span class="sd">                +--------------+-----------+--------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -937,13 +922,11 @@
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_last_inference_and_image_data`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the latest data of saved inference result and image.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : The Device ID.</span>
-<span class="sd">            sub_directory_name (str, required) : The Sub Directory Name.</span>
-<span class="sd">                The subdirectory will be the directory notified in the response</span>
-<span class="sd">                of start_upload_inference_result.</span>
+<span class="sd">            device_id (str, required) : Device ID</span>
+<span class="sd">            sub_directory_name (str, required) : Directory name</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -955,7 +938,7 @@
 
 <span class="sd">                +--------------------+------------+------------------------------------+</span>
 <span class="sd">                | *Level1*           | *Type*     | *Description*                      |</span>
-<span class="sd">                +--------------------+------------+------------------------------------+</span>
+<span class="sd">                +====================+============+====================================+</span>
 <span class="sd">                | ``image_data``     |``array``   | Refer :ref:`image_data &lt;id1&gt;`      |</span>
 <span class="sd">                |                    |            | for more details                   |</span>
 <span class="sd">                +--------------------+------------+------------------------------------+</span>
@@ -967,11 +950,11 @@
 <span class="sd">                | image_data     | .. _id1:                                                      |</span>
 <span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*       | *Level2*             | *Type*     | *Description*             |</span>
-<span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
+<span class="sd">                +================+======================+============+===========================+</span>
 <span class="sd">                | ``image_data`` |                      | ``array``  | image data                |</span>
 <span class="sd">                |                |                      |            |                           |</span>
 <span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
-<span class="sd">                |                | ``total_image_count``|  ``int``   | Set the total number of   |</span>
+<span class="sd">                |                | ``total_image_count``| ``integer``| Set the total number of   |</span>
 <span class="sd">                |                |                      |            | images                    |</span>
 <span class="sd">                +----------------+----------------------+------------+---------------------------+</span>
 <span class="sd">                |                | ``images``           | ``array``  | Refer :ref:`images &lt;im1&gt;` |</span>
@@ -980,56 +963,102 @@
 
 <span class="sd">                +-----------------------+-----------------------------------------------------+</span>
 <span class="sd">                | images                | .. _im1:                                            |</span>
-<span class="sd">                +-----------------------+------------+----------------------------------------+</span>
+<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*              | *Level2*   | *Type*     | *Description*             |</span>
+<span class="sd">                +=======================+============+============+===========================+</span>
+<span class="sd">                |``images``             |            | ``array``  |                           |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |``images``             |            | ``array``  | Image file name array     |</span>
-<span class="sd">                |                       |            |            | The descendant elements   |</span>
-<span class="sd">                |                       |            |            | are listed in ascending   |</span>
-<span class="sd">                |                       |            |            | order by image file name. |</span>
+<span class="sd">                |                       | ``name``   | ``string`` | Set the image filename.   |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |                       | ``name``   | ``string`` | Set the image file name.  |</span>
-<span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
-<span class="sd">                |                       |``contents``| ``string`` | Image file contents       |</span>
-<span class="sd">                |                       |            |            | \*Base64 encoding         |</span>
+<span class="sd">                |                       |``contents``| ``string`` | Images file contents      |</span>
+<span class="sd">                |                       |            |            | (BASE64 encoding)         |</span>
 <span class="sd">                +-----------------------+------------+------------+---------------------------+</span>
 
-<span class="sd">                +------------------+----------------------------------------------------------+</span>
-<span class="sd">                | inference_data   | .. _ifd1:                                                |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                | *Level1*         | *Level2*         | *Type*     | *Description*            |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |``inference_data``|                  |``array``   | inference_data           |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``id``            | ``string`` | The ID of the inference  |</span>
-<span class="sd">                |                  |                  |            | result metadata.         |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``device_id``     | ``string`` | Device ID.               |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``model_id``      | ``string`` | Model ID.                |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``model           |``string``  | Dnn Model Version        |</span>
-<span class="sd">                |                  |_version_id``     |            |                          |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``model           |``string``  |Model type                |</span>
-<span class="sd">                |                  |_type``           |            |                          |</span>
-<span class="sd">                |                  |                  |            |00: Image classification  |</span>
-<span class="sd">                |                  |                  |            |                          |</span>
-<span class="sd">                |                  |                  |            |01: Object detection      |</span>
-<span class="sd">                |                  |                  |            |                          |</span>
-<span class="sd">                |                  |                  |            |In the case of imported   |</span>
-<span class="sd">                |                  |                  |            |models, 01 is fixed at the|</span>
-<span class="sd">                |                  |                  |            |current level.            |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``training        |``string``  |Name of the training_kit  |</span>
-<span class="sd">                |                  |_kit_name``       |            |                          |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``_ts``           |``string``  |Timestamp. = System       |</span>
-<span class="sd">                |                  |                  |            |registration date and time|</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
-<span class="sd">                |                  |``inference       |``string``  | Raw data for inference   |</span>
-<span class="sd">                |                  |_result``         |            | result metadata          |</span>
-<span class="sd">                +------------------+------------------+------------+--------------------------+</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | inference_data   | .. _ifd1:                                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +==================+=============+===========+====================================+</span>
+<span class="sd">                |``inference_data``|             |``array``  | inference_data                     |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``id``       | ``string``| Inference result metadata ID.      |</span>
+<span class="sd">                |                  |             |           | =GUID generated automatically by   |</span>
+<span class="sd">                |                  |             |           | CosmosDB                           |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``version    | ``string``| Version number.                    |</span>
+<span class="sd">                |                  |_number``    |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model version ID.                  |</span>
+<span class="sd">                |                  |_version_id``|           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model type                         |</span>
+<span class="sd">                |                  |_type``      |           |                                    |</span>
+<span class="sd">                |                  |             |           | 00: Image category                 |</span>
+<span class="sd">                |                  |             |           |                                    |</span>
+<span class="sd">                |                  |             |           | 01: Object detection               |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``training   |``string`` |                                    |</span>
+<span class="sd">                |                  |_kit_name``  |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``_ts``      |``integer``| Timestamp.                         |</span>
+<span class="sd">                |                  |             |           | =_ts of CosmosDB                   |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inference  |           |Refer :ref:`inference_result &lt;ifr1&gt;`|</span>
+<span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inferenc   |``array``  |Refer :ref:`inferences &lt;if1&gt;`       |</span>
+<span class="sd">                |                  |es``         |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inference_result   | .. _ifr1:                                                 |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inference_result``|              |            |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``DeviceID``  | ``string`` |Device ID                      |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``ModelID``   |``string``  |DnnModelVersion                |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``Image``     |``boolean`` |Synchronized to the            |</span>
+<span class="sd">                |                    |              |            |InputTensor output.            |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``Inferences``|``array``   |Refer :ref:`inferences &lt;if1&gt;`  |</span>
+<span class="sd">                |                    |              |            |for more details               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``id``        |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``ttl``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_rid``      |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_self``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_etag``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_attachm    |``string``  |                               |</span>
+<span class="sd">                |                    |ents``        |            |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_ts``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | inferences         | .. _if1:                                                  |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``T``         | ``string`` |Time when retrieving           |</span>
+<span class="sd">                |                    |              |            |data from the sensor.          |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``O``         |``string``  |Output tensor (Encoding format)|</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -1116,21 +1145,51 @@
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">file_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``export_images`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the URL to export the images of specified conditions in zip file format. \</span>
+<span class="sd">            For encrypted images for learning in other environments</span>
+
+<span class="sd">            [Prerequisites]</span>
+
+<span class="sd">            - The encryption method is public key cryptography.</span>
+<span class="sd">            - A zip file containing the target images can be downloaded by accessing a URL. \</span>
+<span class="sd">                Each image is encoded using the method described hereafter.</span>
+<span class="sd">            - The key used for encryption is a shared key of 32 characters issued randomly by \</span>
+<span class="sd">                the API each time.</span>
+<span class="sd">            - The image encryption method is AES128, MODE_CBC</span>
+<span class="sd">            - The iv (initial vector, 16 digits) and encrypted data are stored in a zip file.</span>
+
+<span class="sd">            [Generating a Key]</span>
+
+<span class="sd">            - Private keys are issued by Sier itself.</span>
+<span class="sd">            - Public and private keys are issued with a length of 1024 or 2048.</span>
+<span class="sd">            - The public key (key) specified to the parameter of this API passes the pem file\</span>
+<span class="sd">                content of the public key in a base64 encoded format.</span>
+
+<span class="sd">            Example: Base64 encode the entire string as follows:</span>
+
+<span class="sd">            -----BEGIN PUBLIC KEY-----</span>
+
+<span class="sd">            MIGfMA0GCSqGSIb3DQEBAQUAA4GNADC</span>
+
+<span class="sd">            ...</span>
+
+<span class="sd">            -----END PUBLIC KEY-----</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key (str, required) : The public key. \</span>
-<span class="sd">                Base64-encoded format of the entire contents of the public key PEM file</span>
-<span class="sd">            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm</span>
-<span class="sd">            to_datetime (str, optional) : Date and time (To). Form: yyyyMMddhhmm</span>
+<span class="sd">            key (str, required) : Public key. \</span>
+<span class="sd">                Base64-encoded format of the entire pem file contents of the public key</span>
+<span class="sd">            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm \</span>
+<span class="sd">                Default:&quot;&quot;</span>
+<span class="sd">            to_datetime (str, optional) : Date/Time (To). Form: yyyyMMddhhmm \</span>
+<span class="sd">                Default:&quot;&quot;</span>
 <span class="sd">            device_id (str, optional) : Device ID.</span>
-<span class="sd">            file_format (str, optional) : Image file format. \</span>
-<span class="sd">                If not specified, no filtering. \</span>
-<span class="sd">                Value definition</span>
+<span class="sd">            file_format (str, optional) : Image file format. Default:&quot;&quot;\</span>
+<span class="sd">                If this is not specified, there is no filtering.</span>
 
-<span class="sd">                - JPG</span>
-<span class="sd">                - BMP</span>
-<span class="sd">                - RAW</span>
+<span class="sd">                - Value definition</span>
+
+<span class="sd">                    - JPG</span>
+<span class="sd">                    - BMP</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1142,12 +1201,12 @@
 
 <span class="sd">                +-------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*    | *Type*     | *Description*             |</span>
-<span class="sd">                +-------------+------------+---------------------------+</span>
-<span class="sd">                | ``key``     | ``string`` | A common key for image    |</span>
-<span class="sd">                |             |            | decryption encrypted with |</span>
+<span class="sd">                +=============+============+===========================+</span>
+<span class="sd">                | ``key``     | ``string`` | Shared key for decrypting |</span>
+<span class="sd">                |             |            | images encrypted by       |</span>
 <span class="sd">                |             |            | a public key.             |</span>
 <span class="sd">                +-------------+------------+---------------------------+</span>
-<span class="sd">                | ``url``     | ``string`` | SUS URI for download      |</span>
+<span class="sd">                | ``url``     | ``string`` | SUS URI for downloading   |</span>
 <span class="sd">                +-------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1239,7 +1298,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -30,6 +30,7 @@ from aitrios_console_rest_client_sdk_primitive.model.error_response import Error
 from . import path
 
 # Query params
+GrantTypeSchema = schemas.StrSchema
 DeviceIdSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
@@ -39,6 +40,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
         'device_id': typing.Union[DeviceIdSchema, str, ],
     },
     total=False
@@ -49,6 +51,12 @@ class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams)
     pass
 
 
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 request_query_device_id = api_client.QueryParameter(
     name="device_id",
     style=api_client.ParameterStyle.FORM,
@@ -115,12 +123,12 @@ class SchemaFor200ResponseBodyApplicationJson(
                                         
                                             def __new__(
                                                 cls,
-                                                arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, str, ]], typing.List[typing.Union[MetaOapg.items, str, ]]],
+                                                _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, str, ]], typing.List[typing.Union[MetaOapg.items, str, ]]],
                                                 _configuration: typing.Optional[schemas.Configuration] = None,
                                             ) -> 'Image':
                                                 return super().__new__(
                                                     cls,
-                                                    arg,
+                                                    _arg,
                                                     _configuration=_configuration,
                                                 )
                                         
@@ -171,7 +179,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                             
                                 def __new__(
                                     cls,
-                                    *args: typing.Union[dict, frozendict.frozendict, ],
+                                    *_args: typing.Union[dict, frozendict.frozendict, ],
                                     device_name: typing.Union[MetaOapg.properties.device_name, str, ],
                                     device_id: typing.Union[MetaOapg.properties.device_id, str, ],
                                     Image: typing.Union[MetaOapg.properties.Image, list, tuple, ],
@@ -180,7 +188,7 @@ class SchemaFor200ResponseBodyApplicationJson(
                                 ) -> 'items':
                                     return super().__new__(
                                         cls,
-                                        *args,
+                                        *_args,
                                         device_name=device_name,
                                         device_id=device_id,
                                         Image=Image,
@@ -190,12 +198,12 @@ class SchemaFor200ResponseBodyApplicationJson(
                     
                         def __new__(
                             cls,
-                            arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
+                            _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
                             _configuration: typing.Optional[schemas.Configuration] = None,
                         ) -> 'devices':
                             return super().__new__(
                                 cls,
-                                arg,
+                                _arg,
                                 _configuration=_configuration,
                             )
                     
@@ -238,7 +246,7 @@ class SchemaFor200ResponseBodyApplicationJson(
         
             def __new__(
                 cls,
-                *args: typing.Union[dict, frozendict.frozendict, ],
+                *_args: typing.Union[dict, frozendict.frozendict, ],
                 devices: typing.Union[MetaOapg.properties.devices, list, tuple, ],
                 group_id: typing.Union[MetaOapg.properties.group_id, str, ],
                 _configuration: typing.Optional[schemas.Configuration] = None,
@@ -246,7 +254,7 @@ class SchemaFor200ResponseBodyApplicationJson(
             ) -> 'items':
                 return super().__new__(
                     cls,
-                    *args,
+                    *_args,
                     devices=devices,
                     group_id=group_id,
                     _configuration=_configuration,
@@ -255,12 +263,12 @@ class SchemaFor200ResponseBodyApplicationJson(
 
     def __new__(
         cls,
-        arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
+        _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
         _configuration: typing.Optional[schemas.Configuration] = None,
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            arg,
+            _arg,
             _configuration=_configuration,
         )
 
@@ -447,6 +455,7 @@ class BaseApi(api_client.Api):
 
         prefix_separator_iterator = None
         for parameter in (
+            request_query_grant_type,
             request_query_device_id,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
@@ -482,7 +491,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 

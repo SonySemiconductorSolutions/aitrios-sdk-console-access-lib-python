@@ -5,7 +5,7 @@
 #   https://github.com/MetLife/OCSPChecker/blob/master/ocspchecker/ocspchecker.py
 
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@
 # pylint:disable=too-many-branches
 # pylint:disable=unnecessary-dunder-call
 # pylint:disable=duplicate-code
+# pylint:disable=too-many-statements
 
 """ A full cert chain is required to make a proper OCSP request. However,
  the ssl module for python 3.x does not support the get_peer_cert_chain()
@@ -164,7 +165,7 @@ def get_certificate_chain(host: str, port: int, proxy=None) -> List[str]:
             # Make headers for proxy connection
             send_buffer = f"CONNECT {host}:{port} HTTP/1.1\r\n".encode()
             parsed_proxy = urlparse(proxy)
-            if parsed_proxy.username and parsed_proxy.password is not None :
+            if parsed_proxy.username and parsed_proxy.password is not None:
                 token = b64encode(f"{parsed_proxy.username}:{parsed_proxy.password}".encode())
                 send_buffer += "Proxy-Authorization: Basic ".encode() + token + "\r\n".encode()
             send_buffer += "Connection: close\r\n\r\n".encode()

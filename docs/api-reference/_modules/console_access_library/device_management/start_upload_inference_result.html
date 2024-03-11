@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.device_management.start_upload_inference_result &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.device_management.start_upload_inference_result &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.device_management.start_upload_inference_result</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -125,7 +125,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, required : Edge AI Device ID</span>
+    <span class="c1">#: str, required : Device ID.</span>
     <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -154,11 +154,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 
 <div class="viewcode-block" id="StartUploadInferenceResult.start_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult.start_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">start_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute inference result metadata (Output Tensor) and image (Input Tensor)\</span>
-<span class="sd">             acquisition start instruction to the specified device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement instructions to a specified device to start to get the\</span>
+<span class="sd">             inference result metadata (Output Tensor) and image (Input image).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Device ID. Case-sensitive</span>
+<span class="sd">            device_id (str, required): Device ID.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -168,15 +168,20 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">                +------------------------+------------+---------------------------+</span>
-<span class="sd">                | *Level1*               | *Type*     | *Description*             |</span>
-<span class="sd">                +------------------------+------------+---------------------------+</span>
-<span class="sd">                | ``result``             | ``string`` | Set &quot;SUCCESS&quot; pinning     |</span>
-<span class="sd">                +------------------------+------------+---------------------------+</span>
-<span class="sd">                | ``outputSubDirectory`` | ``string`` | Input Image storage path  |</span>
-<span class="sd">                |                        |            | UploadMethod:BlobStorage  |</span>
-<span class="sd">                |                        |            | only                      |</span>
-<span class="sd">                +------------------------+------------+---------------------------+</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*                 | *Type*     | *Description*             |</span>
+<span class="sd">                +==========================+============+===========================+</span>
+<span class="sd">                | ``result``               | ``string`` | Set &quot;SUCCESS&quot; fixing      |</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
+<span class="sd">                | ``outputSubDirectory``   | ``string`` | Input Image storage path, |</span>
+<span class="sd">                |                          |            | UploadMethod:BlobStorage  |</span>
+<span class="sd">                |                          |            | only                      |</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
+<span class="sd">                | ``outputSubDirectoryIR`` | ``string`` | Input Inference result    |</span>
+<span class="sd">                |                          |            | storage path,             |</span>
+<span class="sd">                |                          |            | UploadMethodIR:BlobStorage|</span>
+<span class="sd">                |                          |            | only                      |</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -271,6 +276,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -285,7 +291,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -307,6 +314,7 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="n">_query_params</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
             <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
@@ -326,11 +334,20 @@
                 <span class="p">)</span>
 
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">_return_start_upload_inference_result</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="n">device_command_api_instance</span><span class="o">.</span><span class="n">start_upload_inference_result</span><span class="p">(</span>
-                            <span class="n">path_params</span><span class="o">=</span><span class="n">_local_params</span>
+                    <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                        <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+                        <span class="n">_return_start_upload_inference_result</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="n">device_command_api_instance</span><span class="o">.</span><span class="n">start_upload_inference_result</span><span class="p">(</span>
+                                <span class="n">path_params</span><span class="o">=</span><span class="n">_local_params</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="n">_query_params</span>
+                            <span class="p">)</span>
                         <span class="p">)</span>
-                    <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_return_start_upload_inference_result</span> <span class="o">=</span> <span class="p">(</span>
+                            <span class="n">device_command_api_instance</span><span class="o">.</span><span class="n">start_upload_inference_result</span><span class="p">(</span>
+                                <span class="n">path_params</span><span class="o">=</span><span class="n">_local_params</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
                     <span class="k">return</span> <span class="n">_return_start_upload_inference_result</span><span class="o">.</span><span class="n">body</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
@@ -376,7 +393,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

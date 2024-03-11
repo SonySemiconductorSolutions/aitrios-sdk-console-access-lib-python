@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.common.config &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.common.config &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.common.config</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -107,12 +107,15 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">msal</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">import</span> <span class="nn">aitrios_console_rest_client_sdk_primitive</span>
 <span class="kn">import</span> <span class="nn">jwt</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">marshmallow</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">validates_schema</span>
+<span class="kn">from</span> <span class="nn">urllib3</span> <span class="kn">import</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
@@ -155,6 +158,11 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for client_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
+    <span class="c1">#: string, allow_none : Application ID required to issue an access token</span>
+    <span class="n">application_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
 <div class="viewcode-block" id="SchemaConsoleAccessSettingsConfiguration.validate"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.SchemaConsoleAccessSettingsConfiguration.validate">[docs]</a>    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">_</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;console_endpoint&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -188,6 +196,7 @@
         <span class="n">portal_authorization_endpoint</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor method for config class</span>
 
@@ -204,11 +213,16 @@
 
 <span class="sd">            client_secret (str, optional): Client Secret required to issue an access token.</span>
 <span class="sd">            If not specified, read from environment variables.</span>
+
+<span class="sd">            application_id (str, optional): Application ID required to issue an access token.</span>
+<span class="sd">            If not specified, read from environment variables.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_console_endpoint</span> <span class="o">=</span> <span class="n">console_endpoint</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span> <span class="o">=</span> <span class="n">portal_authorization_endpoint</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span> <span class="o">=</span> <span class="n">client_secret</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="o">=</span> <span class="n">application_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -225,12 +239,16 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CLIENT_ID&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;APPLICATION_ID&quot;</span><span class="p">)</span>
+
         <span class="c1"># Validate Console Access Setting Configuration Parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">validate_config_parameters</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_console_endpoint</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Read Proxy from environment</span>
@@ -238,7 +256,9 @@
 
         <span class="c1"># Set configuration parameters.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span>
-            <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_console_endpoint</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span>
+            <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_console_endpoint</span><span class="p">,</span>
+            <span class="n">proxy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span><span class="p">,</span>
+            <span class="n">proxy_headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_proxy_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span><span class="p">)</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="Config.validate_config_parameters"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_config_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">validate_config_parameters</span><span class="p">(</span>
@@ -247,6 +267,7 @@
         <span class="n">portal_authorization_endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">client_secret</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validation for Console Access Setting Configuration Parameters.</span>
@@ -278,6 +299,23 @@
 
         <span class="n">proxy_env_var</span> <span class="o">=</span> <span class="s2">&quot;https_proxy&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proxy_env_var</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proxy_env_var</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Config.get_proxy_auth_header"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_proxy_auth_header">[docs]</a>    <span class="k">def</span> <span class="nf">get_proxy_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get proxy headers for authorization</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            - Proxy string</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            - Proxy headers for proxy_basic_auth</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">proxy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">parsed_proxy</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">proxy</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">parsed_proxy</span><span class="o">.</span><span class="n">username</span> <span class="ow">and</span> <span class="n">parsed_proxy</span><span class="o">.</span><span class="n">password</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">make_headers</span><span class="p">(</span>
+                <span class="n">proxy_basic_auth</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parsed_proxy</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">parsed_proxy</span><span class="o">.</span><span class="n">password</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Config.validate_access_token"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_access_token">[docs]</a>    <span class="k">def</span> <span class="nf">validate_access_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to Validate Access Token</span>
@@ -340,20 +378,34 @@
             <span class="p">}</span>
 
             <span class="c1"># Set payload</span>
-            <span class="n">_data</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span><span class="p">,</span>
-                <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span><span class="p">,</span>
-            <span class="p">}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;client_credentials&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;client_secret&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span><span class="p">,</span>
+                    <span class="s2">&quot;scope&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;client_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="c1"># Create an instance of the Console API class</span>
+                <span class="n">_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+                    <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">_headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">180</span>
+                <span class="p">)</span>
+                <span class="n">_response_json</span> <span class="o">=</span> <span class="n">_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                <span class="n">_return_value</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;bearer </span><span class="si">{</span><span class="n">_response_json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;access_token&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">client_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span>
+                <span class="n">authority</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span>
+                <span class="n">client_credential</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span>
+                <span class="n">scope</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;api://&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="o">+</span> <span class="s2">&quot;/.default&quot;</span><span class="p">]</span>
 
-            <span class="c1"># Create an instance of the API class</span>
-            <span class="n">_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-                <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">_headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">180</span>
-            <span class="p">)</span>
-            <span class="n">_response_json</span> <span class="o">=</span> <span class="n">_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="n">_return_value</span> <span class="o">=</span> <span class="s2">&quot;bearer &quot;</span> <span class="o">+</span> <span class="n">_response_json</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-
+                <span class="c1"># Create an instance of the Azure API class</span>
+                <span class="n">_data</span> <span class="o">=</span> <span class="n">msal</span><span class="o">.</span><span class="n">ConfidentialClientApplication</span><span class="p">(</span>
+                    <span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">,</span> <span class="n">authority</span><span class="o">=</span><span class="n">authority</span><span class="p">,</span> <span class="n">client_credential</span><span class="o">=</span><span class="n">client_credential</span>
+                <span class="p">)</span>
+                <span class="n">_response</span> <span class="o">=</span> <span class="n">_data</span><span class="o">.</span><span class="n">acquire_token_silent</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="n">scope</span><span class="p">,</span> <span class="n">account</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">_response</span><span class="p">:</span>
+                    <span class="n">_response</span> <span class="o">=</span> <span class="n">_data</span><span class="o">.</span><span class="n">acquire_token_for_client</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+                <span class="n">_return_value</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;bearer </span><span class="si">{</span><span class="n">_response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;access_token&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_application_id_flg</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">ex</span>
@@ -395,6 +447,12 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">_portal_authorization_endpoint_ocsp_status</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;OCSP Status of URL </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span><span class="si">}</span><span class="s2"> is not good&quot;</span><span class="p">)</span>
+            <span class="c1"># Case of Azure API. OCSP check of &quot;login.microsoftonline.com&quot;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_url</span> <span class="o">=</span> <span class="s2">&quot;https://login.microsoftonline.com&quot;</span>
+                <span class="n">_ocsp_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ocsp_status</span><span class="p">(</span><span class="n">_url</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">_ocsp_status</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;OCSP Status of URL </span><span class="si">{</span><span class="n">_url</span><span class="si">}</span><span class="s2"> is not good&quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">()</span>
 
@@ -409,7 +467,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.deployment &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.deployment.deployment &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.deployment.deployment</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -160,7 +160,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">deploy_device_app_status_obj</span> <span class="o">=</span> <span class="n">DeployDeviceAppStatus</span>
 
 <div class="viewcode-block" id="Deployment.get_device_apps"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.get_device_apps">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_apps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_device_apps`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the device app list information</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -172,57 +172,123 @@
 
 <span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
 <span class="sd">                | *Level1* | *Level2*    | *Type*     | *Description*                            |</span>
+<span class="sd">                +==========+=============+============+==========================================+</span>
+<span class="sd">                | ``apps`` |             | ``array``  |                                          |</span>
 <span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
-<span class="sd">                | ``apps`` |             | ``array``  | App array                                |</span>
+<span class="sd">                |          | ``name``    | ``string`` | Set the app name.                        |</span>
 <span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
-<span class="sd">                |          | ``name``    | ``string`` | App name                                 |</span>
+<span class="sd">                |          |``create_by``| ``string`` | Set the create_by.                       |</span>
+<span class="sd">                |          |             |            |                                          |</span>
+<span class="sd">                |          |             |            | - Value definition                       |</span>
+<span class="sd">                |          |             |            |                                          |</span>
+<span class="sd">                |          |             |            | Self: Self-training models               |</span>
+<span class="sd">                |          |             |            |                                          |</span>
+<span class="sd">                |          |             |            | Marketplace: Marketplace purchacing model|</span>
 <span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
-<span class="sd">                |          | ``versions``| ``array``  | Refer :ref:`versions &lt;element1&gt;`         |</span>
+<span class="sd">                |          |``package_   | ``string`` | Set the marketplace package ID.          |</span>
+<span class="sd">                |          |id``         |            |                                          |</span>
+<span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
+<span class="sd">                |          |``product    | ``string`` | Set the marketplace product ID.          |</span>
+<span class="sd">                |          |_id``        |            |                                          |</span>
+<span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
+<span class="sd">                |          |``schema_    | ``array``  | Refer :ref:`schema_info &lt;schema_info1&gt;`  |</span>
+<span class="sd">                |          |info``       |            | for more details                         |</span>
+<span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
+<span class="sd">                |          |``versions`` | ``array``  | Refer :ref:`versions &lt;versions_element&gt;` |</span>
 <span class="sd">                |          |             |            | for more details                         |</span>
 <span class="sd">                +----------+-------------+------------+------------------------------------------+</span>
 
+
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                | schema_info       | .. _schema_info1:                                            |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*                 |</span>
+<span class="sd">                +===================+=================+============+===============================+</span>
+<span class="sd">                | ``schema_info``   |                 | ``array``  | Schema info.                  |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                |                   | ``VnSAppId``    | ``string`` | Set the VnS app ID            |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                |                   | ``version``     | ``string`` | Set the app version no.       |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                |                   | ``interfaces``  | ``array``  |Refer :ref:`interfaces &lt;int1&gt;` |</span>
+<span class="sd">                |                   |                 |            |for more details               |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                | interfaces        | .. _int1:                                                    |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*                 |</span>
+<span class="sd">                +===================+=================+============+===============================+</span>
+<span class="sd">                | ``interfaces``    |                 | ``array``  | Set the metadata format IDs.  |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                |                   | ``in``          | ``array``  | Refer :ref:`in &lt;in1&gt;`         |</span>
+<span class="sd">                |                   |                 |            | for more details              |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                | in                | .. _in1:                                                     |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*                 |</span>
+<span class="sd">                +===================+=================+============+===============================+</span>
+<span class="sd">                | ``in``            |                 | ``array``  |                               |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``metadata       | ``string`` | Set the metadata format ID.   |</span>
+<span class="sd">                |                   |FormatId``       |            |                               |</span>
+<span class="sd">                +-------------------+-----------------+------------+-------------------------------+</span>
+
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                | versions          | .. _element1:                                       |</span>
+<span class="sd">                | versions          | .. _versions_element:                               |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*     |</span>
-<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
+<span class="sd">                +===================+====================+============+===================+</span>
 <span class="sd">                | ``versions``      |                    | ``array``  |                   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``version``        | ``string`` |                   |</span>
+<span class="sd">                |                   | ``version``        | ``string`` | Set the app       |</span>
+<span class="sd">                |                   |                    |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``compiled_flg``   | ``string`` | 0: Uncompiled     |</span>
-<span class="sd">                |                   |                    |            | (compile process) |</span>
+<span class="sd">                |                   | ``compiled_flg``   | ``string`` | Set the compiled  |</span>
+<span class="sd">                |                   |                    |            | flg.              |</span>
 <span class="sd">                |                   |                    |            |                   |</span>
-<span class="sd">                |                   |                    |            | 1: Compiled (no   |</span>
+<span class="sd">                |                   |                    |            | - Value definition|</span>
+<span class="sd">                |                   |                    |            |                   |</span>
+<span class="sd">                |                   |                    |            | 0 : Specified App |</span>
+<span class="sd">                |                   |                    |            | is not compiled   |</span>
+<span class="sd">                |                   |                    |            |                   |</span>
+<span class="sd">                |                   |                    |            | 1 : Specified App |</span>
+<span class="sd">                |                   |                    |            | is compiled       |</span>
+<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
+<span class="sd">                |                   | ``status``         | ``string`` | Set the status.   |</span>
+<span class="sd">                |                   |                    |            |                   |</span>
+<span class="sd">                |                   |                    |            | - Value definition|</span>
+<span class="sd">                |                   |                    |            |                   |</span>
+<span class="sd">                |                   |                    |            | 0: before         |</span>
 <span class="sd">                |                   |                    |            | compilation       |</span>
-<span class="sd">                |                   |                    |            | process)          |</span>
-<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``status``         | ``string`` | 0: Before         |</span>
+<span class="sd">                |                   |                    |            |                   |</span>
+<span class="sd">                |                   |                    |            | 1: during         |</span>
 <span class="sd">                |                   |                    |            | compilation       |</span>
 <span class="sd">                |                   |                    |            |                   |</span>
-<span class="sd">                |                   |                    |            | 1: Compiling      |</span>
+<span class="sd">                |                   |                    |            | 2: successful     |</span>
 <span class="sd">                |                   |                    |            |                   |</span>
-<span class="sd">                |                   |                    |            | 2: Successful     |</span>
-<span class="sd">                |                   |                    |            |                   |</span>
-<span class="sd">                |                   |                    |            | 3: Failed         |</span>
+<span class="sd">                |                   |                    |            | 3: failed         |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``comment``        | ``string`` |                   |</span>
+<span class="sd">                |                   | ``comment``        | ``string`` | Set the comment.  |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``deploy_count``   | ``string`` |                   |</span>
+<span class="sd">                |                   | ``deploy_count``   | ``string`` | Set the deploy    |</span>
+<span class="sd">                |                   |                    |            | count.            |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |  ``ins_id``        |``string``  | App Version       |</span>
-<span class="sd">                |                   |                    |            | Author            |</span>
+<span class="sd">                |                   |  ``ins_id``        |``string``  | Set the settings  |</span>
+<span class="sd">                |                   |                    |            | author.           |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |  ``ins_date``      |``string``  | Date and time the |</span>
-<span class="sd">                |                   |                    |            | app version was   |</span>
-<span class="sd">                |                   |                    |            | created           |</span>
+<span class="sd">                |                   |  ``ins_date``      |``string``  | Set the date the  |</span>
+<span class="sd">                |                   |                    |            | settings were     |</span>
+<span class="sd">                |                   |                    |            | created.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |  ``upd_id``        |``string``  | App version       |</span>
-<span class="sd">                |                   |                    |            | updated by        |</span>
+<span class="sd">                |                   |  ``upd_id``        |``string``  | Set the settings  |</span>
+<span class="sd">                |                   |                    |            | updater.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |  ``upd_date``      |``string``  | Date and time the |</span>
-<span class="sd">                |                   |                    |            | app version was   |</span>
-<span class="sd">                |                   |                    |            | updated           |</span>
+<span class="sd">                |                   |  ``upd_date``      |``string``  | Set the date the  |</span>
+<span class="sd">                |                   |                    |            | settings were     |</span>
+<span class="sd">                |                   |                    |            | updated.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -301,11 +367,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_device_apps_obj</span><span class="o">.</span><span class="n">get_device_apps</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Deployment.delete_device_app"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.delete_device_app">[docs]</a>    <span class="k">def</span> <span class="nf">delete_device_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``delete_device_app`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete device app</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            app_name (str, required): DeviceApp name</span>
-<span class="sd">            version_number (str, required): DeviceApp version</span>
+<span class="sd">            app_name (str, required): App name</span>
+<span class="sd">            version_number (str, required): App version number</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -317,8 +383,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -408,36 +474,53 @@
         <span class="n">file_content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">entry_point</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">schema_info</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``import_device_app`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Import Device app</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            compiled_flg (str, required): Compile flags.</span>
+<span class="sd">            compiled_flg (str, required): Set the compiled flg.</span>
 
-<span class="sd">                - 0: Not compiled (perform compilation)</span>
-<span class="sd">                - 1: Compiled (Do not compile)</span>
+<span class="sd">                - Value definition</span>
 
-<span class="sd">            app_name (str, required): DeviceApp name. The maximum number of \</span>
-<span class="sd">                characters is app_name + version_number ⇐31. Characters other than the \</span>
-<span class="sd">                following are forbidden characters</span>
+<span class="sd">                    - 0 : Specified App is not compiled</span>
+<span class="sd">                    - 1 : Specified App is compiled</span>
 
-<span class="sd">                    - Alphanumeric</span>
-<span class="sd">                    - Underbar</span>
+<span class="sd">            app_name (str, required): App name.</span>
+<span class="sd">                Allow only the following characters.</span>
+
+<span class="sd">                    - Alphanumeric characters</span>
+<span class="sd">                    - Under bar</span>
 <span class="sd">                    - Dot</span>
 
-<span class="sd">            version_number (str, required): DeviceApp version. The maximum number of \</span>
-<span class="sd">                characters is app_name + version_number ⇐31. Characters other than the \</span>
-<span class="sd">                following are forbidden characters</span>
+<span class="sd">                The maximum number of characters is app_name + version_number &lt;=31.</span>
 
-<span class="sd">                    - Alphanumeric</span>
-<span class="sd">                    - Underbar</span>
+<span class="sd">            version_number (str, required): App version number.</span>
+<span class="sd">                Allow only the following characters.</span>
+
+<span class="sd">                    - Alphanumeric characters</span>
+<span class="sd">                    - Under bar</span>
 <span class="sd">                    - Dot</span>
 
-<span class="sd">            comment (str, optional): DeviceApp Description. up to 100 characters \</span>
-<span class="sd">                No comment if not specified.</span>
-<span class="sd">            file_name (str, required): DeviceApp file name.</span>
-<span class="sd">            file_content (str, required): Contents of DeviceApp file. Base64 encoded string.</span>
-<span class="sd">            entry_point (str, optional): EVP module entry point. &quot;ppl&quot; if not specified.</span>
+<span class="sd">                The maximum number of characters is app_name + version_number &lt;=31.</span>
+
+<span class="sd">            comment (str, optional): Comment. Max. 100 characters.</span>
+<span class="sd">            file_name (str, required): filename.</span>
+<span class="sd">            file_content (str, required): App file content in base64 encoding.</span>
+<span class="sd">            entry_point (str, optional): App entry point.</span>
+<span class="sd">            schema_info (dict, optional) : Schema info. Example:</span>
+
+<span class="sd">                .. code-block:: console</span>
+
+<span class="sd">                    {</span>
+<span class="sd">                        interfaces: {</span>
+<span class="sd">                            in:</span>
+<span class="sd">                            [</span>
+<span class="sd">                                { metadataFormatId: &quot;string_value1&quot;},</span>
+<span class="sd">                                { metadataFormatId: &quot;string_value2&quot;}</span>
+<span class="sd">                            ]</span>
+<span class="sd">                        }</span>
+<span class="sd">                    }</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -449,8 +532,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -527,11 +610,12 @@
 <span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_import_device_app_obj</span><span class="o">.</span><span class="n">import_device_app</span><span class="p">(</span>
-            <span class="n">compiled_flg</span><span class="p">,</span> <span class="n">app_name</span><span class="p">,</span> <span class="n">version_number</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">file_content</span><span class="p">,</span> <span class="n">entry_point</span><span class="p">,</span> <span class="n">comment</span>
+            <span class="n">compiled_flg</span><span class="p">,</span> <span class="n">app_name</span><span class="p">,</span> <span class="n">version_number</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">file_content</span><span class="p">,</span>
+            <span class="n">entry_point</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">schema_info</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Deployment.get_deploy_configurations"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.get_deploy_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">get_deploy_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_deploy_configurations`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the deploy config list</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -543,26 +627,26 @@
 
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
 <span class="sd">                | *Level1*        | *Level2*   | *Type*     | *Description*                   |</span>
+<span class="sd">                +=================+============+============+=================================+</span>
+<span class="sd">                |``deploy_        |            | ``array``  |                                 |</span>
+<span class="sd">                |configurations`` |            |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |``deploy_        |            | ``array``  | Ascending order of              |</span>
-<span class="sd">                |configurations`` |            |            | config_id                       |</span>
-<span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``config_   | ``string`` |                                 |</span>
+<span class="sd">                |                 |``config_   | ``string`` | Set the config ID.              |</span>
 <span class="sd">                |                 |id``        |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``device_   | ``string`` |                                 |</span>
+<span class="sd">                |                 |``device_   | ``string`` | Set the device type.            |</span>
 <span class="sd">                |                 |type``      |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``config_   | ``string`` |                                 |</span>
+<span class="sd">                |                 |``config_   | ``string`` | Set the config comment.         |</span>
 <span class="sd">                |                 |comment``   |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``running_  | ``int``    |                                 |</span>
+<span class="sd">                |                 |``running_  | ``integer``| Set the running cnt.            |</span>
 <span class="sd">                |                 |cnt``       |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``success_  | ``int``    |                                 |</span>
+<span class="sd">                |                 |``success_  | ``integer``| Set the success cnt.            |</span>
 <span class="sd">                |                 |cnt``       |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``fail_cnt``| ``int``    |                                 |</span>
+<span class="sd">                |                 |``fail_cnt``| ``integer``| Set the fail cnt.               |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
 <span class="sd">                |                 |``firmware``| ``array``  | Refer :ref:`firmware &lt;f9&gt;`      |</span>
 <span class="sd">                |                 |            |            | for more details                |</span>
@@ -570,131 +654,72 @@
 <span class="sd">                |                 |``model``   | ``array``  | Refer :ref:`model &lt;mm&gt;`         |</span>
 <span class="sd">                |                 |            |            | for more details                |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``custom_   | ``array``  | Refer :ref:`custom_setting &lt;cc&gt;`|</span>
-<span class="sd">                |                 |setting``   |            | for more details                |</span>
+<span class="sd">                |                 |``ins_id``  | ``string`` | Set the deployment author.      |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``ins_id``  | ``string`` |                                 |</span>
+<span class="sd">                |                 |``ins_date``| ``string`` | Set the date the deployment     |</span>
+<span class="sd">                |                 |            |            | was created.                    |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``ins_date``| ``string`` |                                 |</span>
+<span class="sd">                |                 |``upd_id``  | ``string`` | Set the deployment updater.     |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``upd_id``  | ``string`` |                                 |</span>
-<span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``upd_date``| ``string`` |                                 |</span>
+<span class="sd">                |                 |``upd_date``| ``string`` | Set the date the deployment     |</span>
+<span class="sd">                |                 |            |            | was updated.                    |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | firmware          | .. _f9:                                             |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*     |</span>
-<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
+<span class="sd">                +===================+====================+============+===================+</span>
 <span class="sd">                | ``firmware``      |                    | ``array``  |                   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_loader_    | ``string`` |                   |</span>
-<span class="sd">                |                   |file_name``         |            |                   |</span>
+<span class="sd">                |                   |``sensor_loader_    | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |file_name``         |            | loader filename.  |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_loader_    | ``string`` |                   |</span>
-<span class="sd">                |                   |version_number``    |            |                   |</span>
+<span class="sd">                |                   |``sensor_loader_    | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |version_number``    |            | loader version    |</span>
+<span class="sd">                |                   |                    |            | number.           |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_loader_    | ``string`` |                   |</span>
-<span class="sd">                |                   |firmware_comment``  |            |                   |</span>
+<span class="sd">                |                   |``sensor_loader_    | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |firmware_comment``  |            | loader firmware   |</span>
+<span class="sd">                |                   |                    |            | comment.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_file_name``| ``string`` |                   |</span>
+<span class="sd">                |                   |``sensor_file_name``| ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |                    |            | filename.         |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_           | ``string`` |                   |</span>
-<span class="sd">                |                   |version_number``    |            |                   |</span>
+<span class="sd">                |                   |``sensor_           | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |version_number``    |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_           |``string``  |                   |</span>
-<span class="sd">                |                   |firmware_comment``  |            |                   |</span>
+<span class="sd">                |                   |``sensor_           |``string``  | Set the sensor    |</span>
+<span class="sd">                |                   |firmware_comment``  |            | firmware comment. |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``apfw_file_name``  |``string``  |                   |</span>
+<span class="sd">                |                   |``apfw_file_name``  |``string``  | Set the apfw      |</span>
+<span class="sd">                |                   |                    |            | filename.         |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``apfw_version_     |``string``  |                   |</span>
-<span class="sd">                |                   |number``            |            |                   |</span>
+<span class="sd">                |                   |``apfw_version_     |``string``  | Set the apfw      |</span>
+<span class="sd">                |                   |number``            |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``apfw_firmware_    |``string``  |                   |</span>
-<span class="sd">                |                   |comment``           |            |                   |</span>
+<span class="sd">                |                   |``apfw_firmware_    |``string``  | Set the apfw      |</span>
+<span class="sd">                |                   |comment``           |            | firmware comment. |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | model             | .. _mm:                                             |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*     |</span>
-<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
+<span class="sd">                +===================+====================+============+===================+</span>
 <span class="sd">                | ``model``         |                    | ``array``  |                   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``model_id``       | ``string`` |                   |</span>
+<span class="sd">                |                   | ``model_id``       | ``string`` | Set the model ID. |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``model_            | ``string`` |                   |</span>
-<span class="sd">                |                   |version_number``    |            |                   |</span>
+<span class="sd">                |                   |``model_            | ``string`` | Set the model     |</span>
+<span class="sd">                |                   |version_number``    |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``model_comment``  | ``string`` |                   |</span>
+<span class="sd">                |                   | ``model_comment``  | ``string`` | Set the model     |</span>
+<span class="sd">                |                   |                    |            | comment.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``model_            | ``string`` |                   |</span>
-<span class="sd">                |                   |version_comment``   |            |                   |</span>
+<span class="sd">                |                   |``model_            | ``string`` | Set the model     |</span>
+<span class="sd">                |                   |version_comment``   |            | version comment.  |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |custom_setting| .. _cc:                                         |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                | *Level1*     | *Level2*           | *Type*     | *Description* |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |``custom_     |                    | ``array``  |               |</span>
-<span class="sd">                |setting``     |                    |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``color_matrix_     | ``string`` |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -772,10 +797,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_deploy_configurations_obj</span><span class="o">.</span><span class="n">get_deploy_configurations</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Deployment.get_deploy_history"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.get_deploy_history">[docs]</a>    <span class="k">def</span> <span class="nf">get_deploy_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_deploy_history`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the deploy history for a specified device</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): ID of Edge AI device.</span>
+<span class="sd">            device_id (str, required): Device ID.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -787,401 +812,176 @@
 
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1* | *Level2*             | *Type*     | *Description*                 |</span>
+<span class="sd">                +==========+======================+============+===============================+</span>
+<span class="sd">                |``deploy  |                      | ``array``  |                               |</span>
+<span class="sd">                |s``       |                      |            |                               |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |``deploy``|                      | ``array``  | Descending order of           |</span>
-<span class="sd">                |          |                      |            | ins_date                      |</span>
+<span class="sd">                |          | ``id``               | ``integer``| Deploy ID.                    |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          | ``id``               | ``number`` |                               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          | ``deploy_type``      | ``string`` | 0: Deployment configuration   |</span>
+<span class="sd">                |          | ``deploy_type``      | ``string`` | Set the deploy type.          |</span>
+<span class="sd">                |          |                      |            | - Value definition            |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 1: Device model, App:DeviceApp|</span>
+<span class="sd">                |          |                      |            | 0: Deploy config              |</span>
+<span class="sd">                |          |                      |            |                               |</span>
+<span class="sd">                |          |                      |            | 1: Device model               |</span>
+<span class="sd">                |          |                      |            |                               |</span>
+<span class="sd">                |          |                      |            | App: DeviceApp                |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``deploy_status``     | ``string`` | Total deployment status       |</span>
-<span class="sd">                |          |                      |            | including other devices       |</span>
+<span class="sd">                |          |``deploy_status``     | ``string`` | Set the deploy status. Target |</span>
+<span class="sd">                |          |                      |            | device deployment status.     |</span>
+<span class="sd">                |          |                      |            | - Value definition            |</span>
 <span class="sd">                |          |                      |            |                               |</span>
 <span class="sd">                |          |                      |            | 0: Deploying                  |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 1: Succeeding                 |</span>
+<span class="sd">                |          |                      |            | 1: Success                    |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 2: failed                     |</span>
+<span class="sd">                |          |                      |            | 2: Fail                       |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 3: canceled                   |</span>
+<span class="sd">                |          |                      |            | 3: Cancel                     |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 9: DeviceApp Undeploy         |</span>
+<span class="sd">                |          |                      |            | App: DeviceApp undeploy       |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``deploy_comment``    | ``string`` |                               |</span>
+<span class="sd">                |          |``update_progress``   | ``string`` | Set the update progress in    |</span>
+<span class="sd">                |          |                      |            | percentage.                   |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |  ``config_id``       | ``string`` |                               |</span>
+<span class="sd">                |          |``deploy_comment``    | ``string`` | Set the deploy comment.       |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``replace_network_id``| ``string`` |                               |</span>
+<span class="sd">                |          |  ``config_id``       | ``string`` | Set the deploy config ID.     |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          | ``current_target``   | ``string`` |                               |</span>
+<span class="sd">                |          |``replace_network_id``| ``string`` | Set the replace network ID.   |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``total_status``      | ``string`` | Total deployment status       |</span>
-<span class="sd">                |          |                      |            | including other devices       |</span>
+<span class="sd">                |          | ``current_target``   | ``string`` | Set the current target.       |</span>
+<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
+<span class="sd">                |          |``total_status``      | ``string`` | Set the deploy status.        |</span>
+<span class="sd">                |          |                      |            | Total status of devices       |</span>
+<span class="sd">                |          |                      |            | deployed together.            |</span>
+<span class="sd">                |          |                      |            | - Value definition            |</span>
 <span class="sd">                |          |                      |            |                               |</span>
 <span class="sd">                |          |                      |            | 0: Deploying                  |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 1: Succeeding                 |</span>
+<span class="sd">                |          |                      |            | 1: Success                    |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 2: failed                     |</span>
+<span class="sd">                |          |                      |            | 2: Fail                       |</span>
 <span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 3: canceled                   |</span>
-<span class="sd">                |          |                      |            |                               |</span>
-<span class="sd">                |          |                      |            | 9: DeviceApp Undeploy         |</span>
+<span class="sd">                |          |                      |            | 3: Cancel                     |</span>
+<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
+<span class="sd">                |          | ``app_name``         | ``string`` | Set the app name.             |</span>
+<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
+<span class="sd">                |          | ``version_number``   | ``string`` | Set the version number.       |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
 <span class="sd">                |          | ``firmware``         | ``array``  |Refer :ref:`firmware &lt;f7&gt;`     |</span>
 <span class="sd">                |          |                      |            |for more details               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |  ``model``           | ``array``  |Refer :ref:`model &lt;m7&gt;`        |</span>
-<span class="sd">                |          |                      |            |for more details               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``custom_setting``    | ``array``  |Refer :ref:`custom_setting &lt;s&gt;`|</span>
-<span class="sd">                |          |                      |            |for more details               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``ins_id``            | ``string`` |                               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``ins_date``          | ``string`` |                               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``upd_id``            | ``string`` |                               |</span>
-<span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
-<span class="sd">                |          |``upd_date``          | ``string`` |                               |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
 
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                | firmware   | .. _f7:                                                             |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                     |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                +============+====================+============+===================================+</span>
 <span class="sd">                |``firmware``|                    | ``array``  |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    | ``string`` | 0: Not eligible                   |</span>
-<span class="sd">                |            |target_flg``        |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Eligible                       |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    |``string``  | 0: Waiting to run                 |</span>
-<span class="sd">                |            |status``            |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Running                        |</span>
+<span class="sd">                |            |``sensor_loader_    | ``string`` | Set the deploy target flg.        |</span>
+<span class="sd">                |            |target_flg``        |            | - Value definition                |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 2: Successful                     |</span>
+<span class="sd">                |            |                    |            | 0: Not for deployment             |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 3: Failed                         |</span>
+<span class="sd">                |            |                    |            | 1: Deployment target              |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_loader_    |``string``  | Set the deploy status.            |</span>
+<span class="sd">                |            |status``            |            | - Value definition                |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 0: Waiting                        |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 1: Deploying                      |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 2: Success                        |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 3: Fail                           |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``sensor_loader_    |``integer`` | Set the sensor loader retry count.|</span>
 <span class="sd">                |            |retry_count``       |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_loader_    |``string``  | Set the sensor loader start date. |</span>
 <span class="sd">                |            |start_date``        |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    | ``string`` |                                   |</span>
+<span class="sd">                |            |``sensor_loader_    | ``string`` | Set the sensor loader end date.   |</span>
 <span class="sd">                |            |end_date``          |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    |``string``  |                                   |</span>
-<span class="sd">                |            |version_number``    |            |                                   |</span>
+<span class="sd">                |            |``sensor_loader_    |``string``  | Set the sensor loader version     |</span>
+<span class="sd">                |            |version_number``    |            | number.                           |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_loader_    |``string``  |                                   |</span>
-<span class="sd">                |            |version_comment``   |            |                                   |</span>
+<span class="sd">                |            |``sensor_loader_    |``string``  | Set the sensor loader version     |</span>
+<span class="sd">                |            |version_comment``   |            | comment.                          |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_target_    |``string``  | 0: Not eligible                   |</span>
-<span class="sd">                |            |flg``               |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Eligible                       |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_status``   | ``string`` | 0: Waiting to run                 |</span>
+<span class="sd">                |            |``sensor_target_    |``string``  | Set the deploy target flg.        |</span>
+<span class="sd">                |            |flg``               |            | - Value definition                |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Running                        |</span>
+<span class="sd">                |            |                    |            | 0: Not for deployment             |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 2: Successful                     |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 3: Failed                         |</span>
+<span class="sd">                |            |                    |            | 1: Deployment target              |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_retry_     |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_status``   | ``string`` | Set the deploy status.            |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | - Value definition                |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 0: Waiting                        |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 1: Deploying                      |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 2: Success                        |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 3: Fail                           |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``sensor_retry_     |``integer`` | Set the sensor retry count.       |</span>
 <span class="sd">                |            |count``             |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_start_     |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_start_     |``string``  | Set the sensor start date.        |</span>
 <span class="sd">                |            |date``              |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_end_date`` |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_end_date`` |``string``  | Set the sensor end date.          |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_version_   |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_version_   |``string``  | Set the sensor version number.    |</span>
 <span class="sd">                |            |number``            |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``sensor_version_   |``string``  |                                   |</span>
+<span class="sd">                |            |``sensor_version_   |``string``  | Set the sensor version comment.   |</span>
 <span class="sd">                |            |comment``           |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_target_flg`` |``string``  | 0: Not eligible                   |</span>
+<span class="sd">                |            |``apfw_target_flg`` |``string``  | Set the deploy target flg.        |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Eligible                       |</span>
+<span class="sd">                |            |                    |            |- Value definition                 |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 0: Not for deployment             |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 1: Deployment target              |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_status``     |``string``  | 0: Waiting to run                 |</span>
+<span class="sd">                |            |``apfw_status``     |``string``  | Set the deploy status.            |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Running                        |</span>
+<span class="sd">                |            |                    |            | - Value definition                |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 2: Successful                     |</span>
+<span class="sd">                |            |                    |            | 0: Waiting                        |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 3: Failed                         |</span>
+<span class="sd">                |            |                    |            | 1: Deploying                      |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 2: Success                        |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                |            |                    |            | 3: Fail                           |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_retry_count``|``string``  |                                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_start_date`` |``string``  |                                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_end_date``   |``string``  |                                   |</span>
+<span class="sd">                |            |``apfw_retry_count``|``integer`` | Set the appfw retry count.        |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_version_     |``string``  |                                   |</span>
+<span class="sd">                |            |``apfw_start_date`` |``string``  | Set the appfw start date.         |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``apfw_end_date``   |``string``  | Set the appfw end date.           |</span>
+<span class="sd">                |            |                    |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``apfw_version_     |``string``  | Set the appfw version number.     |</span>
 <span class="sd">                |            |number``            |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``apfw_version_     |``string``  |                                   |</span>
+<span class="sd">                |            |``apfw_version_     |``string``  | Set the appfw version comment.    |</span>
 <span class="sd">                |            |comment``           |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                | model      | .. _m7:                                                             |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                     |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |``model``   |                    | ``array``  |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_target_flg``| ``string`` | 0: Not eligible                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Eligible                       |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_status``    |``string``  | 0: Waiting to run                 |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 1: Running                        |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 2: Successful                     |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                |            |                    |            | 3: Failed                         |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_retry_      |``string``  |                                   |</span>
-<span class="sd">                |            |count``             |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_start_date``|``string``  |                                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_end_date``  | ``string`` |                                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_id``        |``string``  |                                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_version_    |``string``  |                                   |</span>
-<span class="sd">                |            |number``            |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_comment``   |``string``  |                                   |</span>
-<span class="sd">                |            |                    |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_version_    | ``string`` |                                   |</span>
-<span class="sd">                |            |comment``           |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``dnn_parame_set    |``string``  |                                   |</span>
-<span class="sd">                |            |ting_target_flg``   |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``dnn_parame_       |``string``  |                                   |</span>
-<span class="sd">                |            |settingstatus``     |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``dnn_parame_sett   |``string``  |                                   |</span>
-<span class="sd">                |            |ing_retry_count``   |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``dnn_parame_set    |``string``  |                                   |</span>
-<span class="sd">                |            |ting_start_date``   |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``dnn_parame_set    |``string``  |                                   |</span>
-<span class="sd">                |            |ting_end_date``     |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |custom_setting| .. _s:                                                            |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                | *Level1*     | *Level2*           | *Type*     | *Description*                   |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |``custom_     |                    | ``array``  |                                 |</span>
-<span class="sd">                |setting``     |                    |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     | ``string`` | 0: Not eligible                 |</span>
-<span class="sd">                |              |target_flg``        |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Eligible                     |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  | 0: Waiting to run               |</span>
-<span class="sd">                |              |status``            |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Running                      |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 2: Successful                   |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 3: Failed                       |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     | ``string`` |                                 |</span>
-<span class="sd">                |              |retry_count``       |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |                                 |</span>
-<span class="sd">                |              |start_date``        |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     | ``string`` |                                 |</span>
-<span class="sd">                |              |end_date``          |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |                                 |</span>
-<span class="sd">                |              |mode``              |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     | ``string`` |                                 |</span>
-<span class="sd">                |              |file_name``         |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |                                 |</span>
-<span class="sd">                |              |comment``           |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  | 0: Not eligible                 |</span>
-<span class="sd">                |              |target_flg``        |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Eligible                     |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  | 0: Waiting to run               |</span>
-<span class="sd">                |              |status``            |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Running                      |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 2: Successful                   |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 3: Failed                       |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |                                 |</span>
-<span class="sd">                |              |retry_count``       |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |                                 |</span>
-<span class="sd">                |              |start_date``        |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |                                 |</span>
-<span class="sd">                |              |end_date``          |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |                                 |</span>
-<span class="sd">                |              |mode``              |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |                                 |</span>
-<span class="sd">                |              |file_name``         |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |                                 |</span>
-<span class="sd">                |              |comment``           |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  | 0: Not eligible                 |</span>
-<span class="sd">                |              |target_flg``        |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Eligible                     |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  | 0: Waiting to run               |</span>
-<span class="sd">                |              |status``            |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Running                      |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 2: Successful                   |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 3: Failed                       |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |                                 |</span>
-<span class="sd">                |              |retry_count``       |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |                                 |</span>
-<span class="sd">                |              |start_date``        |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |                                 |</span>
-<span class="sd">                |              |end_date``          |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |                                 |</span>
-<span class="sd">                |              |mode``              |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |                                 |</span>
-<span class="sd">                |              |file_name``         |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |                                 |</span>
-<span class="sd">                |              |comment``           |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  | 0: Not eligible                 |</span>
-<span class="sd">                |              |target_flg``        |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Eligible                     |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  | 0: Waiting to run               |</span>
-<span class="sd">                |              |status``            |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Running                      |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 2: Successful                   |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 3: Failed                       |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |                                 |</span>
-<span class="sd">                |              |retry_count``       |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |                                 |</span>
-<span class="sd">                |              |start_date``        |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |                                 |</span>
-<span class="sd">                |              |end_date``          |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |                                 |</span>
-<span class="sd">                |              |mode``              |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |                                 |</span>
-<span class="sd">                |              |file_name``         |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |                                 |</span>
-<span class="sd">                |              |comment``           |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  | 0: Not eligible                 |</span>
-<span class="sd">                |              |target_flg``        |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Eligible                     |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  | 0: Waiting to run               |</span>
-<span class="sd">                |              |status``            |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Running                      |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 2: Successful                   |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 3: Failed                       |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |                                 |</span>
-<span class="sd">                |              |retry_count``       |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |                                 |</span>
-<span class="sd">                |              |start_date``        |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |                                 |</span>
-<span class="sd">                |              |end_date``          |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |                                 |</span>
-<span class="sd">                |              |mode``              |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |                                 |</span>
-<span class="sd">                |              |file_name``         |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |                                 |</span>
-<span class="sd">                |              |comment``           |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  | 0: Not eligible                 |</span>
-<span class="sd">                |              |target_flg``        |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Eligible                     |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  | 0: Waiting to run               |</span>
-<span class="sd">                |              |status``            |            |                                 |</span>
-<span class="sd">                |              |                    |            | 1: Running                      |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 2: Successful                   |</span>
-<span class="sd">                |              |                    |            |                                 |</span>
-<span class="sd">                |              |                    |            | 3: Failed                       |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |                                 |</span>
-<span class="sd">                |              |retry_count``       |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |                                 |</span>
-<span class="sd">                |              |start_date``        |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |                                 |</span>
-<span class="sd">                |              |end_date``          |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |                                 |</span>
-<span class="sd">                |              |mode``              |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |                                 |</span>
-<span class="sd">                |              |file_name``         |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |                                 |</span>
-<span class="sd">                |              |comment``           |            |                                 |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -1259,11 +1059,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_deploy_history_obj</span><span class="o">.</span><span class="n">get_deploy_history</span><span class="p">(</span><span class="n">device_id</span><span class="o">=</span><span class="n">device_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Deployment.get_device_app_deploys"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.get_device_app_deploys">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_app_deploys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_device_app_deploys`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get Device App Deploys</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            app_name (str, required): App name</span>
-<span class="sd">            version_number (str, required): Version Number.</span>
+<span class="sd">            version_number (str, required): App version number.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1275,61 +1075,68 @@
 
 <span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
 <span class="sd">                | *Level1*  | *Level2*           | *Type*    | *Description*             |</span>
+<span class="sd">                +===========+====================+===========+===========================+</span>
+<span class="sd">                |``deploys``|                    | ``array`` |                           |</span>
 <span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |``deploy`` |                    | ``array`` | Descending order of       |</span>
-<span class="sd">                |           |                    |           | ins_date                  |</span>
+<span class="sd">                |           | ``id``             | ``number``| Set the deploy id.        |</span>
 <span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           | ``id``             | ``number``|                           |</span>
-<span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           | ``total_status``   | ``string``| 0: Running                |</span>
+<span class="sd">                |           | ``total_status``   | ``string``| Set the total status.     |</span>
 <span class="sd">                |           |                    |           |                           |</span>
-<span class="sd">                |           |                    |           | 1: Normal completion      |</span>
+<span class="sd">                |           |                    |           | - Value definition        |</span>
 <span class="sd">                |           |                    |           |                           |</span>
-<span class="sd">                |           |                    |           | 2: Failure                |</span>
+<span class="sd">                |           |                    |           | 0: Running                |</span>
 <span class="sd">                |           |                    |           |                           |</span>
-<span class="sd">                |           |                    |           | 3: Cancellation           |</span>
+<span class="sd">                |           |                    |           | 1: Successfully completed |</span>
+<span class="sd">                |           |                    |           |                           |</span>
+<span class="sd">                |           |                    |           | 2: Failed                 |</span>
+<span class="sd">                |           |                    |           |                           |</span>
+<span class="sd">                |           |                    |           | 3: Canceled               |</span>
 <span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           |``deploy_parameter``| ``dict``  |                           |</span>
+<span class="sd">                |           |``deploy_parameter``| ``string``| Set the deploy parameter. |</span>
 <span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
 <span class="sd">                |           |``devices``         | ``array`` | Refer :ref:`devices &lt;d2&gt;` |</span>
 <span class="sd">                |           |                    |           | for more details          |</span>
-<span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           |``ins_id``          | ``string``|                           |</span>
-<span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           |``ins_date``        | ``string``|                           |</span>
-<span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           |``upd_id``          | ``string``|                           |</span>
-<span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
-<span class="sd">                |           |``upd_date``        | ``string``|                           |</span>
 <span class="sd">                +-----------+--------------------+-----------+---------------------------+</span>
 
 <span class="sd">                +-------------------+-----------------+-----------+---------------------------+</span>
 <span class="sd">                | devices           | .. _d2:                                                 |</span>
 <span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+=================+============+==========================+</span>
+<span class="sd">                |``devices``        |                 | ``array``  |                          |</span>
 <span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
-<span class="sd">                |``devices``        |                 | ``array``  | Ascending order of       |</span>
-<span class="sd">                |                   |                 |            | device IDs               |</span>
+<span class="sd">                |                   |``device_id``    | ``string`` | Set the device id.       |</span>
 <span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``device_id``    | ``string`` |                          |</span>
-<span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``status``       | ``string`` | 0: Running               |</span>
+<span class="sd">                |                   |``status``       | ``string`` | Set the total status.    |</span>
 <span class="sd">                |                   |                 |            |                          |</span>
-<span class="sd">                |                   |                 |            | 1: Successful            |</span>
+<span class="sd">                |                   |                 |            | - Value definition       |</span>
+<span class="sd">                |                   |                 |            |                          |</span>
+<span class="sd">                |                   |                 |            | 0: Running               |</span>
+<span class="sd">                |                   |                 |            |                          |</span>
+<span class="sd">                |                   |                 |            | 1: Successfully completed|</span>
 <span class="sd">                |                   |                 |            |                          |</span>
 <span class="sd">                |                   |                 |            | 2: Failed                |</span>
 <span class="sd">                |                   |                 |            |                          |</span>
 <span class="sd">                |                   |                 |            | 3: Canceled              |</span>
-<span class="sd">                |                   |                 |            |                          |</span>
-<span class="sd">                |                   |                 |            | Cancellation supplement  |</span>
-<span class="sd">                |                   |                 |            | During deployment, if    |</span>
-<span class="sd">                |                   |                 |            | the device is deleted,it |</span>
-<span class="sd">                |                   |                 |            | will be in this status   |</span>
 <span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``latest_        | ``string`` | 0: Not Latest            |</span>
+<span class="sd">                |                   |``latest_        | ``string`` | Set the deployment flg.  |</span>
 <span class="sd">                |                   |deployment_flg`` |            |                          |</span>
+<span class="sd">                |                   |                 |            | - Value definition       |</span>
 <span class="sd">                |                   |                 |            |                          |</span>
-<span class="sd">                |                   |                 |            | 1: Latest                |</span>
+<span class="sd">                |                   |                 |            | 0: Old deployment history|</span>
+<span class="sd">                |                   |                 |            |                          |</span>
+<span class="sd">                |                   |                 |            | 1: Recent deployment     |</span>
+<span class="sd">                |                   |                 |            | history                  |</span>
+<span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``ins_id``       | ``string`` | Set the settings author. |</span>
+<span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``ins_date``     | ``string`` | Set the date the settings|</span>
+<span class="sd">                |                   |                 |            | were created.            |</span>
+<span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``upd_id``       | ``string`` | Set the settings updater.|</span>
+<span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``upd_date``     | ``string`` | Set the date the settings|</span>
+<span class="sd">                |                   |                 |            | were updated.            |</span>
 <span class="sd">                +-------------------+-----------------+------------+--------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1420,27 +1227,24 @@
         <span class="n">model_version_number</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">ap_fw_version_number</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``create_deploy_configuration`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register the deploy config information to deploy to the following devices. \</span>
+<span class="sd">        ・Firmware ・AI model</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            config_id (str, required) : config ID \</span>
-<span class="sd">                up to 20 characters half-width only</span>
-<span class="sd">            comment (str, optional) : Config Description \</span>
-<span class="sd">                up to 100 characters No comment if not specified</span>
-<span class="sd">            sensor_loader_version_number (str, optional) : SensorLoader version number \</span>
-<span class="sd">                When -1 is specified, the default version (system\</span>
-<span class="sd">                setting &quot;DVC0017&quot;) is applied\</span>
-<span class="sd">                If not specified, no SensorLoader deployment</span>
-<span class="sd">            sensor_version_number (str, optional) : Sensor version number\</span>
-<span class="sd">                When -1 is specified, the default version (system \</span>
-<span class="sd">                setting &quot;DVC0018&quot;) is applied\</span>
-<span class="sd">                No Sensor deployment if not specified</span>
-<span class="sd">            model_id (str, optional) : Model ID \</span>
-<span class="sd">                If not specified, no model deployment</span>
-<span class="sd">            model_version_number (str, optional) : Model version number \</span>
-<span class="sd">                If not specified, the latest version is applied.</span>
-<span class="sd">            ap_fw_version_number (str, optional) : ApFw version number\</span>
-<span class="sd">                If not specified, no firmware deployment</span>
+<span class="sd">            config_id (str, required) : Max. 20 single characters, single-byte characters only. \</span>
+<span class="sd">                The following characters are allowed \</span>
+<span class="sd">                Alphanumeric characters \</span>
+<span class="sd">                -hyphen \</span>
+<span class="sd">                _ Underscore \</span>
+<span class="sd">                () Small parentheses \</span>
+<span class="sd">                . dot</span>
+<span class="sd">            comment (str, optional) : Max. 100 characters. Default : &quot;&quot;.</span>
+<span class="sd">            sensor_loader_version_number (str, optional) : Sensor loader version number.</span>
+<span class="sd">                Default is &quot;&quot;.</span>
+<span class="sd">            sensor_version_number (str, optional) : Sensor version number. Default is &quot;&quot;.</span>
+<span class="sd">            model_id (str, optional) : The model_id.</span>
+<span class="sd">            model_version_number (str, optional) : The Model version number. Default: &quot;&quot;.</span>
+<span class="sd">            ap_fw_version_number (str, optional) : The ApFw version number. Default : &quot;&quot;.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1452,8 +1256,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1544,21 +1348,16 @@
         <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">deploy_parameter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``deploy_device_app`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deploy device app</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            app_name (str, required) : App Name.</span>
-<span class="sd">            version_number (str, required) : Version Number.</span>
-<span class="sd">            device_ids (str, required) : IDs of edge AI devices \</span>
-<span class="sd">                Specify multiple device IDs of edge AI devices separated by comma.</span>
-<span class="sd">            deploy_parameter (str, optional) : The Deployment parameters. \</span>
-<span class="sd">                (JSON format) The contents are Base64 encoded strings.\</span>
-<span class="sd">                No parameters if not specified</span>
-<span class="sd">            comment (str, optional) : deploy comment\</span>
-<span class="sd">                up to 100 characters No comment if not specified</span>
+<span class="sd">            app_name (str, required) : App name</span>
+<span class="sd">            version_number (str, required) : App version number</span>
+<span class="sd">            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\</span>
+<span class="sd">                by commas.</span>
+<span class="sd">            comment (str, optional) : Comment. Max. 100 characters.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1570,8 +1369,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1648,7 +1447,7 @@
 <span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_device_app_obj</span><span class="o">.</span><span class="n">deploy_device_app</span><span class="p">(</span>
-            <span class="n">app_name</span><span class="p">,</span> <span class="n">version_number</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">,</span> <span class="n">deploy_parameter</span><span class="p">,</span> <span class="n">comment</span>
+            <span class="n">app_name</span><span class="p">,</span> <span class="n">version_number</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">,</span> <span class="n">comment</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Deployment.deploy_by_configuration"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.deploy_by_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">deploy_by_configuration</span><span class="p">(</span>
@@ -1658,20 +1457,18 @@
         <span class="n">replace_model_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``deploy_by_configuration`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Provide a function for deploying the following to devices \</span>
+<span class="sd">            specified with deploy config\</span>
+<span class="sd">            ・Firmware\</span>
+<span class="sd">            ・AI model</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            config_id (str, required) : config ID</span>
-<span class="sd">            device_ids (str, required) : IDs of edge AI devices \</span>
-<span class="sd">            Specify multiple device IDs of edge AI devices separated by comma.</span>
-<span class="sd">            replace_model_id (str, optional) : Replacement target model ID.\</span>
-<span class="sd">                Specify &quot;model_id&quot; or &quot;network_id&quot;\</span>
-<span class="sd">                If the specified model ID does not exist in the DB, treat the\</span>
-<span class="sd">                input value as network_id (console internal\</span>
-<span class="sd">                management ID) and perform processing\</span>
-<span class="sd">                If not specified, do not replace.</span>
-<span class="sd">            comment (str, optional) : deploy comment\</span>
-<span class="sd">                up to 100 characters No comment if not specified</span>
+<span class="sd">            config_id (str, required) : Setting ID</span>
+<span class="sd">            device_ids (str, required) : Specify multiple device IDs separated by commas.</span>
+<span class="sd">            replace_model_id (str, optional) : Specify the model ID or network_id.\</span>
+<span class="sd">                If the model with the specified model ID does not exist in the database,\</span>
+<span class="sd">                treat the entered value as the network_id and process it. Default : &quot;&quot;.</span>
+<span class="sd">            comment (str, optional) : Max 100 characters. Default : &quot;&quot;.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1683,8 +1480,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1769,12 +1566,11 @@
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">deploy_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``cancel_deployment`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Force cancellation of the device deployment status</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : ID of edge AI device.</span>
-<span class="sd">            deploy_id (str, required) : Deploy ID \</span>
-<span class="sd">                id that can be obtained with get_deploy_history</span>
+<span class="sd">            device_id (str, required) : Device ID.</span>
+<span class="sd">            deploy_id (str, required) : Deploy ID.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1786,8 +1582,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1868,10 +1664,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_deployment_obj</span><span class="o">.</span><span class="n">cancel_deployment</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span> <span class="n">deploy_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Deployment.delete_deploy_configuration"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.delete_deploy_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">delete_deploy_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``delete_deploy_configuration`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete the information for a specified deploy config</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            config_id (str, required): config Id</span>
+<span class="sd">            config_id (str, required): Config ID</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1883,8 +1679,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -1966,10 +1762,10 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Deployment.undeploy_device_app"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.undeploy_device_app">[docs]</a>    <span class="k">def</span> <span class="nf">undeploy_device_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``undeploy_device_app`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Undeploy device app</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_ids (str, required): Multiple IDs of edge AI devices separated by commas.</span>
+<span class="sd">            device_ids (str, required): Device IDs.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -1981,8 +1777,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -2066,22 +1862,17 @@
         <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">deploy_parameter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``deploy_device_app_wait_response`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deploy and wait for completion</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            app_name (str, required) : App name</span>
-<span class="sd">            version_number (str, required) : App version</span>
-<span class="sd">            device_ids (str, required) : IDs of edge AI devices \</span>
-<span class="sd">                Specify multiple device IDs separated by commas</span>
-<span class="sd">            deploy_parameter (str, optional) : Deployment parameters \</span>
-<span class="sd">                Base64 encoded string in Json format No parameters if not specified.</span>
-<span class="sd">            comment (str, optional) : deploy comment \</span>
-<span class="sd">                up to 100 characters \</span>
-<span class="sd">                No comment if not specified.</span>
+<span class="sd">            version_number (str, required) : App version number</span>
+<span class="sd">            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\</span>
+<span class="sd">                by commas.</span>
+<span class="sd">            comment (str, optional) : Comment. Max. 100 characters.</span>
 <span class="sd">            callback (function, optional) : A function handle of the form - \</span>
 <span class="sd">                ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\</span>
 <span class="sd">                is the array of the dictionary for each device :</span>
@@ -2119,7 +1910,7 @@
 
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*          | *Type*     | *Description*              |</span>
-<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                +===================+===================+============+============================+</span>
 <span class="sd">                | ``No_item_name``  |                   | ``array``  | deploy device app          |</span>
 <span class="sd">                |                   |                   |            | wait response array        |</span>
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
@@ -2204,7 +1995,7 @@
 <span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deploy_device_app_wait_response_obj</span><span class="o">.</span><span class="n">deploy_device_app_wait_response</span><span class="p">(</span>
-            <span class="n">app_name</span><span class="p">,</span> <span class="n">version_number</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">,</span> <span class="n">deploy_parameter</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">callback</span>
+            <span class="n">app_name</span><span class="p">,</span> <span class="n">version_number</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">callback</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Deployment.deploy_by_configuration_wait_response"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deployment.Deployment.deploy_by_configuration_wait_response">[docs]</a>    <span class="k">def</span> <span class="nf">deploy_by_configuration_wait_response</span><span class="p">(</span>
@@ -2216,15 +2007,16 @@
         <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``deploy_by_configuration_wait_response`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Provides a function to deploy the following to the device specified from the</span>
+<span class="sd">        deployment config.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            config_id (str, required) : Configuration ID.</span>
-<span class="sd">            device_ids (str, required) : Device ID. Specify multiple device IDs separated by commas.</span>
-<span class="sd">            replace_model_id (str, optional) : Model ID to be replaced. Specify &quot;Model ID&quot; or \</span>
-<span class="sd">                &quot;network_id&quot;. If the specified model ID does not exist in the DB, the \</span>
-<span class="sd">                entered value is regarded as a network_id and processed is performed.</span>
-<span class="sd">            comment (str, optional) : Deploy comment.</span>
+<span class="sd">            config_id (str, required) : Setting ID</span>
+<span class="sd">            device_ids (str, required) : Specify multiple device IDs separated by commas.</span>
+<span class="sd">            replace_model_id (str, optional) : Specify the model ID or network_id.\</span>
+<span class="sd">                If the model with the specified model ID does not exist in the database,\</span>
+<span class="sd">                treat the entered value as the network_id and process it. Default : &quot;&quot;.</span>
+<span class="sd">            comment (str, optional) : Max 100 characters. Default : &quot;&quot;.</span>
 <span class="sd">            timeout (int, optional) : Timeout waiting for completion. There are cases where the \</span>
 <span class="sd">                edge AI device hangs up during the deployment process,\</span>
 <span class="sd">                so there are cases where the process remains in progress,\</span>
@@ -2258,7 +2050,7 @@
 
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*          | *Type*     | *Description*              |</span>
-<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                +===================+===================+============+============================+</span>
 <span class="sd">                | ``No_item_name``  |                   | ``array``  | deploy by configuration    |</span>
 <span class="sd">                |                   |                   |            | wait response array        |</span>
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
@@ -2356,7 +2148,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

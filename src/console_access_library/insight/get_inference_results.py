@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,64 +52,75 @@ class SchemaGetInferenceresults(Schema):
 
     """
 
-    #: str, required : Edge AI Device ID
+    #: str, required : Device ID
     device_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
 
-    #: str, optional : Search filter (same specifications as CosmosDB UI on Azure portal except for
-    #:                 the following) - No need to prepend the where string.
-    #:                 - No need to add deviceID.
+    #: str, optional : Search filter. \
+    #:                 The specifications are the same except for those of Cosmos DB UI
+    #:                 of the Azure portal and those listed below.
     #:
-    #:                Filter Samples:
+    #:                 - A where string does not need to be added to the heading.
+    #:                 - deviceID does not need to be added.
     #:
-    #:                  * ModelID: string  match filter
+    #:                 Filter Example:
     #:
-    #:                      eg. "c.ModelID=\"0300000001590100\""
+    #:                     * ModelID: string  match filter
+    #:                         eg. "c.ModelID=\"0300000001590100\""
+    #:                     * Image: boolean  match filter eg. "c.Image=true"
+    #:                     * T: string  match or more filter
+    #:                         eg. "c.Inferences[0].T>=\"20230412140050618\""
+    #:                     * T: string  range filter
+    #:                         eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences \
+    #:                             WHERE i.T >= \"20230412140023098\" AND \
+    #:                             i.T <= \"20230412140029728\")"
+    #:                     * _ts: number  match filter
+    #:                         eg. "c._ts=1681308028"
     #:
-    #:                  * Image: boolean  match filter eg. "c.Image=true"
-    #:
-    #:                  * T: string  match or more filter
-    #:
-    #:                      eg. "c.Inferences[0].T>=\"20230412140050618\""
-    #:
-    #:                  * T: string  range filter \
-    #:
-    #:                      eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences
-    #:                      WHERE i.T >= \"20230412140023098\" AND
-    #:                      i.T <= \"20230412140029728\")"
-    #:
-    #:                  * _ts: number  match filter
-    #:
-    #:                       eg. "c._ts=1681308028"
+    #:                 Default = ''
     filter = fields.String(
         required=False, error_messages={"invalid": "Invalid string for filter"}, strict=True
     )
 
-    #: int, optional : Number of acquisitions. If not specified, defaults to 20.
+    #: int, optional : Number of cases to get.
+    #:                 Return the latest record of the specified number of cases.
+    #:                 Maximum value: 10000.
+    #:                 default: 20
     number_of_inference_results = fields.Integer(
         required=False,
         error_messages={"invalid": "Invalid Integer for number_of_inference_results"},
         strict=True,
     )
 
-    #: int, optional : Data format of inference results.
-    #:                 1: Add records as they are stored in CosmosDB.
-    #:                 0: Do not apply. If not specified: 1.
+    #: int, optional : If 1 is specified, add a record stored to Cosmos DB and return it.
+    #:                 Default:1
+    #:
+    #:                 - Value definition
+    #:
+    #:                  - 0: Do not add
+    #:                  - 1: Add
     raw = fields.Integer(
         required=False, error_messages={"invalid": "Invalid Integer for raw"}, strict=True
     )
 
-    #: str, optional : Inference result data stored in CosmosDB.
-    #:    yyyyMMddHHmmssfff+,
+    #: str, optional : When this value is specified, extract the inference result \
+    #:                 metadata within the following range. Default:""
     #:
-    #:    * yyyy: 4-digit year string
-    #:    * MM: 2-digit month string
-    #:    * dd: 2-digit day string
-    #:    * HH: 2-digit hour string
-    #:    * mm: 2-digit minute string
-    #:    * ss: 2-digit seconds string
-    #:    * fff: 3-digit millisecond string
+    #:                 - Extraction range:
+    #:                   (time - threshold) <= T
+    #:
+    #:                   Time in inference result metadata < (time + threshold)
+    #:
+    #:                     - Value definition
+    #:
+    #:                         - yyyy: 4-digit year string
+    #:                         - MM: 2-digit month string
+    #:                         - dd: 2-digit day string
+    #:                         - HH: 2-digit hour string
+    #:                         - mm: 2-digit minute string
+    #:                         - ss: 2-digit seconds string
+    #:                         - fff: 3-digit millisecond string
     time = fields.String(
         required=False, error_messages={"invalid": "Invalid string for time"}, strict=True
     )
@@ -173,58 +184,64 @@ class GetInferenceresults(ConsoleAccessBaseClass):
         raw: int = 1,
         time: str = None,
     ):
-        """Retrieves (saved) inference result metadata list information for a specified device.
+        """Get the (saved) inference result metadata list information for a specified device.
 
         Args:
-            device_id (str, required) : Device ID. Case-sensitive
-            filter (str, optional) : The Filter. Search filter (same specifications as Cosmos DB UI\
-                                     on Azure portal except for the following)
+            device_id (str, required) : Device ID
+            filter (str, optional) : Search filter.
+                The specifications are the same except for those of Cosmos DB UI \
+                    of the Azure portal and those listed below.
 
-                                        - No need to prepend where string
-                                        - It is not necessary to add a deviceID.
+                - A where string does not need to be added to the heading.
+                - deviceID does not need to be added.
 
-                                    Filter Samples:
+                        Filter Example:
 
-                                    * ModelID: string  match filter
+                            * ModelID: string  match filter
+                                eg. "c.ModelID=\"0300000001590100\""
+                            * Image: boolean  match filter eg. "c.Image=true"
+                            * T: string  match or more filter
+                                eg. "c.Inferences[0].T>=\"20230412140050618\""
+                            * T: string  range filter
+                                eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences \
+                                    WHERE i.T >= \"20230412140023098\" AND \
+                                    i.T <= \"20230412140029728\")"
+                            * _ts: number  match filter
+                                eg. "c._ts=1681308028"
 
-                                        eg. "c.ModelID=\"0300000001590100\""
+                Default = ''
 
-                                    * Image: boolean  match filter eg. "c.Image=true"
+            number_of_inference_results (int, optional) :Number of cases to get.
+                Return the latest record of the specified number of cases. Maximum value: 10000.
+                default: 20
 
-                                    * T: string  match or more filter
+            raw (int, optional) : If 1 is specified, add a record stored to Cosmos DB and return it.
 
-                                        eg. "c.Inferences[0].T>=\"20230412140050618\""
+                - Value definitions
 
-                                    * T: string  range filter
+                    - 0: Do not add
+                    - 1: Add
 
-                                        eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences \
-                                            WHERE i.T >= \"20230412140023098\" AND \
-                                            i.T <= \"20230412140029728\")"
+                default: 1
 
-                                    * _ts: number  match filter
+            time (str, optional) : When this value is specified,\
+                    extract the inference result metadata within the following range. \
+                    Default:""
 
-                                        eg. "c._ts=1681308028"
+                    - Extraction range:
+                      (time - threshold) <= T
 
-            number_of_inference_results (int, optional) :Number of acquisitions.\
-                                                         If not specified: 20
+                      Time in inference result metadata < (time + threshold)
 
-            raw (int, optional) : Data format of inference results.
+                    - Value definition
 
-                                    - 1:Append records stored in Cosmos DB.
-                                    - 0:Not granted.
-
-                                        If not specified: 1
-
-            time (str, optional) : The Time. Inference result data stored in Cosmos DB.\
-                                   yyyyMMddHHmmssfff
-
-                                    - yyyy: 4-digit year string
-                                    - MM: 2-digit month string
-                                    - dd: 2-digit day string
-                                    - HH: 2-digit hour string
-                                    - mm: 2-digit minute string
-                                    - ss: 2-digit seconds string
-                                    - fff: 3-digit millisecond string
+                        - yyyy: 4-digit year string
+                        - MM: 2-digit month string
+                        - dd: 2-digit day string
+                        - HH: 2-digit hour string
+                        - mm: 2-digit minute string
+                        - ss: 2-digit seconds string
+                        - fff: 3-digit millisecond string
 
         Returns:
             **Return Type**
@@ -234,103 +251,89 @@ class GetInferenceresults(ConsoleAccessBaseClass):
 
             **Success Response Schema**
 
-            - when time parameter is not specified
-
                 +------------------+-------------+-----------+------------------------------------+
                 | *Level1*         | *Level2*    | *Type*    | *Description*                      |
+                +==================+============+============+====================================+
+                | ``No_item_name`` |             |           |                                    |
                 +------------------+-------------+-----------+------------------------------------+
-                | ``No_item_name`` |             |           | The subordinate elements are       |
-                |                  |             |           | listed in descending order         |
-                |                  |             |           | by system registration date        |
-                |                  |             |           | and time.                          |
-                +------------------+-------------+-----------+------------------------------------+
-                |                  |``id``       | ``string``| The ID of the inference            |
-                |                  |             |           | result metadata.                   |
+                |                  |``id``       | ``string``| Inference result metadata ID.      |
+                |                  |             |           | =GUID generated automatically by   |
+                |                  |             |           | CosmosDB                           |
                 +------------------+-------------+-----------+------------------------------------+
                 |                  |``device_id``| ``string``| Device ID.                         |
                 +------------------+-------------+-----------+------------------------------------+
                 |                  |``model_id`` | ``string``| Model ID.                          |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``model      |``string`` | Dnn Model Version                  |
+                |                  |``version    | ``string``| Version number.                    |
+                |                  |_number``    |           |                                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``model      |``string`` | Model version ID.                  |
                 |                  |_version_id``|           |                                    |
                 +------------------+-------------+-----------+------------------------------------+
                 |                  |``model      |``string`` | Model type                         |
                 |                  |_type``      |           |                                    |
-                |                  |             |           | 00: Image classification           |
+                |                  |             |           | 00: Image category                 |
                 |                  |             |           |                                    |
                 |                  |             |           | 01: Object detection               |
-                |                  |             |           |                                    |
-                |                  |             |           | In the case of imported            |
-                |                  |             |           | models, 01 is fixed at the         |
-                |                  |             |           | current level.                     |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``training   |``string`` | Name of the training_kit           |
+                |                  |``training   |``string`` |                                    |
                 |                  |_kit_name``  |           |                                    |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``_ts``      |``string`` | Timestamp. = System                |
-                |                  |             |           | registration date and time         |
+                |                  |``_ts``      |``integer``| Timestamp.                         |
+                |                  |             |           | =_ts of CosmosDB                   |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``inference  |``string`` |Refer :ref:`inference_result <ifr2>`|
+                |                  |``inference  |           |Refer :ref:`inference_result <ifr2>`|
                 |                  |_result``    |           |for more details                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``inferenc   |``array``  |Refer :ref:`inferences <if2>`       |
+                |                  |es``         |           |for more details                    |
                 +------------------+-------------+-----------+------------------------------------+
 
                 +--------------------+--------------+------------+-------------------------------+
                 | inference_result   | .. _ifr2:                                                 |
                 +--------------------+--------------+------------+-------------------------------+
                 | *Level1*           | *Level2*     | *Type*     | *Description*                 |
+                +====================+==============+============+===============================+
+                |``inference_result``|              |            |                               |
                 +--------------------+--------------+------------+-------------------------------+
-                |``inference_result``|              | ``array``  |Raw data for inference result  |
-                |                    |              |            |in ascending order of project  |
-                |                    |              |            |type and model project name.   |
+                |                    |``DeviceID``  | ``string`` |Device ID                      |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``device_id`` | ``string`` |Device ID                      |
+                |                    |``ModelID``   |``string``  |DnnModelVersion                |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``model_id``  |``string``  |DnnModelVersion                |
+                |                    |``Image``     |``boolean`` |Synchronized to the            |
+                |                    |              |            |InputTensor output.            |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``image``     |``boolean`` |Is it synchronized with        |
-                |                    |              |            |the output of InputTensor?     |
-                +--------------------+--------------+------------+-------------------------------+
-                |                    |``inferences``|``array``   |Refer :ref:`inferences <if2>`  |
+                |                    |``Inferences``|``array``   |Refer :ref:`inferences <if2>`  |
                 |                    |              |            |for more details               |
                 +--------------------+--------------+------------+-------------------------------+
+                |                    |``id``        |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``ttl``       |``integer`` |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_rid``      |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_self``     |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_etag``     |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_attachm    |``string``  |                               |
+                |                    |ents``        |            |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_ts``       |``integer`` |                               |
+                +--------------------+--------------+------------+-------------------------------+
+
                 +--------------------+--------------+------------+-------------------------------+
                 | inferences         | .. _if2:                                                  |
                 +--------------------+--------------+------------+-------------------------------+
                 | *Level1*           | *Level2*     | *Type*     | *Description*                 |
+                +====================+==============+============+===============================+
+                |``inferences``      |              | ``array``  |                               |
                 +--------------------+--------------+------------+-------------------------------+
-                |``inferences``      |              | ``array``  |Inference result Array         |
+                |                    |``T``         | ``string`` |Time when retrieving           |
+                |                    |              |            |data from the sensor.          |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``T``         | ``string`` |The time at which the data     |
-                |                    |              |            |was acquired from the sensor.  |
+                |                    |``O``         |``string``  |Output tensor (Encoding format)|
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``O``         |``string``  |Outputtensor output without    |
-                |                    |              |            |going through PPL              |
-                +--------------------+--------------+------------+-------------------------------+
-
-            - when time parameter is specified
-
-                +------------------+--------------+-----------+--------------------------------+
-                | *Level1*         | *Level2*     | *Type*    | *Description*                  |
-                +------------------+--------------+-----------+--------------------------------+
-                | ``No_item_name`` |              |           | The subordinate elements are   |
-                |                  |              |           | listed in descending order     |
-                |                  |              |           | by system registration date    |
-                |                  |              |           | and time.                      |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``id``        | ``string``| The ID of the inference result |
-                |                  |              |           | metadata. = GUID automatically |
-                |                  |              |           | fired by CosmosDB              |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``device_id`` | ``string``| Device ID.                     |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``model_id``  | ``string``| Model ID.                      |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``_ts``       |``string`` | Timestamp. = System            |
-                |                  |              |           | registration date and time     |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``inferences``|``array``  |Refer :ref:`inferences <if2>`   |
-                |                  |              |           |for more details                |
-                +------------------+--------------+-----------+--------------------------------+
 
             **Error Response Schema**
 
@@ -428,6 +431,7 @@ class GetInferenceresults(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -442,7 +446,8 @@ class GetInferenceresults(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -516,6 +521,11 @@ class GetInferenceresults(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 insight_api_instance = insight_api.InsightApi(api_client)
                 try:

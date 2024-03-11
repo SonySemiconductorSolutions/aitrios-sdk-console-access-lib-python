@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
         self._config = config
 
     def get_deploy_configurations(self):
-        """Get deployment config information list.
+        """Get the deploy config list.
 
         Returns:
             **Return Type**
@@ -66,26 +66,26 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
 
                 +-----------------+------------+------------+---------------------------------+
                 | *Level1*        | *Level2*   | *Type*     | *Description*                   |
+                +=================+============+============+=================================+
+                |``deploy_        |            | ``array``  |                                 |
+                |configurations`` |            |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |``deploy_        |            | ``array``  | Ascending order of              |
-                |configurations`` |            |            | config_id                       |
-                +-----------------+------------+------------+---------------------------------+
-                |                 |``config_   | ``string`` |                                 |
+                |                 |``config_   | ``string`` | Set the config ID.              |
                 |                 |id``        |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``device_   | ``string`` |                                 |
+                |                 |``device_   | ``string`` | Set the device type.            |
                 |                 |type``      |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``config_   | ``string`` |                                 |
+                |                 |``config_   | ``string`` | Set the config comment.         |
                 |                 |comment``   |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``running_  | ``int``    |                                 |
+                |                 |``running_  | ``integer``| Set the running cnt.            |
                 |                 |cnt``       |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``success_  | ``int``    |                                 |
+                |                 |``success_  | ``integer``| Set the success cnt.            |
                 |                 |cnt``       |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``fail_cnt``| ``int``    |                                 |
+                |                 |``fail_cnt``| ``integer``| Set the fail cnt.               |
                 +-----------------+------------+------------+---------------------------------+
                 |                 |``firmware``| ``array``  | Refer :ref:`firmware <f1>`      |
                 |                 |            |            | for more details                |
@@ -93,131 +93,72 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
                 |                 |``model``   | ``array``  | Refer :ref:`model <m1>`         |
                 |                 |            |            | for more details                |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``custom_   | ``array``  | Refer :ref:`custom_setting <c1>`|
-                |                 |setting``   |            | for more details                |
+                |                 |``ins_id``  | ``string`` | Set the deployment author.      |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``ins_id``  | ``string`` |                                 |
+                |                 |``ins_date``| ``string`` | Set the date the deployment     |
+                |                 |            |            | was created.                    |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``ins_date``| ``string`` |                                 |
+                |                 |``upd_id``  | ``string`` | Set the deployment updater.     |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``upd_id``  | ``string`` |                                 |
-                +-----------------+------------+------------+---------------------------------+
-                |                 |``upd_date``| ``string`` |                                 |
+                |                 |``upd_date``| ``string`` | Set the date the deployment     |
+                |                 |            |            | was updated.                    |
                 +-----------------+------------+------------+---------------------------------+
 
                 +-------------------+--------------------+------------+-------------------+
                 | firmware          | .. _f1:                                             |
                 +-------------------+--------------------+------------+-------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*     |
-                +-------------------+--------------------+------------+-------------------+
+                +===================+====================+============+===================+
                 | ``firmware``      |                    | ``array``  |                   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_loader_    | ``string`` |                   |
-                |                   |file_name``         |            |                   |
+                |                   |``sensor_loader_    | ``string`` | Set the sensor    |
+                |                   |file_name``         |            | loader filename.  |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_loader_    | ``string`` |                   |
-                |                   |version_number``    |            |                   |
+                |                   |``sensor_loader_    | ``string`` | Set the sensor    |
+                |                   |version_number``    |            | loader version    |
+                |                   |                    |            | number.           |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_loader_    | ``string`` |                   |
-                |                   |firmware_comment``  |            |                   |
+                |                   |``sensor_loader_    | ``string`` | Set the sensor    |
+                |                   |firmware_comment``  |            | loader firmware   |
+                |                   |                    |            | comment.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_file_name``| ``string`` |                   |
+                |                   |``sensor_file_name``| ``string`` | Set the sensor    |
+                |                   |                    |            | filename.         |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_           | ``string`` |                   |
-                |                   |version_number``    |            |                   |
+                |                   |``sensor_           | ``string`` | Set the sensor    |
+                |                   |version_number``    |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_           |``string``  |                   |
-                |                   |firmware_comment``  |            |                   |
+                |                   |``sensor_           |``string``  | Set the sensor    |
+                |                   |firmware_comment``  |            | firmware comment. |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``apfw_file_name``  |``string``  |                   |
+                |                   |``apfw_file_name``  |``string``  | Set the apfw      |
+                |                   |                    |            | filename.         |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``apfw_version_     |``string``  |                   |
-                |                   |number``            |            |                   |
+                |                   |``apfw_version_     |``string``  | Set the apfw      |
+                |                   |number``            |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``apfw_firmware_    |``string``  |                   |
-                |                   |comment``           |            |                   |
+                |                   |``apfw_firmware_    |``string``  | Set the apfw      |
+                |                   |comment``           |            | firmware comment. |
                 +-------------------+--------------------+------------+-------------------+
 
                 +-------------------+--------------------+------------+-------------------+
                 | model             | .. _m1:                                             |
                 +-------------------+--------------------+------------+-------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*     |
-                +-------------------+--------------------+------------+-------------------+
+                +===================+====================+============+===================+
                 | ``model``         |                    | ``array``  |                   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``model_id``       | ``string`` |                   |
+                |                   | ``model_id``       | ``string`` | Set the model ID. |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``model_            | ``string`` |                   |
-                |                   |version_number``    |            |                   |
+                |                   |``model_            | ``string`` | Set the model     |
+                |                   |version_number``    |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``model_comment``  | ``string`` |                   |
+                |                   | ``model_comment``  | ``string`` | Set the model     |
+                |                   |                    |            | comment.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``model_            | ``string`` |                   |
-                |                   |version_comment``   |            |                   |
+                |                   |``model_            | ``string`` | Set the model     |
+                |                   |version_comment``   |            | version comment.  |
                 +-------------------+--------------------+------------+-------------------+
-
-                +--------------+--------------------+------------+---------------+
-                |custom_setting| .. _c1:                                         |
-                +--------------+--------------------+------------+---------------+
-                | *Level1*     | *Level2*           | *Type*     | *Description* |
-                +--------------+--------------------+------------+---------------+
-                |``custom_     |                    | ``array``  |               |
-                |setting``     |                    |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``color_matrix_     |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``color_matrix_     | ``string`` |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``color_matrix_     |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``gamma_            |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``gamma_            |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``gamma_            |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscisp_           |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscisp_           |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscisp_           |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscraw_           |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscraw_           |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscraw_           |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``prewb_            |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``prewb_            |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``prewb_            |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``dewarp_           |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``dewarp_           |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``dewarp_           |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
 
             **Error Response Schema**
 
@@ -312,6 +253,7 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -326,7 +268,8 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -341,6 +284,7 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
         """
 
         logger.info(sys._getframe().f_code.co_name)
+        _query_params = {}
 
         # Enter a context with an instance of the API client
         with aitrios_console_rest_client_sdk_primitive.ApiClient(
@@ -351,9 +295,17 @@ class GetDeployConfigurations(ConsoleAccessBaseClass):
             # Create an instance of the API class
             get_deploy_configurations_api_instance = deploy_api.DeployApi(api_client)
             try:
-                _return_get_deploy_configurations = (
-                    get_deploy_configurations_api_instance.get_deploy_configurations()
-                )
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+                    # pylint:disable=line-too-long
+                    _return_get_deploy_configurations = (
+                        get_deploy_configurations_api_instance.get_deploy_configurations(query_params=_query_params)
+                    )
+                else:
+                    _return_get_deploy_configurations = (
+                        get_deploy_configurations_api_instance.get_deploy_configurations()
+                    )
                 return _return_get_deploy_configurations.body
 
             except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

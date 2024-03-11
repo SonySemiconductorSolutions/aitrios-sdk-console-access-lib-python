@@ -8,10 +8,10 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**result** | str,  | str,  | todo | 
-**code** | str,  | str,  | todo | 
-**time** | str,  | str,  | todo | 
-**message** | str,  | str,  | todo | 
+**result** | str,  | str,  | Set \&quot;ERROR\&quot; fixing. | 
+**code** | str,  | str,  | Set the error code. | 
+**time** | str,  | str,  | Set the time the error occurred.* yyyy-MM-dd&#x27;T&#x27;HH:mm:ssXXX. | 
+**message** | str,  | str,  | Set the error message details or the reason. | 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

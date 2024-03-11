@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -65,25 +65,17 @@ class SchemaDeployDeviceAppWaitResponse(Schema):
         required=True, error_messages={"invalid": "Invalid string for app_name"}, strict=True
     )
 
-    #: str, required : App version
+    #: str, required : App version Number
     version_number = fields.String(
         required=True, error_messages={"invalid": "Invalid string for version_number"}, strict=True
     )
 
-    #: str, required : IDs of edge AI devices
+    #: str, required : Device IDS. Specify multiple device IDs separated by commas.
     device_ids = fields.String(
         required=True, error_messages={"invalid": "Invalid Value for device_ids"}, strict=True
     )
 
-    #: str, optional : Deployment parameters
-    deploy_parameter = fields.String(
-        required=False,
-        error_messages={"invalid": "Invalid string for deploy_parameter"},
-        strict=True,
-        allow_none=True,
-    )
-
-    #: str, optional : deploy comment
+    #: str, optional : Comment. Max. 100 characters.
     comment = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for comment"},
@@ -131,11 +123,6 @@ class SchemaDeployDeviceAppWaitResponse(Schema):
 
         if str(data["device_ids"]).strip() == "":
             raise ValidationError("device_ids is required or can't be empty string")
-
-        if "deploy_parameter" in data and (
-            data["deploy_parameter"] is None and str(data["deploy_parameter"]).strip() == ""
-        ):
-            raise ValidationError("deploy_parameter is required or can't be empty string")
 
         if "comment" in data and data["comment"] is not None and str(data["comment"]).strip() == "":
             raise ValidationError("comment is required or can't be empty string")
@@ -232,7 +219,6 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
         app_name: str,
         version_number: str,
         device_ids: str,
-        deploy_parameter: str = None,
         comment: str = None,
         callback=None,
     ):
@@ -240,14 +226,10 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
 
         Args:
             app_name (str, required) : App name
-            version_number (str, required) : App version
-            device_ids (str, required) : IDs of edge AI devices \
-                Specify multiple device IDs separated by commas
-            deploy_parameter (str, optional) : Deployment parameters \
-                Base64 encoded string in Json format No parameters if not specified.
-            comment (str, optional) : deploy comment \
-                up to 100 characters \
-                No comment if not specified.
+            version_number (str, required) : App version number
+            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\
+                by commas.
+            comment (str, optional) : Comment. Max. 100 characters.
             callback (function, optional) : A function handle of the form - \
                 ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\
                 is the array of the dictionary for each device :
@@ -285,7 +267,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
 
                 +-------------------+-------------------+------------+----------------------------+
                 | *Level1*          | *Level2*          | *Type*     | *Description*              |
-                +-------------------+-------------------+------------+----------------------------+
+                +===================+===================+============+============================+
                 | ``No_item_name``  |                   | ``array``  | deploy device app          |
                 |                   |                   |            | wait response array        |
                 +-------------------+-------------------+------------+----------------------------+
@@ -312,7 +294,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
 
                     If incorrect API input parameters OR
                     if any input string parameter found empty OR
-                    if type of callback paramter not a function.
+                    if type of callback parameter not a function.
                     Then, Dictionary with below key and value pairs.
 
                     - ``result`` (str) : "ERROR"
@@ -390,6 +372,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -404,7 +387,8 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -417,7 +401,6 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                 app_name = "__app_name__",
                 version_number = "__version_number__",
                 device_ids = "__device_ids__",
-                deploy_parameter = "__deploy_parameter__",
                 comment = "__comment__"
                 callback = "__callback__"
 
@@ -448,7 +431,6 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                     app_name,
                     version_number,
                     device_ids,
-                    deploy_parameter,
                     comment,
                     callback
                 )
@@ -482,7 +464,6 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                     app_name=_local_params["app_name"],
                     version_number=_local_params["version_number"],
                     device_ids=_local_params["device_ids"],
-                    deploy_parameter=_local_params["deploy_parameter"],
                     comment=_local_params["comment"],
                 )
                 if (
@@ -532,9 +513,9 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                     # devices list
                                     if devices_id_from_response in device_ids_list:
                                         # Check if the device_id is not present in global array,
-                                        # Then, add the first occurence of device_id to the
+                                        # Then, add the first occurrence of device_id to the
                                         # global array.
-                                        # Set found_position of the first occurence of device_id
+                                        # Set found_position of the first occurrence of device_id
                                         # to the global array
                                         if devices_id_from_response not in [
                                             list(d.keys())[0]
@@ -549,9 +530,9 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                             )
 
                                         # Check if the device_id is present in global array,
-                                        # Then get the found_position of the first occurence
+                                        # Then get the found_position of the first occurrence
                                         # of device_id from the global array
-                                        # and get the skip value of the first occurence of
+                                        # and get the skip value of the first occurrence of
                                         # device_id from the global array
                                         elif (
                                             devices_id_from_response
@@ -569,7 +550,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                             _found_position = array_device_json["found_position"]
                                             _skip = array_device_json["skip"]
 
-                                            # Check whether it's first occurence
+                                            # Check whether it's first occurrence
                                             # Then Add status of the added device to
                                             # the global array
                                             if index + 1 == _found_position and _skip == 0:

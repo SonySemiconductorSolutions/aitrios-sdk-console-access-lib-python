@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.device_management.get_devices &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.device_management.get_devices &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.device_management.get_devices</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -94,6 +94,7 @@
 <span class="c1"># pylint:disable=wrong-import-position</span>
 <span class="c1"># pylint:disable=duplicate-code</span>
 <span class="c1"># pylint:disable=unused-argument</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
 <span class="c1"># pylint:disable=too-many-return-statements</span>
 <span class="c1"># pylint:disable=protected-access</span>
 <span class="c1"># pylint:disable=too-many-locals</span>
@@ -125,27 +126,57 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, optional : Edge AI Device ID</span>
+    <span class="c1">#: str, optional : Device ID. Partial match search.</span>
+    <span class="c1">#:                 Default:&quot;&quot;</span>
     <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Edge AI device name</span>
+    <span class="c1">#: str, optional : Device name. Partial match search.</span>
+    <span class="c1">#:                 Default:&quot;&quot;</span>
     <span class="n">device_name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_name&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="c1">#: str, optional : Connection status.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                      - Connected</span>
+    <span class="c1">#:                      - Disconnected</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  Default:&quot;&quot;</span>
     <span class="n">connection_state</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for connection_state&quot;</span><span class="p">},</span>
         <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Affiliated Edge AI device group</span>
+    <span class="c1">#: str, optional : Device group ID.</span>
+    <span class="c1">#:                 Default:&quot;&quot;</span>
     <span class="n">device_group_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_group_id&quot;</span><span class="p">},</span>
+        <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Specify multiple device IDs separated by commas.</span>
+    <span class="c1">#:                 Default:&quot;&quot;</span>
+    <span class="n">device_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Specify the scope of response parameters to return.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                      - full : Return full parameters</span>
+    <span class="c1">#:                      - minimal : Return minimal parameters fast response speed</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  Default:&quot;full&quot;</span>
+    <span class="n">scope</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for scope&quot;</span><span class="p">},</span>
         <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -169,7 +200,17 @@
         <span class="k">if</span> <span class="s2">&quot;device_group_id&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
             <span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_group_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_group_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
         <span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_group_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_group_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;device_ids&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_ids is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;scope&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;scope is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="GetDevices"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.get_devices.GetDevices">[docs]</a><span class="k">class</span> <span class="nc">GetDevices</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
@@ -195,23 +236,32 @@
         <span class="n">device_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">connection_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">device_group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;full&quot;</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get device list information.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the device list information.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, optional) : Edge AI Device ID. Partial search, case insensitive.\</span>
-<span class="sd">                Search all device_ids if not specified.</span>
-<span class="sd">            device_name (str, optional) : Edge AI device name.\</span>
-<span class="sd">                Partial search, case insensitive.\</span>
-<span class="sd">                If not specified, search all device_names.</span>
-<span class="sd">            connection_state (str, optional) : Connection status.\</span>
-<span class="sd">                For connected state: Connected\</span>
-<span class="sd">                Disconnected state: Disconnected\</span>
-<span class="sd">                Exact match search, case insensitive.\</span>
-<span class="sd">                If not specified, search all connection_states.</span>
-<span class="sd">            device_group_id (str, optional) : Affiliated Edge AI device group.\</span>
-<span class="sd">                Exact match search, case insensitive.\</span>
-<span class="sd">                Search all device_group_id if not specified.</span>
+<span class="sd">            device_id (str, optional) : Device ID. Partial match search. Default:&quot;&quot;</span>
+<span class="sd">            device_name (str, optional) : Device name. Partial match search. Default:&quot;&quot;</span>
+<span class="sd">            connection_state (str, optional) : Connection status.</span>
+
+<span class="sd">                Value definition</span>
+
+<span class="sd">                    - Connected</span>
+<span class="sd">                    - Disconnected</span>
+
+<span class="sd">                Default:&quot;&quot;</span>
+<span class="sd">            device_group_id (str, optional) : Device group ID. Default:&quot;&quot;</span>
+<span class="sd">            device_ids (str, optional): Specify multiple device IDs separated by commas.</span>
+<span class="sd">                                              Default:&quot;&quot;</span>
+<span class="sd">            scope (str, optional) : Specify the scope of response parameters to return.</span>
+<span class="sd">                Default: &quot;full&quot;</span>
+
+<span class="sd">                Value definition</span>
+
+<span class="sd">                    - full : Return full parameters</span>
+<span class="sd">                    - minimal : Return minimal parameters fast response speed</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -223,10 +273,8 @@
 
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                | *Level1*   | *Level2*           |*Type*     | *Description*                  |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                | ``devices``|                    |``array``  | The subordinate elements are   |</span>
-<span class="sd">                |            |                    |           | listed in ascending order by   |</span>
-<span class="sd">                |            |                    |           | device ID                      |</span>
+<span class="sd">                +============+====================+===========+================================+</span>
+<span class="sd">                | ``devices``|                    |``array``  |                                |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                |            | ``device_id``      |``string`` | Set the device ID              |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
@@ -234,84 +282,93 @@
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                |            | ``comment``        |``string`` | Set the device description     |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``property``       |``string`` | Set device properties          |</span>
-<span class="sd">                |            |                    |           | (device_name, etc.)            |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``ins_id``         |``string`` | Set the creator of the device  |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``ins_date``       |``string`` | Set the date and               |</span>
-<span class="sd">                |            |                    |           | time the device was created.   |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``upd_id``         |``string`` | Set up an updater for          |</span>
-<span class="sd">                |            |                    |           | your device                    |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``upd_date``       |``string`` | Set the date and time          |</span>
-<span class="sd">                |            |                    |           | of the device update.          |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            |``connectionState`` |``string`` | Set the connection status      |</span>
-<span class="sd">                |            |                    |           | of the device.                 |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            |``lastActivityTime``|``string`` | Set the last connection date   |</span>
-<span class="sd">                |            |                    |           | and time of the device.        |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups &lt;dg&gt;`|</span>
+<span class="sd">                |            | ``property``       |``array``  | Refer :ref:`property &lt;pro1&gt;`   |</span>
 <span class="sd">                |            |                    |           | for more details               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``device_type``    |``string`` | Set the device type.           |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``display_device_   |``string`` | Set the display device type.   |</span>
+<span class="sd">                |            |type``              |           |                                |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``ins_id``         |``string`` | Set the device author.         |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``ins_date``       |``string`` | Set the date                   |</span>
+<span class="sd">                |            |                    |           | the device was created.        |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``upd_id``         |``string`` | Set the device updater.        |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``upd_date``       |``string`` | Set the date the device was    |</span>
+<span class="sd">                |            |                    |           | updated.                       |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``connectionState`` |``string`` | Set the device connection state|</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``lastActivityTime``|``string`` | Set the date the device last   |</span>
+<span class="sd">                |            |                    |           | connected.                     |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                |            | ``models``         |``array``  | Refer :ref:`models &lt;model&gt;`    |</span>
 <span class="sd">                |            |                    |           | for more details               |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``configuration``  |``array``  |                                |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``state``          |``array``  |                                |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups &lt;dg&gt;`|</span>
+<span class="sd">                |            |                    |           | for more details               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | property          | .. _pro1:                                                  |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``property``      |                    | ``array``  |                          |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_name``     | ``string`` | Set the device name.     |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``internal_device_  | ``string`` | Set the internal device  |</span>
+<span class="sd">                |                   |id``                |            | id.                      |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | device_groups     | .. _dg:                                                    |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
-<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                | ``device_groups`` |                    | ``array``  | The subordinate          |</span>
-<span class="sd">                |                   |                    |            | elements are listed      |</span>
-<span class="sd">                |                   |                    |            | in ascending order       |</span>
-<span class="sd">                |                   |                    |            | by device group ID       |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``device_groups`` |                    | ``array``  |                          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                |                   |``device_group_id`` | ``string`` | Set the device group ID  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                |                   |``device_type``     | ``string`` | Set the device type      |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                |                   | ``comment``        |``string``  | Set the device           |</span>
-<span class="sd">                |                   |                    |            | bdescription             |</span>
+<span class="sd">                |                   |                    |            | group comment.           |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``ins_id``         |``string``  | Set the date and time    |</span>
-<span class="sd">                |                   |                    |            | that the device group    |</span>
-<span class="sd">                |                   |                    |            | was created.             |</span>
+<span class="sd">                |                   | ``ins_id``         |``string``  | Set the date the device  |</span>
+<span class="sd">                |                   |                    |            | group was created.       |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``ins_date``       |``string``  | Set the creator of the   |</span>
-<span class="sd">                |                   |                    |            | device group.            |</span>
+<span class="sd">                |                   | ``ins_date``       |``string``  | Set the device group     |</span>
+<span class="sd">                |                   |                    |            | author.                  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``upd_id``         |``string``  | Set the updater for      |</span>
-<span class="sd">                |                   |                    |            | the device group         |</span>
+<span class="sd">                |                   | ``upd_id``         |``string``  | Set the device group     |</span>
+<span class="sd">                |                   |                    |            | updater                  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``upd_date``       |``string``  | Set the date and time of |</span>
-<span class="sd">                |                   |                    |            | the device group update. |</span>
+<span class="sd">                |                   | ``upd_date``       |``string``  | Set the date the device  |</span>
+<span class="sd">                |                   |                    |            | group was updated.       |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | models            | .. _model:                                                 |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``models``        |                    | ``array``  |                          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                | ``models``        |                    | ``array``  | The subordinate          |</span>
-<span class="sd">                |                   |                    |            | elements are listed      |</span>
-<span class="sd">                |                   |                    |            | in ascending order       |</span>
-<span class="sd">                |                   |                    |            | by device group ID       |</span>
-<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``model_version_id``| ``string`` | Set the model version ID |</span>
-<span class="sd">                |                   |                    |            | Format: ModelID:v1.0001  |</span>
-<span class="sd">                |                   |                    |            | * If DnnModelVersion does|</span>
-<span class="sd">                |                   |                    |            | not exist in the DB, the |</span>
-<span class="sd">                |                   |                    |            | network_id is displayed. |</span>
-<span class="sd">                |                   |                    |            | Example) 0201020002370200|</span>
-<span class="sd">                |                   |                    |            | In the above case, 000237|</span>
-<span class="sd">                |                   |                    |            | (7~12 digits) If it is 16|</span>
-<span class="sd">                |                   |                    |            | digits,it is displayed   |</span>
-<span class="sd">                |                   |                    |            | as is.                   |</span>
+<span class="sd">                |                   |``model_version_id``| ``string`` | Set the model version ID.|</span>
+<span class="sd">                |                   |                    |            | Format: modelid:v1.01    |</span>
+<span class="sd">                |                   |                    |            | For model that does not  |</span>
+<span class="sd">                |                   |                    |            | exist in the system,     |</span>
+<span class="sd">                |                   |                    |            | display network_id       |</span>
+<span class="sd">                |                   |                    |            | Example: 000237          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -407,6 +464,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -421,7 +479,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -435,7 +494,9 @@
 <span class="sd">                    device_id,</span>
 <span class="sd">                    device_name,</span>
 <span class="sd">                    connection_state,</span>
-<span class="sd">                    device_group_id</span>
+<span class="sd">                    device_group_id,</span>
+<span class="sd">                    device_ids,</span>
+<span class="sd">                    scope</span>
 <span class="sd">                )</span>
 <span class="sd">                pprint(response)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -461,6 +522,12 @@
             <span class="k">if</span> <span class="s2">&quot;device_group_id&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_group_id&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_group_id&quot;</span><span class="p">]</span>
 
+            <span class="k">if</span> <span class="s2">&quot;device_ids&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;device_ids&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s2">&quot;scope&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">]</span>
+
             <span class="c1"># Validate schema</span>
             <span class="n">_query_params</span> <span class="o">=</span> <span class="n">SchemaGetDevices</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
 
@@ -476,6 +543,11 @@
                 <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
                 <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+
+                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                    <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">manage_devices_api_instance</span> <span class="o">=</span> <span class="n">manage_devices_api</span><span class="o">.</span><span class="n">ManageDevicesApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -513,7 +585,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

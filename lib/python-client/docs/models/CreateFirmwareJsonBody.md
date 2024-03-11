@@ -10,11 +10,11 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  | CreateFirmware API mod
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**firmware_type** | str,  | str,  | Firmware Type | [optional] if omitted the server will use the default value of ""
-**version_number** | str,  | str,  | Version Number | [optional] if omitted the server will use the default value of ""
-**comment** | str,  | str,  | Comment | [optional] if omitted the server will use the default value of ""
-**file_name** | str,  | str,  | FileName | [optional] if omitted the server will use the default value of ""
-**file_content** | str,  | str,  | File Content | [optional] if omitted the server will use the default value of ""
+**file_content** | str,  | str,  | Firmware File (BASE64 encoding). | 
+**file_name** | str,  | str,  | Firmware filename | 
+**version_number** | str,  | str,  | Firmware version number. | 
+**firmware_type** | str,  | str,  | Firmware type ID. - Value definition   00: MCU(AppFw)   01: IMX500(Sensor)   02: IMX500(SensorLoader) | 
+**comment** | str,  | str,  | Comment. *Max. 100 characters. | [optional] if omitted the server will use the default value of ""
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

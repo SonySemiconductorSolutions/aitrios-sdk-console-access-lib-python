@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ class SchemaGetLastInferenceAndImageData(Schema):
 
     """
 
-    #: str, required : Edge AI Device ID
+    #: str, required : Device ID
     device_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
@@ -127,11 +127,9 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
 
             **Success Response Schema**
 
-            - when time parameter is not specified
-
                 +--------------------+------------+------------------------------------+
                 | *Level1*           | *Type*     | *Description*                      |
-                +--------------------+------------+------------------------------------+
+                +====================+============+====================================+
                 | ``image_data``     |``array``   | Refer :ref:`image_data <id7>`      |
                 |                    |            | for more details                   |
                 +--------------------+------------+------------------------------------+
@@ -143,7 +141,7 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
                 | image_data     | .. _id7:                                                      |
                 +----------------+----------------------+------------+---------------------------+
                 | *Level1*       | *Level2*             | *Type*     | *Description*             |
-                +----------------+----------------------+------------+---------------------------+
+                +================+======================+============+===========================+
                 | ``image_data`` |                      | ``array``  | image data                |
                 |                |                      |            |                           |
                 +----------------+----------------------+------------+---------------------------+
@@ -158,154 +156,100 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
                 | images                | .. _im7:                                            |
                 +-----------------------+------------+------------+---------------------------+
                 | *Level1*              | *Level2*   | *Type*     | *Description*             |
+                +=======================+============+============+===========================+
+                |``images``             |            | ``array``  |                           |
                 +-----------------------+------------+------------+---------------------------+
-                |``images``             |            | ``array``  | Image file name array     |
-                |                       |            |            | The descendant elements   |
-                |                       |            |            | are listed in ascending   |
-                |                       |            |            | order by image file name. |
+                |                       | ``name``   | ``string`` | Set the image filename.   |
                 +-----------------------+------------+------------+---------------------------+
-                |                       | ``name``   | ``string`` | Set the image file name.  |
-                +-----------------------+------------+------------+---------------------------+
-                |                       |``contents``| ``string`` | Image file contents       |
-                |                       |            |            | * Base64 encoding         |
+                |                       |``contents``| ``string`` | Images file contents      |
+                |                       |            |            | (BASE64 encoding)         |
                 +-----------------------+------------+------------+---------------------------+
 
                 +------------------+-------------+-----------+------------------------------------+
                 | inference_data   | .. _ifd7:                                                    |
                 +------------------+-------------+-----------+------------------------------------+
                 | *Level1*         | *Level2*    | *Type*    | *Description*                      |
-                +------------------+-------------+-----------+------------------------------------+
+                +==================+=============+===========+====================================+
                 |``inference_data``|             |``array``  | inference_data                     |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``id``       | ``string``| The ID of the inference            |
-                |                  |             |           | result metadata.                   |
+                |                  |``id``       | ``string``| Inference result metadata ID.      |
+                |                  |             |           | =GUID generated automatically by   |
+                |                  |             |           | CosmosDB                           |
                 +------------------+-------------+-----------+------------------------------------+
                 |                  |``device_id``| ``string``| Device ID.                         |
                 +------------------+-------------+-----------+------------------------------------+
                 |                  |``model_id`` | ``string``| Model ID.                          |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``model      |``string`` | Dnn Model Version                  |
+                |                  |``version    | ``string``| Version number.                    |
+                |                  |_number``    |           |                                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``model      |``string`` | Model version ID.                  |
                 |                  |_version_id``|           |                                    |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``model      |``string`` |Model type.                         |
+                |                  |``model      |``string`` | Model type                         |
                 |                  |_type``      |           |                                    |
-                |                  |             |           |00: Image classification            |
+                |                  |             |           | 00: Image category                 |
                 |                  |             |           |                                    |
-                |                  |             |           |01: Object detection                |
-                |                  |             |           |                                    |
-                |                  |             |           |In the case of imported             |
-                |                  |             |           |models, 01 is fixed at the          |
-                |                  |             |           |current level.                      |
+                |                  |             |           | 01: Object detection               |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``training   |``string`` |Name of the training_kit            |
+                |                  |``training   |``string`` |                                    |
                 |                  |_kit_name``  |           |                                    |
                 +------------------+-------------+-----------+------------------------------------+
-                |                  |``_ts``      |``string`` |Timestamp. = System                 |
-                |                  |             |           |registration date and time          |
+                |                  |``_ts``      |``integer``| Timestamp.                         |
+                |                  |             |           | =_ts of CosmosDB                   |
                 +------------------+-------------+-----------+------------------------------------+
                 |                  |``inference  |``string`` |Refer :ref:`inference_result <ifr7>`|
                 |                  |_result``    |           |for more details                    |
+                +------------------+-------------+-----------+------------------------------------+
+                |                  |``inferenc   |``array``  |Refer :ref:`inferences <if7>`       |
+                |                  |es``         |           |for more details                    |
                 +------------------+-------------+-----------+------------------------------------+
 
                 +--------------------+--------------+------------+-------------------------------+
                 | inference_result   | .. _ifr7:                                                 |
                 +--------------------+--------------+------------+-------------------------------+
                 | *Level1*           | *Level2*     | *Type*     | *Description*                 |
-                +--------------------+--------------+------------+-------------------------------+
-                |``inference_result``|              | ``array``  |Raw data for inference result  |
-                |                    |              |            |in ascending order of project  |
-                |                    |              |            |type and model project name.   |
+                +====================+==============+============+===============================+
+                |``inference_result``|              | ``array``  |                               |
                 +--------------------+--------------+------------+-------------------------------+
                 |                    |``device_id`` | ``string`` |Device ID                      |
                 +--------------------+--------------+------------+-------------------------------+
                 |                    |``model_id``  |``string``  |DnnModelVersion                |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``image``     |``boolean`` |Is it synchronized with        |
-                |                    |              |            |the output of InputTensor?     |
+                |                    |``image``     |``boolean`` |Synchronized to the            |
+                |                    |              |            |InputTensor output.            |
                 +--------------------+--------------+------------+-------------------------------+
                 |                    |``inferences``|``array``   |Refer :ref:`inferences <if7>`  |
                 |                    |              |            |for more details               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``id``        |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``ttl``       |``integer`` |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_rid``      |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_self``     |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_etag``     |``string``  |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_attachm    |``string``  |                               |
+                |                    |ents``        |            |                               |
+                +--------------------+--------------+------------+-------------------------------+
+                |                    |``_ts``       |``integer`` |                               |
                 +--------------------+--------------+------------+-------------------------------+
 
                 +--------------------+--------------+------------+-------------------------------+
                 | inferences         | .. _if7:                                                  |
                 +--------------------+--------------+------------+-------------------------------+
                 | *Level1*           | *Level2*     | *Type*     | *Description*                 |
+                +====================+==============+============+===============================+
+                |``inferences``      |              | ``array``  |                               |
                 +--------------------+--------------+------------+-------------------------------+
-                |``inferences``      |              | ``array``  |Inference result Array         |
+                |                    |``T``         | ``string`` |Time when retrieving           |
+                |                    |              |            |data from the sensor.          |
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``T``         | ``string`` |The time at which the data     |
-                |                    |              |            |was acquired from the sensor.  |
+                |                    |``O``         |``string``  |Output tensor (Encoding format)|
                 +--------------------+--------------+------------+-------------------------------+
-                |                    |``O``         |``string``  |Outputtensor output without    |
-                |                    |              |            |going through PPL              |
-                +--------------------+--------------+------------+-------------------------------+
-
-
-            - when time parameter is specified
-
-                +--------------------+------------+------------------------------------+
-                | *Level1*           | *Type*     | *Description*                      |
-                +--------------------+------------+------------------------------------+
-                | ``image_data``     |``array``   | Refer :ref:`image_data <id8>`      |
-                |                    |            | for more details                   |
-                +--------------------+------------+------------------------------------+
-                |``inference_data``  |``array``   | Refer :ref:`inference_data <ifd8>` |
-                |                    |            | for more details                   |
-                +--------------------+------------+------------------------------------+
-
-                +----------------+---------------------------------------------------------------+
-                | image_data     | .. _id8:                                                      |
-                +----------------+----------------------+------------+---------------------------+
-                | *Level1*       | *Level2*             | *Type*     | *Description*             |
-                +----------------+----------------------+------------+---------------------------+
-                | ``image_data`` |                      | ``array``  | image data                |
-                |                |                      |            |                           |
-                +----------------+----------------------+------------+---------------------------+
-                |                | ``total_image_count``|  ``int``   | Set the total number of   |
-                |                |                      |            | images                    |
-                +----------------+----------------------+------------+---------------------------+
-                |                | ``images``           | ``array``  | Refer :ref:`images <im8>` |
-                |                |                      |            | for more details          |
-                +----------------+----------------------+------------+---------------------------+
-
-                +-----------------------+-----------------------------------------------------+
-                | images                | .. _im8:                                            |
-                +-----------------------+------------+------------+---------------------------+
-                | *Level1*              | *Level2*   | *Type*     | *Description*             |
-                +-----------------------+------------+------------+---------------------------+
-                |``images``             |            | ``array``  | Image file name array     |
-                |                       |            |            | The descendant elements   |
-                |                       |            |            | are listed in ascending   |
-                |                       |            |            | order by image file name. |
-                +-----------------------+------------+------------+---------------------------+
-                |                       | ``name``   | ``string`` | Set the image file name.  |
-                +-----------------------+------------+------------+---------------------------+
-                |                       |``contents``| ``string`` | Image file contents       |
-                |                       |            |            | * Base64 encoding         |
-                +-----------------------+------------+------------+---------------------------+
-
-                +------------------+-----------------------------------------------------------+
-                | inference_data   | .. _ifd8:                                                 |
-                +------------------+--------------+-----------+--------------------------------+
-                | *Level1*         | *Level2*     | *Type*    | *Description*                  |
-                +------------------+--------------+-----------+--------------------------------+
-                |``inference_data``|              |``array``  | inference_data                 |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``id``        | ``string``| The ID of the inference result |
-                |                  |              |           | metadata. = GUID automatically |
-                |                  |              |           | fired by CosmosDB              |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``device_id`` | ``string``| Device ID.                     |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``model_id``  | ``string``| Model ID.                      |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``_ts``       |``string`` | Timestamp. = System            |
-                |                  |              |           | registration date and time     |
-                +------------------+--------------+-----------+--------------------------------+
-                |                  |``inferences``|``array``  |Refer :ref:`inferences <if7>`   |
-                |                  |              |           |for more details                |
-                +------------------+--------------+-----------+--------------------------------+
 
             **Error Response Schema**
 
@@ -400,6 +344,7 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -414,7 +359,8 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -459,6 +405,8 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
                 _latest_image_data = ""
                 _latest_inference_data = ""
 
+                if "result" in _return_get_image_data:
+                    return _return_get_image_data
                 if len(_return_get_image_data["images"]) != 0:
                     _latest_image_data = _return_get_image_data
                     _latest_image_ts = _latest_image_data["images"][0]["name"].replace(".jpg", "")
@@ -471,6 +419,8 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
                         time=_latest_image_ts,
                     )
 
+                    if "result" in _return_get_inference_data:
+                        return _return_get_inference_data
                     if len(_return_get_inference_data) != 0:
                         _latest_inference_data = _return_get_inference_data[0]
 

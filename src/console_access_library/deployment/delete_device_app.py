@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -46,12 +46,12 @@ class SchemaDeleteDeviceApp(Schema):
 
     """
 
-    #: str, required : DeviceApp name
+    #: str, required : App name
     app_name = fields.String(
         required=True, error_messages={"invalid": "Invalid string for app_name"}, strict=True
     )
 
-    #: str, required : DeviceApp version
+    #: str, required : App version number
     version_number = fields.String(
         required=True, error_messages={"invalid": "Invalid string for version_number"}, strict=True
     )
@@ -84,11 +84,11 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
 
     # pylint:disable=unused-argument
     def delete_device_app(self, app_name: str, version_number: str):
-        """Delete the device app.
+        """Delete device app
 
         Args:
-            app_name (str, required): DeviceApp name
-            version_number (str, required): DeviceApp version
+            app_name (str, required): App name
+            version_number (str, required): App version number
 
         Returns:
             **Return Type**
@@ -100,8 +100,8 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -197,6 +197,7 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__".
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -211,7 +212,8 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -233,6 +235,7 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
@@ -249,9 +252,18 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 delete_device_app_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:
-                    _return_delete_device_app = delete_device_app_api_instance.delete_device_app(
-                        path_params=_path_params
-                    )
+
+                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    if self._config._application_id:
+                        _query_params["grant_type"] = "client_credentials"
+                        # pylint:disable=line-too-long
+                        _return_delete_device_app = delete_device_app_api_instance.delete_device_app(
+                            path_params=_path_params, query_params=_query_params
+                        )
+                    else:
+                        _return_delete_device_app = delete_device_app_api_instance.delete_device_app(
+                            path_params=_path_params
+                        )
                     return _return_delete_device_app.body
 
                 except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.deploy_by_configuration_wait_response &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.deployment.deploy_by_configuration_wait_response &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.deployment.deploy_by_configuration_wait_response</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -132,7 +132,7 @@
 <span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, required : Configuration ID.</span>
+    <span class="c1">#: str, required : Config ID</span>
     <span class="n">config_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for config_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -142,9 +142,9 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Model ID to be replaced. Specify &quot;Model ID&quot; or &quot;network_id&quot;.</span>
-    <span class="c1">#:                 If the specified model ID does not exist in the DB, the</span>
-    <span class="c1">#:                 entered value is regarded as a network_id and processed is performed.</span>
+    <span class="c1">#: str, optional : Specify the model ID or network_id.\</span>
+    <span class="c1">#:                 If the model with the specified model ID does not exist in the database,\</span>
+    <span class="c1">#:                 treat the entered value as the network_id and process it. Default : &quot;&quot;.</span>
     <span class="n">replace_model_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for replace_model_id&quot;</span><span class="p">},</span>
@@ -152,7 +152,8 @@
         <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Deploy comment .</span>
+    <span class="c1">#: str, optional : Comment. Max 100 characters.</span>
+    <span class="c1">#:                 Default: &quot;&quot;.</span>
     <span class="n">comment</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span>
@@ -313,12 +314,12 @@
 <span class="sd">        deployment config.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            config_id (str, required) : Configuration ID.</span>
-<span class="sd">            device_ids (str, required) : Device ID. Specify multiple device IDs separated by commas.</span>
-<span class="sd">            replace_model_id (str, optional) : Model ID to be replaced. Specify &quot;Model ID&quot; or \</span>
-<span class="sd">                &quot;network_id&quot;. If the specified model ID does not exist in the DB, the \</span>
-<span class="sd">                entered value is regarded as a network_id and processed is performed.</span>
-<span class="sd">            comment (str, optional) : Deploy comment .</span>
+<span class="sd">            config_id (str, required) : Setting ID</span>
+<span class="sd">            device_ids (str, required) : Specify multiple device IDs separated by commas.</span>
+<span class="sd">            replace_model_id (str, optional) : Specify the model ID or network_id.\</span>
+<span class="sd">                If the model with the specified model ID does not exist in the database,\</span>
+<span class="sd">                treat the entered value as the network_id and process it. Default : &quot;&quot;.</span>
+<span class="sd">            comment (str, optional) : Max 100 characters. Default : &quot;&quot;.</span>
 <span class="sd">            timeout (int, optional) : Timeout waiting for completion. There are cases where the \</span>
 <span class="sd">                edge AI device hangs up during the deployment process,\</span>
 <span class="sd">                so there are cases where the process remains in progress,\</span>
@@ -352,7 +353,7 @@
 
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*          | *Type*     | *Description*              |</span>
-<span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
+<span class="sd">                +===================+===================+============+============================+</span>
 <span class="sd">                | ``No_item_name``  |                   | ``array``  | deploy by configuration    |</span>
 <span class="sd">                |                   |                   |            | wait response array        |</span>
 <span class="sd">                +-------------------+-------------------+------------+----------------------------+</span>
@@ -381,7 +382,7 @@
 <span class="sd">                    if any input string parameter found empty OR</span>
 <span class="sd">                    if any input integer parameter found negative OR</span>
 <span class="sd">                    if any input non integer parameter found OR</span>
-<span class="sd">                    if type of callback paramter not a function.</span>
+<span class="sd">                    if type of callback parameter not a function.</span>
 <span class="sd">                    Then, Dictionary with below key and value pairs.</span>
 
 <span class="sd">                    - ``result`` (str) : &quot;ERROR&quot;</span>
@@ -459,6 +460,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -473,7 +475,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -594,7 +597,7 @@
                                             <span class="p">][</span><span class="s2">&quot;total_status&quot;</span><span class="p">]</span>
 
                                     <span class="c1"># Check if the device_id is not present in global array,</span>
-                                    <span class="c1"># Then, add the first occurence of device_id to the</span>
+                                    <span class="c1"># Then, add the first occurrence of device_id to the</span>
                                     <span class="c1"># global array.</span>
                                     <span class="k">if</span> <span class="n">_device_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
                                         <span class="nb">list</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
@@ -605,7 +608,7 @@
                                             <span class="n">status</span><span class="o">=</span><span class="n">_total_status</span><span class="p">,</span>
                                         <span class="p">)</span>
 
-                                    <span class="c1"># Check whether it&#39;s first occurence</span>
+                                    <span class="c1"># Check whether it&#39;s first occurrence</span>
                                     <span class="c1"># Then update status of the added device to</span>
                                     <span class="c1"># the global array</span>
                                     <span class="k">if</span> <span class="n">_device_id</span> <span class="ow">in</span> <span class="p">[</span>
@@ -722,7 +725,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

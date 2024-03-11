@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,12 +58,12 @@ class SchemaCreateDeployConfiguration(Schema):
         required=True, error_messages={"invalid": "Invalid string for config_id"}, strict=True
     )
 
-    #: str, optional : Config Description.
+    #: str, optional : Comment.
     comment = fields.String(
         required=False, error_messages={"invalid": "Invalid string for comment"}, strict=True
     )
 
-    #: str, optional : SensorLoader version number
+    #: str, optional : Sensor Loader version number
     sensor_loader_version_number = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for sensor_loader_version_number"},
@@ -163,25 +163,20 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
         ・Firmware ・AI model
 
         Args:
-            config_id (str, required) : The config ID. Up to 20 characters \
-                half-width only. \
+            config_id (str, required) : Max. 20 single characters, single-byte characters only. \
                 The following characters are allowed \
                 Alphanumeric characters \
                 -hyphen \
                 _ Underscore \
                 () Small parentheses \
                 . dot
-            comment (str, optional) : 100 characters or less
-            sensor_loader_version_number (str, optional) : If -1 is specified \
-                the default version is applied The default value is system setting "DVC0017"
-            sensor_version_number (str, optional) : If -1 is specified \
-                the default version is applied The default value is system setting "DVC0018"
-            model_id (str, optional) : The model_id. \
-                If not specified, no model deployment.
-            model_version_number (str, optional) : The Model version number. \
-                If not specified, the latest version is applied.
-            ap_fw_version_number (str, optional) : The ApFw version number. \
-                If not specified, no firmware deployment.
+            comment (str, optional) : Max. 100 characters. Default : "".
+            sensor_loader_version_number (str, optional) : Sensor loader version number.
+                Default is "".
+            sensor_version_number (str, optional) : Sensor version number. Default is "".
+            model_id (str, optional) : The model_id.
+            model_version_number (str, optional) : The Model version number. Default: "".
+            ap_fw_version_number (str, optional) : The ApFw version number. Default : "".
 
         Returns:
             **Return Type**
@@ -193,8 +188,8 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -290,6 +285,7 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -304,7 +300,8 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -390,6 +387,11 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _local_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 create_deploy_configurations_api_instance = deploy_api.DeployApi(api_client)
                 try:
