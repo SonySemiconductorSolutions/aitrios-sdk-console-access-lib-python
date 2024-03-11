@@ -26,15 +26,18 @@ import frozendict  # noqa: F401
 from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
-from aitrios_console_rest_client_sdk_primitive.model.device import Device
+from aitrios_console_rest_client_sdk_primitive.model.devices import Devices
 
 from . import path
 
 # Query params
+GrantTypeSchema = schemas.StrSchema
 ConnectionStateSchema = schemas.StrSchema
 DeviceNameSchema = schemas.StrSchema
 DeviceIdSchema = schemas.StrSchema
 DeviceGroupIdSchema = schemas.StrSchema
+DeviceIdsSchema = schemas.StrSchema
+ScopeSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -43,10 +46,13 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
         'connectionState': typing.Union[ConnectionStateSchema, str, ],
         'device_name': typing.Union[DeviceNameSchema, str, ],
         'device_id': typing.Union[DeviceIdSchema, str, ],
         'device_group_id': typing.Union[DeviceGroupIdSchema, str, ],
+        'device_ids': typing.Union[DeviceIdsSchema, str, ],
+        'scope': typing.Union[ScopeSchema, str, ],
     },
     total=False
 )
@@ -56,6 +62,12 @@ class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams)
     pass
 
 
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 request_query_connection_state = api_client.QueryParameter(
     name="connectionState",
     style=api_client.ParameterStyle.FORM,
@@ -78,6 +90,18 @@ request_query_device_group_id = api_client.QueryParameter(
     name="device_group_id",
     style=api_client.ParameterStyle.FORM,
     schema=DeviceGroupIdSchema,
+    explode=True,
+)
+request_query_device_ids = api_client.QueryParameter(
+    name="device_ids",
+    style=api_client.ParameterStyle.FORM,
+    schema=DeviceIdsSchema,
+    explode=True,
+)
+request_query_scope = api_client.QueryParameter(
+    name="scope",
+    style=api_client.ParameterStyle.FORM,
+    schema=ScopeSchema,
     explode=True,
 )
 
@@ -103,21 +127,21 @@ class SchemaFor200ResponseBodyApplicationJson(
                 class MetaOapg:
                     
                     @staticmethod
-                    def items() -> typing.Type['Device']:
-                        return Device
+                    def items() -> typing.Type['Devices']:
+                        return Devices
             
                 def __new__(
                     cls,
-                    arg: typing.Union[typing.Tuple['Device'], typing.List['Device']],
+                    _arg: typing.Union[typing.Tuple['Devices'], typing.List['Devices']],
                     _configuration: typing.Optional[schemas.Configuration] = None,
                 ) -> 'devices':
                     return super().__new__(
                         cls,
-                        arg,
+                        _arg,
                         _configuration=_configuration,
                     )
             
-                def __getitem__(self, i: int) -> 'Device':
+                def __getitem__(self, i: int) -> 'Devices':
                     return super().__getitem__(i)
             __annotations__ = {
                 "devices": devices,
@@ -148,14 +172,14 @@ class SchemaFor200ResponseBodyApplicationJson(
 
     def __new__(
         cls,
-        *args: typing.Union[dict, frozendict.frozendict, ],
+        *_args: typing.Union[dict, frozendict.frozendict, ],
         devices: typing.Union[MetaOapg.properties.devices, list, tuple, ],
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            *args,
+            *_args,
             devices=devices,
             _configuration=_configuration,
             **kwargs,
@@ -341,10 +365,13 @@ class BaseApi(api_client.Api):
 
         prefix_separator_iterator = None
         for parameter in (
+            request_query_grant_type,
             request_query_connection_state,
             request_query_device_name,
             request_query_device_id,
             request_query_device_group_id,
+            request_query_device_ids,
+            request_query_scope,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:
@@ -379,7 +406,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 

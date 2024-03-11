@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ class SchemaDeployByConfigurationWaitResponse(Schema):
         Schema (object): Inherited from Schema class of marshmallow
     """
 
-    #: str, required : Configuration ID.
+    #: str, required : Config ID
     config_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for config_id"}, strict=True
     )
@@ -67,9 +67,9 @@ class SchemaDeployByConfigurationWaitResponse(Schema):
         required=True, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
 
-    #: str, optional : Model ID to be replaced. Specify "Model ID" or "network_id".
-    #:                 If the specified model ID does not exist in the DB, the
-    #:                 entered value is regarded as a network_id and processed is performed.
+    #: str, optional : Specify the model ID or network_id.\
+    #:                 If the model with the specified model ID does not exist in the database,\
+    #:                 treat the entered value as the network_id and process it. Default : "".
     replace_model_id = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for replace_model_id"},
@@ -77,7 +77,8 @@ class SchemaDeployByConfigurationWaitResponse(Schema):
         allow_none=True,
     )
 
-    #: str, optional : Deploy comment .
+    #: str, optional : Comment. Max 100 characters.
+    #:                 Default: "".
     comment = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for comment"},
@@ -238,12 +239,12 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
         deployment config.
 
         Args:
-            config_id (str, required) : Configuration ID.
-            device_ids (str, required) : Device ID. Specify multiple device IDs separated by commas.
-            replace_model_id (str, optional) : Model ID to be replaced. Specify "Model ID" or \
-                "network_id". If the specified model ID does not exist in the DB, the \
-                entered value is regarded as a network_id and processed is performed.
-            comment (str, optional) : Deploy comment .
+            config_id (str, required) : Setting ID
+            device_ids (str, required) : Specify multiple device IDs separated by commas.
+            replace_model_id (str, optional) : Specify the model ID or network_id.\
+                If the model with the specified model ID does not exist in the database,\
+                treat the entered value as the network_id and process it. Default : "".
+            comment (str, optional) : Max 100 characters. Default : "".
             timeout (int, optional) : Timeout waiting for completion. There are cases where the \
                 edge AI device hangs up during the deployment process,\
                 so there are cases where the process remains in progress,\
@@ -277,7 +278,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
 
                 +-------------------+-------------------+------------+----------------------------+
                 | *Level1*          | *Level2*          | *Type*     | *Description*              |
-                +-------------------+-------------------+------------+----------------------------+
+                +===================+===================+============+============================+
                 | ``No_item_name``  |                   | ``array``  | deploy by configuration    |
                 |                   |                   |            | wait response array        |
                 +-------------------+-------------------+------------+----------------------------+
@@ -306,7 +307,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                     if any input string parameter found empty OR
                     if any input integer parameter found negative OR
                     if any input non integer parameter found OR
-                    if type of callback paramter not a function.
+                    if type of callback parameter not a function.
                     Then, Dictionary with below key and value pairs.
 
                     - ``result`` (str) : "ERROR"
@@ -384,6 +385,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -398,7 +400,8 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -519,7 +522,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                                             ]["total_status"]
 
                                     # Check if the device_id is not present in global array,
-                                    # Then, add the first occurence of device_id to the
+                                    # Then, add the first occurrence of device_id to the
                                     # global array.
                                     if _device_id not in [
                                         list(d.keys())[0]
@@ -530,7 +533,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                                             status=_total_status,
                                         )
 
-                                    # Check whether it's first occurence
+                                    # Check whether it's first occurrence
                                     # Then update status of the added device to
                                     # the global array
                                     if _device_id in [

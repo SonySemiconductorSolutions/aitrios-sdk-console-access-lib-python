@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestDevicesConfigurationCommandParameterFilesFileName(ApiTestMixin, unittest.TestCase):
     """
     DevicesConfigurationCommandParameterFilesFileName unit test stubs
-        CancelCommandParameterFile  # noqa: E501
+        UnbindCommandParameterFile  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

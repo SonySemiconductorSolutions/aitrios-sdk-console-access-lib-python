@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 # pylint:disable=wrong-import-position
 # pylint:disable=duplicate-code
 # pylint:disable=unused-argument
+# pylint:disable=too-many-arguments
 # pylint:disable=too-many-return-statements
 # pylint:disable=protected-access
 # pylint:disable=too-many-locals
@@ -50,27 +51,57 @@ class SchemaGetDevices(Schema):
 
     """
 
-    #: str, optional : Edge AI Device ID
+    #: str, optional : Device ID. Partial match search.
+    #:                 Default:""
     device_id = fields.String(
         required=False, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
 
-    #: str, optional : Edge AI device name
+    #: str, optional : Device name. Partial match search.
+    #:                 Default:""
     device_name = fields.String(
         required=False, error_messages={"invalid": "Invalid string for device_name"}, strict=True
     )
 
     #: str, optional : Connection status.
+    #:
+    #:                  Value definition
+    #:
+    #:                      - Connected
+    #:                      - Disconnected
+    #:
+    #:                  Default:""
     connection_state = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for connection_state"},
         strict=True,
     )
 
-    #: str, optional : Affiliated Edge AI device group
+    #: str, optional : Device group ID.
+    #:                 Default:""
     device_group_id = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for device_group_id"},
+        strict=True,
+    )
+
+    #: str, optional : Specify multiple device IDs separated by commas.
+    #:                 Default:""
+    device_ids = fields.String(
+        required=False, error_messages={"invalid": "Invalid string for device_id"}, strict=True
+    )
+
+    #: str, optional : Specify the scope of response parameters to return.
+    #:
+    #:                  Value definition
+    #:
+    #:                      - full : Return full parameters
+    #:                      - minimal : Return minimal parameters fast response speed
+    #:
+    #:                  Default:"full"
+    scope = fields.String(
+        required=False,
+        error_messages={"invalid": "Invalid string for scope"},
         strict=True,
     )
 
@@ -96,6 +127,16 @@ class SchemaGetDevices(Schema):
         ):
             raise ValidationError("device_group_id is required or can't be empty string")
 
+        if "device_ids" in data and (
+            data["device_ids"] is None or str(data["device_ids"]).strip() == ""
+        ):
+            raise ValidationError("device_ids is required or can't be empty string")
+
+        if "scope" in data and (
+            data["scope"] is None or str(data["scope"]).strip() == ""
+        ):
+            raise ValidationError("scope is required or can't be empty string")
+
 
 class GetDevices(ConsoleAccessBaseClass):
     """This class implements GetDevices API.
@@ -120,23 +161,32 @@ class GetDevices(ConsoleAccessBaseClass):
         device_name: str = None,
         connection_state: str = None,
         device_group_id: str = None,
+        device_ids: str = None,
+        scope: str = "full"
     ):
-        """Get device list information.
+        """Get the device list information.
 
         Args:
-            device_id (str, optional) : Edge AI Device ID. Partial search, case insensitive.\
-                Search all device_ids if not specified.
-            device_name (str, optional) : Edge AI device name.\
-                Partial search, case insensitive.\
-                If not specified, search all device_names.
-            connection_state (str, optional) : Connection status.\
-                For connected state: Connected\
-                Disconnected state: Disconnected\
-                Exact match search, case insensitive.\
-                If not specified, search all connection_states.
-            device_group_id (str, optional) : Affiliated Edge AI device group.\
-                Exact match search, case insensitive.\
-                Search all device_group_id if not specified.
+            device_id (str, optional) : Device ID. Partial match search. Default:""
+            device_name (str, optional) : Device name. Partial match search. Default:""
+            connection_state (str, optional) : Connection status.
+
+                Value definition
+
+                    - Connected
+                    - Disconnected
+
+                Default:""
+            device_group_id (str, optional) : Device group ID. Default:""
+            device_ids (str, optional): Specify multiple device IDs separated by commas.
+                                              Default:""
+            scope (str, optional) : Specify the scope of response parameters to return.
+                Default: "full"
+
+                Value definition
+
+                    - full : Return full parameters
+                    - minimal : Return minimal parameters fast response speed
 
         Returns:
             **Return Type**
@@ -148,10 +198,8 @@ class GetDevices(ConsoleAccessBaseClass):
 
                 +------------+--------------------+-----------+--------------------------------+
                 | *Level1*   | *Level2*           |*Type*     | *Description*                  |
-                +------------+--------------------+-----------+--------------------------------+
-                | ``devices``|                    |``array``  | The subordinate elements are   |
-                |            |                    |           | listed in ascending order by   |
-                |            |                    |           | device ID                      |
+                +============+====================+===========+================================+
+                | ``devices``|                    |``array``  |                                |
                 +------------+--------------------+-----------+--------------------------------+
                 |            | ``device_id``      |``string`` | Set the device ID              |
                 +------------+--------------------+-----------+--------------------------------+
@@ -159,84 +207,93 @@ class GetDevices(ConsoleAccessBaseClass):
                 +------------+--------------------+-----------+--------------------------------+
                 |            | ``comment``        |``string`` | Set the device description     |
                 +------------+--------------------+-----------+--------------------------------+
-                |            | ``property``       |``string`` | Set device properties          |
-                |            |                    |           | (device_name, etc.)            |
-                +------------+--------------------+-----------+--------------------------------+
-                |            | ``ins_id``         |``string`` | Set the creator of the device  |
-                +------------+--------------------+-----------+--------------------------------+
-                |            | ``ins_date``       |``string`` | Set the date and               |
-                |            |                    |           | time the device was created.   |
-                +------------+--------------------+-----------+--------------------------------+
-                |            | ``upd_id``         |``string`` | Set up an updater for          |
-                |            |                    |           | your device                    |
-                +------------+--------------------+-----------+--------------------------------+
-                |            | ``upd_date``       |``string`` | Set the date and time          |
-                |            |                    |           | of the device update.          |
-                +------------+--------------------+-----------+--------------------------------+
-                |            |``connectionState`` |``string`` | Set the connection status      |
-                |            |                    |           | of the device.                 |
-                +------------+--------------------+-----------+--------------------------------+
-                |            |``lastActivityTime``|``string`` | Set the last connection date   |
-                |            |                    |           | and time of the device.        |
-                +------------+--------------------+-----------+--------------------------------+
-                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups <dg>`|
+                |            | ``property``       |``array``  | Refer :ref:`property <pro1>`   |
                 |            |                    |           | for more details               |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``device_type``    |``string`` | Set the device type.           |
+                +------------+--------------------+-----------+--------------------------------+
+                |            |``display_device_   |``string`` | Set the display device type.   |
+                |            |type``              |           |                                |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``ins_id``         |``string`` | Set the device author.         |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``ins_date``       |``string`` | Set the date                   |
+                |            |                    |           | the device was created.        |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``upd_id``         |``string`` | Set the device updater.        |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``upd_date``       |``string`` | Set the date the device was    |
+                |            |                    |           | updated.                       |
+                +------------+--------------------+-----------+--------------------------------+
+                |            |``connectionState`` |``string`` | Set the device connection state|
+                +------------+--------------------+-----------+--------------------------------+
+                |            |``lastActivityTime``|``string`` | Set the date the device last   |
+                |            |                    |           | connected.                     |
                 +------------+--------------------+-----------+--------------------------------+
                 |            | ``models``         |``array``  | Refer :ref:`models <model>`    |
                 |            |                    |           | for more details               |
                 +------------+--------------------+-----------+--------------------------------+
+                |            | ``configuration``  |``array``  |                                |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``state``          |``array``  |                                |
+                +------------+--------------------+-----------+--------------------------------+
+                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups <dg>`|
+                |            |                    |           | for more details               |
+                +------------+--------------------+-----------+--------------------------------+
+
+                +-------------------+--------------------+------------+--------------------------+
+                | property          | .. _pro1:                                                  |
+                +-------------------+--------------------+------------+--------------------------+
+                | *Level1*          | *Level2*           | *Type*     | *Description*            |
+                +===================+====================+============+==========================+
+                | ``property``      |                    | ``array``  |                          |
+                +-------------------+--------------------+------------+--------------------------+
+                |                   |``device_name``     | ``string`` | Set the device name.     |
+                +-------------------+--------------------+------------+--------------------------+
+                |                   |``internal_device_  | ``string`` | Set the internal device  |
+                |                   |id``                |            | id.                      |
+                +-------------------+--------------------+------------+--------------------------+
 
                 +-------------------+--------------------+------------+--------------------------+
                 | device_groups     | .. _dg:                                                    |
                 +-------------------+--------------------+------------+--------------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*            |
-                +-------------------+--------------------+------------+--------------------------+
-                | ``device_groups`` |                    | ``array``  | The subordinate          |
-                |                   |                    |            | elements are listed      |
-                |                   |                    |            | in ascending order       |
-                |                   |                    |            | by device group ID       |
+                +===================+====================+============+==========================+
+                | ``device_groups`` |                    | ``array``  |                          |
                 +-------------------+--------------------+------------+--------------------------+
                 |                   |``device_group_id`` | ``string`` | Set the device group ID  |
                 +-------------------+--------------------+------------+--------------------------+
                 |                   |``device_type``     | ``string`` | Set the device type      |
                 +-------------------+--------------------+------------+--------------------------+
                 |                   | ``comment``        |``string``  | Set the device           |
-                |                   |                    |            | bdescription             |
+                |                   |                    |            | group comment.           |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   | ``ins_id``         |``string``  | Set the date and time    |
-                |                   |                    |            | that the device group    |
-                |                   |                    |            | was created.             |
+                |                   | ``ins_id``         |``string``  | Set the date the device  |
+                |                   |                    |            | group was created.       |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   | ``ins_date``       |``string``  | Set the creator of the   |
-                |                   |                    |            | device group.            |
+                |                   | ``ins_date``       |``string``  | Set the device group     |
+                |                   |                    |            | author.                  |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   | ``upd_id``         |``string``  | Set the updater for      |
-                |                   |                    |            | the device group         |
+                |                   | ``upd_id``         |``string``  | Set the device group     |
+                |                   |                    |            | updater                  |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   | ``upd_date``       |``string``  | Set the date and time of |
-                |                   |                    |            | the device group update. |
+                |                   | ``upd_date``       |``string``  | Set the date the device  |
+                |                   |                    |            | group was updated.       |
                 +-------------------+--------------------+------------+--------------------------+
 
                 +-------------------+--------------------+------------+--------------------------+
                 | models            | .. _model:                                                 |
                 +-------------------+--------------------+------------+--------------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*            |
+                +===================+====================+============+==========================+
+                | ``models``        |                    | ``array``  |                          |
                 +-------------------+--------------------+------------+--------------------------+
-                | ``models``        |                    | ``array``  | The subordinate          |
-                |                   |                    |            | elements are listed      |
-                |                   |                    |            | in ascending order       |
-                |                   |                    |            | by device group ID       |
-                +-------------------+--------------------+------------+--------------------------+
-                |                   |``model_version_id``| ``string`` | Set the model version ID |
-                |                   |                    |            | Format: ModelID:v1.0001  |
-                |                   |                    |            | * If DnnModelVersion does|
-                |                   |                    |            | not exist in the DB, the |
-                |                   |                    |            | network_id is displayed. |
-                |                   |                    |            | Example) 0201020002370200|
-                |                   |                    |            | In the above case, 000237|
-                |                   |                    |            | (7~12 digits) If it is 16|
-                |                   |                    |            | digits,it is displayed   |
-                |                   |                    |            | as is.                   |
+                |                   |``model_version_id``| ``string`` | Set the model version ID.|
+                |                   |                    |            | Format: modelid:v1.01    |
+                |                   |                    |            | For model that does not  |
+                |                   |                    |            | exist in the system,     |
+                |                   |                    |            | display network_id       |
+                |                   |                    |            | Example: 000237          |
                 +-------------------+--------------------+------------+--------------------------+
 
             **Error Response Schema**
@@ -332,6 +389,7 @@ class GetDevices(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -346,7 +404,8 @@ class GetDevices(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -360,7 +419,9 @@ class GetDevices(ConsoleAccessBaseClass):
                     device_id,
                     device_name,
                     connection_state,
-                    device_group_id
+                    device_group_id,
+                    device_ids,
+                    scope
                 )
                 pprint(response)
         """
@@ -386,6 +447,12 @@ class GetDevices(ConsoleAccessBaseClass):
             if "device_group_id" in _local_params and _local_params["device_group_id"] is None:
                 del _local_params["device_group_id"]
 
+            if "device_ids" in _local_params and _local_params["device_ids"] is None:
+                del _local_params["device_ids"]
+
+            if "scope" in _local_params and _local_params["scope"] is None:
+                del _local_params["scope"]
+
             # Validate schema
             _query_params = SchemaGetDevices().load(_local_params)
 
@@ -401,6 +468,11 @@ class GetDevices(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 manage_devices_api_instance = manage_devices_api.ManageDevicesApi(api_client)
                 try:

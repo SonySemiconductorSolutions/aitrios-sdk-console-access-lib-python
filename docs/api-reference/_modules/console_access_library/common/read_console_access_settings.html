@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.common.read_console_access_settings &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.common.read_console_access_settings &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.common.read_console_access_settings</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -132,7 +132,10 @@
     <span class="n">client_secret</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
     <span class="c1">#: string, required : Client Secret required to issue an access token</span>
-    <span class="n">client_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+    <span class="n">client_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1">#: string, required : Application ID required to issue an access token</span>
+    <span class="n">application_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SchemaAppConfig"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.read_console_access_settings.SchemaAppConfig">[docs]</a><span class="k">class</span> <span class="nc">SchemaAppConfig</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
@@ -160,6 +163,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_portal_authorization_endpoint</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_read_settings_file</span><span class="p">(</span><span class="n">settings_file_path</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_read_settings_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_file_path</span><span class="p">):</span>
@@ -201,6 +205,7 @@
                 <span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_client_secret</span> <span class="o">=</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;console_access_settings&quot;</span><span class="p">][</span><span class="s2">&quot;client_secret&quot;</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span> <span class="o">=</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;console_access_settings&quot;</span><span class="p">][</span><span class="s2">&quot;client_id&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span> <span class="o">=</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;console_access_settings&quot;</span><span class="p">][</span><span class="s2">&quot;application_id&quot;</span><span class="p">]</span>
 
         <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
@@ -222,7 +227,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">client_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">application_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_application_id</span></div>
 </pre></div>
 
            </div>
@@ -232,7 +241,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -59,6 +59,9 @@ class SchemaAppConfiguration(Schema):
     #: string, required : Client Secret required to issue an access token
     client_id = fields.String(required=False, missing=None)
 
+    #: string, required : Application ID required to issue an access token
+    application_id = fields.String(required=False, missing=None)
+
 
 class SchemaAppConfig(Schema):
     """Schema for AppConfiguration
@@ -85,6 +88,7 @@ class ReadConsoleAccessSettings:
         self._portal_authorization_endpoint = None
         self._client_secret = None
         self._client_id = None
+        self._application_id = None
         self._read_settings_file(settings_file_path)
 
     def _read_settings_file(self, settings_file_path):
@@ -126,6 +130,7 @@ class ReadConsoleAccessSettings:
                 ]
                 self._client_secret = _settings["console_access_settings"]["client_secret"]
                 self._client_id = _settings["console_access_settings"]["client_id"]
+                self._application_id = _settings["console_access_settings"]["application_id"]
 
         except KeyError as err:
             logger.error(str(err))
@@ -148,3 +153,7 @@ class ReadConsoleAccessSettings:
     @property
     def client_id(self):
         return self._client_id
+
+    @property
+    def application_id(self):
+        return self._application_id

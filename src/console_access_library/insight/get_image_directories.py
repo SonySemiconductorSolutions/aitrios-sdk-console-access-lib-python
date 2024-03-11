@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -50,7 +50,8 @@ class SchemaGetImageDirectories(Schema):
 
     """
 
-    #: str, optional : Device ID.
+    #: str, optional : Device ID. If this is specified, return an image directory\
+    #:                   list linked to the specified device ID.
     device_id = fields.String(
         required=False, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
@@ -82,13 +83,12 @@ class GetImageDirectories(ConsoleAccessBaseClass):
         self._config = config
 
     def get_image_directories(self, device_id: str = None):
-        """Image storage directory list retrieval API. For each device group, a list of image \
-        storage directories for each device is acquired.
+        """Get the image save directory list of the devices for each device group
 
         Args:
             device_id (str, optional): Device ID \
-                If specified, the image directory list associated with the specified \
-                device ID is returned. Case-sensitive
+                If this is specified, return an image directory list linked to\
+                    the specified device ID.
 
         Returns:
             **Return Type**
@@ -100,8 +100,8 @@ class GetImageDirectories(ConsoleAccessBaseClass):
 
                 +------------------+------------+------------+-------------------------------+
                 | *Level1*         | *Level2*   | *Type*     | *Description*                 |
-                +------------------+------------+------------+-------------------------------+
-                | ``No_item_name`` |            |            | Device Affiliation Group Array|
+                +==================+============+============+===============================+
+                | ``No_item_name`` |            | ``array``  |                               |
                 +------------------+------------+------------+-------------------------------+
                 |                  |``group_id``| ``string`` | Set the device group ID.      |
                 +------------------+------------+------------+-------------------------------+
@@ -113,21 +113,25 @@ class GetImageDirectories(ConsoleAccessBaseClass):
                 | devices           | .. _devices:                                               |
                 +-------------------+--------------------+------------+--------------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*            |
+                +===================+====================+============+==========================+
+                | ``devices``       |  ``array``         |            |                          |
                 +-------------------+--------------------+------------+--------------------------+
-                | ``devices``       |  ``array``         |            | Device Array.            |
-                |                   |                    |            | The subordinate          |
-                |                   |                    |            | elements are listed      |
-                |                   |                    |            | in ascending order       |
-                |                   |                    |            | by device ID             |
+                |                   |``device_id``       | ``string`` | Set the device ID.       |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   |``device_id``       | ``string`` | Device ID.               |
+                |                   |``device_name``     | ``string`` | Set the device name.     |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   |``device_name``     | ``string`` | Device name at the time  |
-                |                   |                    |            | of registration          |
+                |                   |``Image``           | ``array``  | Refer :ref:`img <img>`   |
+                |                   |                    |            | for more details         |
                 +-------------------+--------------------+------------+--------------------------+
-                |                   |``Image``           | ``array``  | The descendant elements  |
-                |                   |                    |            | are listed in ascending  |
-                |                   |                    |            | order by directory name. |
+
+                +-------------------+--------------------+------------+--------------------------+
+                | Image             | .. _img:                                                   |
+                +-------------------+--------------------+------------+--------------------------+
+                | *Level1*          | *Level2*           | *Type*     | *Description*            |
+                +===================+====================+============+==========================+
+                | ``Image``         |  ``array``         |            |                          |
+                +-------------------+--------------------+------------+--------------------------+
+                |                   |  ``No_item_name``  | ``string`` | Set the directory name.  |
                 +-------------------+--------------------+------------+--------------------------+
 
             **Error Response Schema**
@@ -223,6 +227,7 @@ class GetImageDirectories(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -237,7 +242,8 @@ class GetImageDirectories(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -274,6 +280,11 @@ class GetImageDirectories(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _local_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 insight_api_api_instance = insight_api.InsightApi(api_client)
 

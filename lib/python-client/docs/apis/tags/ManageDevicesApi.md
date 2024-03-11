@@ -1,4 +1,4 @@
-<a name="__pageTop"></a>
+<a id="__pageTop"></a>
 # aitrios_console_rest_client_sdk_primitive.apis.tags.manage_devices_api.ManageDevicesApi
 
 All URIs are relative to *http://localhost*
@@ -8,12 +8,12 @@ Method | HTTP request | Description
 [**get_devices**](#get_devices) | **get** /devices | GetDevices
 
 # **get_devices**
-<a name="get_devices"></a>
+<a id="get_devices"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_devices()
 
 GetDevices
 
-Get Devices
+Get the device list information.
 
 ### Example
 
@@ -21,7 +21,7 @@ Get Devices
 import aitrios_console_rest_client_sdk_primitive
 from aitrios_console_rest_client_sdk_primitive.apis.tags import manage_devices_api
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
-from aitrios_console_rest_client_sdk_primitive.model.device import Device
+from aitrios_console_rest_client_sdk_primitive.model.devices import Devices
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -36,10 +36,13 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
     # example passing only optional values
     query_params = {
+        'grant_type': "client_credentials",
         'connectionState': "",
         'device_name': "",
         'device_id': "",
         'device_group_id': "",
+        'device_ids': "",
+        'scope': "full",
     }
     try:
         # GetDevices
@@ -65,47 +68,63 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 connectionState | ConnectionStateSchema | | optional
 device_name | DeviceNameSchema | | optional
 device_id | DeviceIdSchema | | optional
 device_group_id | DeviceGroupIdSchema | | optional
+device_ids | DeviceIdsSchema | | optional
+scope | ScopeSchema | | optional
 
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 # ConnectionStateSchema
 
-connectionState (Connected or Disconnected)
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | connectionState (Connected or Disconnected) | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # DeviceNameSchema
 
-device_name
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | device_name | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # DeviceIdSchema
 
-device_id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | device_id | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # DeviceGroupIdSchema
 
-device_group_id
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of ""
+
+# DeviceIdsSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | device_group_id | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
+
+# ScopeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "full"
 
 ### Return Types, Responses
 
@@ -149,7 +168,7 @@ list, tuple,  | tuple,  |  |
 ### Tuple Items
 Class Name | Input Type | Accessed Type | Description | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-[**Device**]({{complexTypePrefix}}Device.md) | [**Device**]({{complexTypePrefix}}Device.md) | [**Device**]({{complexTypePrefix}}Device.md) |  | 
+[**Devices**]({{complexTypePrefix}}Devices.md) | [**Devices**]({{complexTypePrefix}}Devices.md) | [**Devices**]({{complexTypePrefix}}Devices.md) |  | 
 
 #### get_devices.ApiResponseFor400
 Name | Type | Description  | Notes

@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ class SchemaGetDeviceAppDeploys(Schema):
         required=True, error_messages={"invalid": "Invalid string for app_name"}, strict=True
     )
 
-    #: str, required : App Version.
+    #: str, required : App Version Number.
     version_number = fields.String(
         required=True, error_messages={"invalid": "Invalid string for version_number"}, strict=True
     )
@@ -84,11 +84,11 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
         self._config = config
 
     def get_device_app_deploys(self, app_name, version_number):
-        """Get DeviceApp deployment history.
+        """Get Device App Deploys
 
         Args:
-            app_name (str, required) :Set the App name
-            version_number (str, required) :Set the App version
+            app_name (str, required) : App name
+            version_number (str, required) : App version number
 
         Returns:
             **Return Type**
@@ -100,61 +100,68 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
 
                 +-----------+--------------------+-----------+---------------------------+
                 | *Level1*  | *Level2*           | *Type*    | *Description*             |
+                +===========+====================+===========+===========================+
+                |``deploys``|                    | ``array`` |                           |
                 +-----------+--------------------+-----------+---------------------------+
-                |``deploy`` |                    | ``array`` | Descending order of       |
-                |           |                    |           | ins_date                  |
+                |           | ``id``             | ``number``| Set the deploy id.        |
                 +-----------+--------------------+-----------+---------------------------+
-                |           | ``id``             | ``number``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           | ``total_status``   | ``string``| 0: Running                |
+                |           | ``total_status``   | ``string``| Set the total status.     |
                 |           |                    |           |                           |
-                |           |                    |           | 1: Normal completion      |
+                |           |                    |           | - Value definition        |
                 |           |                    |           |                           |
-                |           |                    |           | 2: Failure                |
+                |           |                    |           | 0: Running                |
                 |           |                    |           |                           |
-                |           |                    |           | 3: Cancellation           |
+                |           |                    |           | 1: Successfully completed |
+                |           |                    |           |                           |
+                |           |                    |           | 2: Failed                 |
+                |           |                    |           |                           |
+                |           |                    |           | 3: Canceled               |
                 +-----------+--------------------+-----------+---------------------------+
-                |           |``deploy_parameter``| ``dict``  |                           |
+                |           |``deploy_parameter``| ``string``| Set the deploy parameter. |
                 +-----------+--------------------+-----------+---------------------------+
                 |           |``devices``         | ``array`` | Refer :ref:`devices <d1>` |
                 |           |                    |           | for more details          |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``ins_id``          | ``string``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``ins_date``        | ``string``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``upd_id``          | ``string``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``upd_date``        | ``string``|                           |
                 +-----------+--------------------+-----------+---------------------------+
 
                 +-------------------+-----------------+-----------+---------------------------+
                 | devices           | .. _d1:                                                 |
                 +-------------------+-----------------+------------+--------------------------+
                 | *Level1*          | *Level2*        | *Type*     | *Description*            |
+                +===================+=================+============+==========================+
+                |``devices``        |                 | ``array``  |                          |
                 +-------------------+-----------------+------------+--------------------------+
-                |``devices``        |                 | ``array``  | Ascending order of       |
-                |                   |                 |            | device IDs               |
+                |                   |``device_id``    | ``string`` | Set the device id.       |
                 +-------------------+-----------------+------------+--------------------------+
-                |                   |``device_id``    | ``string`` |                          |
-                +-------------------+-----------------+------------+--------------------------+
-                |                   |``status``       | ``string`` | 0: Running               |
+                |                   |``status``       | ``string`` | Set the total status.    |
                 |                   |                 |            |                          |
-                |                   |                 |            | 1: Successful            |
+                |                   |                 |            | - Value definition       |
+                |                   |                 |            |                          |
+                |                   |                 |            | 0: Running               |
+                |                   |                 |            |                          |
+                |                   |                 |            | 1: Successfully completed|
                 |                   |                 |            |                          |
                 |                   |                 |            | 2: Failed                |
                 |                   |                 |            |                          |
                 |                   |                 |            | 3: Canceled              |
-                |                   |                 |            |                          |
-                |                   |                 |            | Cancellation supplement  |
-                |                   |                 |            | During deployment, if    |
-                |                   |                 |            | the device is deleted,it |
-                |                   |                 |            | will be in this status   |
                 +-------------------+-----------------+------------+--------------------------+
-                |                   |``latest_        | ``string`` | 0: Not Latest            |
+                |                   |``latest_        | ``string`` | Set the deployment flg.  |
                 |                   |deployment_flg`` |            |                          |
+                |                   |                 |            | - Value definition       |
                 |                   |                 |            |                          |
-                |                   |                 |            | 1: Latest                |
+                |                   |                 |            | 0: Old deployment history|
+                |                   |                 |            |                          |
+                |                   |                 |            | 1: Recent deployment     |
+                |                   |                 |            | history                  |
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``ins_id``       | ``string`` | Set the settings author. |
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``ins_date``     | ``string`` | Set the date the settings|
+                |                   |                 |            | were created.            |
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``upd_id``       | ``string`` | Set the settings updater.|
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``upd_date``     | ``string`` | Set the date the settings|
+                |                   |                 |            | were updated.            |
                 +-------------------+-----------------+------------+--------------------------+
 
             **Error Response Schema**
@@ -250,6 +257,7 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -264,7 +272,8 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -289,6 +298,7 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
@@ -305,11 +315,20 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 get_device_app_deploys_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:
-                    _return_get_device_app_deploys = (
-                        get_device_app_deploys_api_instance.get_device_app_deploys(
-                            path_params=_local_params
+                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    if self._config._application_id:
+                        _query_params["grant_type"] = "client_credentials"
+                        _return_get_device_app_deploys = (
+                            get_device_app_deploys_api_instance.get_device_app_deploys(
+                                path_params=_local_params, query_params=_query_params
+                            )
                         )
-                    )
+                    else:
+                        _return_get_device_app_deploys = (
+                            get_device_app_deploys_api_instance.get_device_app_deploys(
+                                path_params=_local_params
+                            )
+                        )
                     return _return_get_device_app_deploys.body
 
                 except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

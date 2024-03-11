@@ -7,3 +7,4 @@ marshmallow>=3.17.0
 nassl>=4.0
 cryptography>=36.0
 validators>=0.18
+msal>=1.22.0

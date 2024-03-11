@@ -28,6 +28,32 @@ from aitrios_console_rest_client_sdk_primitive import schemas  # noqa: F401
 from aitrios_console_rest_client_sdk_primitive.model.error_response import ErrorResponse
 from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 
+# Query params
+GrantTypeSchema = schemas.StrSchema
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 # Path params
 AppNameSchema = schemas.StrSchema
 VersionNumberSchema = schemas.StrSchema
@@ -185,6 +211,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _delete_device_app_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -198,6 +225,7 @@ class BaseApi(api_client.Api):
     def _delete_device_app_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -207,6 +235,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _delete_device_app_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -219,6 +248,7 @@ class BaseApi(api_client.Api):
 
     def _delete_device_app_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -231,6 +261,7 @@ class BaseApi(api_client.Api):
             api_response.body and api_response.headers will not be deserialized into schema
             class instances
         """
+        self._verify_typed_dict_inputs_oapg(RequestQueryParams, query_params)
         self._verify_typed_dict_inputs_oapg(RequestPathParams, path_params)
         used_path = path.value
 
@@ -247,6 +278,19 @@ class BaseApi(api_client.Api):
 
         for k, v in _path_params.items():
             used_path = used_path.replace('{%s}' % k, v)
+
+        prefix_separator_iterator = None
+        for parameter in (
+            request_query_grant_type,
+        ):
+            parameter_data = query_params.get(parameter.name, schemas.unset)
+            if parameter_data is schemas.unset:
+                continue
+            if prefix_separator_iterator is None:
+                prefix_separator_iterator = parameter.get_prefix_separator_iterator()
+            serialized_data = parameter.serialize(parameter_data, prefix_separator_iterator)
+            for serialized_value in serialized_data.values():
+                used_path += serialized_value
 
         _headers = HTTPHeaderDict()
         # TODO add cookie handling
@@ -272,7 +316,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 
@@ -283,6 +331,7 @@ class DeleteDeviceApp(BaseApi):
     @typing.overload
     def delete_device_app(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -296,6 +345,7 @@ class DeleteDeviceApp(BaseApi):
     def delete_device_app(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -305,6 +355,7 @@ class DeleteDeviceApp(BaseApi):
     @typing.overload
     def delete_device_app(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -317,6 +368,7 @@ class DeleteDeviceApp(BaseApi):
 
     def delete_device_app(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -324,6 +376,7 @@ class DeleteDeviceApp(BaseApi):
         skip_deserialization: bool = False,
     ):
         return self._delete_device_app_oapg(
+            query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,
@@ -338,6 +391,7 @@ class ApiFordelete(BaseApi):
     @typing.overload
     def delete(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -351,6 +405,7 @@ class ApiFordelete(BaseApi):
     def delete(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -360,6 +415,7 @@ class ApiFordelete(BaseApi):
     @typing.overload
     def delete(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -372,6 +428,7 @@ class ApiFordelete(BaseApi):
 
     def delete(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
@@ -379,6 +436,7 @@ class ApiFordelete(BaseApi):
         skip_deserialization: bool = False,
     ):
         return self._delete_device_app_oapg(
+            query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,

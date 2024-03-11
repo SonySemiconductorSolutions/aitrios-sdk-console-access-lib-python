@@ -30,6 +30,32 @@ from aitrios_console_rest_client_sdk_primitive.model.deploy_configuration import
 
 from . import path
 
+# Query params
+GrantTypeSchema = schemas.StrSchema
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 
 
 class SchemaFor200ResponseBodyApplicationJson(
@@ -45,7 +71,7 @@ class SchemaFor200ResponseBodyApplicationJson(
         class properties:
             
             
-            class devices(
+            class deploy_configurations(
                 schemas.ListSchema
             ):
             
@@ -58,57 +84,55 @@ class SchemaFor200ResponseBodyApplicationJson(
             
                 def __new__(
                     cls,
-                    arg: typing.Union[typing.Tuple['DeployConfiguration'], typing.List['DeployConfiguration']],
+                    _arg: typing.Union[typing.Tuple['DeployConfiguration'], typing.List['DeployConfiguration']],
                     _configuration: typing.Optional[schemas.Configuration] = None,
-                ) -> 'devices':
+                ) -> 'deploy_configurations':
                     return super().__new__(
                         cls,
-                        arg,
+                        _arg,
                         _configuration=_configuration,
                     )
             
                 def __getitem__(self, i: int) -> 'DeployConfiguration':
                     return super().__getitem__(i)
             __annotations__ = {
-                "devices": devices,
+                "deploy_configurations": deploy_configurations,
             }
     
-    deploy_configurations: schemas.AnyTypeSchema
+    deploy_configurations: MetaOapg.properties.deploy_configurations
     
     @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["devices"]) -> MetaOapg.properties.devices: ...
+    def __getitem__(self, name: typing_extensions.Literal["deploy_configurations"]) -> MetaOapg.properties.deploy_configurations: ...
     
     @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
     
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["devices", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["deploy_configurations", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
     
     
     @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["devices"]) -> typing.Union[MetaOapg.properties.devices, schemas.Unset]: ...
+    def get_item_oapg(self, name: typing_extensions.Literal["deploy_configurations"]) -> MetaOapg.properties.deploy_configurations: ...
     
     @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
     
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["devices", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["deploy_configurations", ], str]):
         return super().get_item_oapg(name)
     
 
     def __new__(
         cls,
-        *args: typing.Union[dict, frozendict.frozendict, ],
-        deploy_configurations: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader, ],
-        devices: typing.Union[MetaOapg.properties.devices, list, tuple, schemas.Unset] = schemas.unset,
+        *_args: typing.Union[dict, frozendict.frozendict, ],
+        deploy_configurations: typing.Union[MetaOapg.properties.deploy_configurations, list, tuple, ],
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            *args,
+            *_args,
             deploy_configurations=deploy_configurations,
-            devices=devices,
             _configuration=_configuration,
             **kwargs,
         )
@@ -222,6 +246,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _get_deploy_configurations_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -234,6 +259,7 @@ class BaseApi(api_client.Api):
     def _get_deploy_configurations_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -242,6 +268,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _get_deploy_configurations_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -253,6 +280,7 @@ class BaseApi(api_client.Api):
 
     def _get_deploy_configurations_oapg(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -264,7 +292,21 @@ class BaseApi(api_client.Api):
             api_response.body and api_response.headers will not be deserialized into schema
             class instances
         """
+        self._verify_typed_dict_inputs_oapg(RequestQueryParams, query_params)
         used_path = path.value
+
+        prefix_separator_iterator = None
+        for parameter in (
+            request_query_grant_type,
+        ):
+            parameter_data = query_params.get(parameter.name, schemas.unset)
+            if parameter_data is schemas.unset:
+                continue
+            if prefix_separator_iterator is None:
+                prefix_separator_iterator = parameter.get_prefix_separator_iterator()
+            serialized_data = parameter.serialize(parameter_data, prefix_separator_iterator)
+            for serialized_value in serialized_data.values():
+                used_path += serialized_value
 
         _headers = HTTPHeaderDict()
         # TODO add cookie handling
@@ -290,7 +332,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 
@@ -301,6 +347,7 @@ class GetDeployConfigurations(BaseApi):
     @typing.overload
     def get_deploy_configurations(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -313,6 +360,7 @@ class GetDeployConfigurations(BaseApi):
     def get_deploy_configurations(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -321,6 +369,7 @@ class GetDeployConfigurations(BaseApi):
     @typing.overload
     def get_deploy_configurations(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -332,12 +381,14 @@ class GetDeployConfigurations(BaseApi):
 
     def get_deploy_configurations(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
         return self._get_deploy_configurations_oapg(
+            query_params=query_params,
             accept_content_types=accept_content_types,
             stream=stream,
             timeout=timeout,
@@ -351,6 +402,7 @@ class ApiForget(BaseApi):
     @typing.overload
     def get(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -363,6 +415,7 @@ class ApiForget(BaseApi):
     def get(
         self,
         skip_deserialization: typing_extensions.Literal[True],
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -371,6 +424,7 @@ class ApiForget(BaseApi):
     @typing.overload
     def get(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
@@ -382,12 +436,14 @@ class ApiForget(BaseApi):
 
     def get(
         self,
+        query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
         return self._get_deploy_configurations_oapg(
+            query_params=query_params,
             accept_content_types=accept_content_types,
             stream=stream,
             timeout=timeout,

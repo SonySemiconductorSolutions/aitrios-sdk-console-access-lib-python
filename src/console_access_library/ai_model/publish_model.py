@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,8 @@ class SchemaPublishModel(Schema):
         required=True, error_messages={"invalid": "Invalid string for model_id"}, strict=True
     )
 
-    #: str, optional : The ID of edge AI device.
+    #: str, optional : Device ID. Specify this when the device model is the \
+    #:                  target. Do not specify this when the base model is the target.
     device_id = fields.String(
         required=False, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
@@ -93,13 +94,16 @@ class PublishModel(ConsoleAccessBaseClass):
         model_id: str,
         device_id: str = None,
     ):
-        """Provide the ability to publish transformation models. \
-        Since model import takes time, asynchronous execution is performed.
+        """Provide a function to publish a conversion model. \
+        As model publishing takes time, this is performed asynchronously. \
+        Check the processing status in the result of the GetBaseModelStatus \
+        API or GetDeviceModelStatus API response.\
+        If the result is 'Import completed', the process is completed.
 
         Args:
-            model_id (str, required) : The Model ID.
-            device_id (str, optional) : Device ID Specify when the device model is eligible.\
-                Not specified if the base model is the target. Case-sensitive.
+            model_id (str, required) : Model ID.
+            device_id (str, optional) : Device ID. Specify this when the device model is the\
+                target. Do not specify this when the base model is the target.
 
         Returns:
             **Return Type**
@@ -111,12 +115,10 @@ class PublishModel(ConsoleAccessBaseClass):
 
                 +----------------+------------+-------------------------------+
                 | *Level1*       | *Type*     | *Description*                 |
+                +================+============+===============================+
+                | ``result``     | ``string`` | Set "SUCCESS" fixing          |
                 +----------------+------------+-------------------------------+
-                | ``result``     | ``string`` | Set "SUCCESS" pinning         |
-                +----------------+------------+-------------------------------+
-                | ``import_id``  | ``string`` | Set the import_id of          |
-                |                |            | Model Import Rest API         |
-                |                |            | (model-import) response       |
+                | ``import_id``  | ``string`` | Set the conv id               |
                 +----------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -212,6 +214,7 @@ class PublishModel(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -226,7 +229,8 @@ class PublishModel(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -276,6 +280,11 @@ class PublishModel(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 ai_model_api_instance = train_model_api.TrainModelApi(api_client)
                 try:

@@ -27,6 +27,10 @@ PDFビルド環境更新
 |2023/5/26
 |version 1.0.0 修正対応
 
+|2023/12/22
+|version 1.1.0 修正対応 +
+Console Enterprise Edition対応
+
 |===
 
 == はじめに
@@ -93,6 +97,10 @@ Azure Storage リソースへの制限付きアクセス権を付与する URI
 |Client Secret
 |アクセストークン発行に必要なClient Secret
 
+|Application ID +
+ (「**Console Enterprise Edition**」利用時に必要)
+|アクセストークン発行に必要なApplication ID
+
 |===
 
 * Clientから機能毎に分類された「**Console**」のAPIを実行する
@@ -137,7 +145,7 @@ APIにtimeoutの引数がない場合にはtimeoutしない。
 *** get_inference_results / 保存済み推論結果メタデータ一覧取得
 *** export_images / 保存済み画像エクスポート
 
-* 「**Low Level SDK**」のAPIをユースケースでまとめたHigh Level APIを実行することができます。
+* 「**Low Level SDK**」のAPIをユースケースでまとめたHigh Level APIを実行できます。
 ** AI Model
 *** publish_model_wait_response / モデル発行し、完了待ち
 ** Deployment
@@ -216,6 +224,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 +
 「**Low Level SDK**」のAPIをWrapしたAPI内で、「**Console**」へのアクセスに必要なアクセストークンの取得、更新
 +
+- ConfigにApplication IDが渡された場合、Microsoft Authentication Libraryによるトークンの取得、更新
 - アクセストークンの有効期限は1時間となっており、有効期限が残り180秒以下の場合、アクセストークンの更新
 
 * 推論結果メタデータ取得開始 - 停止
@@ -230,7 +239,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 
 === API
 * Config
-** constructor(console_endpoint: str, portal_authorization_endpoint: str, client_id: str, client_secret: str)
+** constructor(console_endpoint: str, portal_authorization_endpoint: str, client_id: str, client_secret: str, application_id: str)
 
 * Client
 ** constructor(config)
@@ -240,13 +249,13 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 ** get_insight()
 
 * DeviceManagement
-** get_devices(device_id: str, device_name: str, connection_state: str, device_group_id: str)
+** get_devices(device_id: str, device_name: str, connection_state: str, device_group_id: str, device_ids:str, scope: str)
 ** start_upload_inference_result(device_id: str)
 ** stop_upload_inference_result(device_id: str)
 ** get_command_parameter_file()
 
 * AI Model
-** import_base_model(model_id: str, model: str, converted: bool, vendor_name: str, comment: str, input_format_param: str, network_config: str, network_type: str, labels: [])
+** import_base_model(model_id: str, model: str, converted: bool, vendor_name: str, comment: str, input_format_param: str, network_config: str, network_type: str, metadata_format_id: str)
 ** get_models(model_id: str, comment: str, project_name: str, model_platform: str, project_type: str, device_id: str, latest_type: str)
 ** get_base_model_status(model_id: str, latest_type: str)
 ** delete_model(model_id: str)
@@ -257,7 +266,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 *** publish_model_wait_response_callback(status: str)
 
 * Deployment
-** import_device_app(compiled_flg: str, app_name: str, version_number: str, file_name: str, file_content: str, entry_point: str, comment: str)
+** import_device_app(compiled_flg: str, app_name: str, version_number: str, file_name: str, file_content: str, entry_point: str, comment: str, schema_info:	obj)
 ** get_device_apps()
 ** delete_device_app(app_name: str, version_number: str)
 ** get_deploy_configurations()
@@ -266,14 +275,14 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 ** get_deploy_history(device_id: str)
 ** delete_deploy_configuration(config_id: str)
 ** cancel_deployment(device_id: str, deploy_id: str)
-** deploy_device_app(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str)
+** deploy_device_app(app_name: str, version_number: str, device_ids: str, comment: str)
 ** undeploy_device_app(device_ids: str)
 ** get_device_app_deploys(app_name: str, version_number: str)
 
 * Deployment High Level API
 ** deploy_by_configuration_wait_response(config_id: str, device_ids: str, replace_model_id: str, comment: str, timeout: int, callback: deploy_by_configuration_wait_response_callback)
 *** deploy_by_configuration_wait_response_callback(device_status_array: list)
-** deploy_device_app_wait_response(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str, callback: deploy_device_app_wait_response_callback)
+** deploy_device_app_wait_response(app_name: str, version_number: str, device_ids: str, comment: str, callback: deploy_device_app_wait_response_callback)
 *** deploy_device_app_wait_response_callback(device_status_array: list)
 
 * Insight
@@ -293,7 +302,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 == 操作性仕様、画面仕様
 * なし
 
-== 各BlockでのAPIパラメータ
+== APIパラメータ
 各エラーメッセージは、関数名が言語によって異なる（この資料では代表してPythonでのエラーメッセージを記載）
 
 * Config
@@ -330,6 +339,10 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 |なし +
 指定なしの場合、環境変数から読み出す
 
+|application_id
+|アクセストークン発行に必要なApplication ID
+|なし +
+指定なしの場合、環境変数から読み出す
 |===
 +
 |===
@@ -462,6 +475,19 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 |完全一致検索、大文字小文字は区別しない +
 指定なしの場合、全device_group_id検索
 
+|device_ids
+|エッジAIデバイスの所属グループ
+|複数のDevice IDをカンマで区切って指定 +
+指定なしの場合、全deviceIds検索
+
+|scope
+|エッジAIデバイスの所属グループ
+|レスポンスパラメータの範囲を指定 +
+設定値 +
+full: 完全なパラメータを返す +
+minmal: 最小限のパラメータを返す(応答速度が速い) +
+指定なしの場合、全scope検索
+
 |===
 +
 |===
@@ -496,6 +522,9 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 
 |outputSubDirectory
 |Input Image格納パス、UploadMethod:Blob Storageのみ
+
+|outputSubDirectoryIR
+|Inference Result格納パス、UploadMethodIR:Blob Storageのみ
 
 |===
 
@@ -624,9 +653,9 @@ format: フォーマット（"RGB" or "BGR"） +
 指定なしの場合、1
 
 
-|labels
-|ラベル名
-|例: ["label01","label02","label03"]
+|metadata_format_id
+|メタデータ形式ID
+|100文字以内
 
 |===
 +
@@ -914,6 +943,11 @@ format: フォーマット（"RGB" or "BGR"） +
 |「**DeviceApp**」説明
 |100文字以内 +
 指定なしの場合、コメントなし
+
+|schema_info
+|スキーマ情報
+|形式: +
+{ interfaces: { in: [{ metadataFormatId: 'formatId' }] } }
 
 |===
 +
@@ -1212,11 +1246,6 @@ _ アンダーバー +
 |カンマ区切りで複数のエッジAIデバイスのIDを指定 +
 大文字小文字を区別する
 
-|deploy_parameter
-|デプロイパラメータ
-|JsonフォーマットをBase64 Encodeされた文字列 +
-指定なしの場合、パラメータなし
-
 |comment
 |デプロイコメント
 |100文字以内 +
@@ -1409,11 +1438,6 @@ deploy_by_configuration_wait_responseのdevice_idsで指定したdevice_id分の
 |エッジAIデバイスのIDs
 |カンマ区切りで複数のエッジAIデバイスのIDを指定 +
 大文字小文字を区別する
-
-|deploy_parameter
-|デプロイパラメータ
-|JsonフォーマットをBase64 Encodeされた文字列 +
-指定なしの場合、パラメータなし
 
 |comment
 |デプロイコメント

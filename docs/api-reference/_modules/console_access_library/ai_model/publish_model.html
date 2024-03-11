@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.ai_model.publish_model &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.ai_model.publish_model &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.ai_model.publish_model</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -130,7 +130,8 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : The ID of edge AI device.</span>
+    <span class="c1">#: str, optional : Device ID. Specify this when the device model is the \</span>
+    <span class="c1">#:                  target. Do not specify this when the base model is the target.</span>
     <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -168,13 +169,16 @@
         <span class="n">model_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Provide the ability to publish transformation models. \</span>
-<span class="sd">        Since model import takes time, asynchronous execution is performed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Provide a function to publish a conversion model. \</span>
+<span class="sd">        As model publishing takes time, this is performed asynchronously. \</span>
+<span class="sd">        Check the processing status in the result of the GetBaseModelStatus \</span>
+<span class="sd">        API or GetDeviceModelStatus API response.\</span>
+<span class="sd">        If the result is &#39;Import completed&#39;, the process is completed.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            model_id (str, required) : The Model ID.</span>
-<span class="sd">            device_id (str, optional) : Device ID Specify when the device model is eligible.\</span>
-<span class="sd">                Not specified if the base model is the target. Case-sensitive.</span>
+<span class="sd">            model_id (str, required) : Model ID.</span>
+<span class="sd">            device_id (str, optional) : Device ID. Specify this when the device model is the\</span>
+<span class="sd">                target. Do not specify this when the base model is the target.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -186,12 +190,10 @@
 
 <span class="sd">                +----------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*       | *Type*     | *Description*                 |</span>
+<span class="sd">                +================+============+===============================+</span>
+<span class="sd">                | ``result``     | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +----------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result``     | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
-<span class="sd">                +----------------+------------+-------------------------------+</span>
-<span class="sd">                | ``import_id``  | ``string`` | Set the import_id of          |</span>
-<span class="sd">                |                |            | Model Import Rest API         |</span>
-<span class="sd">                |                |            | (model-import) response       |</span>
+<span class="sd">                | ``import_id``  | ``string`` | Set the conv id               |</span>
 <span class="sd">                +----------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -287,6 +289,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -301,7 +304,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -351,6 +355,11 @@
                 <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
                 <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+
+                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                    <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">ai_model_api_instance</span> <span class="o">=</span> <span class="n">train_model_api</span><span class="o">.</span><span class="n">TrainModelApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -390,7 +399,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

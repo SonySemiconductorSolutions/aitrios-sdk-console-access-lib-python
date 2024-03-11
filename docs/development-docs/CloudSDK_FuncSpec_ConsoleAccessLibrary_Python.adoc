@@ -29,6 +29,10 @@ Updated the PDF build environment
 |2023/5/26
 |Fixed parenthesis notation for tool names
 
+|2023/12/22
+|Changed for "**Cloud SDK**" 1.1.0 +
+Console Enterprise Edition support
+
 |===
 
 == Introduction
@@ -94,6 +98,10 @@ The information needed to access the "**Console**" is as follows
 
 |Client Secret
 |Client secret needed to issue an access token
+
+|Application ID +
+(Required during "**Console Enterprise Edition**" )
+|Application ID required for issuing the access token
 
 |===
 
@@ -218,6 +226,8 @@ Get an access token and generate the "**Low Level SDK**" during Client generatio
 +
 Get and update an access token needed to access the "**Console**" using an API wrapped around "**Low Level SDK**" API
 +
+When the Application ID is passed to Config, the token is obtained and updated by Microsoft Authentication Library
++
 - The access token expires in 1 hour and is renewed if it expires in less than 180 seconds.
 
 * Start to get inference result metadata - Stop
@@ -232,7 +242,7 @@ Get and update an access token needed to access the "**Console**" using an API w
 
 === API
 * Config
-** constructor(console_endpoint: str, portal_authorization_endpoint: str, client_id: str, client_secret: str)
+** constructor(console_endpoint: str, portal_authorization_endpoint: str, client_id: str, client_secret: str, application_id: str)
 
 * Client
 ** constructor(config)
@@ -242,13 +252,13 @@ Get and update an access token needed to access the "**Console**" using an API w
 ** get_insight()
 
 * DeviceManagement
-** get_devices(device_id: str, device_name: str, connection_state: str, device_group_id: str)
+** get_devices(device_id: str, device_name: str, connection_state: str, device_group_id: str, device_ids:str, scope: str)
 ** start_upload_inference_result(device_id: str)
 ** stop_upload_inference_result(device_id: str)
 ** get_command_parameter_file()
 
 * AI Model
-** import_base_model(model_id: str, model: str, converted: bool, vendor_name: str, comment: str, input_format_param: str, network_config: str, network_type: str, labels: [])
+** import_base_model(model_id: str, model: str, converted: bool, vendor_name: str, comment: str, input_format_param: str, network_config: str, network_type: str, metadata_format_id: str)
 ** get_models(model_id: str, comment: str, project_name: str, model_platform: str, project_type: str, device_id: str, latest_type: str)
 ** get_base_model_status(model_id: str, latest_type: str)
 ** delete_model(model_id: str)
@@ -259,7 +269,7 @@ Get and update an access token needed to access the "**Console**" using an API w
 *** publish_model_wait_response_callback(status: str)
 
 * Deployment
-** import_device_app(compiled_flg: str, app_name: str, version_number: str, file_name: str, file_content: str, entry_point: str, comment: str)
+** import_device_app(compiled_flg: str, app_name: str, version_number: str, file_name: str, file_content: str, entry_point: str, comment: str, schema_info: obj)
 ** get_device_apps()
 ** delete_device_app(app_name: str, version_number: str)
 ** get_deploy_configurations()
@@ -268,14 +278,14 @@ Get and update an access token needed to access the "**Console**" using an API w
 ** get_deploy_history(device_id: str)
 ** delete_deploy_configuration(config_id: str)
 ** cancel_deployment(device_id: str, deploy_id: str)
-** deploy_device_app(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str)
+** deploy_device_app(app_name: str, version_number: str, device_ids: str, comment: str)
 ** undeploy_device_app(device_ids: str)
 ** get_device_app_deploys(app_name: str, version_number: str)
 
 * Deployment High Level API
 ** deploy_by_configuration_wait_response(config_id: str, device_ids: str, replace_model_id: str, comment: str, timeout: int, callback: deploy_by_configuration_wait_response_callback)
 *** deploy_by_configuration_wait_response_callback(device_status_array: list)
-** deploy_device_app_wait_response(app_name: str, version_number: str, device_ids: str, deploy_parameter: str, comment: str, callback: deploy_device_app_wait_response_callback)
+** deploy_device_app_wait_response(app_name: str, version_number: str, device_ids: str, comment: str, callback: deploy_device_app_wait_response_callback)
 *** deploy_device_app_wait_response_callback(device_status_array: list)
 
 * Insight
@@ -331,6 +341,11 @@ If not specified, read from environment variable
 |Client secret needed to issue an access token
 |None +
 If not specified, read from environment variable
+
+|application_id
+|Application ID required to issue the access token
+|None +
+In case it is not specified, load it from the environment variables
 
 |===
 +
@@ -464,6 +479,19 @@ If not specified, search all connection_state
 |Exact match search, case insensitive +
 If not specified, search all device_group_id
 
+|device_ids
+|Group that belongs to edge AI devices
+|Specify multiple Device ID separated by comma. +
+If not specified, search all device IDs
+
+|scope
+|Group that belongs to edge AI devices 
+|Specifies the range of response parameters. +
+Setting value: +
+full: Return complete parameters. +
+minimal: Return minimum parameters (response speed is high) +
+If not specified, search entire scope
+
 |===
 +
 |===
@@ -498,6 +526,10 @@ If not specified, search all device_group_id
 
 |outputSubDirectory
 |Input image save path、UploadMethod:Blob Storage only
+
+
+|outputSubDirectoryIR
+|Inference result save path、UploadMethodIR:Blob Storage only
 
 |===
 
@@ -625,10 +657,9 @@ If not specified, do not evaluate
 1: Non Custom Vision +
 If not specified, 1
 
-
-|labels
-|Label name
-|Example: ["label01","label02","label03"]
+|metadata_format_id
+|Metadata format ID
+|Within 100 characters
 
 |===
 +
@@ -916,6 +947,12 @@ If not specified, "ppl"
 |Description of the "**DeviceApp**"
 |100 characters or less +
 If not specified, no comment
+
+|schema_info
+|Schema information
+|Format: +
+const schemaInfo = +
+{ interfaces: { in: [{ metadataFormatId: 'formatId' }] } }
 
 |===
 +
@@ -1214,11 +1251,6 @@ If not specified, no comment
 |Specify multiple edge AI device IDs separated by commas +
 Case sensitive
 
-|deploy_parameter
-|Deploy parameters
-|A Base64 encoded string in Json format +
-If not specified, no parameter
-
 |comment
 |Deployment comment
 |100 characters or less +
@@ -1411,11 +1443,6 @@ Fill in data for device_id specified by device_ids in devloy_by_configuration_wa
 |Edge AI device IDs
 |Specify multiple edge AI device IDs separated by commas +
 Case sensitive
-
-|deploy_parameter
-|Deploy parameters
-|A Base64 encoded string in Json format +
-If not specified, no parameter
 
 |comment
 |Deployment comment

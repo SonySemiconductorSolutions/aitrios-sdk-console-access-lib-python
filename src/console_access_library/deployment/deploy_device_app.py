@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,24 +57,18 @@ class SchemaDeployDeviceApp(Schema):
         required=True, error_messages={"invalid": "Invalid string for app_name"}, strict=True
     )
 
-    #: str, required : App version
+    #: str, required : App version number
     version_number = fields.String(
         required=True, error_messages={"invalid": "Invalid string for version_number"}, strict=True
     )
 
-    #: str, required : IDs of edge AI devices
+    #: str, required : Device IDs. Specify multiple device IDs separated
+    #:                  by commas.
     device_ids = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_ids"}, strict=True
     )
 
-    #: str, optional : Deployment parameters
-    deploy_parameter = fields.String(
-        required=False,
-        error_messages={"invalid": "Invalid string for deploy_parameter"},
-        strict=True,
-    )
-
-    #: str, optional : deploy comment
+    #: str, optional : Comment. Max. 100 characters.
     comment = fields.String(
         required=False, error_messages={"invalid": "Invalid string for comment"}, strict=True
     )
@@ -89,11 +83,6 @@ class SchemaDeployDeviceApp(Schema):
 
         if str(data["device_ids"]).strip() == "":
             raise ValidationError("device_ids is required or can't be empty string")
-
-        if "deploy_parameter" in data and (
-            data["deploy_parameter"] is None or str(data["deploy_parameter"]).strip() == ""
-        ):
-            raise ValidationError("deploy_parameter is required or can't be empty string")
 
         if "comment" in data and (data["comment"] is None or str(data["comment"]).strip() == ""):
             raise ValidationError("comment is required or can't be empty string")
@@ -121,21 +110,16 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
         app_name: str,
         version_number: str,
         device_ids: str,
-        deploy_parameter: str = None,
         comment: str = None,
     ):
-        """Deploy device apps.
+        """Deploy device app
 
         Args:
             app_name (str, required) : App name
-            version_number (str, required) : App version
-            device_ids (str, required) : Specify multiple device IDs separated by commas. \
-                Case-sensitive
-            deploy_parameter (str, optional) : Deployment parameters \
-                Base64 encoded string in Json format No parameters if not specified.
-            comment (str, optional) : deploy comment \
-                up to 100 characters \
-                No comment if not specified.
+            version_number (str, required) : App version number
+            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\
+                by commas.
+            comment (str, optional) : Comment. Max. 100 characters.
 
         Returns:
             **Return Type**
@@ -147,8 +131,8 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -244,6 +228,7 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -258,7 +243,8 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -271,7 +257,6 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
                 app_name = "__app_name__",
                 version_number = "__version_number__",
                 device_ids = "__device_ids__",
-                deploy_parameter = "__deploy_parameter__",
                 comment = "__comment__"
 
                 # Deployment - DeployDeviceApps
@@ -279,7 +264,6 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
                     app_name,
                     version_number,
                     device_ids,
-                    deploy_parameter,
                     comment
                 )
                 pprint(response)
@@ -289,6 +273,8 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
+
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
@@ -296,9 +282,6 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
             # set default values, if not passed.
             if "comment" in _local_params and _local_params["comment"] is None:
                 del _local_params["comment"]
-
-            if "deploy_parameter" in _local_params and _local_params["deploy_parameter"] is None:
-                del _local_params["deploy_parameter"]
 
             # Validate Schema
             _local_params = SchemaDeployDeviceApp().load(_local_params)
@@ -309,11 +292,16 @@ class DeployDeviceApp(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 deploy_device_app_api_instance = device_app_api.DeployDeviceApp(api_client)
                 try:
                     _return_deploy_device_app = deploy_device_app_api_instance.deploy_device_app(
-                        body=_local_params
+                        body=_local_params, query_params=_query_params
                     )
                     return _return_deploy_device_app.body
 

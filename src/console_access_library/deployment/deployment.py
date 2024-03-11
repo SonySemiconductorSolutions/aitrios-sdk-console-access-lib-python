@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -85,7 +85,7 @@ class Deployment(ConsoleAccessBaseClass):
         self.deploy_device_app_status_obj = DeployDeviceAppStatus
 
     def get_device_apps(self):
-        """Abstract function call to ``get_device_apps`` API
+        """Get the device app list information
 
         Returns:
             **Return Type**
@@ -97,57 +97,123 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +----------+-------------+------------+------------------------------------------+
                 | *Level1* | *Level2*    | *Type*     | *Description*                            |
+                +==========+=============+============+==========================================+
+                | ``apps`` |             | ``array``  |                                          |
                 +----------+-------------+------------+------------------------------------------+
-                | ``apps`` |             | ``array``  | App array                                |
+                |          | ``name``    | ``string`` | Set the app name.                        |
                 +----------+-------------+------------+------------------------------------------+
-                |          | ``name``    | ``string`` | App name                                 |
+                |          |``create_by``| ``string`` | Set the create_by.                       |
+                |          |             |            |                                          |
+                |          |             |            | - Value definition                       |
+                |          |             |            |                                          |
+                |          |             |            | Self: Self-training models               |
+                |          |             |            |                                          |
+                |          |             |            | Marketplace: Marketplace purchacing model|
                 +----------+-------------+------------+------------------------------------------+
-                |          | ``versions``| ``array``  | Refer :ref:`versions <element1>`         |
+                |          |``package_   | ``string`` | Set the marketplace package ID.          |
+                |          |id``         |            |                                          |
+                +----------+-------------+------------+------------------------------------------+
+                |          |``product    | ``string`` | Set the marketplace product ID.          |
+                |          |_id``        |            |                                          |
+                +----------+-------------+------------+------------------------------------------+
+                |          |``schema_    | ``array``  | Refer :ref:`schema_info <schema_info1>`  |
+                |          |info``       |            | for more details                         |
+                +----------+-------------+------------+------------------------------------------+
+                |          |``versions`` | ``array``  | Refer :ref:`versions <versions_element>` |
                 |          |             |            | for more details                         |
                 +----------+-------------+------------+------------------------------------------+
 
+
+                +-------------------+-----------------+------------+-------------------------------+
+                | schema_info       | .. _schema_info1:                                            |
+                +-------------------+-----------------+------------+-------------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*                 |
+                +===================+=================+============+===============================+
+                | ``schema_info``   |                 | ``array``  | Schema info.                  |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``VnSAppId``    | ``string`` | Set the VnS app ID            |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``version``     | ``string`` | Set the app version no.       |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``interfaces``  | ``array``  |Refer :ref:`interfaces <int1>` |
+                |                   |                 |            |for more details               |
+                +-------------------+-----------------+------------+-------------------------------+
+
+                +-------------------+-----------------+------------+-------------------------------+
+                | interfaces        | .. _int1:                                                    |
+                +-------------------+-----------------+------------+-------------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*                 |
+                +===================+=================+============+===============================+
+                | ``interfaces``    |                 | ``array``  | Set the metadata format IDs.  |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``in``          | ``array``  | Refer :ref:`in <in1>`         |
+                |                   |                 |            | for more details              |
+                +-------------------+-----------------+------------+-------------------------------+
+
+                +-------------------+-----------------+------------+-------------------------------+
+                | in                | .. _in1:                                                     |
+                +-------------------+-----------------+------------+-------------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*                 |
+                +===================+=================+============+===============================+
+                | ``in``            |                 | ``array``  |                               |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   |``metadata       | ``string`` | Set the metadata format ID.   |
+                |                   |FormatId``       |            |                               |
+                +-------------------+-----------------+------------+-------------------------------+
+
                 +-------------------+--------------------+------------+-------------------+
-                | versions          | .. _element1:                                       |
+                | versions          | .. _versions_element:                               |
                 +-------------------+--------------------+------------+-------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*     |
-                +-------------------+--------------------+------------+-------------------+
+                +===================+====================+============+===================+
                 | ``versions``      |                    | ``array``  |                   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``version``        | ``string`` |                   |
+                |                   | ``version``        | ``string`` | Set the app       |
+                |                   |                    |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``compiled_flg``   | ``string`` | 0: Uncompiled     |
-                |                   |                    |            | (compile process) |
+                |                   | ``compiled_flg``   | ``string`` | Set the compiled  |
+                |                   |                    |            | flg.              |
                 |                   |                    |            |                   |
-                |                   |                    |            | 1: Compiled (no   |
+                |                   |                    |            | - Value definition|
+                |                   |                    |            |                   |
+                |                   |                    |            | 0 : Specified App |
+                |                   |                    |            | is not compiled   |
+                |                   |                    |            |                   |
+                |                   |                    |            | 1 : Specified App |
+                |                   |                    |            | is compiled       |
+                +-------------------+--------------------+------------+-------------------+
+                |                   | ``status``         | ``string`` | Set the status.   |
+                |                   |                    |            |                   |
+                |                   |                    |            | - Value definition|
+                |                   |                    |            |                   |
+                |                   |                    |            | 0: before         |
                 |                   |                    |            | compilation       |
-                |                   |                    |            | process)          |
-                +-------------------+--------------------+------------+-------------------+
-                |                   | ``status``         | ``string`` | 0: Before         |
+                |                   |                    |            |                   |
+                |                   |                    |            | 1: during         |
                 |                   |                    |            | compilation       |
                 |                   |                    |            |                   |
-                |                   |                    |            | 1: Compiling      |
+                |                   |                    |            | 2: successful     |
                 |                   |                    |            |                   |
-                |                   |                    |            | 2: Successful     |
-                |                   |                    |            |                   |
-                |                   |                    |            | 3: Failed         |
+                |                   |                    |            | 3: failed         |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``comment``        | ``string`` |                   |
+                |                   | ``comment``        | ``string`` | Set the comment.  |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``deploy_count``   | ``string`` |                   |
+                |                   | ``deploy_count``   | ``string`` | Set the deploy    |
+                |                   |                    |            | count.            |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``ins_id``        |``string``  | App Version       |
-                |                   |                    |            | Author            |
+                |                   |  ``ins_id``        |``string``  | Set the settings  |
+                |                   |                    |            | author.           |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``ins_date``      |``string``  | Date and time the |
-                |                   |                    |            | app version was   |
-                |                   |                    |            | created           |
+                |                   |  ``ins_date``      |``string``  | Set the date the  |
+                |                   |                    |            | settings were     |
+                |                   |                    |            | created.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``upd_id``        |``string``  | App version       |
-                |                   |                    |            | updated by        |
+                |                   |  ``upd_id``        |``string``  | Set the settings  |
+                |                   |                    |            | updater.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``upd_date``      |``string``  | Date and time the |
-                |                   |                    |            | app version was   |
-                |                   |                    |            | updated           |
+                |                   |  ``upd_date``      |``string``  | Set the date the  |
+                |                   |                    |            | settings were     |
+                |                   |                    |            | updated.          |
                 +-------------------+--------------------+------------+-------------------+
 
             **Error Response Schema**
@@ -226,11 +292,11 @@ class Deployment(ConsoleAccessBaseClass):
         return self._get_device_apps_obj.get_device_apps()
 
     def delete_device_app(self, app_name: str, version_number: str):
-        """Abstract function call to ``delete_device_app`` API
+        """Delete device app
 
         Args:
-            app_name (str, required): DeviceApp name
-            version_number (str, required): DeviceApp version
+            app_name (str, required): App name
+            version_number (str, required): App version number
 
         Returns:
             **Return Type**
@@ -242,8 +308,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -333,36 +399,53 @@ class Deployment(ConsoleAccessBaseClass):
         file_content: str,
         entry_point: str = None,
         comment: str = None,
+        schema_info: dict = None
     ):
-        """Abstract function call to ``import_device_app`` API
+        """Import Device app
 
         Args:
-            compiled_flg (str, required): Compile flags.
+            compiled_flg (str, required): Set the compiled flg.
 
-                - 0: Not compiled (perform compilation)
-                - 1: Compiled (Do not compile)
+                - Value definition
 
-            app_name (str, required): DeviceApp name. The maximum number of \
-                characters is app_name + version_number ⇐31. Characters other than the \
-                following are forbidden characters
+                    - 0 : Specified App is not compiled
+                    - 1 : Specified App is compiled
 
-                    - Alphanumeric
-                    - Underbar
+            app_name (str, required): App name.
+                Allow only the following characters.
+
+                    - Alphanumeric characters
+                    - Under bar
                     - Dot
 
-            version_number (str, required): DeviceApp version. The maximum number of \
-                characters is app_name + version_number ⇐31. Characters other than the \
-                following are forbidden characters
+                The maximum number of characters is app_name + version_number <=31.
 
-                    - Alphanumeric
-                    - Underbar
+            version_number (str, required): App version number.
+                Allow only the following characters.
+
+                    - Alphanumeric characters
+                    - Under bar
                     - Dot
 
-            comment (str, optional): DeviceApp Description. up to 100 characters \
-                No comment if not specified.
-            file_name (str, required): DeviceApp file name.
-            file_content (str, required): Contents of DeviceApp file. Base64 encoded string.
-            entry_point (str, optional): EVP module entry point. "ppl" if not specified.
+                The maximum number of characters is app_name + version_number <=31.
+
+            comment (str, optional): Comment. Max. 100 characters.
+            file_name (str, required): filename.
+            file_content (str, required): App file content in base64 encoding.
+            entry_point (str, optional): App entry point.
+            schema_info (dict, optional) : Schema info. Example:
+
+                .. code-block:: console
+
+                    {
+                        interfaces: {
+                            in:
+                            [
+                                { metadataFormatId: "string_value1"},
+                                { metadataFormatId: "string_value2"}
+                            ]
+                        }
+                    }
 
         Returns:
             **Return Type**
@@ -374,8 +457,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -452,11 +535,12 @@ class Deployment(ConsoleAccessBaseClass):
                     - ``datetime`` (str) : Time
         """
         return self._import_device_app_obj.import_device_app(
-            compiled_flg, app_name, version_number, file_name, file_content, entry_point, comment
+            compiled_flg, app_name, version_number, file_name, file_content,
+            entry_point, comment, schema_info
         )
 
     def get_deploy_configurations(self):
-        """Abstract function call to ``get_deploy_configurations`` API
+        """Get the deploy config list
 
         Returns:
             **Return Type**
@@ -468,26 +552,26 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +-----------------+------------+------------+---------------------------------+
                 | *Level1*        | *Level2*   | *Type*     | *Description*                   |
+                +=================+============+============+=================================+
+                |``deploy_        |            | ``array``  |                                 |
+                |configurations`` |            |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |``deploy_        |            | ``array``  | Ascending order of              |
-                |configurations`` |            |            | config_id                       |
-                +-----------------+------------+------------+---------------------------------+
-                |                 |``config_   | ``string`` |                                 |
+                |                 |``config_   | ``string`` | Set the config ID.              |
                 |                 |id``        |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``device_   | ``string`` |                                 |
+                |                 |``device_   | ``string`` | Set the device type.            |
                 |                 |type``      |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``config_   | ``string`` |                                 |
+                |                 |``config_   | ``string`` | Set the config comment.         |
                 |                 |comment``   |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``running_  | ``int``    |                                 |
+                |                 |``running_  | ``integer``| Set the running cnt.            |
                 |                 |cnt``       |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``success_  | ``int``    |                                 |
+                |                 |``success_  | ``integer``| Set the success cnt.            |
                 |                 |cnt``       |            |                                 |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``fail_cnt``| ``int``    |                                 |
+                |                 |``fail_cnt``| ``integer``| Set the fail cnt.               |
                 +-----------------+------------+------------+---------------------------------+
                 |                 |``firmware``| ``array``  | Refer :ref:`firmware <f9>`      |
                 |                 |            |            | for more details                |
@@ -495,131 +579,72 @@ class Deployment(ConsoleAccessBaseClass):
                 |                 |``model``   | ``array``  | Refer :ref:`model <mm>`         |
                 |                 |            |            | for more details                |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``custom_   | ``array``  | Refer :ref:`custom_setting <cc>`|
-                |                 |setting``   |            | for more details                |
+                |                 |``ins_id``  | ``string`` | Set the deployment author.      |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``ins_id``  | ``string`` |                                 |
+                |                 |``ins_date``| ``string`` | Set the date the deployment     |
+                |                 |            |            | was created.                    |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``ins_date``| ``string`` |                                 |
+                |                 |``upd_id``  | ``string`` | Set the deployment updater.     |
                 +-----------------+------------+------------+---------------------------------+
-                |                 |``upd_id``  | ``string`` |                                 |
-                +-----------------+------------+------------+---------------------------------+
-                |                 |``upd_date``| ``string`` |                                 |
+                |                 |``upd_date``| ``string`` | Set the date the deployment     |
+                |                 |            |            | was updated.                    |
                 +-----------------+------------+------------+---------------------------------+
 
                 +-------------------+--------------------+------------+-------------------+
                 | firmware          | .. _f9:                                             |
                 +-------------------+--------------------+------------+-------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*     |
-                +-------------------+--------------------+------------+-------------------+
+                +===================+====================+============+===================+
                 | ``firmware``      |                    | ``array``  |                   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_loader_    | ``string`` |                   |
-                |                   |file_name``         |            |                   |
+                |                   |``sensor_loader_    | ``string`` | Set the sensor    |
+                |                   |file_name``         |            | loader filename.  |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_loader_    | ``string`` |                   |
-                |                   |version_number``    |            |                   |
+                |                   |``sensor_loader_    | ``string`` | Set the sensor    |
+                |                   |version_number``    |            | loader version    |
+                |                   |                    |            | number.           |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_loader_    | ``string`` |                   |
-                |                   |firmware_comment``  |            |                   |
+                |                   |``sensor_loader_    | ``string`` | Set the sensor    |
+                |                   |firmware_comment``  |            | loader firmware   |
+                |                   |                    |            | comment.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_file_name``| ``string`` |                   |
+                |                   |``sensor_file_name``| ``string`` | Set the sensor    |
+                |                   |                    |            | filename.         |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_           | ``string`` |                   |
-                |                   |version_number``    |            |                   |
+                |                   |``sensor_           | ``string`` | Set the sensor    |
+                |                   |version_number``    |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``sensor_           |``string``  |                   |
-                |                   |firmware_comment``  |            |                   |
+                |                   |``sensor_           |``string``  | Set the sensor    |
+                |                   |firmware_comment``  |            | firmware comment. |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``apfw_file_name``  |``string``  |                   |
+                |                   |``apfw_file_name``  |``string``  | Set the apfw      |
+                |                   |                    |            | filename.         |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``apfw_version_     |``string``  |                   |
-                |                   |number``            |            |                   |
+                |                   |``apfw_version_     |``string``  | Set the apfw      |
+                |                   |number``            |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``apfw_firmware_    |``string``  |                   |
-                |                   |comment``           |            |                   |
+                |                   |``apfw_firmware_    |``string``  | Set the apfw      |
+                |                   |comment``           |            | firmware comment. |
                 +-------------------+--------------------+------------+-------------------+
 
                 +-------------------+--------------------+------------+-------------------+
                 | model             | .. _mm:                                             |
                 +-------------------+--------------------+------------+-------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*     |
-                +-------------------+--------------------+------------+-------------------+
+                +===================+====================+============+===================+
                 | ``model``         |                    | ``array``  |                   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``model_id``       | ``string`` |                   |
+                |                   | ``model_id``       | ``string`` | Set the model ID. |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``model_            | ``string`` |                   |
-                |                   |version_number``    |            |                   |
+                |                   |``model_            | ``string`` | Set the model     |
+                |                   |version_number``    |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``model_comment``  | ``string`` |                   |
+                |                   | ``model_comment``  | ``string`` | Set the model     |
+                |                   |                    |            | comment.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |``model_            | ``string`` |                   |
-                |                   |version_comment``   |            |                   |
+                |                   |``model_            | ``string`` | Set the model     |
+                |                   |version_comment``   |            | version comment.  |
                 +-------------------+--------------------+------------+-------------------+
-
-                +--------------+--------------------+------------+---------------+
-                |custom_setting| .. _cc:                                         |
-                +--------------+--------------------+------------+---------------+
-                | *Level1*     | *Level2*           | *Type*     | *Description* |
-                +--------------+--------------------+------------+---------------+
-                |``custom_     |                    | ``array``  |               |
-                |setting``     |                    |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``color_matrix_     |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``color_matrix_     | ``string`` |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``color_matrix_     |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``gamma_            |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``gamma_            |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``gamma_            |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscisp_           |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscisp_           |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscisp_           |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscraw_           |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscraw_           |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``lscraw_           |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``prewb_            |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``prewb_            |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``prewb_            |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``dewarp_           |``string``  |               |
-                |              |mode``              |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``dewarp_           |``string``  |               |
-                |              |file_name``         |            |               |
-                +--------------+--------------------+------------+---------------+
-                |              |``dewarp_           |``string``  |               |
-                |              |comment``           |            |               |
-                +--------------+--------------------+------------+---------------+
 
             **Error Response Schema**
 
@@ -697,10 +722,10 @@ class Deployment(ConsoleAccessBaseClass):
         return self._get_deploy_configurations_obj.get_deploy_configurations()
 
     def get_deploy_history(self, device_id: str):
-        """Abstract function call to ``get_deploy_history`` API
+        """Get the deploy history for a specified device
 
         Args:
-            device_id (str, required): ID of Edge AI device.
+            device_id (str, required): Device ID.
 
         Returns:
             **Return Type**
@@ -712,401 +737,176 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +----------+----------------------+------------+-------------------------------+
                 | *Level1* | *Level2*             | *Type*     | *Description*                 |
+                +==========+======================+============+===============================+
+                |``deploy  |                      | ``array``  |                               |
+                |s``       |                      |            |                               |
                 +----------+----------------------+------------+-------------------------------+
-                |``deploy``|                      | ``array``  | Descending order of           |
-                |          |                      |            | ins_date                      |
+                |          | ``id``               | ``integer``| Deploy ID.                    |
                 +----------+----------------------+------------+-------------------------------+
-                |          | ``id``               | ``number`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          | ``deploy_type``      | ``string`` | 0: Deployment configuration   |
+                |          | ``deploy_type``      | ``string`` | Set the deploy type.          |
+                |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
-                |          |                      |            | 1: Device model, App:DeviceApp|
+                |          |                      |            | 0: Deploy config              |
+                |          |                      |            |                               |
+                |          |                      |            | 1: Device model               |
+                |          |                      |            |                               |
+                |          |                      |            | App: DeviceApp                |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``deploy_status``     | ``string`` | Total deployment status       |
-                |          |                      |            | including other devices       |
+                |          |``deploy_status``     | ``string`` | Set the deploy status. Target |
+                |          |                      |            | device deployment status.     |
+                |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
                 |          |                      |            | 0: Deploying                  |
                 |          |                      |            |                               |
-                |          |                      |            | 1: Succeeding                 |
+                |          |                      |            | 1: Success                    |
                 |          |                      |            |                               |
-                |          |                      |            | 2: failed                     |
+                |          |                      |            | 2: Fail                       |
                 |          |                      |            |                               |
-                |          |                      |            | 3: canceled                   |
+                |          |                      |            | 3: Cancel                     |
                 |          |                      |            |                               |
-                |          |                      |            | 9: DeviceApp Undeploy         |
+                |          |                      |            | App: DeviceApp undeploy       |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``deploy_comment``    | ``string`` |                               |
+                |          |``update_progress``   | ``string`` | Set the update progress in    |
+                |          |                      |            | percentage.                   |
                 +----------+----------------------+------------+-------------------------------+
-                |          |  ``config_id``       | ``string`` |                               |
+                |          |``deploy_comment``    | ``string`` | Set the deploy comment.       |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``replace_network_id``| ``string`` |                               |
+                |          |  ``config_id``       | ``string`` | Set the deploy config ID.     |
                 +----------+----------------------+------------+-------------------------------+
-                |          | ``current_target``   | ``string`` |                               |
+                |          |``replace_network_id``| ``string`` | Set the replace network ID.   |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``total_status``      | ``string`` | Total deployment status       |
-                |          |                      |            | including other devices       |
+                |          | ``current_target``   | ``string`` | Set the current target.       |
+                +----------+----------------------+------------+-------------------------------+
+                |          |``total_status``      | ``string`` | Set the deploy status.        |
+                |          |                      |            | Total status of devices       |
+                |          |                      |            | deployed together.            |
+                |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
                 |          |                      |            | 0: Deploying                  |
                 |          |                      |            |                               |
-                |          |                      |            | 1: Succeeding                 |
+                |          |                      |            | 1: Success                    |
                 |          |                      |            |                               |
-                |          |                      |            | 2: failed                     |
+                |          |                      |            | 2: Fail                       |
                 |          |                      |            |                               |
-                |          |                      |            | 3: canceled                   |
-                |          |                      |            |                               |
-                |          |                      |            | 9: DeviceApp Undeploy         |
+                |          |                      |            | 3: Cancel                     |
+                +----------+----------------------+------------+-------------------------------+
+                |          | ``app_name``         | ``string`` | Set the app name.             |
+                +----------+----------------------+------------+-------------------------------+
+                |          | ``version_number``   | ``string`` | Set the version number.       |
                 +----------+----------------------+------------+-------------------------------+
                 |          | ``firmware``         | ``array``  |Refer :ref:`firmware <f7>`     |
                 |          |                      |            |for more details               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |  ``model``           | ``array``  |Refer :ref:`model <m7>`        |
-                |          |                      |            |for more details               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``custom_setting``    | ``array``  |Refer :ref:`custom_setting <s>`|
-                |          |                      |            |for more details               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``ins_id``            | ``string`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``ins_date``          | ``string`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``upd_id``            | ``string`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``upd_date``          | ``string`` |                               |
                 +----------+----------------------+------------+-------------------------------+
 
                 +------------+--------------------+------------+-----------------------------------+
                 | firmware   | .. _f7:                                                             |
                 +------------+--------------------+------------+-----------------------------------+
                 | *Level1*   | *Level2*           | *Type*     | *Description*                     |
-                +------------+--------------------+------------+-----------------------------------+
+                +============+====================+============+===================================+
                 |``firmware``|                    | ``array``  |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    | ``string`` | 0: Not eligible                   |
-                |            |target_flg``        |            |                                   |
-                |            |                    |            | 1: Eligible                       |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  | 0: Waiting to run                 |
-                |            |status``            |            |                                   |
-                |            |                    |            | 1: Running                        |
+                |            |``sensor_loader_    | ``string`` | Set the deploy target flg.        |
+                |            |target_flg``        |            | - Value definition                |
                 |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
+                |            |                    |            | 0: Not for deployment             |
                 |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
+                |            |                    |            | 1: Deployment target              |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
+                |            |``sensor_loader_    |``string``  | Set the deploy status.            |
+                |            |status``            |            | - Value definition                |
+                |            |                    |            |                                   |
+                |            |                    |            | 0: Waiting                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 1: Deploying                      |
+                |            |                    |            |                                   |
+                |            |                    |            | 2: Success                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 3: Fail                           |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``sensor_loader_    |``integer`` | Set the sensor loader retry count.|
                 |            |retry_count``       |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
+                |            |``sensor_loader_    |``string``  | Set the sensor loader start date. |
                 |            |start_date``        |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    | ``string`` |                                   |
+                |            |``sensor_loader_    | ``string`` | Set the sensor loader end date.   |
                 |            |end_date``          |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
-                |            |version_number``    |            |                                   |
+                |            |``sensor_loader_    |``string``  | Set the sensor loader version     |
+                |            |version_number``    |            | number.                           |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
-                |            |version_comment``   |            |                                   |
+                |            |``sensor_loader_    |``string``  | Set the sensor loader version     |
+                |            |version_comment``   |            | comment.                          |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_target_    |``string``  | 0: Not eligible                   |
-                |            |flg``               |            |                                   |
-                |            |                    |            | 1: Eligible                       |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_status``   | ``string`` | 0: Waiting to run                 |
+                |            |``sensor_target_    |``string``  | Set the deploy target flg.        |
+                |            |flg``               |            | - Value definition                |
                 |            |                    |            |                                   |
-                |            |                    |            | 1: Running                        |
+                |            |                    |            | 0: Not for deployment             |
                 |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
-                |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
+                |            |                    |            | 1: Deployment target              |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_retry_     |``string``  |                                   |
+                |            |``sensor_status``   | ``string`` | Set the deploy status.            |
+                |            |                    |            |                                   |
+                |            |                    |            | - Value definition                |
+                |            |                    |            |                                   |
+                |            |                    |            | 0: Waiting                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 1: Deploying                      |
+                |            |                    |            |                                   |
+                |            |                    |            | 2: Success                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 3: Fail                           |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``sensor_retry_     |``integer`` | Set the sensor retry count.       |
                 |            |count``             |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_start_     |``string``  |                                   |
+                |            |``sensor_start_     |``string``  | Set the sensor start date.        |
                 |            |date``              |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_end_date`` |``string``  |                                   |
+                |            |``sensor_end_date`` |``string``  | Set the sensor end date.          |
                 |            |                    |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_version_   |``string``  |                                   |
+                |            |``sensor_version_   |``string``  | Set the sensor version number.    |
                 |            |number``            |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_version_   |``string``  |                                   |
+                |            |``sensor_version_   |``string``  | Set the sensor version comment.   |
                 |            |comment``           |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_target_flg`` |``string``  | 0: Not eligible                   |
+                |            |``apfw_target_flg`` |``string``  | Set the deploy target flg.        |
                 |            |                    |            |                                   |
-                |            |                    |            | 1: Eligible                       |
+                |            |                    |            |- Value definition                 |
+                |            |                    |            |                                   |
+                |            |                    |            | 0: Not for deployment             |
+                |            |                    |            |                                   |
+                |            |                    |            | 1: Deployment target              |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_status``     |``string``  | 0: Waiting to run                 |
+                |            |``apfw_status``     |``string``  | Set the deploy status.            |
                 |            |                    |            |                                   |
-                |            |                    |            | 1: Running                        |
+                |            |                    |            | - Value definition                |
                 |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
+                |            |                    |            | 0: Waiting                        |
                 |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
+                |            |                    |            | 1: Deploying                      |
+                |            |                    |            |                                   |
+                |            |                    |            | 2: Success                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 3: Fail                           |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_retry_count``|``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_start_date`` |``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_end_date``   |``string``  |                                   |
+                |            |``apfw_retry_count``|``integer`` | Set the appfw retry count.        |
                 |            |                    |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_version_     |``string``  |                                   |
+                |            |``apfw_start_date`` |``string``  | Set the appfw start date.         |
+                |            |                    |            |                                   |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``apfw_end_date``   |``string``  | Set the appfw end date.           |
+                |            |                    |            |                                   |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``apfw_version_     |``string``  | Set the appfw version number.     |
                 |            |number``            |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_version_     |``string``  |                                   |
+                |            |``apfw_version_     |``string``  | Set the appfw version comment.    |
                 |            |comment``           |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-
-                +------------+--------------------+------------+-----------------------------------+
-                | model      | .. _m7:                                                             |
-                +------------+--------------------+------------+-----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                     |
-                +------------+--------------------+------------+-----------------------------------+
-                |``model``   |                    | ``array``  |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_target_flg``| ``string`` | 0: Not eligible                   |
-                |            |                    |            |                                   |
-                |            |                    |            | 1: Eligible                       |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_status``    |``string``  | 0: Waiting to run                 |
-                |            |                    |            |                                   |
-                |            |                    |            | 1: Running                        |
-                |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
-                |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_retry_      |``string``  |                                   |
-                |            |count``             |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_start_date``|``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_end_date``  | ``string`` |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_id``        |``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_version_    |``string``  |                                   |
-                |            |number``            |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_comment``   |``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_version_    | ``string`` |                                   |
-                |            |comment``           |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_set    |``string``  |                                   |
-                |            |ting_target_flg``   |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_       |``string``  |                                   |
-                |            |settingstatus``     |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_sett   |``string``  |                                   |
-                |            |ing_retry_count``   |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_set    |``string``  |                                   |
-                |            |ting_start_date``   |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_set    |``string``  |                                   |
-                |            |ting_end_date``     |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-
-                +--------------+--------------------+------------+---------------------------------+
-                |custom_setting| .. _s:                                                            |
-                +--------------+--------------------+------------+---------------------------------+
-                | *Level1*     | *Level2*           | *Type*     | *Description*                   |
-                +--------------+--------------------+------------+---------------------------------+
-                |``custom_     |                    | ``array``  |                                 |
-                |setting``     |                    |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
 
             **Error Response Schema**
 
@@ -1184,11 +984,11 @@ class Deployment(ConsoleAccessBaseClass):
         return self._get_deploy_history_obj.get_deploy_history(device_id=device_id)
 
     def get_device_app_deploys(self, app_name: str, version_number: str):
-        """Abstract function call to ``get_device_app_deploys`` API
+        """Get Device App Deploys
 
         Args:
             app_name (str, required): App name
-            version_number (str, required): Version Number.
+            version_number (str, required): App version number.
 
         Returns:
             **Return Type**
@@ -1200,61 +1000,68 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +-----------+--------------------+-----------+---------------------------+
                 | *Level1*  | *Level2*           | *Type*    | *Description*             |
+                +===========+====================+===========+===========================+
+                |``deploys``|                    | ``array`` |                           |
                 +-----------+--------------------+-----------+---------------------------+
-                |``deploy`` |                    | ``array`` | Descending order of       |
-                |           |                    |           | ins_date                  |
+                |           | ``id``             | ``number``| Set the deploy id.        |
                 +-----------+--------------------+-----------+---------------------------+
-                |           | ``id``             | ``number``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           | ``total_status``   | ``string``| 0: Running                |
+                |           | ``total_status``   | ``string``| Set the total status.     |
                 |           |                    |           |                           |
-                |           |                    |           | 1: Normal completion      |
+                |           |                    |           | - Value definition        |
                 |           |                    |           |                           |
-                |           |                    |           | 2: Failure                |
+                |           |                    |           | 0: Running                |
                 |           |                    |           |                           |
-                |           |                    |           | 3: Cancellation           |
+                |           |                    |           | 1: Successfully completed |
+                |           |                    |           |                           |
+                |           |                    |           | 2: Failed                 |
+                |           |                    |           |                           |
+                |           |                    |           | 3: Canceled               |
                 +-----------+--------------------+-----------+---------------------------+
-                |           |``deploy_parameter``| ``dict``  |                           |
+                |           |``deploy_parameter``| ``string``| Set the deploy parameter. |
                 +-----------+--------------------+-----------+---------------------------+
                 |           |``devices``         | ``array`` | Refer :ref:`devices <d2>` |
                 |           |                    |           | for more details          |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``ins_id``          | ``string``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``ins_date``        | ``string``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``upd_id``          | ``string``|                           |
-                +-----------+--------------------+-----------+---------------------------+
-                |           |``upd_date``        | ``string``|                           |
                 +-----------+--------------------+-----------+---------------------------+
 
                 +-------------------+-----------------+-----------+---------------------------+
                 | devices           | .. _d2:                                                 |
                 +-------------------+-----------------+------------+--------------------------+
                 | *Level1*          | *Level2*        | *Type*     | *Description*            |
+                +===================+=================+============+==========================+
+                |``devices``        |                 | ``array``  |                          |
                 +-------------------+-----------------+------------+--------------------------+
-                |``devices``        |                 | ``array``  | Ascending order of       |
-                |                   |                 |            | device IDs               |
+                |                   |``device_id``    | ``string`` | Set the device id.       |
                 +-------------------+-----------------+------------+--------------------------+
-                |                   |``device_id``    | ``string`` |                          |
-                +-------------------+-----------------+------------+--------------------------+
-                |                   |``status``       | ``string`` | 0: Running               |
+                |                   |``status``       | ``string`` | Set the total status.    |
                 |                   |                 |            |                          |
-                |                   |                 |            | 1: Successful            |
+                |                   |                 |            | - Value definition       |
+                |                   |                 |            |                          |
+                |                   |                 |            | 0: Running               |
+                |                   |                 |            |                          |
+                |                   |                 |            | 1: Successfully completed|
                 |                   |                 |            |                          |
                 |                   |                 |            | 2: Failed                |
                 |                   |                 |            |                          |
                 |                   |                 |            | 3: Canceled              |
-                |                   |                 |            |                          |
-                |                   |                 |            | Cancellation supplement  |
-                |                   |                 |            | During deployment, if    |
-                |                   |                 |            | the device is deleted,it |
-                |                   |                 |            | will be in this status   |
                 +-------------------+-----------------+------------+--------------------------+
-                |                   |``latest_        | ``string`` | 0: Not Latest            |
+                |                   |``latest_        | ``string`` | Set the deployment flg.  |
                 |                   |deployment_flg`` |            |                          |
+                |                   |                 |            | - Value definition       |
                 |                   |                 |            |                          |
-                |                   |                 |            | 1: Latest                |
+                |                   |                 |            | 0: Old deployment history|
+                |                   |                 |            |                          |
+                |                   |                 |            | 1: Recent deployment     |
+                |                   |                 |            | history                  |
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``ins_id``       | ``string`` | Set the settings author. |
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``ins_date``     | ``string`` | Set the date the settings|
+                |                   |                 |            | were created.            |
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``upd_id``       | ``string`` | Set the settings updater.|
+                +-------------------+-----------------+------------+--------------------------+
+                |                   |``upd_date``     | ``string`` | Set the date the settings|
+                |                   |                 |            | were updated.            |
                 +-------------------+-----------------+------------+--------------------------+
 
             **Error Response Schema**
@@ -1345,27 +1152,24 @@ class Deployment(ConsoleAccessBaseClass):
         model_version_number: str = None,
         ap_fw_version_number: str = None,
     ):
-        """Abstract function call to ``create_deploy_configuration`` API
+        """Register the deploy config information to deploy to the following devices. \
+        ・Firmware ・AI model
 
         Args:
-            config_id (str, required) : config ID \
-                up to 20 characters half-width only
-            comment (str, optional) : Config Description \
-                up to 100 characters No comment if not specified
-            sensor_loader_version_number (str, optional) : SensorLoader version number \
-                When -1 is specified, the default version (system\
-                setting "DVC0017") is applied\
-                If not specified, no SensorLoader deployment
-            sensor_version_number (str, optional) : Sensor version number\
-                When -1 is specified, the default version (system \
-                setting "DVC0018") is applied\
-                No Sensor deployment if not specified
-            model_id (str, optional) : Model ID \
-                If not specified, no model deployment
-            model_version_number (str, optional) : Model version number \
-                If not specified, the latest version is applied.
-            ap_fw_version_number (str, optional) : ApFw version number\
-                If not specified, no firmware deployment
+            config_id (str, required) : Max. 20 single characters, single-byte characters only. \
+                The following characters are allowed \
+                Alphanumeric characters \
+                -hyphen \
+                _ Underscore \
+                () Small parentheses \
+                . dot
+            comment (str, optional) : Max. 100 characters. Default : "".
+            sensor_loader_version_number (str, optional) : Sensor loader version number.
+                Default is "".
+            sensor_version_number (str, optional) : Sensor version number. Default is "".
+            model_id (str, optional) : The model_id.
+            model_version_number (str, optional) : The Model version number. Default: "".
+            ap_fw_version_number (str, optional) : The ApFw version number. Default : "".
 
         Returns:
             **Return Type**
@@ -1377,8 +1181,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -1469,21 +1273,16 @@ class Deployment(ConsoleAccessBaseClass):
         app_name: str,
         version_number: str,
         device_ids: str,
-        deploy_parameter: str = None,
         comment: str = None,
     ):
-        """Abstract function call to ``deploy_device_app`` API
+        """Deploy device app
 
         Args:
-            app_name (str, required) : App Name.
-            version_number (str, required) : Version Number.
-            device_ids (str, required) : IDs of edge AI devices \
-                Specify multiple device IDs of edge AI devices separated by comma.
-            deploy_parameter (str, optional) : The Deployment parameters. \
-                (JSON format) The contents are Base64 encoded strings.\
-                No parameters if not specified
-            comment (str, optional) : deploy comment\
-                up to 100 characters No comment if not specified
+            app_name (str, required) : App name
+            version_number (str, required) : App version number
+            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\
+                by commas.
+            comment (str, optional) : Comment. Max. 100 characters.
 
         Returns:
             **Return Type**
@@ -1495,8 +1294,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -1573,7 +1372,7 @@ class Deployment(ConsoleAccessBaseClass):
                     - ``datetime`` (str) : Time
         """
         return self._deploy_device_app_obj.deploy_device_app(
-            app_name, version_number, device_ids, deploy_parameter, comment
+            app_name, version_number, device_ids, comment
         )
 
     def deploy_by_configuration(
@@ -1583,20 +1382,18 @@ class Deployment(ConsoleAccessBaseClass):
         replace_model_id: str = None,
         comment: str = None,
     ):
-        """Abstract function call to ``deploy_by_configuration`` API
+        """Provide a function for deploying the following to devices \
+            specified with deploy config\
+            ・Firmware\
+            ・AI model
 
         Args:
-            config_id (str, required) : config ID
-            device_ids (str, required) : IDs of edge AI devices \
-            Specify multiple device IDs of edge AI devices separated by comma.
-            replace_model_id (str, optional) : Replacement target model ID.\
-                Specify "model_id" or "network_id"\
-                If the specified model ID does not exist in the DB, treat the\
-                input value as network_id (console internal\
-                management ID) and perform processing\
-                If not specified, do not replace.
-            comment (str, optional) : deploy comment\
-                up to 100 characters No comment if not specified
+            config_id (str, required) : Setting ID
+            device_ids (str, required) : Specify multiple device IDs separated by commas.
+            replace_model_id (str, optional) : Specify the model ID or network_id.\
+                If the model with the specified model ID does not exist in the database,\
+                treat the entered value as the network_id and process it. Default : "".
+            comment (str, optional) : Max 100 characters. Default : "".
 
         Returns:
             **Return Type**
@@ -1608,8 +1405,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -1694,12 +1491,11 @@ class Deployment(ConsoleAccessBaseClass):
         device_id: str,
         deploy_id: str,
     ):
-        """Abstract function call to ``cancel_deployment`` API
+        """Force cancellation of the device deployment status
 
         Args:
-            device_id (str, required) : ID of edge AI device.
-            deploy_id (str, required) : Deploy ID \
-                id that can be obtained with get_deploy_history
+            device_id (str, required) : Device ID.
+            deploy_id (str, required) : Deploy ID.
 
         Returns:
             **Return Type**
@@ -1711,8 +1507,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -1793,10 +1589,10 @@ class Deployment(ConsoleAccessBaseClass):
         return self._cancel_deployment_obj.cancel_deployment(device_id, deploy_id)
 
     def delete_deploy_configuration(self, config_id: str):
-        """Abstract function call to ``delete_deploy_configuration`` API
+        """Delete the information for a specified deploy config
 
         Args:
-            config_id (str, required): config Id
+            config_id (str, required): Config ID
 
         Returns:
             **Return Type**
@@ -1808,8 +1604,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -1891,10 +1687,10 @@ class Deployment(ConsoleAccessBaseClass):
         )
 
     def undeploy_device_app(self, device_ids: str):
-        """Abstract function call to ``undeploy_device_app`` API
+        """Undeploy device app
 
         Args:
-            device_ids (str, required): Multiple IDs of edge AI devices separated by commas.
+            device_ids (str, required): Device IDs.
 
         Returns:
             **Return Type**
@@ -1906,8 +1702,8 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -1991,22 +1787,17 @@ class Deployment(ConsoleAccessBaseClass):
         app_name: str,
         version_number: str,
         device_ids: str,
-        deploy_parameter: str = None,
         comment: str = None,
         callback=None,
     ):
-        """Abstract function call to ``deploy_device_app_wait_response`` API
+        """Deploy and wait for completion
 
         Args:
             app_name (str, required) : App name
-            version_number (str, required) : App version
-            device_ids (str, required) : IDs of edge AI devices \
-                Specify multiple device IDs separated by commas
-            deploy_parameter (str, optional) : Deployment parameters \
-                Base64 encoded string in Json format No parameters if not specified.
-            comment (str, optional) : deploy comment \
-                up to 100 characters \
-                No comment if not specified.
+            version_number (str, required) : App version number
+            device_ids (str, required) : Device IDS. Specify multiple device IDs separated\
+                by commas.
+            comment (str, optional) : Comment. Max. 100 characters.
             callback (function, optional) : A function handle of the form - \
                 ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\
                 is the array of the dictionary for each device :
@@ -2044,7 +1835,7 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +-------------------+-------------------+------------+----------------------------+
                 | *Level1*          | *Level2*          | *Type*     | *Description*              |
-                +-------------------+-------------------+------------+----------------------------+
+                +===================+===================+============+============================+
                 | ``No_item_name``  |                   | ``array``  | deploy device app          |
                 |                   |                   |            | wait response array        |
                 +-------------------+-------------------+------------+----------------------------+
@@ -2129,7 +1920,7 @@ class Deployment(ConsoleAccessBaseClass):
                     - ``datetime`` (str) : Time
         """
         return self._deploy_device_app_wait_response_obj.deploy_device_app_wait_response(
-            app_name, version_number, device_ids, deploy_parameter, comment, callback
+            app_name, version_number, device_ids, comment, callback
         )
 
     def deploy_by_configuration_wait_response(
@@ -2141,15 +1932,16 @@ class Deployment(ConsoleAccessBaseClass):
         timeout: int = None,
         callback=None,
     ):
-        """Abstract function call to ``deploy_by_configuration_wait_response`` API
+        """Provides a function to deploy the following to the device specified from the
+        deployment config.
 
         Args:
-            config_id (str, required) : Configuration ID.
-            device_ids (str, required) : Device ID. Specify multiple device IDs separated by commas.
-            replace_model_id (str, optional) : Model ID to be replaced. Specify "Model ID" or \
-                "network_id". If the specified model ID does not exist in the DB, the \
-                entered value is regarded as a network_id and processed is performed.
-            comment (str, optional) : Deploy comment.
+            config_id (str, required) : Setting ID
+            device_ids (str, required) : Specify multiple device IDs separated by commas.
+            replace_model_id (str, optional) : Specify the model ID or network_id.\
+                If the model with the specified model ID does not exist in the database,\
+                treat the entered value as the network_id and process it. Default : "".
+            comment (str, optional) : Max 100 characters. Default : "".
             timeout (int, optional) : Timeout waiting for completion. There are cases where the \
                 edge AI device hangs up during the deployment process,\
                 so there are cases where the process remains in progress,\
@@ -2183,7 +1975,7 @@ class Deployment(ConsoleAccessBaseClass):
 
                 +-------------------+-------------------+------------+----------------------------+
                 | *Level1*          | *Level2*          | *Type*     | *Description*              |
-                +-------------------+-------------------+------------+----------------------------+
+                +===================+===================+============+============================+
                 | ``No_item_name``  |                   | ``array``  | deploy by configuration    |
                 |                   |                   |            | wait response array        |
                 +-------------------+-------------------+------------+----------------------------+

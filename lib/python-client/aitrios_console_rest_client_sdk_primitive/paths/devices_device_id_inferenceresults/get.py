@@ -32,6 +32,7 @@ from aitrios_console_rest_client_sdk_primitive.model.inference_result import Inf
 from . import path
 
 # Query params
+GrantTypeSchema = schemas.StrSchema
 NumberOfInferenceresultsSchema = schemas.IntSchema
 FilterSchema = schemas.StrSchema
 RawSchema = schemas.IntSchema
@@ -44,6 +45,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
         'NumberOfInferenceresults': typing.Union[NumberOfInferenceresultsSchema, decimal.Decimal, int, ],
         'filter': typing.Union[FilterSchema, str, ],
         'raw': typing.Union[RawSchema, decimal.Decimal, int, ],
@@ -57,6 +59,12 @@ class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams)
     pass
 
 
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 request_query_number_of_inferenceresults = api_client.QueryParameter(
     name="NumberOfInferenceresults",
     style=api_client.ParameterStyle.FORM,
@@ -152,12 +160,12 @@ class SchemaFor200ResponseBodyApplicationJson(
                     
                         def __new__(
                             cls,
-                            arg: typing.Union[typing.Tuple['Inference'], typing.List['Inference']],
+                            _arg: typing.Union[typing.Tuple['Inference'], typing.List['Inference']],
                             _configuration: typing.Optional[schemas.Configuration] = None,
                         ) -> 'inferences':
                             return super().__new__(
                                 cls,
-                                arg,
+                                _arg,
                                 _configuration=_configuration,
                             )
                     
@@ -253,7 +261,7 @@ class SchemaFor200ResponseBodyApplicationJson(
         
             def __new__(
                 cls,
-                *args: typing.Union[dict, frozendict.frozendict, ],
+                *_args: typing.Union[dict, frozendict.frozendict, ],
                 id: typing.Union[MetaOapg.properties.id, str, schemas.Unset] = schemas.unset,
                 device_id: typing.Union[MetaOapg.properties.device_id, str, schemas.Unset] = schemas.unset,
                 model_id: typing.Union[MetaOapg.properties.model_id, str, schemas.Unset] = schemas.unset,
@@ -269,7 +277,7 @@ class SchemaFor200ResponseBodyApplicationJson(
             ) -> 'items':
                 return super().__new__(
                     cls,
-                    *args,
+                    *_args,
                     id=id,
                     device_id=device_id,
                     model_id=model_id,
@@ -286,12 +294,12 @@ class SchemaFor200ResponseBodyApplicationJson(
 
     def __new__(
         cls,
-        arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
+        _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
         _configuration: typing.Optional[schemas.Configuration] = None,
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            arg,
+            _arg,
             _configuration=_configuration,
         )
 
@@ -496,6 +504,7 @@ class BaseApi(api_client.Api):
 
         prefix_separator_iterator = None
         for parameter in (
+            request_query_grant_type,
             request_query_number_of_inferenceresults,
             request_query_filter,
             request_query_raw,
@@ -534,7 +543,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 
