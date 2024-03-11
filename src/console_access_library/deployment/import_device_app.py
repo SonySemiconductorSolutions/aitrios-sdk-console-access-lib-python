@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,53 +52,57 @@ class SchemaImportDeviceApp(Schema):
     """
 
     #: str, required : compile flags.
-    #:                  0: Not compiled (perform compilation)
-    #:                  1: Compiled (Do not compile)
+    #:                  0: Specified App is not compiled
+    #:                  1: Specified App is compiled
     compiled_flg = fields.String(
         required=True, error_messages={"invalid": "Invalid string for compiled_flg"}, strict=True
     )
 
-    #: str, required : DeviceApp name. The maximum number of characters is app_name
-    #:                  + version_number 31. Characters other than the following are
-    #:                  forbidden characters, strict=True
+    #: str, required :  App name. Allow only the following characters.
     #:
-    #:                  ・Alphanumeric
-    #:                  ・Underbar
-    #:                  ・Dot
+    #:                  - Alphanumeric characters
+    #:                  - Under bar
+    #:                  - Dot
+    #:
+    #:                  The maximum number of characters is app_name + version_number <=31.
     app_name = fields.String(
         required=True, error_messages={"invalid": "Invalid string for app_name"}, strict=True
     )
 
-    #: str, required : DeviceApp version.The maximum number of characters is app_name
-    #:                 + version_number 31. Characters other than the following are
-    #:                 forbidden characters
+    #: str, required : App version number. Allow only the following characters.
     #:
-    #:                  ・Alphanumeric
-    #:                  ・Underbar
-    #:                  ・Dot
+    #:                  - Alphanumeric characters
+    #:                  - Under bar
+    #:                  - Dot
+    #:
+    #:                  The maximum number of characters is app_name + version_number <=31.
     version_number = fields.String(
         required=True, error_messages={"invalid": "Invalid string for version_number"}, strict=True
     )
 
-    #: str, optional : DeviceApp Description. Up to 100 characters.
-    #:                  No comment if not specified
+    #: str, optional : Comment. Max. 100 characters.
     comment = fields.String(
         required=False, error_messages={"invalid": "Invalid string for comment"}, strict=True
     )
 
-    #: str, required : DeviceApp file name.
+    #: str, required : filename.
     file_name = fields.String(
         required=True, error_messages={"invalid": "Invalid string for file_name"}, strict=True
     )
 
-    #: str, required : Contents of DeviceApp file. Base64 encoded string.
+    #: str, required : App file content in base64 encoding.
     file_content = fields.String(
         required=True, error_messages={"invalid": "Invalid string for file_content"}
     )
 
-    #: str, optional : EVP module entry point. "ppl" if not specified.
+    #: str, optional : App entry point.
     entry_point = fields.String(
         required=False, error_messages={"invalid": "Invalid string for entry_point"}, strict=True
+    )
+
+    #: dict, optional : Schema Info.
+    schema_info = fields.Dict(
+        required=False, error_messages={"invalid": "Invalid string for schema_info"}, strict=True
     )
 
     @validates_schema
@@ -139,6 +143,11 @@ class SchemaImportDeviceApp(Schema):
         ):
             raise ValidationError("entry_point is required or can't be empty string")
 
+        if "schema_info" in data and (
+            data["schema_info"] is None or not data["schema_info"]
+        ):
+            raise ValidationError("schema_info is required or can't be empty dict")
+
 
 class ImportDeviceApp(ConsoleAccessBaseClass):
     """This class implements API to sign and import device apps.
@@ -166,36 +175,52 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
         file_content: str,
         entry_point: str = None,
         comment: str = None,
+        schema_info: dict = None
     ):
-        """Import DeviceApp
+        """Import Device app
 
-        Args:
-            compiled_flg (str, required): Specify compile FLG Value definition
+            compiled_flg (str, required): Set the compiled flg.
 
-                - 0: Uncompiled (compile process)
-                - 1: Compiled (no compilation process)
+                - Value definition
 
-            app_name (str, required): DeviceApp name. The maximum number of \
-                characters is app_name + version_number ⇐31. Characters other than the \
-                following are forbidden characters
+                    - 0 : Specified App is not compiled
+                    - 1 : Specified App is compiled
 
-                    - Alphanumeric
-                    - Underbar
+            app_name (str, required): App name.
+                Allow only the following characters.
+
+                    - Alphanumeric characters
+                    - Under bar
                     - Dot
 
-            version_number (str, required): DeviceApp version. The maximum number of \
-                characters is app_name + version_number ⇐31. Characters other than the \
-                following are forbidden characters
+                The maximum number of characters is app_name + version_number <=31.
 
-                    - Alphanumeric
-                    - Underbar
+            version_number (str, required): App version number.
+                Allow only the following characters.
+
+                    - Alphanumeric characters
+                    - Under bar
                     - Dot
 
-            comment (str, optional): DeviceApp Description. up to 100 characters \
-                No comment if not specified.
-            file_name (str, required): DeviceApp file name.
-            file_content (str, required): Contents of DeviceApp file. Base64 encoded string.
-            entry_point (str, optional): EVP module entry point. "ppl" if not specified.
+                The maximum number of characters is app_name + version_number <=31.
+
+            comment (str, optional): Comment. Max. 100 characters.
+            file_name (str, required): filename.
+            file_content (str, required): App file content in base64 encoding.
+            entry_point (str, optional): App entry point.
+            schema_info (dict, optional) : Schema info. Example:
+
+                .. code-block:: console
+
+                    {
+                        interfaces: {
+                            in:
+                            [
+                                { metadataFormatId: "string_value1"},
+                                { metadataFormatId: "string_value2"}
+                            ]
+                        }
+                    }
 
         Returns:
             **Return Type**
@@ -207,8 +232,8 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -304,6 +329,7 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -318,7 +344,8 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -335,6 +362,7 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
                 file_content =  "__file_content__"
                 entry_point =  "__entry_point__"
                 comment =  "__comment__"
+                schema_info = "__schema_info__"
 
                 # Deployment - ImportDeviceApp
                 response = deployment_obj.import_device_app(
@@ -344,7 +372,8 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
                     file_name,
                     file_content,
                     entry_point,
-                    comment
+                    comment,
+                    schema_info
                 )
                 pprint(response)
         """
@@ -353,16 +382,20 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
 
             # set default values, if not passed.
             if "entry_point" in _local_params and _local_params["entry_point"] is None:
-                _local_params["entry_point"] = "ppl"
+                del _local_params["entry_point"]
 
             if "comment" in _local_params and _local_params["comment"] is None:
                 del _local_params["comment"]
+
+            if "schema_info" in _local_params and _local_params["schema_info"] is None:
+                del _local_params["schema_info"]
 
             # Validate schema
             _body_params = SchemaImportDeviceApp().load(_local_params)
@@ -387,9 +420,16 @@ class ImportDeviceApp(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 manage_devices_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:
-                    _return_import_device_app = manage_devices_api_instance.import_device_app(
-                        body=_body_params
-                    )
+                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    if self._config._application_id:
+                        _query_params["grant_type"] = "client_credentials"
+                        _return_import_device_app = manage_devices_api_instance.import_device_app(
+                            body=_body_params, query_params=_query_params
+                        )
+                    else:
+                        _return_import_device_app = manage_devices_api_instance.import_device_app(
+                            body=_body_params
+                        )
                     return _return_import_device_app.body
 
                 except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

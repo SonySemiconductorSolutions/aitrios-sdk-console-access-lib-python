@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestCommandParameterFiles(ApiTestMixin, unittest.TestCase):
     """
     CommandParameterFiles unit test stubs
-        GetCommandParameter  # noqa: E501
+        GetCommandParameterFile  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

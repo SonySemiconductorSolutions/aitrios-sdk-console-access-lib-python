@@ -1,4 +1,4 @@
-<a name="__pageTop"></a>
+<a id="__pageTop"></a>
 # aitrios_console_rest_client_sdk_primitive.apis.tags.deploy_api.DeployApi
 
 All URIs are relative to *http://localhost*
@@ -13,12 +13,12 @@ Method | HTTP request | Description
 [**get_deploy_history**](#get_deploy_history) | **get** /devices/{device_id}/deploys | GetDeployHistory
 
 # **cancel_deployment**
-<a name="cancel_deployment"></a>
+<a id="cancel_deployment"></a>
 > SuccessResponse cancel_deployment(device_iddeploy_id)
 
 CancelDeployment
 
-Cancel_Deployment .
+Force cancellation of the device deployment status.
 
 ### Example
 
@@ -44,10 +44,31 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'device_id': "device_id_example",
         'deploy_id': "deploy_id_example",
     }
+    query_params = {
+    }
     try:
         # CancelDeployment
         api_response = api_instance.cancel_deployment(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeployApi->cancel_deployment: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'device_id': "device_id_example",
+        'deploy_id': "deploy_id_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # CancelDeployment
+        api_response = api_instance.cancel_deployment(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -57,11 +78,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -73,21 +110,17 @@ deploy_id | DeployIdSchema | |
 
 # DeviceIdSchema
 
-Device Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Device Id | 
+str,  | str,  |  | 
 
 # DeployIdSchema
 
-Deploy Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Deploy Id | 
+str,  | str,  |  | 
 
 ### Return Types, Responses
 
@@ -186,12 +219,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **create_deploy_configuration**
-<a name="create_deploy_configuration"></a>
+<a id="create_deploy_configuration"></a>
 > SuccessResponse create_deploy_configuration(config_id)
 
 CreateDeployConfiguration
 
-Create Deploy Configuration.
+Register the deploy config information to deploy to the following devices. - Firmware - AI model
 
 ### Example
 
@@ -227,12 +260,13 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
     # example passing only optional values
     query_params = {
+        'grant_type': "client_credentials",
         'config_id': "config_id_example",
         'comment': "",
         'sensor_loader_version_number': "",
         'sensor_version_number': "",
         'model_id': "",
-        'model_version_number': "",
+        'model_version_number': "Latest",
         'ap_fw_version_number': "",
     }
     try:
@@ -259,6 +293,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 config_id | ConfigIdSchema | | 
 comment | CommentSchema | | optional
 sensor_loader_version_number | SensorLoaderVersionNumberSchema | | optional
@@ -268,32 +303,33 @@ model_version_number | ModelVersionNumberSchema | | optional
 ap_fw_version_number | ApFwVersionNumberSchema | | optional
 
 
-# ConfigIdSchema
-
-Config ID
+# GrantTypeSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Config ID | 
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
+
+# ConfigIdSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | 
 
 # CommentSchema
 
-Comment
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Comment | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # SensorLoaderVersionNumberSchema
 
-Sensor loader version number
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Sensor loader version number | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # SensorVersionNumberSchema
 
@@ -306,30 +342,24 @@ str,  | str,  | Sensor version number | if omitted the server will use the defau
 
 # ModelIdSchema
 
-Model id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Model id | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # ModelVersionNumberSchema
 
-Model version number
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Model version number | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of "Latest"
 
 # ApFwVersionNumberSchema
 
-Ap fw version number
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Ap fw version number | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 ### Return Types, Responses
 
@@ -428,12 +458,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **delete_deploy_configuration**
-<a name="delete_deploy_configuration"></a>
+<a id="delete_deploy_configuration"></a>
 > SuccessResponse delete_deploy_configuration(config_id)
 
 DeleteDeployConfiguration
 
-Delete Deploy Configuration.
+Delete the information for a specified deploy config.
 
 ### Example
 
@@ -458,10 +488,30 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     path_params = {
         'config_id': "config_id_example",
     }
+    query_params = {
+    }
     try:
         # DeleteDeployConfiguration
         api_response = api_instance.delete_deploy_configuration(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeployApi->delete_deploy_configuration: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'config_id': "config_id_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # DeleteDeployConfiguration
+        api_response = api_instance.delete_deploy_configuration(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -471,11 +521,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -486,12 +552,10 @@ config_id | ConfigIdSchema | |
 
 # ConfigIdSchema
 
-Config ID
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Config ID | 
+str,  | str,  |  | 
 
 ### Return Types, Responses
 
@@ -590,12 +654,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **deploy_by_configuration**
-<a name="deploy_by_configuration"></a>
+<a id="deploy_by_configuration"></a>
 > SuccessResponse deploy_by_configuration(config_iddevice_ids)
 
 DeployByConfiguration
 
-Deploy By Configuration.
+   Provide a function for deploying the following to devices specified with deploy config.    - Firmware    - AI model
 
 ### Example
 
@@ -638,6 +702,7 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'config_id': "config_id_example",
     }
     query_params = {
+        'grant_type': "client_credentials",
         'device_ids': "device_ids_example",
         'replace_model_id': "",
         'comment': "",
@@ -668,37 +733,39 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
 device_ids | DeviceIdsSchema | | 
 replace_model_id | ReplaceModelIdSchema | | optional
 comment | CommentSchema | | optional
 
 
-# DeviceIdsSchema
-
-Device Ids
+# GrantTypeSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Device Ids | 
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
+
+# DeviceIdsSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | 
 
 # ReplaceModelIdSchema
 
-Replace Model Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Replace Model Id | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 # CommentSchema
 
-Comment
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Comment | if omitted the server will use the default value of ""
+str,  | str,  |  | if omitted the server will use the default value of ""
 
 ### path_params
 #### RequestPathParams
@@ -709,12 +776,10 @@ config_id | ConfigIdSchema | |
 
 # ConfigIdSchema
 
-Config Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Config Id | 
+str,  | str,  |  | 
 
 ### Return Types, Responses
 
@@ -813,12 +878,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_deploy_configurations**
-<a name="get_deploy_configurations"></a>
+<a id="get_deploy_configurations"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_deploy_configurations()
 
 GetDeployConfigurations
 
-Get Deploy Configurations.
+Get the deploy config list.
 
 ### Example
 
@@ -839,16 +904,43 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     # Create an instance of the API class
     api_instance = deploy_api.DeployApi(api_client)
 
-    # example, this endpoint has no required or optional parameters
+    # example passing only optional values
+    query_params = {
+        'grant_type': "client_credentials",
+    }
     try:
         # GetDeployConfigurations
-        api_response = api_instance.get_deploy_configurations()
+        api_response = api_instance.get_deploy_configurations(
+            query_params=query_params,
+        )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
         print("Exception when calling DeployApi->get_deploy_configurations: %s\n" % e)
 ```
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
+accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### Return Types, Responses
 
@@ -878,11 +970,10 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**deploy_configurations** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
-**[devices](#devices)** | list, tuple,  | tuple,  |  | [optional] 
+**[deploy_configurations](#deploy_configurations)** | list, tuple,  | tuple,  |  | 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
-# devices
+# deploy_configurations
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
@@ -953,12 +1044,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **get_deploy_history**
-<a name="get_deploy_history"></a>
+<a id="get_deploy_history"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} get_deploy_history(device_id)
 
 GetDeployHistory
 
-Get Deploy History.
+Get the deploy history for a specified device.
 
 ### Example
 
@@ -983,10 +1074,30 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     path_params = {
         'device_id': "device_id_example",
     }
+    query_params = {
+    }
     try:
         # GetDeployHistory
         api_response = api_instance.get_deploy_history(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeployApi->get_deploy_history: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'device_id': "device_id_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # GetDeployHistory
+        api_response = api_instance.get_deploy_history(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -996,11 +1107,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -1011,12 +1138,10 @@ device_id | DeviceIdSchema | |
 
 # DeviceIdSchema
 
-Device Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Device Id | 
+str,  | str,  |  | 
 
 ### Return Types, Responses
 

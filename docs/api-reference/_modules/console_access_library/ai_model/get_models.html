@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.ai_model.get_models &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.ai_model.get_models &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.ai_model.get_models</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -130,22 +130,32 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Model Description.</span>
+    <span class="c1">#: str, optional : Model description.</span>
     <span class="n">comment</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Project Name.</span>
+    <span class="c1">#: str, optional : Project name.</span>
     <span class="n">project_name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for project_name&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Model Platform.</span>
+    <span class="c1">#: str, optional : Model platform.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                   - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                      - 0 : Custom Vision</span>
+    <span class="c1">#:                      - 1 : Non Custom Vision</span>
     <span class="n">model_platform</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for model_platform&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
     <span class="c1">#: str, optional : Project Type.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                     - 0 : Base model</span>
+    <span class="c1">#:                     - 1 : Device model</span>
     <span class="n">project_type</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for project_type&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -156,6 +166,15 @@
     <span class="p">)</span>
 
     <span class="c1">#: str, optional : Latest version type.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                     - 0: Latest published version</span>
+    <span class="c1">#:                     - 1: Latest version (latest including model version being</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                       converted/published)</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  default: 1</span>
     <span class="n">latest_type</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for latest_type&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -221,41 +240,37 @@
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">latest_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get model information list</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the model list information</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            model_id (str, optional) : Model ID. Partial search \</span>
-<span class="sd">                If not specified, all model_id searches.</span>
-<span class="sd">            comment (str, optional) : Model Description. Partial search \</span>
-<span class="sd">                If not specified, search all comments.</span>
-<span class="sd">            project_name(str, optional) : Project Name. Partial search \</span>
-<span class="sd">                Search all project_name if not specified.</span>
+<span class="sd">            model_id (str, optional) : Model ID. Partial match search</span>
+<span class="sd">            comment (str, optional) : Model description. Partial match search</span>
+<span class="sd">            project_name(str, optional) : Project name. Partial match search</span>
 <span class="sd">            model_platform(str, optional) : Model platform</span>
 
-<span class="sd">                - 0 : Custom Vision</span>
-<span class="sd">                - 1 : Non Custom Vision</span>
-<span class="sd">                - 2 : Model Retrainer</span>
+<span class="sd">                - Value definition</span>
 
-<span class="sd">                Exact search, If not specified, search all model_platforms.</span>
+<span class="sd">                    - 0 : Custom Vision</span>
+<span class="sd">                    - 1 : Non Custom Vision</span>
 
 <span class="sd">            project_type (str, optional) : Project Type.</span>
 
-<span class="sd">                - 0 : Base</span>
-<span class="sd">                - 1 : Device</span>
+<span class="sd">                - Value definition</span>
 
-<span class="sd">                Exact search, Search all project_types if not specified.</span>
+<span class="sd">                    - 0 : Base model</span>
+<span class="sd">                    - 1 : Device model</span>
 
 <span class="sd">            device_id (str, optional) : Device Id. \</span>
-<span class="sd">                Specify when you want to search for device models. \</span>
-<span class="sd">                Exact match search criteria. Case-sensitive.</span>
 
 <span class="sd">            latest_type (str, optional) : Latest version type.</span>
 
-<span class="sd">                - 0 : latest published version</span>
-<span class="sd">                - 1 : Latest version (latest including model version in process of \</span>
-<span class="sd">                conversion/publishing)</span>
+<span class="sd">                - Value definition</span>
 
-<span class="sd">                Exact search, 1 if not specified.</span>
+<span class="sd">                    - 0 : latest published version</span>
+<span class="sd">                    - 1 : Latest version (latest including model version being \</span>
+<span class="sd">                    converted/published)</span>
+
+<span class="sd">                default: 1</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -267,24 +282,33 @@
 
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Level2*          | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
-<span class="sd">                | ``models`` |                   | ``array``  | The subordinate elements are  |</span>
-<span class="sd">                |            |                   |            | listed in ascending order of  |</span>
-<span class="sd">                |            |                   |            | model ID                      |</span>
+<span class="sd">                +============+===================+============+===============================+</span>
+<span class="sd">                | ``models`` |                   | ``array``  |                               |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
 <span class="sd">                |            | ``model_id``      | ``string`` | Set the model ID              |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
-<span class="sd">                |            | ``device_type``   | ``string`` | Set the model type            |</span>
+<span class="sd">                |            | ``model_type``    | ``string`` | Set the model type            |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
-<span class="sd">                |            | ``functionality`` | ``string`` | Set the feature description   |</span>
+<span class="sd">                |            | ``functionality`` | ``string`` | Set the feature descriptions  |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
 <span class="sd">                |            | ``vendor_name``   | ``string`` | Set the vendor name           |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
 <span class="sd">                |            | ``model_comment`` | ``string`` | Set the description           |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
-<span class="sd">                |            | ``network_type``  | ``string`` | 0: Custom Vision              |</span>
-<span class="sd">                |            |                   |            |                               |</span>
-<span class="sd">                |            |                   |            | 1: Non Custom Vision          |</span>
+<span class="sd">                |            | ``network_type``  | ``string`` | Set the network type.         |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``create_by``     | ``string`` | Set the create_by.            |</span>
+<span class="sd">                |            |                   |            | - Value definition            |</span>
+<span class="sd">                |            |                   |            | Self: Self-training models    |</span>
+<span class="sd">                |            |                   |            | Marketplace: Marketplace      |</span>
+<span class="sd">                |            |                   |            | purchacing model              |</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``package_id``    | ``string`` | Set the marketplace package ID|</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            | ``product_id``    | ``string`` | Set the marketplace product ID|</span>
+<span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
+<span class="sd">                |            |``metadata_format_ | ``string`` | Set the metadata_format_id.   |</span>
+<span class="sd">                |            |id``               |            |                               |</span>
 <span class="sd">                +------------+-------------------+------------+-------------------------------+</span>
 <span class="sd">                |            | ``projects``      | ``array``  | Refer :ref:`projects &lt;p1&gt;`    |</span>
 <span class="sd">                |            |                   |            | for more details              |</span>
@@ -294,22 +318,22 @@
 <span class="sd">                | projects   | .. _p1:                                                             |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                     |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |``projects``|                    | ``array``  |The subordinate elements are listed|</span>
-<span class="sd">                |            |                    |            |in ascending order of project type |</span>
-<span class="sd">                |            |                    |            |and model project name.            |</span>
+<span class="sd">                +============+====================+============+===================================+</span>
+<span class="sd">                |``projects``|                    | ``array``  |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``model_project_    | ``string`` |Set the model project name         |</span>
 <span class="sd">                |            |name``              |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_platform``  |``string``  |Set up the model platform          |</span>
+<span class="sd">                |            |``model_project_    | ``string`` |Set the model project id           |</span>
+<span class="sd">                |            |id``                |            |                                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_platform``  |``string``  |Set the model platform             |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``model_type``      |``string``  |Set the model type                 |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``project_type``    |``string``  |Set the project type               |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``device_id``       |``string``  |Set the device ID * This is not an |</span>
-<span class="sd">                |            |                    |            |internal ID                        |</span>
+<span class="sd">                |            |``device_id``       |``string``  |Set the device ID                  |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``versions``        |``array``   |Refer :ref:`versions &lt;v1&gt;`         |</span>
 <span class="sd">                |            |                    |            |for more details                   |</span>
@@ -319,10 +343,9 @@
 <span class="sd">                | versions   | .. _v1:                                                             |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                | *Level1*   | *Level2*           | *Type*     | *Description*                     |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |``versions``|                    | ``array``  |Although it is a subordinate       |</span>
-<span class="sd">                |            |                    |            |element, in the case of this API,  |</span>
-<span class="sd">                |            |                    |            |there is always one.               |</span>
+<span class="sd">                +============+====================+============+===================================+</span>
+<span class="sd">                |``versions``|                    | ``array``  |There must be one subordinate      |</span>
+<span class="sd">                |            |                    |            |element for this API.              |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``version_number``  | ``string`` |Set the version number             |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
@@ -330,14 +353,17 @@
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``iteration_name``  |``string``  |Set the iteration name             |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``accuracy``        |``string``  |Set the precision                  |</span>
+<span class="sd">                |            |``accuracy``        |``string``  |Set the accuracy                   |</span>
+<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
+<span class="sd">                |            |``model_performan   |``object``  |Set the performance information    |</span>
+<span class="sd">                |            |ces``               |            |of the model.                      |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``latest_flg``      |``string``  |Set the latest flag                |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``publish_latest    |``string``  |Set the latest published flag      |</span>
 <span class="sd">                |            |_flg``              |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``version_status``  |``string``  |Set your status                    |</span>
+<span class="sd">                |            |``version_status``  |``string``  |Set the status                     |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
 <span class="sd">                |            |                    |            |&#39;01&#39;: &#39;Before conversion&#39;          |</span>
 <span class="sd">                |            |                    |            |                                   |</span>
@@ -357,20 +383,20 @@
 <span class="sd">                |            |                    |            |&#39;11&#39;: &#39;Saving&#39; Model saving        |</span>
 <span class="sd">                |            |                    |            |status in Model Retrainer case     |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``org_file_name``   |``string``  |Set the file name of the model     |</span>
-<span class="sd">                |            |                    |            |before conversion                  |</span>
+<span class="sd">                |            |``org_file_name``   |``string``  |Set the preconversion model        |</span>
+<span class="sd">                |            |                    |            |filename.                          |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``org_file_size``   |``integer`` |Set the publishing model file size |</span>
+<span class="sd">                |            |``org_file_size``   |``integer`` |Set the publish model file size    |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``publish_file_     |``string``  |Set the publishing model file name |</span>
+<span class="sd">                |            |``publish_file_     |``string``  |Set the publish model filename     |</span>
 <span class="sd">                |            |name``              |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``publish_file_     |``integer`` |Set the publishing model file size |</span>
+<span class="sd">                |            |``publish_file_     |``integer`` |Set the publish model file size    |</span>
 <span class="sd">                |            |size``              |            |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``model_file_size`` |``integer`` |Set the model file size            |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``model_framework`` |``string``  |Set up the model framework         |</span>
+<span class="sd">                |            |``model_framework`` |``string``  |Set the model framework            |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``conv_id``         |``string``  |Set the conversion request ID      |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
@@ -378,25 +404,7 @@
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 <span class="sd">                |            |``stage``           |``string``  |Set the conversion stage           |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``result``          |``string``  |Set the conversion result          |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``convert_start_    |``string``  |Set the conversion start date and  |</span>
-<span class="sd">                |            |date``              |            |time                               |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``convert_end_date``|``string``  |Set the conversion end date and    |</span>
-<span class="sd">                |            |                    |            |time                               |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``publish_start     |``string``  |Set the publish start date and time|</span>
-<span class="sd">                |            |_date``             |            |                                   |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``publish_end_date``|``string``  |Set the publication end date and   |</span>
-<span class="sd">                |            |                    |            |time                               |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``version_comment`` |``string``  |Set the description                |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``version_ins_date``|``date``    |Set the version creation time      |</span>
-<span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
-<span class="sd">                |            |``version_upd_date``|``date``    |Set the version creation time      |</span>
+<span class="sd">                |            |``kpi``             |``array``   |                                   |</span>
 <span class="sd">                +------------+--------------------+------------+-----------------------------------+</span>
 
 <span class="sd">           **Error Response Schema**</span>
@@ -492,6 +500,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -506,9 +515,9 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
-
 <span class="sd">                # Instantiate Console Access Library Client.</span>
 <span class="sd">                client_obj = Client(config_obj)</span>
 
@@ -567,6 +576,11 @@
                 <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
                 <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+
+                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                    <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">manage_devices_api_instance</span> <span class="o">=</span> <span class="n">train_model_api</span><span class="o">.</span><span class="n">TrainModelApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -604,7 +618,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

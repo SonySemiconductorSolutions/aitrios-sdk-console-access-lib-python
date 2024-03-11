@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.delete_device_app &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.deployment.delete_device_app &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.deployment.delete_device_app</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -121,12 +121,12 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, required : DeviceApp name</span>
+    <span class="c1">#: str, required : App name</span>
     <span class="n">app_name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for app_name&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, required : DeviceApp version</span>
+    <span class="c1">#: str, required : App version number</span>
     <span class="n">version_number</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for version_number&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -159,11 +159,11 @@
 
     <span class="c1"># pylint:disable=unused-argument</span>
 <div class="viewcode-block" id="DeleteDeviceApp.delete_device_app"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.delete_device_app.DeleteDeviceApp.delete_device_app">[docs]</a>    <span class="k">def</span> <span class="nf">delete_device_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete the device app.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete device app</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            app_name (str, required): DeviceApp name</span>
-<span class="sd">            version_number (str, required): DeviceApp version</span>
+<span class="sd">            app_name (str, required): App name</span>
+<span class="sd">            version_number (str, required): App version number</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -175,8 +175,8 @@
 
 <span class="sd">                +------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*   | *Type*     | *Description*                 |</span>
-<span class="sd">                +------------+------------+-------------------------------+</span>
-<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; pinning         |</span>
+<span class="sd">                +============+============+===============================+</span>
+<span class="sd">                | ``result`` | ``string`` | Set &quot;SUCCESS&quot; fixing          |</span>
 <span class="sd">                +------------+------------+-------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -272,6 +272,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;.</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -286,7 +287,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -308,6 +310,7 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">_local_params</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="n">_query_params</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="c1"># delete local argument &#39;self&#39; form locals() for validation.</span>
             <span class="k">if</span> <span class="s2">&quot;self&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
                 <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span>
@@ -324,9 +327,18 @@
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">delete_device_app_api_instance</span> <span class="o">=</span> <span class="n">device_app_api</span><span class="o">.</span><span class="n">DeviceAppApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">_return_delete_device_app</span> <span class="o">=</span> <span class="n">delete_device_app_api_instance</span><span class="o">.</span><span class="n">delete_device_app</span><span class="p">(</span>
-                        <span class="n">path_params</span><span class="o">=</span><span class="n">_path_params</span>
-                    <span class="p">)</span>
+
+                    <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                        <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+                        <span class="c1"># pylint:disable=line-too-long</span>
+                        <span class="n">_return_delete_device_app</span> <span class="o">=</span> <span class="n">delete_device_app_api_instance</span><span class="o">.</span><span class="n">delete_device_app</span><span class="p">(</span>
+                            <span class="n">path_params</span><span class="o">=</span><span class="n">_path_params</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="n">_query_params</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">_return_delete_device_app</span> <span class="o">=</span> <span class="n">delete_device_app_api_instance</span><span class="o">.</span><span class="n">delete_device_app</span><span class="p">(</span>
+                            <span class="n">path_params</span><span class="o">=</span><span class="n">_path_params</span>
+                        <span class="p">)</span>
                     <span class="k">return</span> <span class="n">_return_delete_device_app</span><span class="o">.</span><span class="n">body</span>
 
                 <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
@@ -360,7 +372,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

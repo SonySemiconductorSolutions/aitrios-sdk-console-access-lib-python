@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.get_inference_results &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.insight.get_inference_results &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.insight.get_inference_results</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -127,64 +127,75 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, required : Edge AI Device ID</span>
+    <span class="c1">#: str, required : Device ID</span>
     <span class="n">device_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Search filter (same specifications as CosmosDB UI on Azure portal except for</span>
-    <span class="c1">#:                 the following) - No need to prepend the where string.</span>
-    <span class="c1">#:                 - No need to add deviceID.</span>
+    <span class="c1">#: str, optional : Search filter. \</span>
+    <span class="c1">#:                 The specifications are the same except for those of Cosmos DB UI</span>
+    <span class="c1">#:                 of the Azure portal and those listed below.</span>
     <span class="c1">#:</span>
-    <span class="c1">#:                Filter Samples:</span>
+    <span class="c1">#:                 - A where string does not need to be added to the heading.</span>
+    <span class="c1">#:                 - deviceID does not need to be added.</span>
     <span class="c1">#:</span>
-    <span class="c1">#:                  * ModelID: string  match filter</span>
+    <span class="c1">#:                 Filter Example:</span>
     <span class="c1">#:</span>
-    <span class="c1">#:                      eg. &quot;c.ModelID=\&quot;0300000001590100\&quot;&quot;</span>
+    <span class="c1">#:                     * ModelID: string  match filter</span>
+    <span class="c1">#:                         eg. &quot;c.ModelID=\&quot;0300000001590100\&quot;&quot;</span>
+    <span class="c1">#:                     * Image: boolean  match filter eg. &quot;c.Image=true&quot;</span>
+    <span class="c1">#:                     * T: string  match or more filter</span>
+    <span class="c1">#:                         eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
+    <span class="c1">#:                     * T: string  range filter</span>
+    <span class="c1">#:                         eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences \</span>
+    <span class="c1">#:                             WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND \</span>
+    <span class="c1">#:                             i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
+    <span class="c1">#:                     * _ts: number  match filter</span>
+    <span class="c1">#:                         eg. &quot;c._ts=1681308028&quot;</span>
     <span class="c1">#:</span>
-    <span class="c1">#:                  * Image: boolean  match filter eg. &quot;c.Image=true&quot;</span>
-    <span class="c1">#:</span>
-    <span class="c1">#:                  * T: string  match or more filter</span>
-    <span class="c1">#:</span>
-    <span class="c1">#:                      eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
-    <span class="c1">#:</span>
-    <span class="c1">#:                  * T: string  range filter \</span>
-    <span class="c1">#:</span>
-    <span class="c1">#:                      eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences</span>
-    <span class="c1">#:                      WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND</span>
-    <span class="c1">#:                      i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
-    <span class="c1">#:</span>
-    <span class="c1">#:                  * _ts: number  match filter</span>
-    <span class="c1">#:</span>
-    <span class="c1">#:                       eg. &quot;c._ts=1681308028&quot;</span>
+    <span class="c1">#:                 Default = &#39;&#39;</span>
     <span class="nb">filter</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for filter&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: int, optional : Number of acquisitions. If not specified, defaults to 20.</span>
+    <span class="c1">#: int, optional : Number of cases to get.</span>
+    <span class="c1">#:                 Return the latest record of the specified number of cases.</span>
+    <span class="c1">#:                 Maximum value: 10000.</span>
+    <span class="c1">#:                 default: 20</span>
     <span class="n">number_of_inference_results</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid Integer for number_of_inference_results&quot;</span><span class="p">},</span>
         <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1">#: int, optional : Data format of inference results.</span>
-    <span class="c1">#:                 1: Add records as they are stored in CosmosDB.</span>
-    <span class="c1">#:                 0: Do not apply. If not specified: 1.</span>
+    <span class="c1">#: int, optional : If 1 is specified, add a record stored to Cosmos DB and return it.</span>
+    <span class="c1">#:                 Default:1</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                 - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - 0: Do not add</span>
+    <span class="c1">#:                  - 1: Add</span>
     <span class="n">raw</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid Integer for raw&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Inference result data stored in CosmosDB.</span>
-    <span class="c1">#:    yyyyMMddHHmmssfff+,</span>
+    <span class="c1">#: str, optional : When this value is specified, extract the inference result \</span>
+    <span class="c1">#:                 metadata within the following range. Default:&quot;&quot;</span>
     <span class="c1">#:</span>
-    <span class="c1">#:    * yyyy: 4-digit year string</span>
-    <span class="c1">#:    * MM: 2-digit month string</span>
-    <span class="c1">#:    * dd: 2-digit day string</span>
-    <span class="c1">#:    * HH: 2-digit hour string</span>
-    <span class="c1">#:    * mm: 2-digit minute string</span>
-    <span class="c1">#:    * ss: 2-digit seconds string</span>
-    <span class="c1">#:    * fff: 3-digit millisecond string</span>
+    <span class="c1">#:                 - Extraction range:</span>
+    <span class="c1">#:                   (time - threshold) &lt;= T</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                   Time in inference result metadata &lt; (time + threshold)</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                     - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                         - yyyy: 4-digit year string</span>
+    <span class="c1">#:                         - MM: 2-digit month string</span>
+    <span class="c1">#:                         - dd: 2-digit day string</span>
+    <span class="c1">#:                         - HH: 2-digit hour string</span>
+    <span class="c1">#:                         - mm: 2-digit minute string</span>
+    <span class="c1">#:                         - ss: 2-digit seconds string</span>
+    <span class="c1">#:                         - fff: 3-digit millisecond string</span>
     <span class="n">time</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for time&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -248,58 +259,64 @@
         <span class="n">raw</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">time</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves (saved) inference result metadata list information for a specified device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the (saved) inference result metadata list information for a specified device.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required) : Device ID. Case-sensitive</span>
-<span class="sd">            filter (str, optional) : The Filter. Search filter (same specifications as Cosmos DB UI\</span>
-<span class="sd">                                     on Azure portal except for the following)</span>
+<span class="sd">            device_id (str, required) : Device ID</span>
+<span class="sd">            filter (str, optional) : Search filter.</span>
+<span class="sd">                The specifications are the same except for those of Cosmos DB UI \</span>
+<span class="sd">                    of the Azure portal and those listed below.</span>
 
-<span class="sd">                                        - No need to prepend where string</span>
-<span class="sd">                                        - It is not necessary to add a deviceID.</span>
+<span class="sd">                - A where string does not need to be added to the heading.</span>
+<span class="sd">                - deviceID does not need to be added.</span>
 
-<span class="sd">                                    Filter Samples:</span>
+<span class="sd">                        Filter Example:</span>
 
-<span class="sd">                                    * ModelID: string  match filter</span>
+<span class="sd">                            * ModelID: string  match filter</span>
+<span class="sd">                                eg. &quot;c.ModelID=\&quot;0300000001590100\&quot;&quot;</span>
+<span class="sd">                            * Image: boolean  match filter eg. &quot;c.Image=true&quot;</span>
+<span class="sd">                            * T: string  match or more filter</span>
+<span class="sd">                                eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
+<span class="sd">                            * T: string  range filter</span>
+<span class="sd">                                eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences \</span>
+<span class="sd">                                    WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND \</span>
+<span class="sd">                                    i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
+<span class="sd">                            * _ts: number  match filter</span>
+<span class="sd">                                eg. &quot;c._ts=1681308028&quot;</span>
 
-<span class="sd">                                        eg. &quot;c.ModelID=\&quot;0300000001590100\&quot;&quot;</span>
+<span class="sd">                Default = &#39;&#39;</span>
 
-<span class="sd">                                    * Image: boolean  match filter eg. &quot;c.Image=true&quot;</span>
+<span class="sd">            number_of_inference_results (int, optional) :Number of cases to get.</span>
+<span class="sd">                Return the latest record of the specified number of cases. Maximum value: 10000.</span>
+<span class="sd">                default: 20</span>
 
-<span class="sd">                                    * T: string  match or more filter</span>
+<span class="sd">            raw (int, optional) : If 1 is specified, add a record stored to Cosmos DB and return it.</span>
 
-<span class="sd">                                        eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
+<span class="sd">                - Value definitions</span>
 
-<span class="sd">                                    * T: string  range filter</span>
+<span class="sd">                    - 0: Do not add</span>
+<span class="sd">                    - 1: Add</span>
 
-<span class="sd">                                        eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences \</span>
-<span class="sd">                                            WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND \</span>
-<span class="sd">                                            i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
+<span class="sd">                default: 1</span>
 
-<span class="sd">                                    * _ts: number  match filter</span>
+<span class="sd">            time (str, optional) : When this value is specified,\</span>
+<span class="sd">                    extract the inference result metadata within the following range. \</span>
+<span class="sd">                    Default:&quot;&quot;</span>
 
-<span class="sd">                                        eg. &quot;c._ts=1681308028&quot;</span>
+<span class="sd">                    - Extraction range:</span>
+<span class="sd">                      (time - threshold) &lt;= T</span>
 
-<span class="sd">            number_of_inference_results (int, optional) :Number of acquisitions.\</span>
-<span class="sd">                                                         If not specified: 20</span>
+<span class="sd">                      Time in inference result metadata &lt; (time + threshold)</span>
 
-<span class="sd">            raw (int, optional) : Data format of inference results.</span>
+<span class="sd">                    - Value definition</span>
 
-<span class="sd">                                    - 1:Append records stored in Cosmos DB.</span>
-<span class="sd">                                    - 0:Not granted.</span>
-
-<span class="sd">                                        If not specified: 1</span>
-
-<span class="sd">            time (str, optional) : The Time. Inference result data stored in Cosmos DB.\</span>
-<span class="sd">                                   yyyyMMddHHmmssfff</span>
-
-<span class="sd">                                    - yyyy: 4-digit year string</span>
-<span class="sd">                                    - MM: 2-digit month string</span>
-<span class="sd">                                    - dd: 2-digit day string</span>
-<span class="sd">                                    - HH: 2-digit hour string</span>
-<span class="sd">                                    - mm: 2-digit minute string</span>
-<span class="sd">                                    - ss: 2-digit seconds string</span>
-<span class="sd">                                    - fff: 3-digit millisecond string</span>
+<span class="sd">                        - yyyy: 4-digit year string</span>
+<span class="sd">                        - MM: 2-digit month string</span>
+<span class="sd">                        - dd: 2-digit day string</span>
+<span class="sd">                        - HH: 2-digit hour string</span>
+<span class="sd">                        - mm: 2-digit minute string</span>
+<span class="sd">                        - ss: 2-digit seconds string</span>
+<span class="sd">                        - fff: 3-digit millisecond string</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -309,103 +326,89 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">            - when time parameter is not specified</span>
-
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                | *Level1*         | *Level2*    | *Type*    | *Description*                      |</span>
+<span class="sd">                +==================+============+============+====================================+</span>
+<span class="sd">                | ``No_item_name`` |             |           |                                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                | ``No_item_name`` |             |           | The subordinate elements are       |</span>
-<span class="sd">                |                  |             |           | listed in descending order         |</span>
-<span class="sd">                |                  |             |           | by system registration date        |</span>
-<span class="sd">                |                  |             |           | and time.                          |</span>
-<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``id``       | ``string``| The ID of the inference            |</span>
-<span class="sd">                |                  |             |           | result metadata.                   |</span>
+<span class="sd">                |                  |``id``       | ``string``| Inference result metadata ID.      |</span>
+<span class="sd">                |                  |             |           | =GUID generated automatically by   |</span>
+<span class="sd">                |                  |             |           | CosmosDB                           |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                |                  |``device_id``| ``string``| Device ID.                         |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                |                  |``model_id`` | ``string``| Model ID.                          |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``model      |``string`` | Dnn Model Version                  |</span>
+<span class="sd">                |                  |``version    | ``string``| Version number.                    |</span>
+<span class="sd">                |                  |_number``    |           |                                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``model      |``string`` | Model version ID.                  |</span>
 <span class="sd">                |                  |_version_id``|           |                                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 <span class="sd">                |                  |``model      |``string`` | Model type                         |</span>
 <span class="sd">                |                  |_type``      |           |                                    |</span>
-<span class="sd">                |                  |             |           | 00: Image classification           |</span>
+<span class="sd">                |                  |             |           | 00: Image category                 |</span>
 <span class="sd">                |                  |             |           |                                    |</span>
 <span class="sd">                |                  |             |           | 01: Object detection               |</span>
-<span class="sd">                |                  |             |           |                                    |</span>
-<span class="sd">                |                  |             |           | In the case of imported            |</span>
-<span class="sd">                |                  |             |           | models, 01 is fixed at the         |</span>
-<span class="sd">                |                  |             |           | current level.                     |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``training   |``string`` | Name of the training_kit           |</span>
+<span class="sd">                |                  |``training   |``string`` |                                    |</span>
 <span class="sd">                |                  |_kit_name``  |           |                                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``_ts``      |``string`` | Timestamp. = System                |</span>
-<span class="sd">                |                  |             |           | registration date and time         |</span>
+<span class="sd">                |                  |``_ts``      |``integer``| Timestamp.                         |</span>
+<span class="sd">                |                  |             |           | =_ts of CosmosDB                   |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
-<span class="sd">                |                  |``inference  |``string`` |Refer :ref:`inference_result &lt;ifr2&gt;`|</span>
+<span class="sd">                |                  |``inference  |           |Refer :ref:`inference_result &lt;ifr2&gt;`|</span>
 <span class="sd">                |                  |_result``    |           |for more details                    |</span>
+<span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
+<span class="sd">                |                  |``inferenc   |``array``  |Refer :ref:`inferences &lt;if2&gt;`       |</span>
+<span class="sd">                |                  |es``         |           |for more details                    |</span>
 <span class="sd">                +------------------+-------------+-----------+------------------------------------+</span>
 
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | inference_result   | .. _ifr2:                                                 |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inference_result``|              |            |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inference_result``|              | ``array``  |Raw data for inference result  |</span>
-<span class="sd">                |                    |              |            |in ascending order of project  |</span>
-<span class="sd">                |                    |              |            |type and model project name.   |</span>
+<span class="sd">                |                    |``DeviceID``  | ``string`` |Device ID                      |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``device_id`` | ``string`` |Device ID                      |</span>
+<span class="sd">                |                    |``ModelID``   |``string``  |DnnModelVersion                |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``model_id``  |``string``  |DnnModelVersion                |</span>
+<span class="sd">                |                    |``Image``     |``boolean`` |Synchronized to the            |</span>
+<span class="sd">                |                    |              |            |InputTensor output.            |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``image``     |``boolean`` |Is it synchronized with        |</span>
-<span class="sd">                |                    |              |            |the output of InputTensor?     |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``inferences``|``array``   |Refer :ref:`inferences &lt;if2&gt;`  |</span>
+<span class="sd">                |                    |``Inferences``|``array``   |Refer :ref:`inferences &lt;if2&gt;`  |</span>
 <span class="sd">                |                    |              |            |for more details               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``id``        |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``ttl``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_rid``      |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_self``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_etag``     |``string``  |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_attachm    |``string``  |                               |</span>
+<span class="sd">                |                    |ents``        |            |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                    |``_ts``       |``integer`` |                               |</span>
+<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
+
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | inferences         | .. _if2:                                                  |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
 <span class="sd">                | *Level1*           | *Level2*     | *Type*     | *Description*                 |</span>
+<span class="sd">                +====================+==============+============+===============================+</span>
+<span class="sd">                |``inferences``      |              | ``array``  |                               |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |``inferences``      |              | ``array``  |Inference result Array         |</span>
+<span class="sd">                |                    |``T``         | ``string`` |Time when retrieving           |</span>
+<span class="sd">                |                    |              |            |data from the sensor.          |</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``T``         | ``string`` |The time at which the data     |</span>
-<span class="sd">                |                    |              |            |was acquired from the sensor.  |</span>
+<span class="sd">                |                    |``O``         |``string``  |Output tensor (Encoding format)|</span>
 <span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-<span class="sd">                |                    |``O``         |``string``  |Outputtensor output without    |</span>
-<span class="sd">                |                    |              |            |going through PPL              |</span>
-<span class="sd">                +--------------------+--------------+------------+-------------------------------+</span>
-
-<span class="sd">            - when time parameter is specified</span>
-
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                | *Level1*         | *Level2*     | *Type*    | *Description*                  |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                | ``No_item_name`` |              |           | The subordinate elements are   |</span>
-<span class="sd">                |                  |              |           | listed in descending order     |</span>
-<span class="sd">                |                  |              |           | by system registration date    |</span>
-<span class="sd">                |                  |              |           | and time.                      |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``id``        | ``string``| The ID of the inference result |</span>
-<span class="sd">                |                  |              |           | metadata. = GUID automatically |</span>
-<span class="sd">                |                  |              |           | fired by CosmosDB              |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``device_id`` | ``string``| Device ID.                     |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``model_id``  | ``string``| Model ID.                      |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``_ts``       |``string`` | Timestamp. = System            |</span>
-<span class="sd">                |                  |              |           | registration date and time     |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
-<span class="sd">                |                  |``inferences``|``array``  |Refer :ref:`inferences &lt;if2&gt;`   |</span>
-<span class="sd">                |                  |              |           |for more details                |</span>
-<span class="sd">                +------------------+--------------+-----------+--------------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -503,6 +506,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -517,7 +521,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -591,6 +596,11 @@
                 <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
                 <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+
+                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                    <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">insight_api_instance</span> <span class="o">=</span> <span class="n">insight_api</span><span class="o">.</span><span class="n">InsightApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -634,7 +644,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

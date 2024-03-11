@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestDevicesConfigurationCommandParameterFilesFileName(ApiTestMixin, unittest.TestCase):
     """
     DevicesConfigurationCommandParameterFilesFileName unit test stubs
-        ApplyCommandParameterFileToDevice  # noqa: E501
+        BindCommandParameterFileToDevice  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

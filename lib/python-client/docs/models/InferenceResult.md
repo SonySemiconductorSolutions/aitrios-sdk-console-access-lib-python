@@ -8,10 +8,10 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**DeviceID** | str,  | str,  |  | [optional] 
-**ModelID** | str,  | str,  |  | [optional] 
-**Image** | bool,  | BoolClass,  |  | [optional] 
-**[Inferences](#Inferences)** | list, tuple,  | tuple,  | todo | [optional] 
+**DeviceID** | str,  | str,  | Device ID. | [optional] 
+**ModelID** | str,  | str,  | DnnModelVersion. | [optional] 
+**Image** | bool,  | BoolClass,  | Synchronized to the InputTensor output. | [optional] 
+**[Inferences](#Inferences)** | list, tuple,  | tuple,  |  | [optional] 
 **id** | str,  | str,  |  | [optional] 
 **ttl** | decimal.Decimal, int,  | decimal.Decimal,  |  | [optional] 
 **_rid** | str,  | str,  |  | [optional] 
@@ -23,12 +23,10 @@ Key | Input Type | Accessed Type | Description | Notes
 
 # Inferences
 
-todo
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-list, tuple,  | tuple,  | todo | 
+list, tuple,  | tuple,  |  | 
 
 ### Tuple Items
 Class Name | Input Type | Accessed Type | Description | Notes

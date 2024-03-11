@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.device_management.device_management &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.device_management.device_management &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.device_management.device_management</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -93,6 +93,7 @@
 <span class="c1"># pylint:disable=import-error</span>
 <span class="c1"># pylint:disable=too-many-instance-attributes</span>
 <span class="c1"># pylint:disable=too-many-public-methods</span>
+<span class="c1"># pylint:disable=too-many-arguments</span>
 <span class="c1"># pylint:disable=duplicate-code</span>
 <span class="c1"># pylint:disable=too-many-function-args</span>
 <span class="c1"># pylint:disable=invalid-name</span>
@@ -137,21 +138,32 @@
         <span class="n">device_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">connection_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">device_group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">device_ids</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_devices`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the device list information</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, optional): Edge AI Device ID. Partial search, case insensitive.</span>
-<span class="sd">                Search all device_ids if not specified.</span>
-<span class="sd">            device_name (str, optional) : Edge AI device name. Partial search, case insensitive.</span>
-<span class="sd">                If not specified, search all device_names.</span>
-<span class="sd">            connection_state (str, optional) : Connection status. For connected state: Connected</span>
-<span class="sd">                Disconnected state: Disconnected</span>
-<span class="sd">                Exact match search, case insensitive.</span>
-<span class="sd">                If not specified, search all connection_states.</span>
-<span class="sd">            device_group_id (str, optional) : Affiliated Edge AI device group.</span>
-<span class="sd">                Exact match search, case insensitive.</span>
-<span class="sd">                Search all device_group_id if not specified.</span>
+<span class="sd">            device_id (str, optional) : Device ID. Partial match search. Default:&quot;&quot;</span>
+<span class="sd">            device_name (str, optional) : Device name. Partial match search. Default:&quot;&quot;</span>
+<span class="sd">            connection_state (str, optional) : Connection status.</span>
+
+<span class="sd">                Value definition</span>
+
+<span class="sd">                    - Connected</span>
+<span class="sd">                    - Disconnected</span>
+
+<span class="sd">                Default:&quot;&quot;</span>
+<span class="sd">            device_group_id (str, optional) : Device group ID. Default:&quot;&quot;</span>
+<span class="sd">            device_ids (str, optional): Specify multiple device IDs separated by commas.</span>
+<span class="sd">                                              Default:&quot;&quot;</span>
+<span class="sd">            scope (str, optional) : Specify the scope of response parameters to return.</span>
+<span class="sd">                Default: &quot;full&quot;</span>
+
+<span class="sd">                Value definition</span>
+
+<span class="sd">                    - full : Return full parameters</span>
+<span class="sd">                    - minimal : Return minimal parameters fast response speed</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -163,10 +175,8 @@
 
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                | *Level1*   | *Level2*           |*Type*     | *Description*                  |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                | ``devices``|                    |``array``  | The subordinate elements are   |</span>
-<span class="sd">                |            |                    |           | listed in ascending order by   |</span>
-<span class="sd">                |            |                    |           | device ID                      |</span>
+<span class="sd">                +============+====================+===========+================================+</span>
+<span class="sd">                | ``devices``|                    |``array``  |                                |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                |            | ``device_id``      |``string`` | Set the device ID              |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
@@ -174,84 +184,93 @@
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                |            | ``comment``        |``string`` | Set the device description     |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``property``       |``string`` | Set device properties          |</span>
-<span class="sd">                |            |                    |           | (device_name, etc.)            |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``ins_id``         |``string`` | Set the creator of the device  |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``ins_date``       |``string`` | Set the date and               |</span>
-<span class="sd">                |            |                    |           | time the device was created.   |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``upd_id``         |``string`` | Set up an updater for          |</span>
-<span class="sd">                |            |                    |           | your device                    |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``upd_date``       |``string`` | Set the date and time          |</span>
-<span class="sd">                |            |                    |           | of the device update.          |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            |``connectionState`` |``string`` | Set the connection status      |</span>
-<span class="sd">                |            |                    |           | of the device.                 |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            |``lastActivityTime``|``string`` | Set the last connection date   |</span>
-<span class="sd">                |            |                    |           | and time of the device.        |</span>
-<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
-<span class="sd">                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups &lt;ds&gt;`|</span>
+<span class="sd">                |            | ``property``       |``array``  | Refer :ref:`property &lt;pro2&gt;`   |</span>
 <span class="sd">                |            |                    |           | for more details               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``device_type``    |``string`` | Set the device type.           |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``display_device_   |``string`` | Set the display device type.   |</span>
+<span class="sd">                |            |type``              |           |                                |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``ins_id``         |``string`` | Set the device author.         |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``ins_date``       |``string`` | Set the date                   |</span>
+<span class="sd">                |            |                    |           | the device was created.        |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``upd_id``         |``string`` | Set the device updater.        |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``upd_date``       |``string`` | Set the date the device was    |</span>
+<span class="sd">                |            |                    |           | updated.                       |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``connectionState`` |``string`` | Set the device connection state|</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            |``lastActivityTime``|``string`` | Set the date the device last   |</span>
+<span class="sd">                |            |                    |           | connected.                     |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
 <span class="sd">                |            | ``models``         |``array``  | Refer :ref:`models &lt;model1&gt;`   |</span>
 <span class="sd">                |            |                    |           | for more details               |</span>
 <span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``configuration``  |``array``  |                                |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``state``          |``array``  |                                |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+<span class="sd">                |            | ``device_groups``  |``array``  | Refer :ref:`device_groups &lt;ds&gt;`|</span>
+<span class="sd">                |            |                    |           | for more details               |</span>
+<span class="sd">                +------------+--------------------+-----------+--------------------------------+</span>
+
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | property          | .. _pro2:                                                  |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``property``      |                    | ``array``  |                          |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``device_name``     | ``string`` | Set the device name.     |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
+<span class="sd">                |                   |``internal_device_  | ``string`` | Set the internal device  |</span>
+<span class="sd">                |                   |id``                |            | id.                      |</span>
+<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | device_groups     | .. _ds:                                                    |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
-<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                | ``device_groups`` |                    | ``array``  | The subordinate          |</span>
-<span class="sd">                |                   |                    |            | elements are listed      |</span>
-<span class="sd">                |                   |                    |            | in ascending order       |</span>
-<span class="sd">                |                   |                    |            | by device group ID       |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``device_groups`` |                    | ``array``  |                          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                |                   |``device_group_id`` | ``string`` | Set the device group ID  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                |                   |``device_type``     | ``string`` | Set the device type      |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                |                   | ``comment``        |``string``  | Set the device           |</span>
-<span class="sd">                |                   |                    |            | bdescription             |</span>
+<span class="sd">                |                   |                    |            | group comment.           |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``ins_id``         |``string``  | Set the date and time    |</span>
-<span class="sd">                |                   |                    |            | that the device group    |</span>
-<span class="sd">                |                   |                    |            | was created.             |</span>
+<span class="sd">                |                   | ``ins_id``         |``string``  | Set the date the device  |</span>
+<span class="sd">                |                   |                    |            | group was created.       |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``ins_date``       |``string``  | Set the creator of the   |</span>
-<span class="sd">                |                   |                    |            | device group.            |</span>
+<span class="sd">                |                   | ``ins_date``       |``string``  | Set the device group     |</span>
+<span class="sd">                |                   |                    |            | author.                  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``upd_id``         |``string``  | Set the updater for      |</span>
-<span class="sd">                |                   |                    |            | the device group         |</span>
+<span class="sd">                |                   | ``upd_id``         |``string``  | Set the device group     |</span>
+<span class="sd">                |                   |                    |            | updater                  |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   | ``upd_date``       |``string``  | Set the date and time of |</span>
-<span class="sd">                |                   |                    |            | the device group update. |</span>
+<span class="sd">                |                   | ``upd_date``       |``string``  | Set the date the device  |</span>
+<span class="sd">                |                   |                    |            | group was updated.       |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | models            | .. _model1:                                                |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*            |</span>
+<span class="sd">                +===================+====================+============+==========================+</span>
+<span class="sd">                | ``models``        |                    | ``array``  |                          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                | ``models``        |                    | ``array``  | The subordinate          |</span>
-<span class="sd">                |                   |                    |            | elements are listed      |</span>
-<span class="sd">                |                   |                    |            | in ascending order       |</span>
-<span class="sd">                |                   |                    |            | by device group ID       |</span>
-<span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
-<span class="sd">                |                   |``model_version_id``| ``string`` | Set the model version ID |</span>
-<span class="sd">                |                   |                    |            | Format: ModelID:v1.0001  |</span>
-<span class="sd">                |                   |                    |            | * If DnnModelVersion does|</span>
-<span class="sd">                |                   |                    |            | not exist in the DB, the |</span>
-<span class="sd">                |                   |                    |            | network_id is displayed. |</span>
-<span class="sd">                |                   |                    |            | Example) 0201020002370200|</span>
-<span class="sd">                |                   |                    |            | In the above case, 000237|</span>
-<span class="sd">                |                   |                    |            | (7~12 digits) If it is 16|</span>
-<span class="sd">                |                   |                    |            | digits,it is displayed   |</span>
-<span class="sd">                |                   |                    |            | as is.                   |</span>
+<span class="sd">                |                   |``model_version_id``| ``string`` | Set the model version ID.|</span>
+<span class="sd">                |                   |                    |            | Format: modelid:v1.01    |</span>
+<span class="sd">                |                   |                    |            | For model that does not  |</span>
+<span class="sd">                |                   |                    |            | exist in the system,     |</span>
+<span class="sd">                |                   |                    |            | display network_id       |</span>
+<span class="sd">                |                   |                    |            | Example: 000237          |</span>
 <span class="sd">                +-------------------+--------------------+------------+--------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -329,14 +348,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_devices_obj</span><span class="o">.</span><span class="n">get_devices</span><span class="p">(</span>
-            <span class="n">device_id</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">connection_state</span><span class="p">,</span> <span class="n">device_group_id</span>
+            <span class="n">device_id</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">connection_state</span><span class="p">,</span> <span class="n">device_group_id</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">,</span> <span class="n">scope</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DeviceManagement.start_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">start_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``start_upload_inference_result`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement instructions to a specified device to start to get the\</span>
+<span class="sd">             inference result metadata (Output Tensor) and image (Input image).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Edge AI Device ID.</span>
+<span class="sd">            device_id (str, required): Device ID.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -346,15 +366,20 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">                +------------------------+------------+---------------------------+</span>
-<span class="sd">                | *Level1*               | *Type*     | *Description*             |</span>
-<span class="sd">                +------------------------+------------+---------------------------+</span>
-<span class="sd">                | ``result``             | ``string`` | Set &quot;SUCCESS&quot; pinning     |</span>
-<span class="sd">                +------------------------+------------+---------------------------+</span>
-<span class="sd">                | ``outputSubDirectory`` | ``string`` | Input Image storage path  |</span>
-<span class="sd">                |                        |            | UploadMethod:BlobStorage  |</span>
-<span class="sd">                |                        |            | only                      |</span>
-<span class="sd">                +------------------------+------------+---------------------------+</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
+<span class="sd">                | *Level1*                 | *Type*     | *Description*             |</span>
+<span class="sd">                +==========================+============+===========================+</span>
+<span class="sd">                | ``result``               | ``string`` | Set &quot;SUCCESS&quot; fixing      |</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
+<span class="sd">                | ``outputSubDirectory``   | ``string`` | Input Image storage path, |</span>
+<span class="sd">                |                          |            | UploadMethod:BlobStorage  |</span>
+<span class="sd">                |                          |            | only                      |</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
+<span class="sd">                | ``outputSubDirectoryIR`` | ``string`` | Input Inference result    |</span>
+<span class="sd">                |                          |            | storage path,             |</span>
+<span class="sd">                |                          |            | UploadMethodIR:BlobStorage|</span>
+<span class="sd">                |                          |            | only                      |</span>
+<span class="sd">                +--------------------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -435,10 +460,11 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DeviceManagement.stop_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">stop_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``stop_upload_inference_result`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement instructions to a specified device to stop getting the\</span>
+<span class="sd">             inference result metadata (Output Tensor) and image (Input image).</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            device_id (str, required): Edge AI Device ID.</span>
+<span class="sd">            device_id (str, required): Device ID.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -450,8 +476,8 @@
 
 <span class="sd">                +-----------------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*              | *Type*     | *Description*             |</span>
-<span class="sd">                +-----------------------+------------+---------------------------+</span>
-<span class="sd">                | ``result``            | ``string`` | Set &quot;SUCCESS&quot; pinning     |</span>
+<span class="sd">                +=======================+============+===========================+</span>
+<span class="sd">                | ``result``            | ``string`` | Set &quot;SUCCESS&quot; fixing      |</span>
 <span class="sd">                +-----------------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -533,7 +559,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="DeviceManagement.get_command_parameter_file"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_parameter_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Abstract function call to ``get_command_parameter_file`` API</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the command parameter file list information.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -543,32 +569,127 @@
 
 <span class="sd">            **Success Response Schema**</span>
 
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                | *Level1*          |*Level2*      |*Type*    | *Description*                 |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                | ``parameter_list``|              |``array`` | Parameter file list           |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``parameter`` |``string``| The setting value. json       |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``filename``  |``string``| File Name                     |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``comment``   |``string``| comment                       |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``isdefault`` |``string``| True: Default parameter       |</span>
-<span class="sd">                |                   |              |          | not False: Default            |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``device_ids``|``List``  | List of target devices.       |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``ins_id``    |``string``| Set the creator of the setting|</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``ins_date``  |``string``| Set the date and time that    |</span>
-<span class="sd">                |                   |              |          | the setting was created       |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``upd_id``    |``string``| Set who updated the settings. |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
-<span class="sd">                |                   |``upd_date``  |``string``| Set the date and time when    |</span>
-<span class="sd">                |                   |              |          | the settings were updated     |</span>
-<span class="sd">                +-------------------+--------------+----------+-------------------------------+</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                | *Level1*          |*Level2*      |*Type*      | *Description*                 |</span>
+<span class="sd">                +===================+==============+============+===============================+</span>
+<span class="sd">                | ``parameter_list``|              |``array``   |                               |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``parameter`` |``array``   | Refer :ref:`parameter &lt;par2&gt;` |</span>
+<span class="sd">                |                   |              |            | for more details              |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``filename``  |``string``  | Name of file                  |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``comment``   |``string``  | Comment                       |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``isdefault`` |``string``  | True: Default parameter;      |</span>
+<span class="sd">                |                   |              |            | False: Not default            |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``device_ids``|``string[]``| Target device list.           |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``ins_id``    |``string``  | Set the settings author.      |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``ins_date``  |``string``  | Set the date the settings     |</span>
+<span class="sd">                |                   |              |            | were created.                 |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``upd_id``    |``string``  | Set the settings updater.     |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+<span class="sd">                |                   |``upd_date``  |``string``  | Set the date the settings     |</span>
+<span class="sd">                |                   |              |            | were updated.                 |</span>
+<span class="sd">                +-------------------+--------------+------------+-------------------------------+</span>
+
+<span class="sd">                +-------------------+-----------------+------------+----------------------------+</span>
+<span class="sd">                | parameter         | .. _par2:                                                 |</span>
+<span class="sd">                +-------------------+-----------------+------------+----------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*              |</span>
+<span class="sd">                +===================+=================+============+============================+</span>
+<span class="sd">                | ``parameter``     |                 | ``array``  | Setting value. json        |</span>
+<span class="sd">                +-------------------+-----------------+------------+----------------------------+</span>
+<span class="sd">                |                   |``commands``     | ``array``  | Refer :ref:`commands &lt;c2&gt;` |</span>
+<span class="sd">                |                   |                 |            | for more details           |</span>
+<span class="sd">                +-------------------+-----------------+------------+----------------------------+</span>
+
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                | commands          | .. _c2:                                                    |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*               |</span>
+<span class="sd">                +===================+=================+============+=============================+</span>
+<span class="sd">                | ``commands``      |                 | ``array``  |                             |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``command_name`` | ``string`` | Command name.               |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``parameters``   | ``array``  | Refer :ref:`parameters &lt;P2&gt;`|</span>
+<span class="sd">                |                   |                 |            | for more details            |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                | parameters        | .. _P2:                                                    |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                | *Level1*          | *Level2*        | *Type*     | *Description*               |</span>
+<span class="sd">                +===================+=================+============+=============================+</span>
+<span class="sd">                | ``parameters``    |                 | ``array``  |                             |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``Mode``         | ``integer``| Collection mode.            |</span>
+<span class="sd">                |                   |                 |            | - Value definition          |</span>
+<span class="sd">                |                   |                 |            | 0 : Input Image only        |</span>
+<span class="sd">                |                   |                 |            | 1 : Input Image &amp; Inference |</span>
+<span class="sd">                |                   |                 |            | Result                      |</span>
+<span class="sd">                |                   |                 |            | 2 : Inference Result only   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``UploadMethod`` | ``string`` | It specifies how to upload  |</span>
+<span class="sd">                |                   |                 |            | Input Image.                |</span>
+<span class="sd">                |                   |                 |            | - Value definition          |</span>
+<span class="sd">                |                   |                 |            | BlobStorage                 |</span>
+<span class="sd">                |                   |                 |            | HttpStorage                 |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``FileFormat``   | ``string`` | Image file format.          |</span>
+<span class="sd">                |                   |                 |            | - Value definition: JPG, BMP|</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``UploadMethod   | ``string`` | It specifies how to         |</span>
+<span class="sd">                |                   |IR``             |            | Inference Result.           |</span>
+<span class="sd">                |                   |                 |            | - Value definition          |</span>
+<span class="sd">                |                   |                 |            | BlobStorage                 |</span>
+<span class="sd">                |                   |                 |            | HttpStorage                 |</span>
+<span class="sd">                |                   |                 |            | Mqtt                        |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``CropHOffset``  | ``integer``| Hoffset for Image crop.     |</span>
+<span class="sd">                |                   |                 |            | - Value range : 0 to 4055   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``CropVOffset``  | ``integer``| Voffset for Image crop.     |</span>
+<span class="sd">                |                   |                 |            | - Value range : 0 to 3039   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``CropHSize``    | ``integer``| Hsize for Image crop.       |</span>
+<span class="sd">                |                   |                 |            | - Value range : 0 to 4056   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``CropVSize``    | ``integer``| Vsize for Image crop.       |</span>
+<span class="sd">                |                   |                 |            | - Value range : 0 to 3040   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``NumberOf       | ``integer``| Number of images to fetch   |</span>
+<span class="sd">                |                   |Images``         |            | (Input Image).              |</span>
+<span class="sd">                |                   |                 |            | When it is 0, continue      |</span>
+<span class="sd">                |                   |                 |            | fetching images until stop  |</span>
+<span class="sd">                |                   |                 |            | instruction is mentioned    |</span>
+<span class="sd">                |                   |                 |            | explicitly.                 |</span>
+<span class="sd">                |                   |                 |            | - Value range : 0 to 10000  |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``Upload         | ``integer``| Upload interval.            |</span>
+<span class="sd">                |                   |Interval``       |            | - Value range : 1 to 2592000|</span>
+<span class="sd">                |                   |                 |            | If 60 is specified,         |</span>
+<span class="sd">                |                   |                 |            | 0.5FPS (=30/60)             |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``NumberOfInferen| ``integer``| Number of inference         |</span>
+<span class="sd">                |                   |cesPerMessage``  |            | results to include in one   |</span>
+<span class="sd">                |                   |                 |            | message (Inference Result). |</span>
+<span class="sd">                |                   |                 |            | - Value range : 1  to 100   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``MaxDetections  | ``integer``| No. of Objects included in  |</span>
+<span class="sd">                |                   |PerFrame``       |            | 1 frame with respect to the |</span>
+<span class="sd">                |                   |                 |            | Inference results metadata. |</span>
+<span class="sd">                |                   |                 |            | - Value range : 1 to 5      |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``ModelId``      | ``string`` | Model ID.                   |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
+<span class="sd">                |                   |``PPLParameter`` | ``object`` |PPL parameter                |</span>
+<span class="sd">                +-------------------+-----------------+------------+-----------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -654,7 +775,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

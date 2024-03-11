@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,24 +52,27 @@ class SchemaDeployByConfiguration(Schema):
 
     """
 
-    #: str, required : config ID
+    #: str, required : Config ID
     config_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for config_id"}, strict=True
     )
 
-    #: str, required : IDs of edge AI devices
+    #: str, required : Device IDS. Specify multiple device IDs separated by commas.
     device_ids = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_ids"}, strict=True
     )
 
-    #: str, optional : Replacement target model ID
+    #: str, optional : Specify the model ID or network_id.\
+    #:                 If the model with the specified model ID does not exist in the database,
+    #:                 treat the entered value as the network_id and process it. Default : "".
     replace_model_id = fields.String(
         required=False,
         error_messages={"invalid": "Invalid string for replace_model_id"},
         strict=True,
     )
 
-    #: str, optional : deploy comment
+    #: str, optional : Comment. Max 100 characters.
+    #:                 Default : "".
     comment = fields.String(
         required=False, error_messages={"invalid": "Invalid string for comment"}, strict=True
     )
@@ -115,22 +118,18 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
         replace_model_id: str = None,
         comment: str = None,
     ):
-        """Provides a function to deploy the following to the device \
-            specified from the deployment config.\
+        """Provide a function for deploying the following to devices \
+            specified with deploy config\
             ・Firmware\
             ・AI model
 
         Args:
-            config_id (str, required) : config ID
-            device_ids (str, required) : Specify multiple device IDs separated by commas. \
-                Case-sensitive
-            replace_model_id (str, optional) : Replacement target model ID \
-                Specify "model_id" or "network_id" If the specified model ID does \
-                not exist in the DB, treat the input value as network_id \
-                (console internal management ID) and perform processing \
-                If not specified, do not replace.
-            comment (str, optional) : deploy comment \
-                up to 100 characters No comment if not specified
+            config_id (str, required) : Setting ID
+            device_ids (str, required) : Specify multiple device IDs separated by commas.
+            replace_model_id (str, optional) : Specify the model ID or network_id.\
+                If the model with the specified model ID does not exist in the database,\
+                treat the entered value as the network_id and process it. Default : "".
+            comment (str, optional) : Max 100 characters. Default : "".
 
         Returns:
             **Return Type**
@@ -142,8 +141,8 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
 
                 +------------+------------+-------------------------------+
                 | *Level1*   | *Type*     | *Description*                 |
-                +------------+------------+-------------------------------+
-                | ``result`` | ``string`` | Set "SUCCESS" pinning         |
+                +============+============+===============================+
+                | ``result`` | ``string`` | Set "SUCCESS" fixing          |
                 +------------+------------+-------------------------------+
 
             **Error Response Schema**
@@ -239,6 +238,7 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -253,7 +253,8 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -307,6 +308,11 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
                 header_name="Authorization",
                 header_value=self._config.get_access_token(),
             ) as api_client:
+
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+
                 # Create an instance of the API class
                 deploy_by_configuration_api_instance = deploy_api.DeployApi(api_client)
                 try:

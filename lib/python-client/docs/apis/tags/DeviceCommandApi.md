@@ -1,4 +1,4 @@
-<a name="__pageTop"></a>
+<a id="__pageTop"></a>
 # aitrios_console_rest_client_sdk_primitive.apis.tags.device_command_api.DeviceCommandApi
 
 All URIs are relative to *http://localhost*
@@ -9,12 +9,12 @@ Method | HTTP request | Description
 [**stop_upload_inference_result**](#stop_upload_inference_result) | **post** /devices/{device_id}/inferenceresults/collectstop | StopUploadInferenceResult
 
 # **start_upload_inference_result**
-<a name="start_upload_inference_result"></a>
+<a id="start_upload_inference_result"></a>
 > {str: (bool, date, datetime, dict, float, int, list, str, none_type)} start_upload_inference_result(device_id)
 
 StartUploadInferenceResult
 
-Start Upload Inference Result.
+Implement instructions to a specified device to start to get the inference result metadata (Output Tensor) and image (Input image).
 
 ### Example
 
@@ -38,10 +38,30 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     path_params = {
         'device_id': "device_id_example",
     }
+    query_params = {
+    }
     try:
         # StartUploadInferenceResult
         api_response = api_instance.start_upload_inference_result(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceCommandApi->start_upload_inference_result: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'device_id': "device_id_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # StartUploadInferenceResult
+        api_response = api_instance.start_upload_inference_result(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -51,11 +71,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -66,12 +102,10 @@ device_id | DeviceIdSchema | |
 
 # DeviceIdSchema
 
-Device Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Device Id | 
+str,  | str,  |  | 
 
 ### Return Types, Responses
 
@@ -102,8 +136,9 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**result** | str,  | str,  | todo | 
-**outputSubDirectory** | str,  | str,  | todo | [optional] 
+**result** | str,  | str,  | Set \&quot;SUCCESS\&quot; fixing | 
+**outputSubDirectory** | str,  | str,  | Input Image storage path, UploadMethod:BlobStorage only | [optional] 
+**outputSubDirectoryIR** | str,  | str,  | Input Inference result storage path, UploadMethodIR:BlobStorage only | [optional] 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 #### start_upload_inference_result.ApiResponseFor401
@@ -178,12 +213,12 @@ No authorization required
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
 # **stop_upload_inference_result**
-<a name="stop_upload_inference_result"></a>
+<a id="stop_upload_inference_result"></a>
 > SuccessResponse stop_upload_inference_result(device_id)
 
 StopUploadInferenceResult
 
-Stop Upload Inference Result.
+Implement instructions to a specified device to stop getting the inference result metadata (Output Tensor) and image (Input image).
 
 ### Example
 
@@ -208,10 +243,30 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
     path_params = {
         'device_id': "device_id_example",
     }
+    query_params = {
+    }
     try:
         # StopUploadInferenceResult
         api_response = api_instance.stop_upload_inference_result(
             path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except aitrios_console_rest_client_sdk_primitive.ApiException as e:
+        print("Exception when calling DeviceCommandApi->stop_upload_inference_result: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'device_id': "device_id_example",
+    }
+    query_params = {
+        'grant_type': "client_credentials",
+    }
+    try:
+        # StopUploadInferenceResult
+        api_response = api_instance.stop_upload_inference_result(
+            path_params=path_params,
+            query_params=query_params,
         )
         pprint(api_response)
     except aitrios_console_rest_client_sdk_primitive.ApiException as e:
@@ -221,11 +276,27 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+grant_type | GrantTypeSchema | | optional
+
+
+# GrantTypeSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  | if omitted the server will use the default value of "client_credentials"
 
 ### path_params
 #### RequestPathParams
@@ -236,12 +307,10 @@ device_id | DeviceIdSchema | |
 
 # DeviceIdSchema
 
-Device Id
-
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  | Device Id | 
+str,  | str,  |  | 
 
 ### Return Types, Responses
 

@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ class GetCommandParameterFile(ConsoleAccessBaseClass):
         self._config = config
 
     def get_command_parameter_file(self):
-        """Get list of CommandParameterFile registered in Console
+        """Get the command parameter file list information.
 
         Returns:
             **Return Type**
@@ -65,32 +65,127 @@ class GetCommandParameterFile(ConsoleAccessBaseClass):
 
             **Success Response Schema**
 
-                +-------------------+--------------+----------+-------------------------------+
-                | *Level1*          |*Level2*      |*Type*    | *Description*                 |
-                +-------------------+--------------+----------+-------------------------------+
-                | ``parameter_list``|              |``array`` | Parameter file list           |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``parameter`` |``string``| The setting value. json       |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``filename``  |``string``| File Name                     |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``comment``   |``string``| comment                       |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``isdefault`` |``string``| True: Default parameter       |
-                |                   |              |          | not False: Default            |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``device_ids``|``List``  | List of target devices.       |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``ins_id``    |``string``| Set the creator of the setting|
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``ins_date``  |``string``| Set the date and time that    |
-                |                   |              |          | the setting was created       |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``upd_id``    |``string``| Set who updated the settings. |
-                +-------------------+--------------+----------+-------------------------------+
-                |                   |``upd_date``  |``string``| Set the date and time when    |
-                |                   |              |          | the settings were updated     |
-                +-------------------+--------------+----------+-------------------------------+
+                +-------------------+--------------+------------+-------------------------------+
+                | *Level1*          |*Level2*      |*Type*      | *Description*                 |
+                +===================+==============+============+===============================+
+                | ``parameter_list``|              |``array``   |                               |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``parameter`` |``array``   | Refer :ref:`parameter <par1>` |
+                |                   |              |            | for more details              |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``filename``  |``string``  | Name of file                  |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``comment``   |``string``  | Comment                       |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``isdefault`` |``string``  | True: Default parameter;      |
+                |                   |              |            | False: Not default            |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``device_ids``|``string[]``| Target device list.           |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``ins_id``    |``string``  | Set the settings author.      |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``ins_date``  |``string``  | Set the date the settings     |
+                |                   |              |            | were created.                 |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``upd_id``    |``string``  | Set the settings updater.     |
+                +-------------------+--------------+------------+-------------------------------+
+                |                   |``upd_date``  |``string``  | Set the date the settings     |
+                |                   |              |            | were updated.                 |
+                +-------------------+--------------+------------+-------------------------------+
+
+                +-------------------+-----------------+------------+----------------------------+
+                | parameter         | .. _par1:                                                 |
+                +-------------------+-----------------+------------+----------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*              |
+                +===================+=================+============+============================+
+                | ``parameter``     |                 | ``array``  | Setting value. json        |
+                +-------------------+-----------------+------------+----------------------------+
+                |                   |``commands``     | ``array``  | Refer :ref:`commands <c1>` |
+                |                   |                 |            | for more details           |
+                +-------------------+-----------------+------------+----------------------------+
+
+                +-------------------+-----------------+------------+-----------------------------+
+                | commands          | .. _c1:                                                    |
+                +-------------------+-----------------+------------+-----------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*               |
+                +===================+=================+============+=============================+
+                | ``commands``      |                 | ``array``  |                             |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``command_name`` | ``string`` | Command name.               |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``parameters``   | ``array``  | Refer :ref:`parameters <P1>`|
+                |                   |                 |            | for more details            |
+                +-------------------+-----------------+------------+-----------------------------+
+
+                +-------------------+-----------------+------------+-----------------------------+
+                | parameters        | .. _P1:                                                    |
+                +-------------------+-----------------+------------+-----------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*               |
+                +===================+=================+============+=============================+
+                | ``parameters``    |                 | ``array``  |                             |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``Mode``         | ``integer``| Collection mode.            |
+                |                   |                 |            | - Value definition          |
+                |                   |                 |            | 0 : Input Image only        |
+                |                   |                 |            | 1 : Input Image & Inference |
+                |                   |                 |            | Result                      |
+                |                   |                 |            | 2 : Inference Result only   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``UploadMethod`` | ``string`` | It specifies how to upload  |
+                |                   |                 |            | Input Image.                |
+                |                   |                 |            | - Value definition          |
+                |                   |                 |            | BlobStorage                 |
+                |                   |                 |            | HttpStorage                 |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``FileFormat``   | ``string`` | Image file format.          |
+                |                   |                 |            | - Value definition: JPG, BMP|
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``UploadMethod   | ``string`` | It specifies how to         |
+                |                   |IR``             |            | Inference Result.           |
+                |                   |                 |            | - Value definition          |
+                |                   |                 |            | BlobStorage                 |
+                |                   |                 |            | HttpStorage                 |
+                |                   |                 |            | Mqtt                        |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``CropHOffset``  | ``integer``| Hoffset for Image crop.     |
+                |                   |                 |            | - Value range : 0 to 4055   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``CropVOffset``  | ``integer``| Voffset for Image crop.     |
+                |                   |                 |            | - Value range : 0 to 3039   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``CropHSize``    | ``integer``| Hsize for Image crop.       |
+                |                   |                 |            | - Value range : 0 to 4056   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``CropVSize``    | ``integer``| Vsize for Image crop.       |
+                |                   |                 |            | - Value range : 0 to 3040   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``NumberOf       | ``integer``| Number of images to fetch   |
+                |                   |Images``         |            | (Input Image).              |
+                |                   |                 |            | When it is 0, continue      |
+                |                   |                 |            | fetching images until stop  |
+                |                   |                 |            | instruction is mentioned    |
+                |                   |                 |            | explicitly.                 |
+                |                   |                 |            | - Value range : 0 to 10000  |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``Upload         | ``integer``| Upload interval.            |
+                |                   |Interval``       |            | - Value range : 1 to 2592000|
+                |                   |                 |            | If 60 is specified,         |
+                |                   |                 |            | 0.5FPS (=30/60)             |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``NumberOfInferen| ``integer``| Number of inference         |
+                |                   |cesPerMessage``  |            | results to include in one   |
+                |                   |                 |            | message (Inference Result). |
+                |                   |                 |            | - Value range : 1  to 100   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``MaxDetections  | ``integer``| No. of Objects included in  |
+                |                   |PerFrame``       |            | 1 frame with respect to the |
+                |                   |                 |            | Inference results metadata. |
+                |                   |                 |            | - Value range : 1 to 5      |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``ModelId``      | ``string`` | Model ID.                   |
+                +-------------------+-----------------+------------+-----------------------------+
+                |                   |``PPLParameter`` | ``object`` |PPL parameter                |
+                +-------------------+-----------------+------------+-----------------------------+
 
             **Error Response Schema**
 
@@ -185,6 +280,7 @@ class GetCommandParameterFile(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -199,7 +295,8 @@ class GetCommandParameterFile(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -214,6 +311,7 @@ class GetCommandParameterFile(ConsoleAccessBaseClass):
         """
 
         logger.info(sys._getframe().f_code.co_name)
+        _query_params = {}
 
         # Enter a context with an instance of the API client
         with aitrios_console_rest_client_sdk_primitive.ApiClient(
@@ -226,9 +324,18 @@ class GetCommandParameterFile(ConsoleAccessBaseClass):
                 command_parameter_file_api.CommandParameterFileApi(api_client)
             )
             try:
-                _return_get_command_parameter_file = (
-                    command_parameter_files_api_instance.get_command_parameter()
-                )
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+                    _return_get_command_parameter_file = (
+                        command_parameter_files_api_instance._get_command_parameter_file_oapg(
+                            _query_params
+                        )
+                    )
+                else:
+                    _return_get_command_parameter_file = (
+                        command_parameter_files_api_instance._get_command_parameter_file_oapg()
+                    )
                 return _return_get_command_parameter_file.body
 
             except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

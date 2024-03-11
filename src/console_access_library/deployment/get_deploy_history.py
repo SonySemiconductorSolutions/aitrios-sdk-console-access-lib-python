@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ class SchemaGetDeployHistory(Schema):
 
     """
 
-    #: str, required : ID of Edge AI device.
+    #: str, required : Device ID.
     device_id = fields.String(
         required=True, error_messages={"invalid": "Invalid string for device_id"}, strict=True
     )
@@ -82,10 +82,10 @@ class GetDeployHistory(ConsoleAccessBaseClass):
         self,
         device_id: str,
     ):
-        """Get deployment history for a specified device.
+        """Get deploy history for a specified device.
 
         Args:
-            device_id (str, required) : Device ID. Case-sensitive
+            device_id (str, required) : Device ID.
 
         Returns:
             **Return Type**
@@ -97,401 +97,176 @@ class GetDeployHistory(ConsoleAccessBaseClass):
 
                 +----------+----------------------+------------+-------------------------------+
                 | *Level1* | *Level2*             | *Type*     | *Description*                 |
+                +==========+======================+============+===============================+
+                |``deploy  |                      | ``array``  |                               |
+                |s``       |                      |            |                               |
                 +----------+----------------------+------------+-------------------------------+
-                |``deploy``|                      | ``array``  | Descending order of           |
-                |          |                      |            | ins_date                      |
+                |          | ``id``               | ``integer``| Deploy ID.                    |
                 +----------+----------------------+------------+-------------------------------+
-                |          | ``id``               | ``number`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          | ``deploy_type``      | ``string`` | 0: Deployment configuration   |
+                |          | ``deploy_type``      | ``string`` | Set the deploy type.          |
+                |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
-                |          |                      |            | 1: Device model, App:DeviceApp|
+                |          |                      |            | 0: Deploy config              |
+                |          |                      |            |                               |
+                |          |                      |            | 1: Device model               |
+                |          |                      |            |                               |
+                |          |                      |            | App: DeviceApp                |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``deploy_status``     | ``string`` | Total deployment status       |
-                |          |                      |            | including other devices       |
+                |          |``deploy_status``     | ``string`` | Set the deploy status. Target |
+                |          |                      |            | device deployment status.     |
+                |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
                 |          |                      |            | 0: Deploying                  |
                 |          |                      |            |                               |
-                |          |                      |            | 1: Succeeding                 |
+                |          |                      |            | 1: Success                    |
                 |          |                      |            |                               |
-                |          |                      |            | 2: failed                     |
+                |          |                      |            | 2: Fail                       |
                 |          |                      |            |                               |
-                |          |                      |            | 3: canceled                   |
+                |          |                      |            | 3: Cancel                     |
                 |          |                      |            |                               |
-                |          |                      |            | 9: DeviceApp Undeploy         |
+                |          |                      |            | App: DeviceApp undeploy       |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``deploy_comment``    | ``string`` |                               |
+                |          |``update_progress``   | ``string`` | Set the update progress in    |
+                |          |                      |            | percentage.                   |
                 +----------+----------------------+------------+-------------------------------+
-                |          |  ``config_id``       | ``string`` |                               |
+                |          |``deploy_comment``    | ``string`` | Set the deploy comment.       |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``replace_network_id``| ``string`` |                               |
+                |          |  ``config_id``       | ``string`` | Set the deploy config ID.     |
                 +----------+----------------------+------------+-------------------------------+
-                |          | ``current_target``   | ``string`` |                               |
+                |          |``replace_network_id``| ``string`` | Set the replace network ID.   |
                 +----------+----------------------+------------+-------------------------------+
-                |          |``total_status``      | ``string`` | Total deployment status       |
-                |          |                      |            | including other devices       |
+                |          | ``current_target``   | ``string`` | Set the current target.       |
+                +----------+----------------------+------------+-------------------------------+
+                |          |``total_status``      | ``string`` | Set the deploy status.        |
+                |          |                      |            | Total status of devices       |
+                |          |                      |            | deployed together.            |
+                |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
                 |          |                      |            | 0: Deploying                  |
                 |          |                      |            |                               |
-                |          |                      |            | 1: Succeeding                 |
+                |          |                      |            | 1: Success                    |
                 |          |                      |            |                               |
-                |          |                      |            | 2: failed                     |
+                |          |                      |            | 2: Fail                       |
                 |          |                      |            |                               |
-                |          |                      |            | 3: canceled                   |
-                |          |                      |            |                               |
-                |          |                      |            | 9: DeviceApp Undeploy         |
+                |          |                      |            | 3: Cancel                     |
+                +----------+----------------------+------------+-------------------------------+
+                |          | ``app_name``         | ``string`` | Set the app name.             |
+                +----------+----------------------+------------+-------------------------------+
+                |          | ``version_number``   | ``string`` | Set the version number.       |
                 +----------+----------------------+------------+-------------------------------+
                 |          | ``firmware``         | ``array``  |Refer :ref:`firmware <f8>`     |
                 |          |                      |            |for more details               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |  ``model``           | ``array``  |Refer :ref:`model <m8>`        |
-                |          |                      |            |for more details               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``custom_setting``    | ``array``  |Refer :ref:`custom_setting <c>`|
-                |          |                      |            |for more details               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``ins_id``            | ``string`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``ins_date``          | ``string`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``upd_id``            | ``string`` |                               |
-                +----------+----------------------+------------+-------------------------------+
-                |          |``upd_date``          | ``string`` |                               |
                 +----------+----------------------+------------+-------------------------------+
 
                 +------------+--------------------+------------+-----------------------------------+
                 | firmware   | .. _f8:                                                             |
                 +------------+--------------------+------------+-----------------------------------+
                 | *Level1*   | *Level2*           | *Type*     | *Description*                     |
-                +------------+--------------------+------------+-----------------------------------+
+                +============+====================+============+===================================+
                 |``firmware``|                    | ``array``  |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    | ``string`` | 0: Not eligible                   |
-                |            |target_flg``        |            |                                   |
-                |            |                    |            | 1: Eligible                       |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  | 0: Waiting to run                 |
-                |            |status``            |            |                                   |
-                |            |                    |            | 1: Running                        |
+                |            |``sensor_loader_    | ``string`` | Set the deploy target flg.        |
+                |            |target_flg``        |            | - Value definition                |
                 |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
+                |            |                    |            | 0: Not for deployment             |
                 |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
+                |            |                    |            | 1: Deployment target              |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
+                |            |``sensor_loader_    |``string``  | Set the deploy status.            |
+                |            |status``            |            | - Value definition                |
+                |            |                    |            |                                   |
+                |            |                    |            | 0: Waiting                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 1: Deploying                      |
+                |            |                    |            |                                   |
+                |            |                    |            | 2: Success                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 3: Fail                           |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``sensor_loader_    |``integer`` | Set the sensor loader retry count.|
                 |            |retry_count``       |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
+                |            |``sensor_loader_    |``string``  | Set the sensor loader start date. |
                 |            |start_date``        |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    | ``string`` |                                   |
+                |            |``sensor_loader_    | ``string`` | Set the sensor loader end date.   |
                 |            |end_date``          |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
-                |            |version_number``    |            |                                   |
+                |            |``sensor_loader_    |``string``  | Set the sensor loader version     |
+                |            |version_number``    |            | number.                           |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_loader_    |``string``  |                                   |
-                |            |version_comment``   |            |                                   |
+                |            |``sensor_loader_    |``string``  | Set the sensor loader version     |
+                |            |version_comment``   |            | comment.                          |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_target_    |``string``  | 0: Not eligible                   |
-                |            |flg``               |            |                                   |
-                |            |                    |            | 1: Eligible                       |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_status``   | ``string`` | 0: Waiting to run                 |
+                |            |``sensor_target_    |``string``  | Set the deploy target flg.        |
+                |            |flg``               |            | - Value definition                |
                 |            |                    |            |                                   |
-                |            |                    |            | 1: Running                        |
+                |            |                    |            | 0: Not for deployment             |
                 |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
-                |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
+                |            |                    |            | 1: Deployment target              |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_retry_     |``string``  |                                   |
+                |            |``sensor_status``   | ``string`` | Set the deploy status.            |
+                |            |                    |            |                                   |
+                |            |                    |            | - Value definition                |
+                |            |                    |            |                                   |
+                |            |                    |            | 0: Waiting                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 1: Deploying                      |
+                |            |                    |            |                                   |
+                |            |                    |            | 2: Success                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 3: Fail                           |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``sensor_retry_     |``integer`` | Set the sensor retry count.       |
                 |            |count``             |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_start_     |``string``  |                                   |
+                |            |``sensor_start_     |``string``  | Set the sensor start date.        |
                 |            |date``              |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_end_date`` |``string``  |                                   |
+                |            |``sensor_end_date`` |``string``  | Set the sensor end date.          |
                 |            |                    |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_version_   |``string``  |                                   |
+                |            |``sensor_version_   |``string``  | Set the sensor version number.    |
                 |            |number``            |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``sensor_version_   |``string``  |                                   |
+                |            |``sensor_version_   |``string``  | Set the sensor version comment.   |
                 |            |comment``           |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_target_flg`` |``string``  | 0: Not eligible                   |
+                |            |``apfw_target_flg`` |``string``  | Set the deploy target flg.        |
                 |            |                    |            |                                   |
-                |            |                    |            | 1: Eligible                       |
+                |            |                    |            |- Value definition                 |
+                |            |                    |            |                                   |
+                |            |                    |            | 0: Not for deployment             |
+                |            |                    |            |                                   |
+                |            |                    |            | 1: Deployment target              |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_status``     |``string``  | 0: Waiting to run                 |
+                |            |``apfw_status``     |``string``  | Set the deploy status.            |
                 |            |                    |            |                                   |
-                |            |                    |            | 1: Running                        |
+                |            |                    |            | - Value definition                |
                 |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
+                |            |                    |            | 0: Waiting                        |
                 |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
+                |            |                    |            | 1: Deploying                      |
+                |            |                    |            |                                   |
+                |            |                    |            | 2: Success                        |
+                |            |                    |            |                                   |
+                |            |                    |            | 3: Fail                           |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_retry_count``|``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_start_date`` |``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_end_date``   |``string``  |                                   |
+                |            |``apfw_retry_count``|``integer`` | Set the appfw retry count.        |
                 |            |                    |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_version_     |``string``  |                                   |
+                |            |``apfw_start_date`` |``string``  | Set the appfw start date.         |
+                |            |                    |            |                                   |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``apfw_end_date``   |``string``  | Set the appfw end date.           |
+                |            |                    |            |                                   |
+                +------------+--------------------+------------+-----------------------------------+
+                |            |``apfw_version_     |``string``  | Set the appfw version number.     |
                 |            |number``            |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-                |            |``apfw_version_     |``string``  |                                   |
+                |            |``apfw_version_     |``string``  | Set the appfw version comment.    |
                 |            |comment``           |            |                                   |
                 +------------+--------------------+------------+-----------------------------------+
-
-                +------------+--------------------+------------+-----------------------------------+
-                | model      | .. _m8:                                                             |
-                +------------+--------------------+------------+-----------------------------------+
-                | *Level1*   | *Level2*           | *Type*     | *Description*                     |
-                +------------+--------------------+------------+-----------------------------------+
-                |``model``   |                    | ``array``  |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_target_flg``| ``string`` | 0: Not eligible                   |
-                |            |                    |            |                                   |
-                |            |                    |            | 1: Eligible                       |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_status``    |``string``  | 0: Waiting to run                 |
-                |            |                    |            |                                   |
-                |            |                    |            | 1: Running                        |
-                |            |                    |            |                                   |
-                |            |                    |            | 2: Successful                     |
-                |            |                    |            |                                   |
-                |            |                    |            | 3: Failed                         |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_retry_      |``string``  |                                   |
-                |            |count``             |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_start_date``|``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_end_date``  | ``string`` |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_id``        |``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_version_    |``string``  |                                   |
-                |            |number``            |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_comment``   |``string``  |                                   |
-                |            |                    |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``model_version_    | ``string`` |                                   |
-                |            |comment``           |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_set    |``string``  |                                   |
-                |            |ting_target_flg``   |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_       |``string``  |                                   |
-                |            |settingstatus``     |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_sett   |``string``  |                                   |
-                |            |ing_retry_count``   |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_set    |``string``  |                                   |
-                |            |ting_start_date``   |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-                |            |``dnn_parame_set    |``string``  |                                   |
-                |            |ting_end_date``     |            |                                   |
-                +------------+--------------------+------------+-----------------------------------+
-
-                +--------------+--------------------+------------+---------------------------------+
-                |custom_setting| .. _c:                                                            |
-                +--------------+--------------------+------------+---------------------------------+
-                | *Level1*     | *Level2*           | *Type*     | *Description*                   |
-                +--------------+--------------------+------------+---------------------------------+
-                |``custom_     |                    | ``array``  |                                 |
-                |setting``     |                    |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     | ``string`` |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``color_matrix_     |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``gamma_            |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscisp_           |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``lscraw_           |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``prewb_            |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  | 0: Not eligible                 |
-                |              |target_flg``        |            |                                 |
-                |              |                    |            | 1: Eligible                     |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  | 0: Waiting to run               |
-                |              |status``            |            |                                 |
-                |              |                    |            | 1: Running                      |
-                |              |                    |            |                                 |
-                |              |                    |            | 2: Successful                   |
-                |              |                    |            |                                 |
-                |              |                    |            | 3: Failed                       |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |retry_count``       |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |start_date``        |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |end_date``          |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |mode``              |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |file_name``         |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
-                |              |``dewarp_           |``string``  |                                 |
-                |              |comment``           |            |                                 |
-                +--------------+--------------------+------------+---------------------------------+
 
             **Error Response Schema**
 
@@ -586,6 +361,7 @@ class GetDeployHistory(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -600,7 +376,8 @@ class GetDeployHistory(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -621,6 +398,7 @@ class GetDeployHistory(ConsoleAccessBaseClass):
 
         try:
             _local_params = locals()
+            _query_params = {}
             # delete local argument 'self' form locals() for validation.
             if "self" in _local_params:
                 del _local_params["self"]
@@ -637,9 +415,18 @@ class GetDeployHistory(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 get_deploy_history_api_instance = deploy_api.DeployApi(api_client)
                 try:
-                    _return_get_deploy_history = get_deploy_history_api_instance.get_deploy_history(
-                        path_params=_local_params
-                    )
+                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    if self._config._application_id:
+                        _query_params["grant_type"] = "client_credentials"
+                        # pylint:disable=line-too-long
+                        _return_get_deploy_history = get_deploy_history_api_instance.get_deploy_history(
+                            path_params=_local_params, query_params=_query_params
+                        )
+                    else:
+                        _return_get_deploy_history = get_deploy_history_api_instance.get_deploy_history(
+                            path_params=_local_params
+                        )
+
                     return _return_get_deploy_history.body
 
                 except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

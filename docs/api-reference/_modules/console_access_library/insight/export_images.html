@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.export_images &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.insight.export_images &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.insight.export_images</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -97,6 +97,7 @@
 <span class="c1"># pylint:disable=redefined-builtin</span>
 <span class="c1"># pylint:disable=too-many-arguments</span>
 <span class="c1"># pylint:disable=too-many-locals</span>
+<span class="c1"># pylint:disable=too-many-branches</span>
 <span class="c1"># pylint:disable=too-many-return-statements</span>
 <span class="c1"># pylint:disable=protected-access</span>
 <span class="c1"># pylint:disable=broad-except</span>
@@ -124,18 +125,20 @@
 <span class="sd">        Schema (object): Inherited from Schema class of marshmallow</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: str, required : The public key.</span>
-    <span class="c1">#:                 Base64-encoded format of the entire contents of the public key PEM file</span>
+    <span class="c1">#: str, required : Public key.</span>
+    <span class="c1">#:                 Base64-encoded format of the entire pem file contents of the public key</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for key&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Date and time (From). Form: yyyyMMddhhmm</span>
+    <span class="c1">#: str, optional : Date and time (From).</span>
+    <span class="c1">#:                 Form: yyyyMMddhhmm. Default:&quot;&quot;</span>
     <span class="n">from_datetime</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for from_datetime&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Date and time (To). Form: yyyyMMddhhmm</span>
+    <span class="c1">#: str, optional : Date and time (To).</span>
+    <span class="c1">#:                 Form: yyyyMMddhhmm. Default:&quot;&quot;</span>
     <span class="n">to_datetime</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for to_datetime&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -145,11 +148,13 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-    <span class="c1">#: str, optional : Image file format. If not specified, no filtering.</span>
-    <span class="c1">#:                 Value definition</span>
-    <span class="c1">#:                 JPG</span>
-    <span class="c1">#:                 BMP</span>
-    <span class="c1">#:                 RAW</span>
+    <span class="c1">#: str, optional : Image file format. If this is not specified, there is no filtering.</span>
+    <span class="c1">#:                 Default:&quot;&quot;</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                 - Value definition</span>
+    <span class="c1">#:</span>
+    <span class="c1">#:                  - JPG</span>
+    <span class="c1">#:                  - BMP</span>
     <span class="n">file_format</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for file_format&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
@@ -226,22 +231,51 @@
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">file_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the URL to export the image with the specified conditions in zip file format.\</span>
-<span class="sd">            * Pre-encrypted, for learning images in other environments</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the URL to export the images of specified conditions in zip file format. \</span>
+<span class="sd">            For encrypted images for learning in other environments</span>
+
+<span class="sd">            [Prerequisites]</span>
+
+<span class="sd">            - The encryption method is public key cryptography.</span>
+<span class="sd">            - A zip file containing the target images can be downloaded by accessing a URL. \</span>
+<span class="sd">                Each image is encoded using the method described hereafter.</span>
+<span class="sd">            - The key used for encryption is a shared key of 32 characters issued randomly by \</span>
+<span class="sd">                the API each time.</span>
+<span class="sd">            - The image encryption method is AES128, MODE_CBC</span>
+<span class="sd">            - The iv (initial vector, 16 digits) and encrypted data are stored in a zip file.</span>
+
+<span class="sd">            [Generating a Key]</span>
+
+<span class="sd">            - Private keys are issued by Sier itself.</span>
+<span class="sd">            - Public and private keys are issued with a length of 1024 or 2048.</span>
+<span class="sd">            - The public key (key) specified to the parameter of this API passes the pem file\</span>
+<span class="sd">                content of the public key in a base64 encoded format.</span>
+
+<span class="sd">            Example: Base64 encode the entire string as follows:</span>
+
+<span class="sd">            -----BEGIN PUBLIC KEY-----</span>
+
+<span class="sd">            MIGfMA0GCSqGSIb3DQEBAQUAA4GNADC</span>
+
+<span class="sd">            ...</span>
+
+<span class="sd">            -----END PUBLIC KEY-----</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key (str, required) : The public key. \</span>
-<span class="sd">                Base64-encoded format of the entire contents of the public key PEM file</span>
-<span class="sd">            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm</span>
-<span class="sd">            to_datetime (str, optional) : Date and time (To). Form: yyyyMMddhhmm</span>
+<span class="sd">            key (str, required) : Public key. \</span>
+<span class="sd">                Base64-encoded format of the entire pem file contents of the public key</span>
+<span class="sd">            from_datetime (str, optional) : Date and time (From). Form: yyyyMMddhhmm \</span>
+<span class="sd">                Default:&quot;&quot;</span>
+<span class="sd">            to_datetime (str, optional) : Date/Time (To). Form: yyyyMMddhhmm \</span>
+<span class="sd">                Default:&quot;&quot;</span>
 <span class="sd">            device_id (str, optional) : Device ID.</span>
-<span class="sd">            file_format (str, optional) : Image file format. \</span>
-<span class="sd">                If not specified, no filtering. \</span>
-<span class="sd">                Value definition</span>
+<span class="sd">            file_format (str, optional) : Image file format. Default:&quot;&quot;\</span>
+<span class="sd">                If this is not specified, there is no filtering.</span>
 
-<span class="sd">                - JPG</span>
-<span class="sd">                - BMP</span>
-<span class="sd">                - RAW</span>
+<span class="sd">                - Value definition</span>
+
+<span class="sd">                    - JPG</span>
+<span class="sd">                    - BMP</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -253,12 +287,12 @@
 
 <span class="sd">                +-------------+------------+---------------------------+</span>
 <span class="sd">                | *Level1*    | *Type*     | *Description*             |</span>
-<span class="sd">                +-------------+------------+---------------------------+</span>
-<span class="sd">                | ``key``     | ``string`` | A common key for image    |</span>
-<span class="sd">                |             |            | decryption encrypted with |</span>
+<span class="sd">                +=============+============+===========================+</span>
+<span class="sd">                | ``key``     | ``string`` | Shared key for decrypting |</span>
+<span class="sd">                |             |            | images encrypted by       |</span>
 <span class="sd">                |             |            | a public key.             |</span>
 <span class="sd">                +-------------+------------+---------------------------+</span>
-<span class="sd">                | ``url``     | ``string`` | SUS URI for download      |</span>
+<span class="sd">                | ``url``     | ``string`` | SUS URI for downloading   |</span>
 <span class="sd">                +-------------+------------+---------------------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
@@ -354,6 +388,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -368,7 +403,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -425,6 +461,11 @@
                 <span class="n">header_name</span><span class="o">=</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span>
                 <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
+
+                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                    <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">insight_api_instance</span> <span class="o">=</span> <span class="n">insight_api</span><span class="o">.</span><span class="n">InsightApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
 
@@ -465,7 +506,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

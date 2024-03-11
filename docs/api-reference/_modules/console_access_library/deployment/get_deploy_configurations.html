@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.get_deploy_configurations &mdash; Console Access Library 1.0.0 documentation</title>
+  <title>console_access_library.deployment.get_deploy_configurations &mdash; Console Access Library 1.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -32,7 +32,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.0.0
+                1.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -74,7 +74,7 @@
              
   <h1>Source code for console_access_library.deployment.get_deploy_configurations</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -129,7 +129,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 
 <div class="viewcode-block" id="GetDeployConfigurations.get_deploy_configurations"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_configurations.GetDeployConfigurations.get_deploy_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">get_deploy_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get deployment config information list.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the deploy config list.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -141,26 +141,26 @@
 
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
 <span class="sd">                | *Level1*        | *Level2*   | *Type*     | *Description*                   |</span>
+<span class="sd">                +=================+============+============+=================================+</span>
+<span class="sd">                |``deploy_        |            | ``array``  |                                 |</span>
+<span class="sd">                |configurations`` |            |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |``deploy_        |            | ``array``  | Ascending order of              |</span>
-<span class="sd">                |configurations`` |            |            | config_id                       |</span>
-<span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``config_   | ``string`` |                                 |</span>
+<span class="sd">                |                 |``config_   | ``string`` | Set the config ID.              |</span>
 <span class="sd">                |                 |id``        |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``device_   | ``string`` |                                 |</span>
+<span class="sd">                |                 |``device_   | ``string`` | Set the device type.            |</span>
 <span class="sd">                |                 |type``      |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``config_   | ``string`` |                                 |</span>
+<span class="sd">                |                 |``config_   | ``string`` | Set the config comment.         |</span>
 <span class="sd">                |                 |comment``   |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``running_  | ``int``    |                                 |</span>
+<span class="sd">                |                 |``running_  | ``integer``| Set the running cnt.            |</span>
 <span class="sd">                |                 |cnt``       |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``success_  | ``int``    |                                 |</span>
+<span class="sd">                |                 |``success_  | ``integer``| Set the success cnt.            |</span>
 <span class="sd">                |                 |cnt``       |            |                                 |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``fail_cnt``| ``int``    |                                 |</span>
+<span class="sd">                |                 |``fail_cnt``| ``integer``| Set the fail cnt.               |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
 <span class="sd">                |                 |``firmware``| ``array``  | Refer :ref:`firmware &lt;f1&gt;`      |</span>
 <span class="sd">                |                 |            |            | for more details                |</span>
@@ -168,131 +168,72 @@
 <span class="sd">                |                 |``model``   | ``array``  | Refer :ref:`model &lt;m1&gt;`         |</span>
 <span class="sd">                |                 |            |            | for more details                |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``custom_   | ``array``  | Refer :ref:`custom_setting &lt;c1&gt;`|</span>
-<span class="sd">                |                 |setting``   |            | for more details                |</span>
+<span class="sd">                |                 |``ins_id``  | ``string`` | Set the deployment author.      |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``ins_id``  | ``string`` |                                 |</span>
+<span class="sd">                |                 |``ins_date``| ``string`` | Set the date the deployment     |</span>
+<span class="sd">                |                 |            |            | was created.                    |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``ins_date``| ``string`` |                                 |</span>
+<span class="sd">                |                 |``upd_id``  | ``string`` | Set the deployment updater.     |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``upd_id``  | ``string`` |                                 |</span>
-<span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
-<span class="sd">                |                 |``upd_date``| ``string`` |                                 |</span>
+<span class="sd">                |                 |``upd_date``| ``string`` | Set the date the deployment     |</span>
+<span class="sd">                |                 |            |            | was updated.                    |</span>
 <span class="sd">                +-----------------+------------+------------+---------------------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | firmware          | .. _f1:                                             |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*     |</span>
-<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
+<span class="sd">                +===================+====================+============+===================+</span>
 <span class="sd">                | ``firmware``      |                    | ``array``  |                   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_loader_    | ``string`` |                   |</span>
-<span class="sd">                |                   |file_name``         |            |                   |</span>
+<span class="sd">                |                   |``sensor_loader_    | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |file_name``         |            | loader filename.  |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_loader_    | ``string`` |                   |</span>
-<span class="sd">                |                   |version_number``    |            |                   |</span>
+<span class="sd">                |                   |``sensor_loader_    | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |version_number``    |            | loader version    |</span>
+<span class="sd">                |                   |                    |            | number.           |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_loader_    | ``string`` |                   |</span>
-<span class="sd">                |                   |firmware_comment``  |            |                   |</span>
+<span class="sd">                |                   |``sensor_loader_    | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |firmware_comment``  |            | loader firmware   |</span>
+<span class="sd">                |                   |                    |            | comment.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_file_name``| ``string`` |                   |</span>
+<span class="sd">                |                   |``sensor_file_name``| ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |                    |            | filename.         |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_           | ``string`` |                   |</span>
-<span class="sd">                |                   |version_number``    |            |                   |</span>
+<span class="sd">                |                   |``sensor_           | ``string`` | Set the sensor    |</span>
+<span class="sd">                |                   |version_number``    |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``sensor_           |``string``  |                   |</span>
-<span class="sd">                |                   |firmware_comment``  |            |                   |</span>
+<span class="sd">                |                   |``sensor_           |``string``  | Set the sensor    |</span>
+<span class="sd">                |                   |firmware_comment``  |            | firmware comment. |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``apfw_file_name``  |``string``  |                   |</span>
+<span class="sd">                |                   |``apfw_file_name``  |``string``  | Set the apfw      |</span>
+<span class="sd">                |                   |                    |            | filename.         |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``apfw_version_     |``string``  |                   |</span>
-<span class="sd">                |                   |number``            |            |                   |</span>
+<span class="sd">                |                   |``apfw_version_     |``string``  | Set the apfw      |</span>
+<span class="sd">                |                   |number``            |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``apfw_firmware_    |``string``  |                   |</span>
-<span class="sd">                |                   |comment``           |            |                   |</span>
+<span class="sd">                |                   |``apfw_firmware_    |``string``  | Set the apfw      |</span>
+<span class="sd">                |                   |comment``           |            | firmware comment. |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | model             | .. _m1:                                             |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
 <span class="sd">                | *Level1*          | *Level2*           | *Type*     | *Description*     |</span>
-<span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
+<span class="sd">                +===================+====================+============+===================+</span>
 <span class="sd">                | ``model``         |                    | ``array``  |                   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``model_id``       | ``string`` |                   |</span>
+<span class="sd">                |                   | ``model_id``       | ``string`` | Set the model ID. |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``model_            | ``string`` |                   |</span>
-<span class="sd">                |                   |version_number``    |            |                   |</span>
+<span class="sd">                |                   |``model_            | ``string`` | Set the model     |</span>
+<span class="sd">                |                   |version_number``    |            | version number.   |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   | ``model_comment``  | ``string`` |                   |</span>
+<span class="sd">                |                   | ``model_comment``  | ``string`` | Set the model     |</span>
+<span class="sd">                |                   |                    |            | comment.          |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-<span class="sd">                |                   |``model_            | ``string`` |                   |</span>
-<span class="sd">                |                   |version_comment``   |            |                   |</span>
+<span class="sd">                |                   |``model_            | ``string`` | Set the model     |</span>
+<span class="sd">                |                   |version_comment``   |            | version comment.  |</span>
 <span class="sd">                +-------------------+--------------------+------------+-------------------+</span>
-
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |custom_setting| .. _c1:                                         |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                | *Level1*     | *Level2*           | *Type*     | *Description* |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |``custom_     |                    | ``array``  |               |</span>
-<span class="sd">                |setting``     |                    |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``color_matrix_     | ``string`` |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``color_matrix_     |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``gamma_            |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscisp_           |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``lscraw_           |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``prewb_            |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |               |</span>
-<span class="sd">                |              |mode``              |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |               |</span>
-<span class="sd">                |              |file_name``         |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
-<span class="sd">                |              |``dewarp_           |``string``  |               |</span>
-<span class="sd">                |              |comment``           |            |               |</span>
-<span class="sd">                +--------------+--------------------+------------+---------------+</span>
 
 <span class="sd">            **Error Response Schema**</span>
 
@@ -387,6 +328,7 @@
 <span class="sd">                #     portal_authorization_endpoint: &quot;__portal_authorization_endpoint__&quot;</span>
 <span class="sd">                #     client_secret: &quot;__client_secret__&quot;</span>
 <span class="sd">                #     client_id: &quot;__client_id__&quot;</span>
+<span class="sd">                #     application_id: &quot;__application_id__&quot;</span>
 
 <span class="sd">                # Set path for Console Access Library Setting File.</span>
 <span class="sd">                SETTING_FILE_PATH = os.path.join(os.getcwd(),</span>
@@ -401,7 +343,8 @@
 <span class="sd">                    read_console_access_settings_obj.console_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.portal_authorization_endpoint,</span>
 <span class="sd">                    read_console_access_settings_obj.client_id,</span>
-<span class="sd">                    read_console_access_settings_obj.client_secret</span>
+<span class="sd">                    read_console_access_settings_obj.client_secret,</span>
+<span class="sd">                    read_console_access_settings_obj.application_id</span>
 <span class="sd">                )</span>
 
 <span class="sd">                # Instantiate Console Access Library Client.</span>
@@ -416,6 +359,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">)</span>
+        <span class="n">_query_params</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># Enter a context with an instance of the API client</span>
         <span class="k">with</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span>
@@ -426,9 +370,17 @@
             <span class="c1"># Create an instance of the API class</span>
             <span class="n">get_deploy_configurations_api_instance</span> <span class="o">=</span> <span class="n">deploy_api</span><span class="o">.</span><span class="n">DeployApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">_return_get_deploy_configurations</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">get_deploy_configurations_api_instance</span><span class="o">.</span><span class="n">get_deploy_configurations</span><span class="p">()</span>
-                <span class="p">)</span>
+                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
+                    <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
+                    <span class="c1"># pylint:disable=line-too-long</span>
+                    <span class="n">_return_get_deploy_configurations</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">get_deploy_configurations_api_instance</span><span class="o">.</span><span class="n">get_deploy_configurations</span><span class="p">(</span><span class="n">query_params</span><span class="o">=</span><span class="n">_query_params</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">_return_get_deploy_configurations</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">get_deploy_configurations_api_instance</span><span class="o">.</span><span class="n">get_deploy_configurations</span><span class="p">()</span>
+                    <span class="p">)</span>
                 <span class="k">return</span> <span class="n">_return_get_deploy_configurations</span><span class="o">.</span><span class="n">body</span>
 
             <span class="k">except</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiKeyError</span> <span class="k">as</span> <span class="n">key_err</span><span class="p">:</span>
@@ -463,7 +415,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022 Sony Semiconductor Solutions Corp.</p>
+    <p>&#169; Copyright 2022, 2023 Sony Semiconductor Solutions Corp.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

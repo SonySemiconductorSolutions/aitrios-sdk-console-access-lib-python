@@ -31,6 +31,7 @@ from aitrios_console_rest_client_sdk_primitive.model.model import Model
 from . import path
 
 # Query params
+GrantTypeSchema = schemas.StrSchema
 ModelIdSchema = schemas.StrSchema
 CommentSchema = schemas.StrSchema
 ProjectNameSchema = schemas.StrSchema
@@ -46,6 +47,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
         'model_id': typing.Union[ModelIdSchema, str, ],
         'comment': typing.Union[CommentSchema, str, ],
         'project_name': typing.Union[ProjectNameSchema, str, ],
@@ -62,6 +64,12 @@ class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams)
     pass
 
 
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 request_query_model_id = api_client.QueryParameter(
     name="model_id",
     style=api_client.ParameterStyle.FORM,
@@ -129,12 +137,12 @@ class SchemaFor200ResponseBodyApplicationJson(
             
                 def __new__(
                     cls,
-                    arg: typing.Union[typing.Tuple['Model'], typing.List['Model']],
+                    _arg: typing.Union[typing.Tuple['Model'], typing.List['Model']],
                     _configuration: typing.Optional[schemas.Configuration] = None,
                 ) -> 'models':
                     return super().__new__(
                         cls,
-                        arg,
+                        _arg,
                         _configuration=_configuration,
                     )
             
@@ -167,14 +175,14 @@ class SchemaFor200ResponseBodyApplicationJson(
 
     def __new__(
         cls,
-        *args: typing.Union[dict, frozendict.frozendict, ],
+        *_args: typing.Union[dict, frozendict.frozendict, ],
         models: typing.Union[MetaOapg.properties.models, list, tuple, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
             cls,
-            *args,
+            *_args,
             models=models,
             _configuration=_configuration,
             **kwargs,
@@ -340,6 +348,7 @@ class BaseApi(api_client.Api):
 
         prefix_separator_iterator = None
         for parameter in (
+            request_query_grant_type,
             request_query_model_id,
             request_query_comment,
             request_query_project_name,
@@ -381,7 +390,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 

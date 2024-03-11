@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ except Exception as err:
     logging.error("Configuration not loaded!!")
     raise err
 
-SDK_SPECIFICATION_VERSION = "1.0.0"
+SDK_SPECIFICATION_VERSION = "1.1.0"
 PACKAGE_VERSION = f"{SDK_SPECIFICATION_VERSION}"
 PACKAGE_NAME = "console_access_library"
 AUTHOR_NAME = "Sony Semiconductor Solutions Corp"
@@ -69,17 +69,16 @@ setup(
         "nassl>=4.0",
         "cryptography>=36.0",
         "validators>=0.18",
+        "msal>=1.22.0"
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Build Tools",
         "License :: Apache License Version 2.0",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
     packages=find_packages(),
-    python_requires=">=3.6, <4",
+    python_requires=">=3.8, <4",
 )

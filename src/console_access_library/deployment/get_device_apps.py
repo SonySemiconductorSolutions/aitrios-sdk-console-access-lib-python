@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ class GetDeviceApps(ConsoleAccessBaseClass):
         self._config = config
 
     def get_device_apps(self):
-        """Get DeviceApp information list.
+        """Get the device app list information.
 
         Returns:
             **Return Type**
@@ -67,57 +67,123 @@ class GetDeviceApps(ConsoleAccessBaseClass):
 
                 +----------+-------------+------------+------------------------------------------+
                 | *Level1* | *Level2*    | *Type*     | *Description*                            |
+                +==========+=============+============+==========================================+
+                | ``apps`` |             | ``array``  |                                          |
                 +----------+-------------+------------+------------------------------------------+
-                | ``apps`` |             | ``array``  | App array                                |
+                |          | ``name``    | ``string`` | Set the app name.                        |
                 +----------+-------------+------------+------------------------------------------+
-                |          | ``name``    | ``string`` | App name                                 |
+                |          |``create_by``| ``string`` | Set the create_by.                       |
+                |          |             |            |                                          |
+                |          |             |            | - Value definition                       |
+                |          |             |            |                                          |
+                |          |             |            | Self: Self-training models               |
+                |          |             |            |                                          |
+                |          |             |            | Marketplace: Marketplace purchacing model|
                 +----------+-------------+------------+------------------------------------------+
-                |          | ``versions``| ``array``  | Refer :ref:`versions <versions_elements>`|
+                |          |``package_   | ``string`` | Set the marketplace package ID.          |
+                |          |id``         |            |                                          |
+                +----------+-------------+------------+------------------------------------------+
+                |          |``product    | ``string`` | Set the marketplace product ID.          |
+                |          |_id``        |            |                                          |
+                +----------+-------------+------------+------------------------------------------+
+                |          |``schema_    | ``array``  | Refer :ref:`schema_info <schema_info>`   |
+                |          |info``       |            | for more details                         |
+                +----------+-------------+------------+------------------------------------------+
+                |          |``versions`` | ``array``  | Refer :ref:`versions <versions_elements>`|
                 |          |             |            | for more details                         |
                 +----------+-------------+------------+------------------------------------------+
+
+
+                +-------------------+-----------------+------------+-------------------------------+
+                | schema_info       | .. _schema_info:                                             |
+                +-------------------+-----------------+------------+-------------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*                 |
+                +===================+=================+============+===============================+
+                | ``schema_info``   |                 | ``array``  | Schema info.                  |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``VnSAppId``    | ``string`` | Set the VnS app ID            |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``version``     | ``string`` | Set the app version no.       |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``interfaces``  | ``array``  |Refer :ref:`interfaces <inter>`|
+                |                   |                 |            |for more details               |
+                +-------------------+-----------------+------------+-------------------------------+
+
+                +-------------------+-----------------+------------+-------------------------------+
+                | interfaces        | .. _inter:                                                   |
+                +-------------------+-----------------+------------+-------------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*                 |
+                +===================+=================+============+===============================+
+                | ``interfaces``    |                 | ``array``  | Set the metadata format IDs.  |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   | ``in``          | ``array``  | Refer :ref:`in <in>`          |
+                |                   |                 |            | for more details              |
+                +-------------------+-----------------+------------+-------------------------------+
+
+                +-------------------+-----------------+------------+-------------------------------+
+                | in                | .. _in:                                                      |
+                +-------------------+-----------------+------------+-------------------------------+
+                | *Level1*          | *Level2*        | *Type*     | *Description*                 |
+                +===================+=================+============+===============================+
+                | ``in``            |                 | ``array``  |                               |
+                +-------------------+-----------------+------------+-------------------------------+
+                |                   |``metadata       | ``string`` | Set the metadata format ID.   |
+                |                   |FormatId``       |            |                               |
+                +-------------------+-----------------+------------+-------------------------------+
 
                 +-------------------+--------------------+------------+-------------------+
                 | versions          | .. _versions_elements:                              |
                 +-------------------+--------------------+------------+-------------------+
                 | *Level1*          | *Level2*           | *Type*     | *Description*     |
-                +-------------------+--------------------+------------+-------------------+
+                +===================+====================+============+===================+
                 | ``versions``      |                    | ``array``  |                   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``version``        | ``string`` |                   |
+                |                   | ``version``        | ``string`` | Set the app       |
+                |                   |                    |            | version number.   |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``compiled_flg``   | ``string`` | 0: Uncompiled     |
-                |                   |                    |            | (compile process) |
+                |                   | ``compiled_flg``   | ``string`` | Set the compiled  |
+                |                   |                    |            | flg.              |
                 |                   |                    |            |                   |
-                |                   |                    |            | 1: Compiled (no   |
+                |                   |                    |            | - Value definition|
+                |                   |                    |            |                   |
+                |                   |                    |            | 0 : Specified App |
+                |                   |                    |            | is not compiled   |
+                |                   |                    |            |                   |
+                |                   |                    |            | 1 : Specified App |
+                |                   |                    |            | is compiled       |
+                +-------------------+--------------------+------------+-------------------+
+                |                   | ``status``         | ``string`` | Set the status.   |
+                |                   |                    |            |                   |
+                |                   |                    |            | - Value definition|
+                |                   |                    |            |                   |
+                |                   |                    |            | 0: before         |
                 |                   |                    |            | compilation       |
-                |                   |                    |            | process)          |
-                +-------------------+--------------------+------------+-------------------+
-                |                   | ``status``         | ``string`` | 0: Before         |
+                |                   |                    |            |                   |
+                |                   |                    |            | 1: during         |
                 |                   |                    |            | compilation       |
                 |                   |                    |            |                   |
-                |                   |                    |            | 1: Compiling      |
+                |                   |                    |            | 2: successful     |
                 |                   |                    |            |                   |
-                |                   |                    |            | 2: Successful     |
-                |                   |                    |            |                   |
-                |                   |                    |            | 3: Failed         |
+                |                   |                    |            | 3: failed         |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``comment``        | ``string`` |                   |
+                |                   | ``comment``        | ``string`` | Set the comment.  |
                 +-------------------+--------------------+------------+-------------------+
-                |                   | ``deploy_count``   | ``string`` |                   |
+                |                   | ``deploy_count``   | ``string`` | Set the deploy    |
+                |                   |                    |            | count.            |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``ins_id``        |``string``  | App Version       |
-                |                   |                    |            | Author            |
+                |                   |  ``ins_id``        |``string``  | Set the settings  |
+                |                   |                    |            | author.           |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``ins_date``      |``string``  | Date and time the |
-                |                   |                    |            | app version was   |
-                |                   |                    |            | created           |
+                |                   |  ``ins_date``      |``string``  | Set the date the  |
+                |                   |                    |            | settings were     |
+                |                   |                    |            | created.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``upd_id``        |``string``  | App version       |
-                |                   |                    |            | updated by        |
+                |                   |  ``upd_id``        |``string``  | Set the settings  |
+                |                   |                    |            | updater.          |
                 +-------------------+--------------------+------------+-------------------+
-                |                   |  ``upd_date``      |``string``  | Date and time the |
-                |                   |                    |            | app version was   |
-                |                   |                    |            | updated           |
+                |                   |  ``upd_date``      |``string``  | Set the date the  |
+                |                   |                    |            | settings were     |
+                |                   |                    |            | updated.          |
                 +-------------------+--------------------+------------+-------------------+
 
             **Error Response Schema**
@@ -213,6 +279,7 @@ class GetDeviceApps(ConsoleAccessBaseClass):
                 #     portal_authorization_endpoint: "__portal_authorization_endpoint__"
                 #     client_secret: "__client_secret__"
                 #     client_id: "__client_id__"
+                #     application_id: "__application_id__"
 
                 # Set path for Console Access Library Setting File.
                 SETTING_FILE_PATH = os.path.join(os.getcwd(),
@@ -227,7 +294,8 @@ class GetDeviceApps(ConsoleAccessBaseClass):
                     read_console_access_settings_obj.console_endpoint,
                     read_console_access_settings_obj.portal_authorization_endpoint,
                     read_console_access_settings_obj.client_id,
-                    read_console_access_settings_obj.client_secret
+                    read_console_access_settings_obj.client_secret,
+                    read_console_access_settings_obj.application_id
                 )
 
                 # Instantiate Console Access Library Client.
@@ -242,6 +310,7 @@ class GetDeviceApps(ConsoleAccessBaseClass):
         """
 
         logger.info(sys._getframe().f_code.co_name)
+        _query_params = {}
 
         # Enter a context with an instance of the API client
         with aitrios_console_rest_client_sdk_primitive.ApiClient(
@@ -252,7 +321,13 @@ class GetDeviceApps(ConsoleAccessBaseClass):
             # Create an instance of the API class
             get_device_apps_api_instance = device_app_api.DeviceAppApi(api_client)
             try:
-                _return_get_device_apps = get_device_apps_api_instance.get_device_apps()
+                # Adding Parameters to Connect to an Enterprise Edition Environment
+                if self._config._application_id:
+                    _query_params["grant_type"] = "client_credentials"
+                    _return_get_device_apps = get_device_apps_api_instance.get_device_apps(
+                        query_params=_query_params)
+                else:
+                    _return_get_device_apps = get_device_apps_api_instance.get_device_apps()
                 return _return_get_device_apps.body
 
             except aitrios_console_rest_client_sdk_primitive.ApiKeyError as key_err:

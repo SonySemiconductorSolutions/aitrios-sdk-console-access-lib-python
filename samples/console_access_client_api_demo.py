@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,13 +54,25 @@ if __name__ == "__main__":
         # Instantiate Console Access Library ReadConsoleAccessSettings.
         read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
 
-        # Instantiate Console Access Library Config.
-        config_obj = Config(
-            read_console_access_settings_obj.console_endpoint,
-            read_console_access_settings_obj.portal_authorization_endpoint,
-            read_console_access_settings_obj.client_id,
-            read_console_access_settings_obj.client_secret,
-        )
+        if read_console_access_settings_obj.application_id is not None:
+            # Instantiate Azure Config.
+            config_obj = Config(
+                console_endpoint=read_console_access_settings_obj.console_endpoint,
+                portal_authorization_endpoint=read_console_access_settings_obj.portal_authorization_endpoint,
+                client_id=read_console_access_settings_obj.client_id,
+                client_secret=read_console_access_settings_obj.client_secret,
+                application_id=read_console_access_settings_obj.application_id
+            )
+            APPLICATION_ID_FLG = True
+        else:
+            # Instantiate Console Access Library Config.
+            config_obj = Config(
+                console_endpoint=read_console_access_settings_obj.console_endpoint,
+                portal_authorization_endpoint=read_console_access_settings_obj.portal_authorization_endpoint,
+                client_id=read_console_access_settings_obj.client_id,
+                client_secret=read_console_access_settings_obj.client_secret,
+                application_id=None,
+            )
     else:
         # Instantiate Console Access Library Config.
         config_obj = Config(
@@ -68,6 +80,7 @@ if __name__ == "__main__":
             portal_authorization_endpoint=None,
             client_id=None,
             client_secret=None,
+            application_id=None,
         )
 
     # Instantiate Console Access Library Client.
@@ -107,43 +120,50 @@ if __name__ == "__main__":
 
     # Read Demo Configuration Values
     device_id = demo_configuration["demo_configuration"]["device_id"]
-    sub_directory_name = demo_configuration["demo_configuration"]["sub_directory_name"]
-    number_of_images = demo_configuration["demo_configuration"]["number_of_images"]
-    skip = demo_configuration["demo_configuration"]["skip"]
-    get_images_order_by = demo_configuration["demo_configuration"]["get_images_order_by"]
-    filter = demo_configuration["demo_configuration"]["filter"]
-    number_of_inference_results = demo_configuration["demo_configuration"][
-        "number_of_inference_results"
-    ]
-    raw = demo_configuration["demo_configuration"]["raw"]
-    time = demo_configuration["demo_configuration"]["time"]
+    get_model_device_id = demo_configuration["demo_configuration"]["get_model_device_id"]
+    publish_model_wait_response_device_id = demo_configuration["demo_configuration"][
+        "publish_model_wait_response_device_id"]
     model_id = demo_configuration["demo_configuration"]["model_id"]
-    key = demo_configuration["demo_configuration"]["key"]
-    app_name = demo_configuration["demo_configuration"]["app_name"]
-    version_number = demo_configuration["demo_configuration"]["version_number"]
-
     model = demo_configuration["demo_configuration"]["model"]
-    compiled_flg = demo_configuration["demo_configuration"]["compiled_flg"]
-    file_name = demo_configuration["demo_configuration"]["file_name"]
-    get_last_inference_and_image_data_order_by = demo_configuration["demo_configuration"][
-        "get_last_inference_and_image_data_order_by"
-    ]
-
+    converted = demo_configuration["demo_configuration"]["converted"]
+    vendor_name = demo_configuration["demo_configuration"]["vendor_name"]
+    comment = demo_configuration["demo_configuration"]["comment"]
+    input_format_param = demo_configuration["demo_configuration"]["input_format_param"]
+    network_config = demo_configuration["demo_configuration"]["network_config"]
+    network_type = demo_configuration["demo_configuration"]["network_type"]
+    metadata_format_id = demo_configuration["demo_configuration"]["metadata_format_id"]
+    project_name = demo_configuration["demo_configuration"]["project_name"]
+    model_platform = demo_configuration["demo_configuration"]["model_platform"]
+    project_type = demo_configuration["demo_configuration"]["project_type"]
+    latest_type = demo_configuration["demo_configuration"]["latest_type"]
     config_id = demo_configuration["demo_configuration"]["config_id"]
     sensor_loader_version_number = demo_configuration["demo_configuration"][
-        "sensor_loader_version_number"
-    ]
+        "sensor_loader_version_number"]
     sensor_version_number = demo_configuration["demo_configuration"]["sensor_version_number"]
     model_version_number = demo_configuration["demo_configuration"]["model_version_number"]
     ap_fw_version_number = demo_configuration["demo_configuration"]["ap_fw_version_number"]
-
     device_ids = demo_configuration["demo_configuration"]["device_ids"]
-    deploy_parameter = demo_configuration["demo_configuration"]["deploy_parameter"]
-    comment = demo_configuration["demo_configuration"]["comment"]
-
     replace_model_id = demo_configuration["demo_configuration"]["replace_model_id"]
-
     timeout = demo_configuration["demo_configuration"]["timeout"]
+    compiled_flg = demo_configuration["demo_configuration"]["compiled_flg"]
+    app_name = demo_configuration["demo_configuration"]["app_name"]
+    version_number = demo_configuration["demo_configuration"]["version_number"]
+    file_name = demo_configuration["demo_configuration"]["file_name"]
+    entry_point = demo_configuration["demo_configuration"]["entry_point"]
+    schema_info = demo_configuration["demo_configuration"]["schema_info"]
+    device_name = demo_configuration["demo_configuration"]["device_name"]
+    connection_state = demo_configuration["demo_configuration"]["connection_state"]
+    device_group_id = demo_configuration["demo_configuration"]["device_group_id"]
+    scope = demo_configuration["demo_configuration"]["scope"]
+    sub_directory_name = demo_configuration["demo_configuration"]["sub_directory_name"]
+    number_of_images = demo_configuration["demo_configuration"]["number_of_images"]
+    skip = demo_configuration["demo_configuration"]["skip"]
+    order_by = demo_configuration["demo_configuration"]["order_by"]
+    number_of_inference_results = demo_configuration["demo_configuration"][
+        "number_of_inference_results"]
+    filter = demo_configuration["demo_configuration"]["filter"]
+    raw = demo_configuration["demo_configuration"]["raw"]
+    time = demo_configuration["demo_configuration"]["time"]
     file_content_path = os.path.join(os.getcwd(), "samples", "device_application_file_content.txt")
 
     def publish_callback(status):
@@ -159,7 +179,7 @@ if __name__ == "__main__":
             elif status == ai_model_obj.publish_status.CONVERSION_COMPLETE.value:
                 logger.info("Conversion Completed")
             elif status == ai_model_obj.publish_status.ADDING_TO_CONFIGURATION.value:
-                logger.info("Add To Comfiguration")
+                logger.info("Add To Configuration")
             elif status == ai_model_obj.publish_status.ADD_TO_CONFIGURATION_FAILED.value:
                 logger.info("Add To Configuration Failed")
             elif status == ai_model_obj.publish_status.ADD_TO_CONFIGURATION_COMPLETE.value:
@@ -212,39 +232,94 @@ if __name__ == "__main__":
     # Console Access Library provided API Usage.
 
     # AIModel - ImportBaseModel
-    response = ai_model_obj.import_base_model(model_id, model)
+    response = ai_model_obj.import_base_model(
+        model_id=model_id,
+        model=model,
+        converted=converted,
+        vendor_name=vendor_name,
+        comment=comment,
+        input_format_param=input_format_param,
+        network_config=network_config,
+        network_type=network_type,
+        metadata_format_id=metadata_format_id
+    )
     print("IMPORT BASE MODEL:", response)
 
     # AIModel - GetModels
-    response = ai_model_obj.get_models()
+    response = ai_model_obj.get_models(
+        model_id=model_id,
+        comment=comment,
+        project_name=project_name,
+        model_platform=model_platform,
+        project_type=project_type,
+        device_id=get_model_device_id,
+        latest_type=latest_type,
+    )
     print("GET MODELS:", response)
 
     # AIModel - GetBaseModelStatus
-    response = ai_model_obj.get_base_model_status(model_id)
+    response = ai_model_obj.get_base_model_status(
+        model_id=model_id,
+        latest_type=latest_type,
+    )
     print("GET BASE MODEL STATUS:", response)
 
     # AIModel - PublishModelWaitModel
-    response = ai_model_obj.publish_model_wait_response(model_id, callback=publish_callback)
+    response = ai_model_obj.publish_model_wait_response(
+        model_id=model_id,
+        device_id=publish_model_wait_response_device_id,
+        callback=publish_callback
+    )
     print("PUBLISH MODEL WAIT RESPONSE:", response)
 
     # Deployment - CreateDeployConfiguration
     response = deployment_obj.create_deploy_configuration(
-        config_id, model_id=model_id
+        config_id=config_id,
+        comment=comment,
+        sensor_loader_version_number=sensor_loader_version_number,
+        sensor_version_number=sensor_version_number,
+        model_id=model_id,
+        model_version_number=model_version_number,
+        ap_fw_version_number=ap_fw_version_number
     )
     print("CREATE DEPLOY CONFIGURATION", response)
 
     # Deployment - DeployByConfigurationWaitResponse
     response = deployment_obj.deploy_by_configuration_wait_response(
-        config_id, device_ids, replace_model_id, callback=deploy_callback
+        config_id=config_id,
+        device_ids=device_ids,
+        replace_model_id=replace_model_id,
+        comment=comment,
+        timeout=timeout,
+        callback=deploy_callback
     )
     print("DEPLOY BY CONFIGURATION WAIT RESPONSE", response)
+
+    # Deployment - CancelDeployment
+    deployment_obj.deploy_by_configuration(
+        config_id=config_id,
+        device_ids=device_ids,
+        replace_model_id=replace_model_id,
+        comment=comment,
+    )
+    response_get_deploy_history = deployment_obj.get_deploy_history(device_id=device_id)
+    for i in range(len(response_get_deploy_history["deploys"])):
+        if (config_id == response_get_deploy_history["deploys"][i]["config_id"] and
+                response_get_deploy_history["deploys"][i]["deploy_status"] == "7"):
+            deploy_id = response_get_deploy_history["deploys"][i]["id"]
+            break
+    response = deployment_obj.cancel_deployment(
+        device_id=device_id,
+        deploy_id=str(deploy_id)
+    )
+    print("CANCEL DEPLOYMENT", response)
 
     # Deployment - GetDeployConfigurations
     response = deployment_obj.get_deploy_configurations()
     print("GET DEPLOY CONFIGURATIONS", response)
 
     # Deployment - GetDeployHistory
-    response = deployment_obj.get_deploy_history(device_id)
+    response = deployment_obj.get_deploy_history(device_id=device_id)
     print("GET DEPLOY HISTORY", response)
 
     # Deployment - ImportDeviceApp
@@ -255,14 +330,21 @@ if __name__ == "__main__":
             compiled_flg=compiled_flg,
             app_name=app_name,
             version_number=version_number,
+            comment=comment,
             file_name=file_name,
             file_content=file_content,
+            entry_point=entry_point,
+            schema_info=schema_info
         )
         print("IMPORT DEVICE APP:", response)
 
         # Deployment - DeployDeviceAppWaitResponse
         response = deployment_obj.deploy_device_app_wait_response(
-            app_name, version_number, device_ids, callback=deploy_device_app_callback
+            app_name=app_name,
+            version_number=version_number,
+            device_ids=device_ids,
+            comment=comment,
+            callback=deploy_device_app_callback
         )
         print("DEPLOY DEVICE APP WAIT RESPONSE", response)
 
@@ -274,28 +356,29 @@ if __name__ == "__main__":
     print("GET DEVICE APPS:", response)
 
     # Deployment - GetDeviceAppDeploys
-    response = deployment_obj.get_device_app_deploys(app_name, version_number)
+    response = deployment_obj.get_device_app_deploys(
+        app_name=app_name,
+        version_number=version_number
+    )
     print("GET DEVICE APP DEPLOYS", response)
 
-    # Deployment - CancelDeployment
-    response_get_deploy_history = deployment_obj.get_deploy_history(device_id)
-    for i in range(len(response_get_deploy_history["deploys"])):
-        if config_id == response_get_deploy_history["deploys"][i]["config_id"]:
-            deploy_id = response_get_deploy_history["deploys"][i]["id"]
-            break
-    response = deployment_obj.cancel_deployment(device_id, str(deploy_id))
-    print("CANCEL DEPLOYMENT", response)
-
     # DeviceManagement - GetDevices
-    response = device_management_obj.get_devices()
+    response = device_management_obj.get_devices(
+        device_id=device_id,
+        device_name=device_name,
+        connection_state=connection_state,
+        device_group_id=device_group_id,
+        device_ids=device_ids,
+        scope=scope
+    )
     print("GET DEVICES:", response)
 
     # DeviceManagement - StartUploadInferenceResult
-    response = device_management_obj.start_upload_inference_result(device_id)
+    response = device_management_obj.start_upload_inference_result(device_id=device_id)
     print("START UPLOAD INFERENCE RESULT:", response)
 
     # DeviceManagement - StopUploadInferenceResult
-    response = device_management_obj.stop_upload_inference_result(device_id)
+    response = device_management_obj.stop_upload_inference_result(device_id=device_id)
     print("STOP UPLOAD INFERENCE RESULT:", response)
 
     # DeviceManagement - GetCommandParameterFile
@@ -303,46 +386,65 @@ if __name__ == "__main__":
     print("GET COMMAND PARAMETER FILE:", response)
 
     # Insight - GetImageDirectories
-    response = insight_obj.get_image_directories(device_id)
+    response = insight_obj.get_image_directories(device_id=device_id)
     print("GET IMAGE DIRECTORIES:", response)
 
     # Insight - GetImages
     response = insight_obj.get_images(
-        device_id,
-        sub_directory_name,
+        device_id=device_id,
+        sub_directory_name=sub_directory_name,
+        number_of_images=number_of_images,
+        skip=skip,
+        order_by=order_by
     )
     print("GET IMAGES:", response)
 
     # Insight - GetInferenceResults
-    response = insight_obj.get_inference_results(device_id, raw=raw)
+    response = insight_obj.get_inference_results(
+        device_id=device_id,
+        filter=filter,
+        number_of_inference_results=number_of_inference_results,
+        raw=raw,
+        time=time
+    )
     print("GET INFERENCE RESULTS:", response)
 
     # Insight - GetImageData
     response = insight_obj.get_image_data(
-        device_id, sub_directory_name, number_of_images=number_of_images, skip=skip
+        device_id,
+        sub_directory_name,
+        number_of_images=number_of_images,
+        skip=skip,
+        order_by=order_by
     )
     print("GET IMAGE DATA:", response)
 
     # Insight - GetLastInferenceData
-    response = insight_obj.get_last_inference_data(device_id)
+    response = insight_obj.get_last_inference_data(device_id=device_id)
     print("GET LAST INFERENCE DATA:", response)
 
     # Insight - GetLastInferenceAndImageData
-    response = insight_obj.get_last_inference_and_image_data(device_id, sub_directory_name)
+    response = insight_obj.get_last_inference_and_image_data(
+        device_id=device_id,
+        sub_directory_name=sub_directory_name
+    )
     print("GET LAST INFERENCE AND IMAGE DATA:", response)
 
     # AIModel - DeleteModel
-    response = ai_model_obj.delete_model(model_id)
+    response = ai_model_obj.delete_model(model_id=model_id)
     print("DELETE MODEL:", response)
 
     # Deployment - UndeployDeviceApp
-    response = deployment_obj.undeploy_device_app(device_ids)
+    response = deployment_obj.undeploy_device_app(device_ids=device_ids)
     print("UNDEPLOY DEVICE APP:", response)
 
     # Deployment - DeleteDeviceApp
-    response = deployment_obj.delete_device_app(app_name, version_number)
+    response = deployment_obj.delete_device_app(
+        app_name=app_name,
+        version_number=version_number
+    )
     print("DELETE DEVICE APP:", response)
 
     # Deployment - DeleteDeployConfiguration
-    response = deployment_obj.delete_deploy_configuration(config_id)
+    response = deployment_obj.delete_deploy_configuration(config_id=config_id)
     print("DELETE DEPLOY CONFIGURATION:", response)

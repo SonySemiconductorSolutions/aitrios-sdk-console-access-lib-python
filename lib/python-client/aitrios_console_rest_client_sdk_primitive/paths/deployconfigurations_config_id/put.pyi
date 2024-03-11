@@ -29,6 +29,7 @@ from aitrios_console_rest_client_sdk_primitive.model.error_response import Error
 from aitrios_console_rest_client_sdk_primitive.model.success_response import SuccessResponse
 
 # Query params
+GrantTypeSchema = schemas.StrSchema
 DeviceIdsSchema = schemas.StrSchema
 ReplaceModelIdSchema = schemas.StrSchema
 CommentSchema = schemas.StrSchema
@@ -41,6 +42,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'grant_type': typing.Union[GrantTypeSchema, str, ],
         'replace_model_id': typing.Union[ReplaceModelIdSchema, str, ],
         'comment': typing.Union[CommentSchema, str, ],
     },
@@ -52,6 +54,12 @@ class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams)
     pass
 
 
+request_query_grant_type = api_client.QueryParameter(
+    name="grant_type",
+    style=api_client.ParameterStyle.FORM,
+    schema=GrantTypeSchema,
+    explode=True,
+)
 request_query_device_ids = api_client.QueryParameter(
     name="device_ids",
     style=api_client.ParameterStyle.FORM,
@@ -289,6 +297,7 @@ class BaseApi(api_client.Api):
 
         prefix_separator_iterator = None
         for parameter in (
+            request_query_grant_type,
             request_query_device_ids,
             request_query_replace_model_id,
             request_query_comment,
@@ -326,7 +335,11 @@ class BaseApi(api_client.Api):
                 api_response = api_client.ApiResponseWithoutDeserialization(response=response)
 
         if not 200 <= response.status <= 299:
-            raise exceptions.ApiException(api_response=api_response)
+            raise exceptions.ApiException(
+                status=response.status,
+                reason=response.reason,
+                api_response=api_response
+            )
 
         return api_response
 
