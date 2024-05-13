@@ -315,7 +315,7 @@ class GetDeviceAppDeploys(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 get_device_app_deploys_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         _return_get_device_app_deploys = (

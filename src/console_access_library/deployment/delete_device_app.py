@@ -253,7 +253,7 @@ class DeleteDeviceApp(ConsoleAccessBaseClass):
                 delete_device_app_api_instance = device_app_api.DeviceAppApi(api_client)
                 try:
 
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         # pylint:disable=line-too-long

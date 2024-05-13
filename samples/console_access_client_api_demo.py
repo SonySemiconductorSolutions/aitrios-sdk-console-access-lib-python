@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023, 2024 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import logging
 import os
 import sys
 import warnings
+import base64
 from pathlib import Path
 
 import yaml
@@ -111,7 +112,9 @@ if __name__ == "__main__":
         else:
             # Open Demo Configuration in read mode
             with open(demo_config_file_path, "r", encoding="utf-8") as file:
-                demo_configuration = yaml.safe_load(file)
+                yaml_content = yaml.safe_load(file)
+                if "demo_configuration" in yaml_content:
+                    demo_configuration = yaml_content["demo_configuration"]
 
     except Exception as err:
         logging.error(str(err))
@@ -119,52 +122,68 @@ if __name__ == "__main__":
         raise err
 
     # Read Demo Configuration Values
-    device_id = demo_configuration["demo_configuration"]["device_id"]
-    get_model_device_id = demo_configuration["demo_configuration"]["get_model_device_id"]
-    publish_model_wait_response_device_id = demo_configuration["demo_configuration"][
-        "publish_model_wait_response_device_id"]
-    model_id = demo_configuration["demo_configuration"]["model_id"]
-    model = demo_configuration["demo_configuration"]["model"]
-    converted = demo_configuration["demo_configuration"]["converted"]
-    vendor_name = demo_configuration["demo_configuration"]["vendor_name"]
-    comment = demo_configuration["demo_configuration"]["comment"]
-    input_format_param = demo_configuration["demo_configuration"]["input_format_param"]
-    network_config = demo_configuration["demo_configuration"]["network_config"]
-    network_type = demo_configuration["demo_configuration"]["network_type"]
-    metadata_format_id = demo_configuration["demo_configuration"]["metadata_format_id"]
-    project_name = demo_configuration["demo_configuration"]["project_name"]
-    model_platform = demo_configuration["demo_configuration"]["model_platform"]
-    project_type = demo_configuration["demo_configuration"]["project_type"]
-    latest_type = demo_configuration["demo_configuration"]["latest_type"]
-    config_id = demo_configuration["demo_configuration"]["config_id"]
-    sensor_loader_version_number = demo_configuration["demo_configuration"][
-        "sensor_loader_version_number"]
-    sensor_version_number = demo_configuration["demo_configuration"]["sensor_version_number"]
-    model_version_number = demo_configuration["demo_configuration"]["model_version_number"]
-    ap_fw_version_number = demo_configuration["demo_configuration"]["ap_fw_version_number"]
-    device_ids = demo_configuration["demo_configuration"]["device_ids"]
-    replace_model_id = demo_configuration["demo_configuration"]["replace_model_id"]
-    timeout = demo_configuration["demo_configuration"]["timeout"]
-    compiled_flg = demo_configuration["demo_configuration"]["compiled_flg"]
-    app_name = demo_configuration["demo_configuration"]["app_name"]
-    version_number = demo_configuration["demo_configuration"]["version_number"]
-    file_name = demo_configuration["demo_configuration"]["file_name"]
-    entry_point = demo_configuration["demo_configuration"]["entry_point"]
-    schema_info = demo_configuration["demo_configuration"]["schema_info"]
-    device_name = demo_configuration["demo_configuration"]["device_name"]
-    connection_state = demo_configuration["demo_configuration"]["connection_state"]
-    device_group_id = demo_configuration["demo_configuration"]["device_group_id"]
-    scope = demo_configuration["demo_configuration"]["scope"]
-    sub_directory_name = demo_configuration["demo_configuration"]["sub_directory_name"]
-    number_of_images = demo_configuration["demo_configuration"]["number_of_images"]
-    skip = demo_configuration["demo_configuration"]["skip"]
-    order_by = demo_configuration["demo_configuration"]["order_by"]
-    number_of_inference_results = demo_configuration["demo_configuration"][
-        "number_of_inference_results"]
-    filter = demo_configuration["demo_configuration"]["filter"]
-    raw = demo_configuration["demo_configuration"]["raw"]
-    time = demo_configuration["demo_configuration"]["time"]
-    file_content_path = os.path.join(os.getcwd(), "samples", "device_application_file_content.txt")
+    device_id = demo_configuration["device_id"]
+    model_id = demo_configuration["model_id"]
+    model = demo_configuration["model"]
+    config_id = demo_configuration["config_id"]
+    app_name = demo_configuration["app_name"]
+    sub_directory_name = demo_configuration["sub_directory_name"]
+    version_number = demo_configuration["version_number"]
+    file_content_name = demo_configuration["file_content_name"]
+    file_content_path = os.path.join("samples",file_content_name)
+    if not os.path.exists(file_content_path):
+        logging.error("file_content_name is not exist.")
+        sys.exit(1)
+
+    if os.path.islink(file_content_path):
+        logging.error("Can't open symbolic link file.")
+        sys.exit(1)
+    
+    with open(file_content_path,"rb") as file:
+        file_encode_content = base64.b64encode(file.read())
+        file_content = file_encode_content.decode('utf-8')
+
+    if file_content_name.endswith(".aot"):
+       compiled_flg = "1"
+    elif file_content_name.endswith(".wasm"):
+       compiled_flg = "0"
+    else :
+        logging.error("The extension of file_content_name is not appropriate.")
+        sys.exit(1)
+
+    get_model_device_id = demo_configuration.get("get_model_device_id", None)
+    publish_model_wait_response_device_id = demo_configuration.get("publish_model_wait_response_device_id", None)
+    vendor_name = demo_configuration.get("vendor_name", None)
+    converted = demo_configuration.get("converted", None)
+    comment = demo_configuration.get("comment", None)
+    input_format_param = demo_configuration.get("input_format_param", None)
+    network_config = demo_configuration.get("network_config", None)
+    network_type = demo_configuration.get("network_type", None)
+    metadata_format_id = demo_configuration.get("metadata_format_id", None)
+    project_name = demo_configuration.get("projnumber_of_imagesect_name", None)
+    model_platform = demo_configuration.get("model_platform", None)
+    project_type = demo_configuration.get("project_type", None)
+    latest_type = demo_configuration.get("latest_type", None)
+    sensor_loader_version_number = demo_configuration.get("sensor_loader_version_number", None)
+    sensor_version_number = demo_configuration.get("sensor_version_number", None)
+    model_version_number = demo_configuration.get("model_version_number", None)
+    ap_fw_version_number = demo_configuration.get("ap_fw_version_number", None)
+    device_ids = demo_configuration.get("device_ids", device_id)
+    replace_model_id = demo_configuration.get("replace_model_id", None)
+    timeout = demo_configuration.get("timeout", None)
+    entry_point = demo_configuration.get("entry_point", None)
+    schema_info = demo_configuration.get("schema_info", None)
+    device_name = demo_configuration.get("device_name", None)
+    connection_state = demo_configuration.get("connection_state", None)
+    device_group_id = demo_configuration.get("device_group_id", None)
+    scope = demo_configuration.get("scope", None)
+    number_of_images = demo_configuration.get("number_of_images", None)
+    skip = demo_configuration.get("skip", None)
+    order_by = demo_configuration.get("order_by", None)
+    number_of_inference_results = demo_configuration.get("number_of_inference_results", None)
+    filter = demo_configuration.get("filter", None)
+    raw = demo_configuration.get("raw", None)
+    time = demo_configuration.get("time", None)
 
     def publish_callback(status):
         """Callback for publish model status"""
@@ -188,6 +207,7 @@ if __name__ == "__main__":
                 logger.info("Saving")
             else:
                 logger.info("Error")
+                sys.exit(1)
             PREV_PUBLISH_CALLBACK_STATUS = status
         else:
             print(".", end="", flush=True)
@@ -212,6 +232,7 @@ if __name__ == "__main__":
                 logger.info("Deployment Undeployed - %s", deploy_device_id)
             else:
                 logger.info("Error - %s", deploy_device_id)
+                sys.exit(1)
 
     def deploy_device_app_callback(deploy_status_array):
         """Callback for Deploy Device App status"""
@@ -228,6 +249,7 @@ if __name__ == "__main__":
                 logger.info("Deployment Canceled - %s", deploy_device_id)
             else:
                 logger.info("Error - %s", deploy_device_id)
+                sys.exit(1)
 
     # Console Access Library provided API Usage.
 
@@ -323,33 +345,36 @@ if __name__ == "__main__":
     print("GET DEPLOY HISTORY", response)
 
     # Deployment - ImportDeviceApp
-    if os.path.exists(file_content_path):
-        with open(file_content_path, "r", encoding="utf-8") as file:
-            file_content = file.read()
-        response = deployment_obj.import_device_app(
-            compiled_flg=compiled_flg,
-            app_name=app_name,
-            version_number=version_number,
-            comment=comment,
-            file_name=file_name,
-            file_content=file_content,
-            entry_point=entry_point,
-            schema_info=schema_info
-        )
-        print("IMPORT DEVICE APP:", response)
+    response = deployment_obj.import_device_app(
+        compiled_flg=compiled_flg,
+        app_name=app_name,
+        version_number=version_number,
+        comment=comment,
+        file_name=file_content_name,
+        file_content=file_content,
+        entry_point=entry_point,
+        schema_info=schema_info
+    )
+    print("IMPORT DEVICE APP:", response)
 
-        # Deployment - DeployDeviceAppWaitResponse
-        response = deployment_obj.deploy_device_app_wait_response(
-            app_name=app_name,
-            version_number=version_number,
-            device_ids=device_ids,
-            comment=comment,
-            callback=deploy_device_app_callback
-        )
-        print("DEPLOY DEVICE APP WAIT RESPONSE", response)
-
-    else:
-        print("Please upload the file device_application_file_content.txt")
+    # Deployment - DeployDeviceAppWaitResponse
+    app_status = "0"
+    while app_status != "2": 
+        device_apps_response = deployment_obj.get_device_apps()
+        for i in range(len(device_apps_response["apps"])):
+            if device_apps_response["apps"][i]["name"] == app_name:
+                app_status = device_apps_response["apps"][i]["versions"][0]["status"]
+                if app_status == "3":
+                    logging.error("ImportDeviceApp is failed.")
+                    sys.exit(1)
+    response = deployment_obj.deploy_device_app_wait_response(
+        app_name=app_name,
+        version_number=version_number,
+        device_ids=device_ids,
+        comment=comment,
+        callback=deploy_device_app_callback
+    )
+    print("DEPLOY DEVICE APP WAIT RESPONSE", response)
 
     # Deployment - GetDeviceApps
     response = deployment_obj.get_device_apps()

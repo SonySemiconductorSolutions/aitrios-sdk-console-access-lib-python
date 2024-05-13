@@ -12,7 +12,7 @@ myst-parser>=0.18.0
 sphinx-rtd-theme>=1.0.0
 sphinxcontrib-napoleon>=0.7
 rst2pdf>=0.99
-streamlit==1.11.1
+streamlit==1.30.0
 pytest-timeout>=2.1.0
 PyJWT>=2.6.0
 nassl>=4.0

@@ -18,7 +18,6 @@ Key | Input Type | Accessed Type | Description | Notes
 **deploy_status** | str,  | str,  | Set the deploy status. *Target device deployment status. - Value definition   0: Deploying   1: Success   2: Fail   3: Cancel   App: DeviceApp undeploy | 
 **deploy_type** | str,  | str,  | Set the deploy type. - Value definition   0: Deploy config   1: Device Model   App: DeviceApp | 
 **ins_id** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
-**custom_setting** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 **[firmware](#firmware)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
 **update_progress** | str,  | str,  | Set the update progress in percentage. | [optional] 
 **deploy_comment** | str,  | str,  | Set the deploy comment. | [optional] 

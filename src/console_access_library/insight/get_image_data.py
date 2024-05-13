@@ -48,7 +48,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchemaGetImageData(Schema):
-    """Schema for API to get a (saved) image of the specified device.
+    """Schema for API to get a (saved) image of the specified Edge Device.
 
     Args:
         Schema (object): Inherited from Schema class of marshmallow
@@ -163,7 +163,7 @@ class GetImageData(ConsoleAccessBaseClass):
         skip: int = None,
         order_by: str = None,
     ):
-        """Get a (saved) image of the specified device.
+        """Get a (saved) image of the specified Edge Device.
 
         Args:
             device_id (str, required) : Device ID.
@@ -346,7 +346,7 @@ class GetImageData(ConsoleAccessBaseClass):
             _local_params = SchemaGetImageData().load(_local_params)
 
             try:
-                # Get the Available Images Count for the specified Device
+                # Get the Available Images Count for the specified Edge Device
                 _get_images_obj = GetImages(self._config)
 
                 capacity = 256

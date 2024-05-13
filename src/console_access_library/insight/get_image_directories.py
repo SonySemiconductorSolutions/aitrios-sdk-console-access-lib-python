@@ -66,7 +66,7 @@ class SchemaGetImageDirectories(Schema):
 
 class GetImageDirectories(ConsoleAccessBaseClass):
     """This class implements API for each device group, a list of image storage \
-        directories for each device is acquired.
+        directories for each Edge Device is acquired.
 
     Args:
         ConsoleAccessBaseClass (object): Inherited from \
@@ -83,7 +83,7 @@ class GetImageDirectories(ConsoleAccessBaseClass):
         self._config = config
 
     def get_image_directories(self, device_id: str = None):
-        """Get the image save directory list of the devices for each device group
+        """Get the image save directory list of the Edge Devices for each device group
 
         Args:
             device_id (str, optional): Device ID \
@@ -281,7 +281,7 @@ class GetImageDirectories(ConsoleAccessBaseClass):
                 header_value=self._config.get_access_token(),
             ) as api_client:
 
-                # Adding Parameters to Connect to an Enterprise Edition Environment
+                # Adding Parameters to Connect to Console Enterprise Edition Environment
                 if self._config._application_id:
                     _local_params["grant_type"] = "client_credentials"
 

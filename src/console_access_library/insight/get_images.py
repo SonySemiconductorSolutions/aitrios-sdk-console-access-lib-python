@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchemaGetImages(Schema):
-    """Schema for API to get a (saved) image of the specified device.
+    """Schema for API to get a (saved) image of the specified Edge Device.
 
     Args:
         Schema (object): Inherited from Schema class of marshmallow
@@ -136,7 +136,7 @@ class GetImages(ConsoleAccessBaseClass):
         skip: int = 0,
         order_by: str = "ASC",
     ):
-        """Get the (saved) images for a specified device. \
+        """Get the (saved) images for a specified Edge Device. \
             Application: Use to display an image in a UI
 
         Args:
@@ -346,7 +346,7 @@ class GetImages(ConsoleAccessBaseClass):
                 header_value=self._config.get_access_token(),
             ) as api_client:
 
-                # Adding Parameters to Connect to an Enterprise Edition Environment
+                # Adding Parameters to Connect to Console Enterprise Edition Environment
                 if self._config._application_id:
                     _query_params["grant_type"] = "client_credentials"
 

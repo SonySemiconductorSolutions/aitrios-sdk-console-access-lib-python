@@ -79,7 +79,7 @@ class StopUploadInferenceResult(ConsoleAccessBaseClass):
         self._config = config
 
     def stop_upload_inference_result(self, device_id: str):
-        """Implement instructions to a specified device to stop getting the\
+        """Implement instructions to a specified Edge Device to stop getting the\
              inference result metadata (Output Tensor) and image (Input image).
 
 
@@ -251,7 +251,7 @@ class StopUploadInferenceResult(ConsoleAccessBaseClass):
                 )
 
                 try:
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         _return_stop_upload_inference_result = (

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.get_deploy_history &mdash; Console Access Library 1.1.0 documentation</title>
+  <title>console_access_library.deployment.get_deploy_history &mdash; Console Access Library 1.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -11,10 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -32,7 +33,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.1.0
+                1.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -117,7 +118,9 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="SchemaGetDeployHistory"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.SchemaGetDeployHistory">[docs]</a><span class="k">class</span> <span class="nc">SchemaGetDeployHistory</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<div class="viewcode-block" id="SchemaGetDeployHistory">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.SchemaGetDeployHistory">[docs]</a>
+<span class="k">class</span> <span class="nc">SchemaGetDeployHistory</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for GetDeployHistory API</span>
 
 <span class="sd">    Args:</span>
@@ -130,13 +133,19 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for device_id&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="SchemaGetDeployHistory.validate"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.SchemaGetDeployHistory.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+<div class="viewcode-block" id="SchemaGetDeployHistory.validate">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.SchemaGetDeployHistory.validate">[docs]</a>
+    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;device_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_id is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="GetDeployHistory"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.GetDeployHistory">[docs]</a><span class="k">class</span> <span class="nc">GetDeployHistory</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="GetDeployHistory">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.GetDeployHistory">[docs]</a>
+<span class="k">class</span> <span class="nc">GetDeployHistory</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements GetDeployHistory API.</span>
 
 <span class="sd">    Args:</span>
@@ -153,11 +162,13 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 
-<div class="viewcode-block" id="GetDeployHistory.get_deploy_history"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.GetDeployHistory.get_deploy_history">[docs]</a>    <span class="k">def</span> <span class="nf">get_deploy_history</span><span class="p">(</span>
+<div class="viewcode-block" id="GetDeployHistory.get_deploy_history">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.get_deploy_history.GetDeployHistory.get_deploy_history">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_deploy_history</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get deploy history for a specified device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get deploy history for a specified Edge Device.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            device_id (str, required) : Device ID.</span>
@@ -213,7 +224,7 @@
 <span class="sd">                |          | ``current_target``   | ``string`` | Set the current target.       |</span>
 <span class="sd">                +----------+----------------------+------------+-------------------------------+</span>
 <span class="sd">                |          |``total_status``      | ``string`` | Set the deploy status.        |</span>
-<span class="sd">                |          |                      |            | Total status of devices       |</span>
+<span class="sd">                |          |                      |            | Total status of Edge Devices  |</span>
 <span class="sd">                |          |                      |            | deployed together.            |</span>
 <span class="sd">                |          |                      |            | - Value definition            |</span>
 <span class="sd">                |          |                      |            |                               |</span>
@@ -490,7 +501,7 @@
                 <span class="c1"># Create an instance of the API class</span>
                 <span class="n">get_deploy_history_api_instance</span> <span class="o">=</span> <span class="n">deploy_api</span><span class="o">.</span><span class="n">DeployApi</span><span class="p">(</span><span class="n">api_client</span><span class="p">)</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                    <span class="c1"># Adding Parameters to Connect to Console Enterprise Edition Environment</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
                         <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
                         <span class="c1"># pylint:disable=line-too-long</span>
@@ -527,7 +538,9 @@
         <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">_return_get_deploy_history</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">_return_get_deploy_history</span></div></div>
+        <span class="k">return</span> <span class="n">_return_get_deploy_history</span></div>
+</div>
+
 </pre></div>
 
            </div>

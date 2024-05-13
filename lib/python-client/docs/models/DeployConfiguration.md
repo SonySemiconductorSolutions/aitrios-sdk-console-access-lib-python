@@ -8,18 +8,17 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**success_cnt** | decimal.Decimal, int,  | decimal.Decimal,  | Set the success cnt. | 
-**config_comment** | str,  | str,  | Set the config comment. | 
-**running_cnt** | decimal.Decimal, int,  | decimal.Decimal,  | Set the running cnt. | 
-**device_type** | str,  | str,  | Set the device type. | 
 **ins_date** | str,  | str,  | Set the date the deployment was created. | 
+**success_cnt** | decimal.Decimal, int,  | decimal.Decimal,  | Set the success cnt. | 
 **upd_id** | str,  | str,  | Set the deployment updater. | 
+**config_comment** | str,  | str,  | Set the config comment. | 
 **config_id** | str,  | str,  | Set the config ID. | 
+**running_cnt** | decimal.Decimal, int,  | decimal.Decimal,  | Set the running cnt. | 
 **upd_date** | str,  | str,  | Set the date the deployment was updated. | 
 **fail_cnt** | decimal.Decimal, int,  | decimal.Decimal,  | Set the fail cnt. | 
+**device_type** | str,  | str,  | Set the device type. | 
 **[model](#model)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
 **ins_id** | str,  | str,  | Set the deployment author. | 
-**custom_setting** | dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader,  | frozendict.frozendict, str, decimal.Decimal, BoolClass, NoneClass, tuple, bytes, FileIO |  | 
 **[firmware](#firmware)** | dict, frozendict.frozendict,  | frozendict.frozendict,  |  | 
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 

@@ -35,18 +35,17 @@ class DeployConfiguration(
 
     class MetaOapg:
         required = {
-            "success_cnt",
-            "config_comment",
-            "running_cnt",
-            "device_type",
             "ins_date",
+            "success_cnt",
             "upd_id",
+            "config_comment",
             "config_id",
+            "running_cnt",
             "upd_date",
             "fail_cnt",
+            "device_type",
             "model",
             "ins_id",
-            "custom_setting",
             "firmware",
         }
         
@@ -286,18 +285,17 @@ class DeployConfiguration(
                 "upd_date": upd_date,
             }
     
-    success_cnt: MetaOapg.properties.success_cnt
-    config_comment: MetaOapg.properties.config_comment
-    running_cnt: MetaOapg.properties.running_cnt
-    device_type: MetaOapg.properties.device_type
     ins_date: MetaOapg.properties.ins_date
+    success_cnt: MetaOapg.properties.success_cnt
     upd_id: MetaOapg.properties.upd_id
+    config_comment: MetaOapg.properties.config_comment
     config_id: MetaOapg.properties.config_id
+    running_cnt: MetaOapg.properties.running_cnt
     upd_date: MetaOapg.properties.upd_date
     fail_cnt: MetaOapg.properties.fail_cnt
+    device_type: MetaOapg.properties.device_type
     model: MetaOapg.properties.model
     ins_id: MetaOapg.properties.ins_id
-    custom_setting: schemas.AnyTypeSchema
     firmware: MetaOapg.properties.firmware
     
     @typing.overload
@@ -390,18 +388,17 @@ class DeployConfiguration(
     def __new__(
         cls,
         *_args: typing.Union[dict, frozendict.frozendict, ],
-        success_cnt: typing.Union[MetaOapg.properties.success_cnt, decimal.Decimal, int, ],
-        config_comment: typing.Union[MetaOapg.properties.config_comment, str, ],
-        running_cnt: typing.Union[MetaOapg.properties.running_cnt, decimal.Decimal, int, ],
-        device_type: typing.Union[MetaOapg.properties.device_type, str, ],
         ins_date: typing.Union[MetaOapg.properties.ins_date, str, ],
+        success_cnt: typing.Union[MetaOapg.properties.success_cnt, decimal.Decimal, int, ],
         upd_id: typing.Union[MetaOapg.properties.upd_id, str, ],
+        config_comment: typing.Union[MetaOapg.properties.config_comment, str, ],
         config_id: typing.Union[MetaOapg.properties.config_id, str, ],
+        running_cnt: typing.Union[MetaOapg.properties.running_cnt, decimal.Decimal, int, ],
         upd_date: typing.Union[MetaOapg.properties.upd_date, str, ],
         fail_cnt: typing.Union[MetaOapg.properties.fail_cnt, decimal.Decimal, int, ],
+        device_type: typing.Union[MetaOapg.properties.device_type, str, ],
         model: typing.Union[MetaOapg.properties.model, dict, frozendict.frozendict, ],
         ins_id: typing.Union[MetaOapg.properties.ins_id, str, ],
-        custom_setting: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader, ],
         firmware: typing.Union[MetaOapg.properties.firmware, dict, frozendict.frozendict, ],
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
@@ -409,18 +406,17 @@ class DeployConfiguration(
         return super().__new__(
             cls,
             *_args,
-            success_cnt=success_cnt,
-            config_comment=config_comment,
-            running_cnt=running_cnt,
-            device_type=device_type,
             ins_date=ins_date,
+            success_cnt=success_cnt,
             upd_id=upd_id,
+            config_comment=config_comment,
             config_id=config_id,
+            running_cnt=running_cnt,
             upd_date=upd_date,
             fail_cnt=fail_cnt,
+            device_type=device_type,
             model=model,
             ins_id=ins_id,
-            custom_setting=custom_setting,
             firmware=firmware,
             _configuration=_configuration,
             **kwargs,

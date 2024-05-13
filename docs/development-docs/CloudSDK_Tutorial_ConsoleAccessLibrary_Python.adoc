@@ -43,6 +43,7 @@ To explain the various APIs exposed by "**Console Access Library**" and help the
     * validators>=0.18
     * msal>=1.22.0
 
+[[api-specifications]]
 === "**Console Access Library**" API Specification
 Please refer the below procedure regarding how to refer the "**Console Access Library**" API specifications. 
 
@@ -56,6 +57,7 @@ Please refer the below procedure regarding how to refer the "**Console Access Li
 === Installation
 
 . Clone the repository
+** https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python
 
 . Install Python dependencies for demo application
 +
@@ -66,7 +68,7 @@ Please refer the below procedure regarding how to refer the "**Console Access Li
 . Run the following command to install into current Python environment
 +
 ```
-    python -m pip install lib/python_client.
+    python -m pip install lib/python_client/.
 ```
 
 . Run the following command to install into current Python environment
@@ -87,9 +89,9 @@ To use the "**Console Access Library**" in a proxy environment, set the `**https
 
 === Set configuration parameter to start "**Console Access Library**" sample application
 
-==== Option 1: Using console access setting file
+1. Create the Console Access settings and input the user environment.  + 
+Place the created file below `**samples**` with a file name as `**console_access_settings.yaml**`
 
-* Step 1: Create console access setting parameters with real values
 +
 `samples/console_access_settings.yaml`
 +
@@ -122,127 +124,57 @@ a|
         application_id: "__application_id__"
 ----
 |===
-
-* Step 2: Import modules `**ReadConsoleAccessSettings**`, `**Config**` and `**Client**` into "**Console Access Library**" sample application
 +
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    from console_access_library.common.read_console_access_settings import ReadConsoleAccessSettings
-    from console_access_library.common.config import Config
-    from console_access_library.client import Client
-----
-|===
-
-* Step 3: Set path for console access setting file, and then instantiate "**Console Access Library**" `**ReadConsoleAccessSettings**` + 
-To create `**console_access_settings.yaml file**`, please refer step 1
-+
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    SETTING_FILE_PATH = os.path.join(os.getcwd(), "samples", "console_access_settings.yaml")
-    read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
-----
-|===
-
-* Step 4: Instantiate "**Console Access Library**" `**Config**`
-+ 
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    config_obj = Config(console_endpoint=read_console_access_settings_obj.console_endpoint,
-                        portal_authorization_endpoint=read_console_access_settings_obj.portal_authorization_endpoint,
-                        client_id=read_console_access_settings_obj.client_id,
-                        client_secret=read_console_access_settings_obj.client_secret,
-                        application_id=read_console_access_settings_obj.application_id)
-----
-|===
-
-==== Option 2: Exporting the real values to environment without creating a console access setting file
-
-* Step 1: Export the real values to environment
+When exporting from the environment variable, set the user environment value to the 
+environment variable using the following command. +
+In that case, it is not required to create 
+a configuration file for `**console_access_settings.yaml**`.
 +
 ```
     export CONSOLE_ENDPOINT="__console_endpoint__"
     export PORTAL_AUTHORIZATION_ENDPOINT="__portal_authorization_endpoint__"
     export CLIENT_SECRET="__client_secret__"
     export CLIENT_ID="__client_id__"
-    export APPLICATION_ID="__application_id__"
+    export APPLICATION_ID="__application_id__"    #Perform this setting only when using "Console Enterprise Edition"
 ```
-* Step 2: Import modules `**Config**` and `**Client**` into "**Console Access Library**" sample application
-+
 
+2. Place the application's wasm file or Aot file prepared by the user under `**samples**`.
+
+3. Open the below file and change the parameters appropriately.
+
++ 
+`samples/demo_config.yaml`
++
 |===
-|samples/console_access_client_api_demo.py
+|In case of setting only the mandatory parameters
 a|
-[source,python]
 ----
-    from console_access_library.common.config import Config
-    from console_access_library.client import Client
+demo_configuration:
+   device_id: "__device_id__"
+   model_id: "__model_id__"
+   model: "__model__"
+   config_id: "__config_id__"
+   app_name: "__app_name__"
+   file_content_name: "__file_content_name__"
+   version_number: "__version_number__"
+   sub_directory_name: "__sub_directory_name__"
 ----
 |===
-
-* Step 3: Instantiate "**Console Access Library**" `**Config**` with real values
 +
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    config_obj = Config(console_endpoint=None,
-                        portal_authorization_endpoint=None,
-                        client_id=None,
-                        client_secret=None,
-                        application_id=None)
-----
-|===
-
-<<<
-
-==== Option 3: Passing real values to "**Console Access Library**" Config
-
-* Step 1: Import modules `**Config**` and `**Client**` into "**Console Access Library**" sample application
+    ** Specify the DeviceID in `**device_id**`. 
+    ** In `**model_id**`, specify the name of any model to be registered with "**Console**".
+    ** Specify SAS URI or signed URI of the model file in `**model**`.
+    ** In `**config_id**`, specify any Config name to be registered with "**Console**".
+    ** In `**app_name**`, specify the name of any Application to be registered with "**Console**".
+    ** In `**file_content_name**`, specify the file name of the wasm file or Aot file placed in step 2.
+    ** In `**version_number**`, specify the version of any Application to be registered with "**Console**". 
+    **  Specify any subdirectory of the Edge device in `**sub_directory_name**`.
 +
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    from console_access_library.common.config import Config
-    from console_access_library.client import Client
-----
-|===
-
-* Step 2: Instantiate "**Console Access Library**" `**Config**` with real values
+NOTE: Specify a value that does not overlap with the model_id, config_id, app_name that 
+is already registered in "**Console**".
 +
 |===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    config_obj = Config(console_endpoint="__console_endpoint__", 
-                        portal_authorization_endpoint="__portal_authorization_endpoint__",
-                        client_id="__client_id__", 
-                        client_secret="__client_secret__",
-                        application_id="__application_id__")
-----
-|===
-
-* 手順3: 下記のファイルを開きパラメータを適切な値に変更します。
-+
-|===
-|samples/demo_config.yaml
+|When performing settings including all the option parameters
 a|
 ----
 demo_configuration:
@@ -270,8 +202,8 @@ demo_configuration:
    device_ids: "__device_ids__"
    replace_model_id: "__replace_model_id__"
    timeout: "__timeout__"
-   compiled_flg: "__compiled_flg__"
    app_name: "__app_name__"
+   file_content_name: "__file_content_name__"
    version_number: "__version_number__"
    file_name: "__file_name__"
    entry_point: "__entry_point__"
@@ -290,12 +222,9 @@ demo_configuration:
    time: "__time__"
 ----
 |===
+As for details on the optional parameters, please refer to the <<api-specifications,"**Console Access Library**" API specifications>>.
 
-=== To run API import_device_app
-
-Place the contents of aot file as base64 in the `**samples/device_app_file_content.txt**`.
-
-=== Starting the App
+=== Launch the Application
 
 To run the CLI demo, open cmd terminal from the root folder, and run the following command.
 
@@ -309,14 +238,45 @@ When executing APIs individually, open samples/console_access_client_api_demo.py
 comment out the APIs that are not to be executed.
 
 * Example:
-
 |===
 |samples/console_access_client_api_demo.py
 a|
-[source,python]
 ----
     # DeviceManagement - StartUploadInferenceResult
     # response = device_management_obj.start_upload_inference_result(device_id=device_id)
     # print("START UPLOAD INFERENCE RESULT:", response)
 ----
 |===
+
+
+== How to use "Console Access Library"
+
+1. Import the `**Client**` and `**Config**` classes from "**Console Access Library**".
++
+[source,Python]
+----
+    from console_access_library.client import Client
+    from console_access_library.common.config import Config
+----
+
+2. Pass the connection information to `**Config**` as an argument and generate a `**Config**` instance. +
+Pass the `**Config**` instance as an argument of the `**Client**` constructor and generate a `**Client**` instance.
++
+[source,Python]
+----
+    config_obj = Config(
+            console_endpoint,
+            portal_authorization_endpoint,
+            client_id,
+            client_secret,
+            application_id    #Specify only when using "Console Enterprise Edition"
+        )
+    client_obj = Client(config_obj)
+----
+
+3. Invoke any API held by the instance variable of the `**Client**` instance.
++
+[source,Python]
+----
+    client_obj.device_management.get_command_parameter_file()
+----

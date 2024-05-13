@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.common.config &mdash; Console Access Library 1.1.0 documentation</title>
+  <title>console_access_library.common.config &mdash; Console Access Library 1.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -11,10 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -32,7 +33,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.1.0
+                1.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -126,7 +127,9 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="SchemaConsoleAccessSettingsConfiguration"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.SchemaConsoleAccessSettingsConfiguration">[docs]</a><span class="k">class</span> <span class="nc">SchemaConsoleAccessSettingsConfiguration</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<div class="viewcode-block" id="SchemaConsoleAccessSettingsConfiguration">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.SchemaConsoleAccessSettingsConfiguration">[docs]</a>
+<span class="k">class</span> <span class="nc">SchemaConsoleAccessSettingsConfiguration</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for ConsoleAccessSettingsConfiguration.</span>
 
 <span class="sd">    Args:</span>
@@ -163,7 +166,9 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="SchemaConsoleAccessSettingsConfiguration.validate"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.SchemaConsoleAccessSettingsConfiguration.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+<div class="viewcode-block" id="SchemaConsoleAccessSettingsConfiguration.validate">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.SchemaConsoleAccessSettingsConfiguration.validate">[docs]</a>
+    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">_</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;console_endpoint&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;console_endpoint is required&quot;</span><span class="p">)</span>
@@ -175,10 +180,14 @@
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;client_secret is required&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;client_id&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;client_id is required&quot;</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;client_id is required&quot;</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="TokenValidationEnum"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.TokenValidationEnum">[docs]</a><span class="k">class</span> <span class="nc">TokenValidationEnum</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TokenValidationEnum">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.TokenValidationEnum">[docs]</a>
+<span class="k">class</span> <span class="nc">TokenValidationEnum</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Access Token Validation Status Enum Value&quot;&quot;&quot;</span>
 
     <span class="n">VALID_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;00&quot;</span>
@@ -187,7 +196,10 @@
     <span class="n">EMPTY_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;03&quot;</span></div>
 
 
-<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Config">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config">[docs]</a>
+<span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class obtains the configuration details needed for APIs from user.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -261,7 +273,9 @@
             <span class="n">proxy_headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_proxy_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy</span><span class="p">)</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="Config.validate_config_parameters"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_config_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">validate_config_parameters</span><span class="p">(</span>
+<div class="viewcode-block" id="Config.validate_config_parameters">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_config_parameters">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate_config_parameters</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">console_endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">portal_authorization_endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -289,7 +303,10 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">ex</span></div>
 
-<div class="viewcode-block" id="Config.get_https_proxy"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_https_proxy">[docs]</a>    <span class="k">def</span> <span class="nf">get_https_proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Config.get_https_proxy">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_https_proxy">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_https_proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get proxy setting from environment variable</span>
 
@@ -300,7 +317,10 @@
         <span class="n">proxy_env_var</span> <span class="o">=</span> <span class="s2">&quot;https_proxy&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proxy_env_var</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proxy_env_var</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="Config.get_proxy_auth_header"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_proxy_auth_header">[docs]</a>    <span class="k">def</span> <span class="nf">get_proxy_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Config.get_proxy_auth_header">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_proxy_auth_header">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_proxy_auth_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get proxy headers for authorization</span>
 
 <span class="sd">        Args:</span>
@@ -317,7 +337,10 @@
                 <span class="n">proxy_basic_auth</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parsed_proxy</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">parsed_proxy</span><span class="o">.</span><span class="n">password</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Config.validate_access_token"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_access_token">[docs]</a>    <span class="k">def</span> <span class="nf">validate_access_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Config.validate_access_token">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.validate_access_token">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate_access_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to Validate Access Token</span>
 
 <span class="sd">        Args:</span>
@@ -347,6 +370,7 @@
             <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">EMPTY_TOKEN</span><span class="o">.</span><span class="n">value</span>
 
         <span class="k">return</span> <span class="n">TokenValidationEnum</span><span class="o">.</span><span class="n">VALID_TOKEN</span><span class="o">.</span><span class="n">value</span></div>
+
 
     <span class="k">def</span> <span class="nf">_get_ocsp_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host_url</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get OCSP status for the host_url&quot;&quot;&quot;</span>
@@ -412,7 +436,9 @@
 
         <span class="k">return</span> <span class="n">_return_value</span>
 
-<div class="viewcode-block" id="Config.get_access_token"><a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_access_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_access_token</span><span class="p">(</span>
+<div class="viewcode-block" id="Config.get_access_token">
+<a class="viewcode-back" href="../../../console_access_library.common.html#console_access_library.common.config.Config.get_access_token">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_access_token</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if access token is available or not, and check its validity.</span>
@@ -457,7 +483,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_access_token</span><span class="p">()</span>
 
         <span class="c1"># Return the access token stored the Access token variable</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_last_access_token</span></div>
+</div>
+
 </pre></div>
 
            </div>
