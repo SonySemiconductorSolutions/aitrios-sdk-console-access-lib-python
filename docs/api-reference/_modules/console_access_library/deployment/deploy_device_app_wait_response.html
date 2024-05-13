@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.deploy_device_app_wait_response &mdash; Console Access Library 1.1.0 documentation</title>
+  <title>console_access_library.deployment.deploy_device_app_wait_response &mdash; Console Access Library 1.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -11,10 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -32,7 +33,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.1.0
+                1.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -127,7 +128,9 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="SchemaDeployDeviceAppWaitResponse"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.SchemaDeployDeviceAppWaitResponse">[docs]</a><span class="k">class</span> <span class="nc">SchemaDeployDeviceAppWaitResponse</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<div class="viewcode-block" id="SchemaDeployDeviceAppWaitResponse">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.SchemaDeployDeviceAppWaitResponse">[docs]</a>
+<span class="k">class</span> <span class="nc">SchemaDeployDeviceAppWaitResponse</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for DeployDeviceAppWaitResponse API.</span>
 
 <span class="sd">    Args:</span>
@@ -160,7 +163,7 @@
 
     <span class="c1">#: function, optional : callback (function, optional) : A function handle of the form -</span>
     <span class="c1">#: ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``</span>
-    <span class="c1">#: is the array of the dictionary for each device :</span>
+    <span class="c1">#: is the array of the dictionary for each Edge Device :</span>
     <span class="c1">#: [</span>
     <span class="c1">#:     {</span>
     <span class="c1">#:         &lt;device_id&gt; : {</span>
@@ -173,7 +176,7 @@
 
     <span class="c1">#: here - ``device_id``: is device ID,</span>
     <span class="c1">#:     - ``status``: is the notified deployment status for that device_id,</span>
-    <span class="c1">#:     - ``found_position``: index of the device id from devices array of the</span>
+    <span class="c1">#:     - ``found_position``: index of the device id from Edge Devices array of the</span>
     <span class="c1">#:             ``get_device_app_deploys`` response</span>
     <span class="c1">#:     - ``skip``: deploy status has captured, so skip for next iteration</span>
     <span class="c1">#:             inside the loop</span>
@@ -188,7 +191,9 @@
         <span class="n">allow_none</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="SchemaDeployDeviceAppWaitResponse.validate"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.SchemaDeployDeviceAppWaitResponse.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+<div class="viewcode-block" id="SchemaDeployDeviceAppWaitResponse.validate">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.SchemaDeployDeviceAppWaitResponse.validate">[docs]</a>
+    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;app_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;app_name is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
@@ -210,10 +215,14 @@
                 <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;callback&quot;</span><span class="p">],</span> <span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">MethodType</span><span class="p">))</span>
             <span class="p">)</span>
         <span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;callback is required or need to be a function/method&quot;</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;callback is required or need to be a function/method&quot;</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="DeployDeviceAppStatus"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppStatus">[docs]</a><span class="k">class</span> <span class="nc">DeployDeviceAppStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DeployDeviceAppStatus">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppStatus">[docs]</a>
+<span class="k">class</span> <span class="nc">DeployDeviceAppStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Deploy Device App Enum Status&quot;&quot;&quot;</span>
 
     <span class="n">DEPLOYING</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
@@ -222,7 +231,10 @@
     <span class="n">DEPLOYMENT_CANCELED</span> <span class="o">=</span> <span class="s2">&quot;3&quot;</span></div>
 
 
-<div class="viewcode-block" id="DeployDeviceAppWaitResponse"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppWaitResponse">[docs]</a><span class="k">class</span> <span class="nc">DeployDeviceAppWaitResponse</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DeployDeviceAppWaitResponse">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppWaitResponse">[docs]</a>
+<span class="k">class</span> <span class="nc">DeployDeviceAppWaitResponse</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements DeployDeviceAppWaitResponse API.</span>
 
 <span class="sd">    Args:</span>
@@ -289,7 +301,9 @@
                     <span class="k">return</span> <span class="n">devices_array</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="DeployDeviceAppWaitResponse.deploy_device_app_wait_response"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppWaitResponse.deploy_device_app_wait_response">[docs]</a>    <span class="k">def</span> <span class="nf">deploy_device_app_wait_response</span><span class="p">(</span>
+<div class="viewcode-block" id="DeployDeviceAppWaitResponse.deploy_device_app_wait_response">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app_wait_response.DeployDeviceAppWaitResponse.deploy_device_app_wait_response">[docs]</a>
+    <span class="k">def</span> <span class="nf">deploy_device_app_wait_response</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -307,7 +321,7 @@
 <span class="sd">            comment (str, optional) : Comment. Max. 100 characters.</span>
 <span class="sd">            callback (function, optional) : A function handle of the form - \</span>
 <span class="sd">                ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\</span>
-<span class="sd">                is the array of the dictionary for each device :</span>
+<span class="sd">                is the array of the dictionary for each Edge Device :</span>
 
 <span class="sd">                .. code-block:: console</span>
 
@@ -323,7 +337,7 @@
 
 <span class="sd">                - ``device_id``: is device ID,</span>
 <span class="sd">                - ``status``: is the notified deployment status for that device_id,</span>
-<span class="sd">                - ``found_position``: index of the device id from devices array of the \</span>
+<span class="sd">                - ``found_position``: index of the Edge Device id from devices array of the \</span>
 <span class="sd">                        ``get_device_app_deploys`` response</span>
 <span class="sd">                - ``skip``: deploy status has captured, so skip for next iteration \</span>
 <span class="sd">                        inside the loop</span>
@@ -483,7 +497,7 @@
 <span class="sd">                def deploy_device_app_callback(deploy_status_array):</span>
 <span class="sd">                    # Process callback received for the ``device_id`` with ``status`` from \</span>
 <span class="sd">                    # ``deploy_status_array``:</span>
-<span class="sd">                    # is the array of the dictionary for each device :</span>
+<span class="sd">                    # is the array of the dictionary for each Edge Device :</span>
 <span class="sd">                    # [</span>
 <span class="sd">                    #     {</span>
 <span class="sd">                    #         &lt;device_id&gt; : {</span>
@@ -496,7 +510,7 @@
 
 <span class="sd">                    # here - ``device_id``: is device ID,</span>
 <span class="sd">                    #     - ``status``: is the notified deployment status for that device_id,</span>
-<span class="sd">                    #     - ``found_position``: index of the device id from devices array of \</span>
+<span class="sd">                    #     - ``found_position``: index of the device id from Edge Devices array of \</span>
 <span class="sd">                    #               the ``get_device_app_deploys`` response</span>
 <span class="sd">                    #     - ``skip``: deploy status has captured, so skip for next iteration \</span>
 <span class="sd">                    #               inside the loop</span>
@@ -626,7 +640,7 @@
                                             <span class="n">_skip</span> <span class="o">=</span> <span class="n">array_device_json</span><span class="p">[</span><span class="s2">&quot;skip&quot;</span><span class="p">]</span>
 
                                             <span class="c1"># Check whether it&#39;s first occurrence</span>
-                                            <span class="c1"># Then Add status of the added device to</span>
+                                            <span class="c1"># Then Add status of the added Edge Device to</span>
                                             <span class="c1"># the global array</span>
                                             <span class="k">if</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">_found_position</span> <span class="ow">and</span> <span class="n">_skip</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                                                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_values</span><span class="p">(</span>
@@ -639,7 +653,7 @@
                                                 <span class="c1"># if deployment status is canceled,</span>
                                                 <span class="c1"># completed successfully or failed,</span>
                                                 <span class="c1"># then set the skip value as 1 of the respective</span>
-                                                <span class="c1"># device in global array</span>
+                                                <span class="c1"># Edge Device in global array</span>
                                                 <span class="c1"># and prepare response with required information</span>
                                                 <span class="k">if</span> <span class="n">_deploy_device_app_status</span> <span class="ow">in</span> <span class="p">[</span>
                                                     <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_DONE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
@@ -647,7 +661,7 @@
                                                     <span class="n">DeployDeviceAppStatus</span><span class="o">.</span><span class="n">DEPLOYMENT_FAILED</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                                                 <span class="p">]:</span>
                                                     <span class="c1"># Set the skip value as 1 of the respective</span>
-                                                    <span class="c1"># device in global array</span>
+                                                    <span class="c1"># Edge Device in global array</span>
                                                     <span class="bp">self</span><span class="o">.</span><span class="n">_set_values</span><span class="p">(</span>
                                                         <span class="n">device_id</span><span class="o">=</span><span class="n">devices_id_from_response</span><span class="p">,</span>
                                                         <span class="n">status</span><span class="o">=</span><span class="n">_deploy_device_app_status</span><span class="p">,</span>
@@ -756,7 +770,9 @@
                 <span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span>
             <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">_return_deploy_device_app_wait_response</span></div></div>
+        <span class="k">return</span> <span class="n">_return_deploy_device_app_wait_response</span></div>
+</div>
+
 </pre></div>
 
            </div>

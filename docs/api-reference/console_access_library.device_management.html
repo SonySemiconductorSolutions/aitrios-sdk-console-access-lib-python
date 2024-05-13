@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Device Management Package &mdash; Console Access Library 1.1.0 documentation</title>
+  <title>Device Management Package &mdash; Console Access Library 1.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -12,10 +12,11 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=6efca38a"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -35,7 +36,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.1.0
+                1.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -92,26 +93,26 @@
            <div itemprop="articleBody">
              
   <section id="device-management-package">
-<h1>Device Management Package<a class="headerlink" href="#device-management-package" title="Permalink to this headline"></a></h1>
+<h1>Device Management Package<a class="headerlink" href="#device-management-package" title="Link to this heading"></a></h1>
 <section id="module-console_access_library.device_management.device_management">
-<span id="device-management"></span><h2>device_management<a class="headerlink" href="#module-console_access_library.device_management.device_management" title="Permalink to this headline"></a></h2>
+<span id="device-management"></span><h2>device_management<a class="headerlink" href="#module-console_access_library.device_management.device_management" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeviceManagement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeviceManagement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code></a></p>
 <p>Abstract class to access Console Access Library DeviceManagement component
 APIs from devicemanagement component</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement.get_devices">
-<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.get_devices" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.get_devices" title="Link to this definition"></a></dt>
 <dd><p>Get the device list information</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Device ID. Partial match search. Default:””</p></li>
 <li><p><strong>device_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Device name. Partial match search. Default:””</p></li>
@@ -140,7 +141,7 @@ Default: “full”</p>
 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -149,12 +150,6 @@ Default: “full”</p>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 27%" />
-<col style="width: 15%" />
-<col style="width: 43%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Level2</em></p></th>
@@ -258,12 +253,6 @@ for more details</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 26%" />
-<col style="width: 16%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>property</p></th>
 <th class="head" colspan="3"></th>
@@ -295,12 +284,6 @@ id.</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 26%" />
-<col style="width: 16%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>device_groups</p></th>
 <th class="head" colspan="3"></th>
@@ -360,12 +343,6 @@ group was updated.</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 26%" />
-<col style="width: 16%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>models</p></th>
 <th class="head" colspan="3"></th>
@@ -492,13 +469,13 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result">
-<span class="sig-name descname"><span class="pre">start_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.start_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.start_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result" title="Link to this definition"></a></dt>
 <dd><p>Implement instructions to a specified device to start to get the             inference result metadata (Output Tensor) and image (Input image).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -507,11 +484,6 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 40%" />
-<col style="width: 18%" />
-<col style="width: 42%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Type</em></p></th>
@@ -636,13 +608,13 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result">
-<span class="sig-name descname"><span class="pre">stop_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.stop_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stop_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.stop_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result" title="Link to this definition"></a></dt>
 <dd><p>Implement instructions to a specified device to stop getting the             inference result metadata (Output Tensor) and image (Input image).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -651,11 +623,6 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 37%" />
-<col style="width: 19%" />
-<col style="width: 44%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Type</em></p></th>
@@ -767,10 +734,10 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file">
-<span class="sig-name descname"><span class="pre">get_command_parameter_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.get_command_parameter_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_command_parameter_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/device_management.html#DeviceManagement.get_command_parameter_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file" title="Link to this definition"></a></dt>
 <dd><p>Get the command parameter file list information.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -779,12 +746,6 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 18%" />
-<col style="width: 16%" />
-<col style="width: 41%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Level2</em></p></th>
@@ -850,12 +811,6 @@ were updated.</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 37%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
 <th class="head" colspan="3"></th>
@@ -881,12 +836,6 @@ for more details</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 38%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>commands</p></th>
 <th class="head" colspan="3"></th>
@@ -917,12 +866,6 @@ for more details</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 38%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>parameters</p></th>
 <th class="head" colspan="3"></th>
@@ -1150,23 +1093,23 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 </section>
 <section id="module-console_access_library.device_management.get_command_parameter_file">
-<span id="get-command-parameter-file"></span><h2>get_command_parameter_file<a class="headerlink" href="#module-console_access_library.device_management.get_command_parameter_file" title="Permalink to this headline"></a></h2>
+<span id="get-command-parameter-file"></span><h2>get_command_parameter_file<a class="headerlink" href="#module-console_access_library.device_management.get_command_parameter_file" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetCommandParameterFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_command_parameter_file.html#GetCommandParameterFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetCommandParameterFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_command_parameter_file.html#GetCommandParameterFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code></a></p>
 <p>This class implements GetCommandParameterFile API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile.get_command_parameter_file">
-<span class="sig-name descname"><span class="pre">get_command_parameter_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_command_parameter_file.html#GetCommandParameterFile.get_command_parameter_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile.get_command_parameter_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_command_parameter_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_command_parameter_file.html#GetCommandParameterFile.get_command_parameter_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_command_parameter_file.GetCommandParameterFile.get_command_parameter_file" title="Link to this definition"></a></dt>
 <dd><p>Get the command parameter file list information.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -1175,12 +1118,6 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 18%" />
-<col style="width: 16%" />
-<col style="width: 41%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Level2</em></p></th>
@@ -1246,12 +1183,6 @@ were updated.</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 37%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
 <th class="head" colspan="3"></th>
@@ -1277,12 +1208,6 @@ for more details</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 38%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>commands</p></th>
 <th class="head" colspan="3"></th>
@@ -1313,12 +1238,6 @@ for more details</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 22%" />
-<col style="width: 16%" />
-<col style="width: 38%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>parameters</p></th>
 <th class="head" colspan="3"></th>
@@ -1594,24 +1513,24 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 </section>
 <section id="module-console_access_library.device_management.get_devices">
-<span id="get-devices"></span><h2>get_devices<a class="headerlink" href="#module-console_access_library.device_management.get_devices" title="Permalink to this headline"></a></h2>
+<span id="get-devices"></span><h2>get_devices<a class="headerlink" href="#module-console_access_library.device_management.get_devices" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaGetDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#SchemaGetDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaGetDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#SchemaGetDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Schema</span></code></p>
 <p>Schema for GetDevices API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_id">
-<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_id" title="Link to this definition"></a></dt>
 <dd><p>Device ID. Partial match search.
 Default:””</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, optional</p>
 </dd>
 </dl>
@@ -1619,11 +1538,11 @@ Default:””</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_name">
-<span class="sig-name descname"><span class="pre">device_name</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_name" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">device_name</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_name" title="Link to this definition"></a></dt>
 <dd><p>Device name. Partial match search.
 Default:””</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, optional</p>
 </dd>
 </dl>
@@ -1631,7 +1550,7 @@ Default:””</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.connection_state">
-<span class="sig-name descname"><span class="pre">connection_state</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.connection_state" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">connection_state</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.connection_state" title="Link to this definition"></a></dt>
 <dd><p>Connection status.</p>
 <p>Value definition</p>
 <blockquote>
@@ -1642,7 +1561,7 @@ Default:””</p>
 </div></blockquote>
 <p>Default:””</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, optional</p>
 </dd>
 </dl>
@@ -1650,11 +1569,11 @@ Default:””</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_group_id">
-<span class="sig-name descname"><span class="pre">device_group_id</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_group_id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">device_group_id</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_group_id" title="Link to this definition"></a></dt>
 <dd><p>Device group ID.
 Default:””</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, optional</p>
 </dd>
 </dl>
@@ -1662,11 +1581,11 @@ Default:””</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.device_ids">
-<span class="sig-name descname"><span class="pre">device_ids</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_ids" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">device_ids</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.device_ids" title="Link to this definition"></a></dt>
 <dd><p>Specify multiple device IDs separated by commas.
 Default:””</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, optional</p>
 </dd>
 </dl>
@@ -1674,7 +1593,7 @@ Default:””</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.scope">
-<span class="sig-name descname"><span class="pre">scope</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.scope" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">scope</span></span><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.scope" title="Link to this definition"></a></dt>
 <dd><p>Specify the scope of response parameters to return.</p>
 <p>Value definition</p>
 <blockquote>
@@ -1685,7 +1604,7 @@ Default:””</p>
 </div></blockquote>
 <p>Default:”full”</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, optional</p>
 </dd>
 </dl>
@@ -1693,11 +1612,11 @@ Default:””</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#SchemaGetDevices.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.validate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#SchemaGetDevices.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.validate" title="Link to this definition"></a></dt>
 <dd><p>Validate <cite>data</cite> against the schema, returning a dictionary of
 validation errors.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – The data to validate.</p></li>
 <li><p><strong>many</strong> – Whether to validate <cite>data</cite> as a collection. If <cite>None</cite>, the
@@ -1708,7 +1627,7 @@ its value is an iterable, only missing fields listed in that iterable
 will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary of validation errors.</p>
 </dd>
 </dl>
@@ -1719,27 +1638,27 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.SchemaGetDevices.opts">
-<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.opts" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.device_management.get_devices.SchemaGetDevices.opts" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.GetDevices">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GetDevices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code></a></p>
 <p>This class implements GetDevices API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.get_devices.GetDevices.get_devices">
-<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'full'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices.get_devices" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_devices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'full'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/get_devices.html#GetDevices.get_devices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.get_devices.GetDevices.get_devices" title="Link to this definition"></a></dt>
 <dd><p>Get the device list information.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>device_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Device ID. Partial match search. Default:””</p></li>
 <li><p><strong>device_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Device name. Partial match search. Default:””</p></li>
@@ -1768,7 +1687,7 @@ Default: “full”</p>
 </p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -1777,12 +1696,6 @@ Default: “full”</p>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 27%" />
-<col style="width: 15%" />
-<col style="width: 43%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Level2</em></p></th>
@@ -1886,12 +1799,6 @@ for more details</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 26%" />
-<col style="width: 16%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>property</p></th>
 <th class="head" colspan="3"></th>
@@ -1923,12 +1830,6 @@ id.</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 26%" />
-<col style="width: 16%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>device_groups</p></th>
 <th class="head" colspan="3"></th>
@@ -1988,12 +1889,6 @@ group was updated.</p></td>
 </tbody>
 </table>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 26%" />
-<col style="width: 16%" />
-<col style="width: 34%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>models</p></th>
 <th class="head" colspan="3"></th>
@@ -2177,23 +2072,23 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 </section>
 <section id="module-console_access_library.device_management.start_upload_inference_result">
-<span id="start-upload-inference-result"></span><h2>start_upload_inference_result<a class="headerlink" href="#module-console_access_library.device_management.start_upload_inference_result" title="Permalink to this headline"></a></h2>
+<span id="start-upload-inference-result"></span><h2>start_upload_inference_result<a class="headerlink" href="#module-console_access_library.device_management.start_upload_inference_result" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaStartUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#SchemaStartUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaStartUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#SchemaStartUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Schema</span></code></p>
 <p>Schema for StartUploadInferenceResult API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.device_id">
-<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.device_id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.device_id" title="Link to this definition"></a></dt>
 <dd><p>Device ID.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, required</p>
 </dd>
 </dl>
@@ -2201,11 +2096,11 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#SchemaStartUploadInferenceResult.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.validate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#SchemaStartUploadInferenceResult.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.validate" title="Link to this definition"></a></dt>
 <dd><p>Validate <cite>data</cite> against the schema, returning a dictionary of
 validation errors.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – The data to validate.</p></li>
 <li><p><strong>many</strong> – Whether to validate <cite>data</cite> as a collection. If <cite>None</cite>, the
@@ -2216,7 +2111,7 @@ its value is an iterable, only missing fields listed in that iterable
 will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary of validation errors.</p>
 </dd>
 </dl>
@@ -2227,30 +2122,30 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.opts">
-<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.opts" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.SchemaStartUploadInferenceResult.opts" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StartUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#StartUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StartUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#StartUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code></a></p>
 <p>This class implements StartUploadInferenceResult API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult.start_upload_inference_result">
-<span class="sig-name descname"><span class="pre">start_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#StartUploadInferenceResult.start_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult.start_upload_inference_result" title="Permalink to this definition"></a></dt>
-<dd><p>Implement instructions to a specified device to start to get the             inference result metadata (Output Tensor) and image (Input image).</p>
+<span class="sig-name descname"><span class="pre">start_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/start_upload_inference_result.html#StartUploadInferenceResult.start_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.start_upload_inference_result.StartUploadInferenceResult.start_upload_inference_result" title="Link to this definition"></a></dt>
+<dd><p>Implement instructions to a specified Edge Device to start to get the             inference result metadata (Output Tensor) and image (Input image).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -2259,11 +2154,6 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 40%" />
-<col style="width: 18%" />
-<col style="width: 42%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Type</em></p></th>
@@ -2442,23 +2332,23 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 </section>
 <section id="module-console_access_library.device_management.stop_upload_inference_result">
-<span id="stop-upload-inference-result"></span><h2>stop_upload_inference_result<a class="headerlink" href="#module-console_access_library.device_management.stop_upload_inference_result" title="Permalink to this headline"></a></h2>
+<span id="stop-upload-inference-result"></span><h2>stop_upload_inference_result<a class="headerlink" href="#module-console_access_library.device_management.stop_upload_inference_result" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaStopUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">types.StrSequenceOrSet</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">types.StrSequenceOrSet</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#SchemaStopUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">marshmallow.schema.Schema</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchemaStopUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dump_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">AbstractSet</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknown</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#SchemaStopUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Schema</span></code></p>
 <p>Schema for StopUploadInferenceResult API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>Schema</strong> (<em>object</em>) – Inherited from Schema class of marshmallow</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.device_id">
-<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.device_id" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">device_id</span></span><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.device_id" title="Link to this definition"></a></dt>
 <dd><p>Device ID.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str, required</p>
 </dd>
 </dl>
@@ -2466,11 +2356,11 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#SchemaStopUploadInferenceResult.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.validate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#SchemaStopUploadInferenceResult.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.validate" title="Link to this definition"></a></dt>
 <dd><p>Validate <cite>data</cite> against the schema, returning a dictionary of
 validation errors.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – The data to validate.</p></li>
 <li><p><strong>many</strong> – Whether to validate <cite>data</cite> as a collection. If <cite>None</cite>, the
@@ -2481,7 +2371,7 @@ its value is an iterable, only missing fields listed in that iterable
 will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary of validation errors.</p>
 </dd>
 </dl>
@@ -2492,30 +2382,30 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.opts">
-<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.opts" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">opts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">SchemaOpts</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;marshmallow.schema.SchemaOpts</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.SchemaStopUploadInferenceResult.opts" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StopUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#StopUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">console_access_library.common.console_access_base_class.ConsoleAccessBaseClass</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StopUploadInferenceResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#StopUploadInferenceResult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="console_access_library.common.html#console_access_library.common.console_access_base_class.ConsoleAccessBaseClass" title="console_access_library.common.console_access_base_class.ConsoleAccessBaseClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code></a></p>
 <p>This class implements StopUploadInferenceResult API.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>ConsoleAccessBaseClass</strong> (<em>object</em>) – Inherited from             <code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAccessBaseClass</span></code>.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult.stop_upload_inference_result">
-<span class="sig-name descname"><span class="pre">stop_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#StopUploadInferenceResult.stop_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult.stop_upload_inference_result" title="Permalink to this definition"></a></dt>
-<dd><p>Implement instructions to a specified device to stop getting the             inference result metadata (Output Tensor) and image (Input image).</p>
+<span class="sig-name descname"><span class="pre">stop_upload_inference_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/device_management/stop_upload_inference_result.html#StopUploadInferenceResult.stop_upload_inference_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.device_management.stop_upload_inference_result.StopUploadInferenceResult.stop_upload_inference_result" title="Link to this definition"></a></dt>
+<dd><p>Implement instructions to a specified Edge Device to stop getting the             inference result metadata (Output Tensor) and image (Input image).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>device_id</strong> (<em>str</em><em>, </em><em>required</em>) – Device ID.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><p><strong>Return Type</strong></p>
 <ul class="simple">
 <li><p>On Success Response - aitrios_console_rest_client_sdk_primitive.schemas.DynamicSchema</p></li>
@@ -2524,11 +2414,6 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <p><strong>Success Response Schema</strong></p>
 <blockquote>
 <div><table class="docutils align-default">
-<colgroup>
-<col style="width: 37%" />
-<col style="width: 19%" />
-<col style="width: 44%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><em>Level1</em></p></th>
 <th class="head"><p><em>Type</em></p></th>

@@ -25,17 +25,18 @@ python setup.py sdist bdist_wheel
 """
 import logging
 import sys
+import os
 from pathlib import Path
 
 from setuptools import find_packages, setup
 
 try:
     # Check if file path is symbolic link
-    symbolic_link = Path("README.md").is_symlink()
+    symbolic_link = Path(os.path.join("..", "README.md")).is_symlink()
     if symbolic_link is True:
         sys.exit("The path to configuration file is a symbolic link")
     else:
-        with open("README.md", "r", encoding="utf-8") as fh:
+        with open(os.path.join("..", "README.md"), "r", encoding="utf-8") as fh:
             long_description = fh.read()
 
 except Exception as err:
@@ -43,7 +44,7 @@ except Exception as err:
     logging.error("Configuration not loaded!!")
     raise err
 
-SDK_SPECIFICATION_VERSION = "1.1.0"
+SDK_SPECIFICATION_VERSION = "1.2.0"
 PACKAGE_VERSION = f"{SDK_SPECIFICATION_VERSION}"
 PACKAGE_NAME = "console_access_library"
 AUTHOR_NAME = "Sony Semiconductor Solutions Corp"

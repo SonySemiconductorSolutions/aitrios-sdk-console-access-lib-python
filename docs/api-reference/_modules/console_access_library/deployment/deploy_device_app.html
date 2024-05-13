@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.deployment.deploy_device_app &mdash; Console Access Library 1.1.0 documentation</title>
+  <title>console_access_library.deployment.deploy_device_app &mdash; Console Access Library 1.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -11,10 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -32,7 +33,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.1.0
+                1.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -119,7 +120,9 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="SchemaDeployDeviceApp"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.SchemaDeployDeviceApp">[docs]</a><span class="k">class</span> <span class="nc">SchemaDeployDeviceApp</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
+<div class="viewcode-block" id="SchemaDeployDeviceApp">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.SchemaDeployDeviceApp">[docs]</a>
+<span class="k">class</span> <span class="nc">SchemaDeployDeviceApp</span><span class="p">(</span><span class="n">Schema</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Schema for DeployDeviceApp API.</span>
 
 <span class="sd">    Args:</span>
@@ -148,7 +151,9 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for comment&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="SchemaDeployDeviceApp.validate"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.SchemaDeployDeviceApp.validate">[docs]</a>    <span class="nd">@validates_schema</span>
+<div class="viewcode-block" id="SchemaDeployDeviceApp.validate">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.SchemaDeployDeviceApp.validate">[docs]</a>
+    <span class="nd">@validates_schema</span>
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;app_name&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;app_name is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
@@ -160,10 +165,14 @@
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;device_ids is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s2">&quot;comment&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;comment&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;comment is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;comment is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="DeployDeviceApp"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.DeployDeviceApp">[docs]</a><span class="k">class</span> <span class="nc">DeployDeviceApp</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DeployDeviceApp">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.DeployDeviceApp">[docs]</a>
+<span class="k">class</span> <span class="nc">DeployDeviceApp</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements DeployDeviceApp API.</span>
 
 <span class="sd">    Args:</span>
@@ -180,7 +189,9 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 
-<div class="viewcode-block" id="DeployDeviceApp.deploy_device_app"><a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.DeployDeviceApp.deploy_device_app">[docs]</a>    <span class="k">def</span> <span class="nf">deploy_device_app</span><span class="p">(</span>
+<div class="viewcode-block" id="DeployDeviceApp.deploy_device_app">
+<a class="viewcode-back" href="../../../console_access_library.deployment.html#console_access_library.deployment.deploy_device_app.DeployDeviceApp.deploy_device_app">[docs]</a>
+    <span class="k">def</span> <span class="nf">deploy_device_app</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">app_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">version_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -368,7 +379,7 @@
                 <span class="n">header_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">(),</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">api_client</span><span class="p">:</span>
 
-                <span class="c1"># Adding Parameters to Connect to an Enterprise Edition Environment</span>
+                <span class="c1"># Adding Parameters to Connect to Console Enterprise Edition Environment</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">_application_id</span><span class="p">:</span>
                     <span class="n">_query_params</span><span class="p">[</span><span class="s2">&quot;grant_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;client_credentials&quot;</span>
 
@@ -401,7 +412,9 @@
         <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">_return_deploy_device_app</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_validation_error_response</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">_return_deploy_device_app</span></div></div>
+        <span class="k">return</span> <span class="n">_return_deploy_device_app</span></div>
+</div>
+
 </pre></div>
 
            </div>

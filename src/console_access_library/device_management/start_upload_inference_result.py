@@ -79,7 +79,7 @@ class StartUploadInferenceResult(ConsoleAccessBaseClass):
         self._config = config
 
     def start_upload_inference_result(self, device_id: str):
-        """Implement instructions to a specified device to start to get the\
+        """Implement instructions to a specified Edge Device to start to get the\
              inference result metadata (Output Tensor) and image (Input image).
 
         Args:
@@ -259,7 +259,7 @@ class StartUploadInferenceResult(ConsoleAccessBaseClass):
                 )
 
                 try:
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         _return_start_upload_inference_result = (

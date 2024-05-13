@@ -86,8 +86,8 @@ class SchemaDeployByConfigurationWaitResponse(Schema):
         allow_none=True,
     )
 
-    #: int, optional : Timeout waiting for completion. There are cases where the edge
-    #:                  AI device hangs up during the deployment process, so there
+    #: int, optional : Timeout waiting for completion. There are cases where the Edge Device
+    #:                  hangs up during the deployment process, so there
     #:                  are cases where the process remains in progress, so timeout to exit
     #:                  the process, 3600 seconds if not specified.
     timeout = fields.Integer(
@@ -99,7 +99,7 @@ class SchemaDeployByConfigurationWaitResponse(Schema):
 
     #: function, optional : callback (function, optional) : A function handle of the form -
     #: ``deploy_callback(device_status_array)``, where ``device_status_array``
-    #: is the array of the dictionary for each device :
+    #: is the array of the dictionary for each Edge Device :
     #: [
     #:     {
     #:         <device_id> : {
@@ -235,7 +235,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
         timeout: int = None,
         callback=None,
     ):
-        """Provides a function to deploy the following to the device specified from the
+        """Provides a function to deploy the following to the Edge Device specified from the
         deployment config.
 
         Args:
@@ -246,12 +246,12 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                 treat the entered value as the network_id and process it. Default : "".
             comment (str, optional) : Max 100 characters. Default : "".
             timeout (int, optional) : Timeout waiting for completion. There are cases where the \
-                edge AI device hangs up during the deployment process,\
+                Edge Device hangs up during the deployment process,\
                 so there are cases where the process remains in progress,\
                 so timeout to exit the process,  3600 seconds if not specified.
             callback (function, optional) : A function handle of the form - \
                 ``deploy_callback(device_status_array)``, where ``device_status_array`` \
-                is the array of the dictionary for each device :
+                is the array of the dictionary for each Edge Device :
 
                 .. code-block:: console
 
@@ -422,7 +422,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                 def deploy_callback(deploy_status_array):
                     # Process callback received for the ``device_id`` with ``status`` from \
                     # ``device_status_array``:
-                    # is the array of the dictionary for each device :
+                    # is the array of the dictionary for each Edge Device :
                     # [
                     #     {
                     #         <device_id> : {
@@ -534,7 +534,7 @@ class DeployByConfigurationWaitResponse(ConsoleAccessBaseClass):
                                         )
 
                                     # Check whether it's first occurrence
-                                    # Then update status of the added device to
+                                    # Then update status of the added Edge Device to
                                     # the global array
                                     if _device_id in [
                                         list(d.keys())[0]

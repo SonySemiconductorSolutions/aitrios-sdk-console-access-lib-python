@@ -239,7 +239,7 @@ class UndeployDeviceApp(ConsoleAccessBaseClass):
                 header_value=self._config.get_access_token(),
             ) as api_client:
 
-                # Adding Parameters to Connect to an Enterprise Edition Environment
+                # Adding Parameters to Connect to Console Enterprise Edition Environment
                 if self._config._application_id:
                     _local_params["grant_type"] = "client_credentials"
 

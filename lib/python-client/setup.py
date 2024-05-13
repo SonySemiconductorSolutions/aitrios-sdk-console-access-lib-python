@@ -12,7 +12,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "aitrios_console_rest_client_sdk_primitive"
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 # To install the library, run the following
 #
 # python setup.py install
@@ -25,7 +25,7 @@ REQUIRES = [
     "frozendict ~= 2.3.4",
     "python-dateutil >= 2.7.0",
     "setuptools >= 21.0.0",
-    "typing_extensions ~= 4.3.0",
+    "typing_extensions == 4.11.0",
     "urllib3 ~= 1.26.7",
 ]
 

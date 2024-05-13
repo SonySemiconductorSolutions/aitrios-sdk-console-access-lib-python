@@ -114,7 +114,7 @@ class GetLastInferenceAndImageData(ConsoleAccessBaseClass):
         """Get the latest data of saved inference result and image.
 
         Args:
-            device_id (str, required) : Edge AI Device ID.
+            device_id (str, required) : Edge Device ID.
             sub_directory_name (str, required) : Image storage subdirectory Defaults to None.
                 The subdirectory will be the directory notified in the
                 start_upload_inference_result response.

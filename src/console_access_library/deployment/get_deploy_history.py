@@ -82,7 +82,7 @@ class GetDeployHistory(ConsoleAccessBaseClass):
         self,
         device_id: str,
     ):
-        """Get deploy history for a specified device.
+        """Get deploy history for a specified Edge Device.
 
         Args:
             device_id (str, required) : Device ID.
@@ -138,7 +138,7 @@ class GetDeployHistory(ConsoleAccessBaseClass):
                 |          | ``current_target``   | ``string`` | Set the current target.       |
                 +----------+----------------------+------------+-------------------------------+
                 |          |``total_status``      | ``string`` | Set the deploy status.        |
-                |          |                      |            | Total status of devices       |
+                |          |                      |            | Total status of Edge Devices  |
                 |          |                      |            | deployed together.            |
                 |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
@@ -415,7 +415,7 @@ class GetDeployHistory(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 get_deploy_history_api_instance = deploy_api.DeployApi(api_client)
                 try:
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         # pylint:disable=line-too-long

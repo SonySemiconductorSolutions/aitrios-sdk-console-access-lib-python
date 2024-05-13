@@ -159,7 +159,7 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
         model_version_number: str = None,
         ap_fw_version_number: str = None,
     ):
-        """	Register the deployment config information to deploy the following to the device. \
+        """	Register the deployment config information to deploy the following to the Edge Device. \
         ・Firmware ・AI model
 
         Args:
@@ -388,7 +388,7 @@ class CreateDeployConfiguration(ConsoleAccessBaseClass):
                 header_value=self._config.get_access_token(),
             ) as api_client:
 
-                # Adding Parameters to Connect to an Enterprise Edition Environment
+                # Adding Parameters to Connect to Console Enterprise Edition Environment
                 if self._config._application_id:
                     _local_params["grant_type"] = "client_credentials"
 

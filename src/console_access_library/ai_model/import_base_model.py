@@ -461,7 +461,7 @@ class ImportBaseModel(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 manage_devices_api_instance = train_model_api.TrainModelApi(api_client)
                 try:
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         _return_import_base_model = manage_devices_api_instance.import_base_model(

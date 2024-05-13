@@ -15,21 +15,24 @@
 == 更新履歴
 
 |===
-|Date |What/Why 
+|Date |What/Why
 |2022/11/16
 |初版作成
 
-|2023/1/30
+|2023/01/30
 |version 0.2.0 修正対応 +
 表現統一 + 
 PDFビルド環境更新
 
-|2023/5/26
+|2023/05/26
 |version 1.0.0 修正対応
 
 |2023/12/22
 |version 1.1.0 修正対応 +
 Console Enterprise Edition対応
+
+|2024/03/26
+|version 1.2.0 修正対応
 
 |===
 
@@ -43,7 +46,7 @@ Console Enterprise Edition対応
 |Terms/Abbreviations |Meaning 
 
 |「**Console for AITRIOS**」
-|エッジからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、エッジAIデバイスマネジメント機能など）を提供するクラウドサービス +
+|エッジからクラウドを含めたソリューションを効率的に導入するための各種機能（デプロイメント機能、リトレーニング機能、エッジデバイスマネジメント機能など）を提供するクラウドサービス +
 以降、本文中では「**Console**」と記載する
 
 |「**Low Level SDK**」
@@ -63,16 +66,16 @@ Azure Storage リソースへの制限付きアクセス権を付与する URI
 
 == 想定ユースケース
 * 「**Console Access Library**」を使用して、下記を実施する
-** エッジAIデバイスの情報を取得
-** エッジAIデバイスに推論開始（推論結果アップロード開始）、推論停止（推論結果アップロード停止）
-** エッジAIデバイスの出力結果（画像、推論結果）の取得
-** ユーザーが自分で作成したAI Modelを「**Console**」にアップロード
-*** アップロードしたAI Modelの確認と削除
-** AI ModelをエッジAIデバイスにデプロイ可能な形式に変換
-** AI ModelをエッジAIデバイスにデプロイ
+** エッジデバイスの情報を取得
+** エッジデバイスに推論開始（推論結果アップロード開始）、推論停止（推論結果アップロード停止）
+** エッジデバイスの出力結果（画像、推論結果）の取得
+** ユーザーが自分で作成したAIモデルを「**Console**」にアップロード
+*** アップロードしたAIモデルの確認と削除
+** AIモデルをエッジデバイスにデプロイ可能な形式に変換
+** AIモデルをエッジデバイスにデプロイ
 ** ユーザーが自分で作成した「**DeviceApp**」を「**Console**」にアップロード
 *** アップロードした「**DeviceApp**」の確認と削除
-** 「**DeviceApp**」をエッジAIデバイスにデプロイ
+** 「**DeviceApp**」をエッジデバイスにデプロイ
 
 == 機能概要、アルゴリズム
 [#_Functional-Overview]
@@ -116,11 +119,11 @@ Azure Storage リソースへの制限付きアクセス権を付与する URI
 APIにtimeoutの引数がない場合にはtimeoutしない。
 ====
 ** DeviceManagement
-*** get_devices / エッジAIデバイスの情報一覧取得
+*** get_devices / エッジデバイスの情報一覧取得
 *** start_upload_inference_result / 推論結果メタデータ取得開始
 *** stop_upload_inference_result / 推論結果メタデータ取得停止
 *** get_command_parameter_file / 「**Console**」に登録されたcommand parameter fileの一覧取得
-** AI Model
+** AIモデル
 *** import_base_model / ベースモデルのインポート
 *** get_models / モデル情報一覧取得
 *** get_base_model_status / ベースモデル情報取得
@@ -146,7 +149,7 @@ APIにtimeoutの引数がない場合にはtimeoutしない。
 *** export_images / 保存済み画像エクスポート
 
 * 「**Low Level SDK**」のAPIをユースケースでまとめたHigh Level APIを実行できます。
-** AI Model
+** AIモデル
 *** publish_model_wait_response / モデル発行し、完了待ち
 ** Deployment
 *** deploy_by_configuration_wait_response / デプロイし、完了待ち
@@ -228,7 +231,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 - アクセストークンの有効期限は1時間となっており、有効期限が残り180秒以下の場合、アクセストークンの更新
 
 * 推論結果メタデータ取得開始 - 停止
-. get_devices APIで、デバイスのIDを確認
+. get_devices APIで、エッジデバイスのIDを確認
 . start_upload_inference_result APIで推論結果メタデータ取得開始
 . InsightのAPIを使用して、推論結果、画像の取得
 . stop_upload_inference_result APIで推論結果メタデータ取得停止
@@ -254,14 +257,14 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 ** stop_upload_inference_result(device_id: str)
 ** get_command_parameter_file()
 
-* AI Model
+* AIモデル
 ** import_base_model(model_id: str, model: str, converted: bool, vendor_name: str, comment: str, input_format_param: str, network_config: str, network_type: str, metadata_format_id: str)
 ** get_models(model_id: str, comment: str, project_name: str, model_platform: str, project_type: str, device_id: str, latest_type: str)
 ** get_base_model_status(model_id: str, latest_type: str)
 ** delete_model(model_id: str)
 ** publish_model(model_id: str, device_id: str)
 
-* AI Model High Level API
+* AIモデル High Level API
 ** publish_model_wait_response(model_id: str, device_id: str, callback: publish_model_wait_response_callback)
 *** publish_model_wait_response_callback(status: str)
 
@@ -297,7 +300,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 ** get_last_inference_and_image_data(device_id: str, sub_directory_name: str)
 
 === Others Exclusive conditions / specifications
-* command parameter fileをエッジAIデバイスに適用済みであること
+* command parameter fileをエッジデバイスに適用済みであること
 
 == 操作性仕様、画面仕様
 * なし
@@ -389,7 +392,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 |DeviceManagement APIを提供するInstance
 |===
 
-** get_ai_model: AI Model APIを提供するInstanceの取得
+** get_ai_model: AIモデル APIを提供するInstanceの取得
 +
 |===
 |Parameter’s name|Meaning|Range of parameter
@@ -403,8 +406,8 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 |===
 |Return value|Meaning
 
-|AI Model instance
-|AI Model APIを提供するInstance
+|AIモデル instance
+|AIモデル APIを提供するInstance
 |===
 
 ** get_deployment: Deployment APIを提供するInstanceの取得
@@ -444,7 +447,7 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 |===
 
 * DeviceManagement
-** get_devices: エッジAIデバイスの情報一覧取得
+** get_devices: エッジデバイスの情報一覧取得
 +
 【Error：「**Low Level SDK**」にてErrorが発生した場合】「**Console Access Library**」で定義したErrorを発生させる
 +
@@ -454,12 +457,12 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |部分検索、大文字小文字は区別しない +
 指定なしの場合、全device_id検索
 
 |device_name
-|エッジAIデバイスの名前
+|エッジデバイスの名前
 |部分検索、大文字小文字は区別しない +
 指定なしの場合、全device_name検索
 
@@ -471,17 +474,17 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 指定なしの場合、全connection_state検索
 
 |device_group_id
-|エッジAIデバイスの所属グループ
+|エッジデバイスの所属グループ
 |完全一致検索、大文字小文字は区別しない +
 指定なしの場合、全device_group_id検索
 
 |device_ids
-|エッジAIデバイスの所属グループ
+|エッジデバイスの所属グループ
 |複数のDevice IDをカンマで区切って指定 +
 指定なしの場合、全deviceIds検索
 
 |scope
-|エッジAIデバイスの所属グループ
+|エッジデバイスの所属グループ
 |レスポンスパラメータの範囲を指定 +
 設定値 +
 full: 完全なパラメータを返す +
@@ -493,8 +496,8 @@ minmal: 最小限のパラメータを返す(応答速度が速い) +
 |===
 |Return value|Meaning
 
-|Device information
-|エッジAIデバイスの情報
+|Edge Device information
+|エッジデバイスの情報
 |===
 
 ** start_upload_inference_result: 推論結果メタデータ取得開始
@@ -509,7 +512,7 @@ minmal: 最小限のパラメータを返す(応答速度が速い) +
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |===
@@ -540,7 +543,7 @@ minmal: 最小限のパラメータを返す(応答速度が速い) +
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |===
@@ -576,7 +579,7 @@ minmal: 最小限のパラメータを返す(応答速度が速い) +
 
 |===
 
-* AI Model
+* AIモデル
 ** import_base_model: ベースモデルのインポート
 +
 【Error：model_idが空の場合】E001 : model_id is required.
@@ -702,12 +705,12 @@ format: フォーマット（"RGB" or "BGR"） +
 |project_type
 |プロジェクト種別
 |0 : ベース +
-1 : デバイス +
+1 : エッジデバイス +
 完全一致検索 +
 指定なしの場合、全project_type検索
 
 |device_id
-|エッジAIデバイスのID(デバイスモデルを検索したい場合に指定)
+|エッジデバイスのID(デバイスモデルを検索したい場合に指定)
 |完全一致検索 +
 大文字小文字を区別する +
 指定なしの場合、全device_id検索
@@ -802,7 +805,7 @@ format: フォーマット（"RGB" or "BGR"） +
 |なし
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する +
 デバイスモデルが対象の場合に指定する +
 ベースモデルが対象の場合、指定しない
@@ -836,7 +839,7 @@ format: フォーマット（"RGB" or "BGR"） +
 |なし
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する +
 デバイスモデルが対象の場合に指定する +
 ベースモデルが対象の場合、指定しない
@@ -1112,8 +1115,8 @@ _ アンダーバー +
 |なし
 
 |device_ids
-|エッジAIデバイスのIDs
-|カンマ区切りで複数のエッジAIデバイスのIDを指定 +
+|エッジデバイスのIDs
+|カンマ区切りで複数のエッジデバイスのIDを指定 +
 大文字小文字を区別する
 
 |replace_model_id
@@ -1149,7 +1152,7 @@ _ アンダーバー +
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |===
@@ -1201,7 +1204,7 @@ _ アンダーバー +
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |deploy_id
@@ -1242,8 +1245,8 @@ _ アンダーバー +
 |なし
 
 |device_ids
-|エッジAIデバイスのIDs
-|カンマ区切りで複数のエッジAIデバイスのIDを指定 +
+|エッジデバイスのIDs
+|カンマ区切りで複数のエッジデバイスのIDを指定 +
 大文字小文字を区別する
 
 |comment
@@ -1273,8 +1276,8 @@ _ アンダーバー +
 |Parameter’s name|Meaning|Range of parameter
 
 |device_ids
-|エッジAIデバイスのID
-|カンマ区切りで複数のエッジAIデバイスのIDを指定 +
+|エッジデバイスのID
+|カンマ区切りで複数のエッジデバイスのIDを指定 +
 大文字小文字を区別する
 
 |===
@@ -1336,8 +1339,8 @@ _ アンダーバー +
 |なし
 
 |device_ids
-|エッジAIデバイスのIDs
-|カンマ区切りで複数のエッジAIデバイスのIDを指定 +
+|エッジデバイスのIDs
+|カンマ区切りで複数のエッジデバイスのIDを指定 +
 大文字小文字を区別する
 
 |replace_model_id
@@ -1353,7 +1356,7 @@ _ アンダーバー +
 
 |timeout
 |完了待ちのtimeout時間 +
-デプロイ処理でエッジAIデバイスがハングアップするなどで、処理中のままとなるケースがあるため、処理を抜けるtimeout
+デプロイ処理でエッジデバイスがハングアップするなどで、処理中のままとなるケースがあるため、処理を抜けるtimeout
 |なし +
 指定なしの場合、3600秒
 
@@ -1381,7 +1384,7 @@ get_deploy_historyで処理結果確認し、コールバック関数を呼び�
 |Parameter’s name|Meaning|Range of parameter
 
 |device_status_array
-|エッジAIデバイスのDeploy状態リスト
+|エッジデバイスのDeploy状態リスト
 |下記形式 +
 [ +
 　{ +
@@ -1393,7 +1396,7 @@ get_deploy_historyで処理結果確認し、コールバック関数を呼び�
 
 deploy_by_configuration_wait_responseのdevice_idsで指定したdevice_id分のデータが入る +
 
-<device_id>: エッジAIデバイスのID +
+<device_id>: エッジデバイスのID +
 <status>: 下記のデプロイ状態を格納 +
 　0：デプロイ中 +
 　1：正常終了 +
@@ -1435,8 +1438,8 @@ deploy_by_configuration_wait_responseのdevice_idsで指定したdevice_id分の
 |なし
 
 |device_ids
-|エッジAIデバイスのIDs
-|カンマ区切りで複数のエッジAIデバイスのIDを指定 +
+|エッジデバイスのIDs
+|カンマ区切りで複数のエッジデバイスのIDを指定 +
 大文字小文字を区別する
 
 |comment
@@ -1468,7 +1471,7 @@ get_device_app_deploysで処理結果確認し、コールバック関数を呼�
 |Parameter’s name|Meaning|Range of parameter
 
 |device_status_array
-|エッジAIデバイスのDeploy状態リスト
+|エッジデバイスのDeploy状態リスト
 |下記形式 +
 [ +
 　{ +
@@ -1482,7 +1485,7 @@ get_device_app_deploysで処理結果確認し、コールバック関数を呼�
 
 deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデータが入る +
 
-<device_id>: エッジAIデバイスのID +
+<device_id>: エッジデバイスのID +
 <found_position>: get_device_app_deploysレスポンスに格納されるdevice_idsのindex +
 <skip>: 下記の値を格納 +
 　0: get_device_app_deploysレスポンスに格納される最新のstatusの場合 +
@@ -1514,7 +1517,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する +
 指定なしの場合、全てのdevice_idの情報を返す
 
@@ -1541,7 +1544,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |sub_directory_name
@@ -1588,7 +1591,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |filter
@@ -1654,7 +1657,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 指定なしの場合、Toの範囲設定なし
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する +
 指定なしの場合、全device_id指定
 
@@ -1691,7 +1694,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |sub_directory_name
@@ -1738,7 +1741,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |===
@@ -1764,7 +1767,7 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |Parameter’s name|Meaning|Range of parameter
 
 |device_id
-|エッジAIデバイスのID
+|エッジデバイスのID
 |大文字小文字を区別する
 
 |sub_directory_name
@@ -1814,7 +1817,8 @@ T.B.D.
 * なし
 
 == 制限事項
-* なし
+* deploy_by_configuration_wait_response APIは、過去に同一のデプロイconfigを用いてデプロイを行った履歴があるデバイスの場合、過去の結果を返却することがあります。 +
+  その場合は、再度get_deploy_history APIを使用することでデプロイ処理状況を確認することができます。
 
 == その他特記事項
 * なし
