@@ -85,7 +85,7 @@ class SchemaDeployDeviceAppWaitResponse(Schema):
 
     #: function, optional : callback (function, optional) : A function handle of the form -
     #: ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``
-    #: is the array of the dictionary for each device :
+    #: is the array of the dictionary for each Edge Device :
     #: [
     #:     {
     #:         <device_id> : {
@@ -98,7 +98,7 @@ class SchemaDeployDeviceAppWaitResponse(Schema):
 
     #: here - ``device_id``: is device ID,
     #:     - ``status``: is the notified deployment status for that device_id,
-    #:     - ``found_position``: index of the device id from devices array of the
+    #:     - ``found_position``: index of the device id from Edge Devices array of the
     #:             ``get_device_app_deploys`` response
     #:     - ``skip``: deploy status has captured, so skip for next iteration
     #:             inside the loop
@@ -232,7 +232,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
             comment (str, optional) : Comment. Max. 100 characters.
             callback (function, optional) : A function handle of the form - \
                 ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\
-                is the array of the dictionary for each device :
+                is the array of the dictionary for each Edge Device :
 
                 .. code-block:: console
 
@@ -248,7 +248,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
 
                 - ``device_id``: is device ID,
                 - ``status``: is the notified deployment status for that device_id,
-                - ``found_position``: index of the device id from devices array of the \
+                - ``found_position``: index of the Edge Device id from devices array of the \
                         ``get_device_app_deploys`` response
                 - ``skip``: deploy status has captured, so skip for next iteration \
                         inside the loop
@@ -408,7 +408,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                 def deploy_device_app_callback(deploy_status_array):
                     # Process callback received for the ``device_id`` with ``status`` from \
                     # ``deploy_status_array``:
-                    # is the array of the dictionary for each device :
+                    # is the array of the dictionary for each Edge Device :
                     # [
                     #     {
                     #         <device_id> : {
@@ -421,7 +421,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
 
                     # here - ``device_id``: is device ID,
                     #     - ``status``: is the notified deployment status for that device_id,
-                    #     - ``found_position``: index of the device id from devices array of \
+                    #     - ``found_position``: index of the device id from Edge Devices array of \
                     #               the ``get_device_app_deploys`` response
                     #     - ``skip``: deploy status has captured, so skip for next iteration \
                     #               inside the loop
@@ -551,7 +551,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                             _skip = array_device_json["skip"]
 
                                             # Check whether it's first occurrence
-                                            # Then Add status of the added device to
+                                            # Then Add status of the added Edge Device to
                                             # the global array
                                             if index + 1 == _found_position and _skip == 0:
                                                 self._set_values(
@@ -564,7 +564,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                                 # if deployment status is canceled,
                                                 # completed successfully or failed,
                                                 # then set the skip value as 1 of the respective
-                                                # device in global array
+                                                # Edge Device in global array
                                                 # and prepare response with required information
                                                 if _deploy_device_app_status in [
                                                     DeployDeviceAppStatus.DEPLOYMENT_DONE.value,
@@ -572,7 +572,7 @@ class DeployDeviceAppWaitResponse(ConsoleAccessBaseClass):
                                                     DeployDeviceAppStatus.DEPLOYMENT_FAILED.value,
                                                 ]:
                                                     # Set the skip value as 1 of the respective
-                                                    # device in global array
+                                                    # Edge Device in global array
                                                     self._set_values(
                                                         device_id=devices_id_from_response,
                                                         status=_deploy_device_app_status,

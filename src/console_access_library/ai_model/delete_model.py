@@ -253,7 +253,7 @@ class DeleteModel(ConsoleAccessBaseClass):
                 # Create an instance of the API class
                 ai_model_api_instance = train_model_api.TrainModelApi(api_client)
                 try:
-                    # Adding Parameters to Connect to an Enterprise Edition Environment
+                    # Adding Parameters to Connect to Console Enterprise Edition Environment
                     if self._config._application_id:
                         _query_params["grant_type"] = "client_credentials"
                         _return_delete_model = ai_model_api_instance.delete_model(

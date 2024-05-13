@@ -17,7 +17,7 @@
 このチュートリアルでは「**Console Access Library**」が公開する各種APIについて解説します。本書を通じてLibraryをビルドして使用できるようになります。
 
 == 前提条件
-- Python 3.8.10
+- Python 3.11.8
 - Python依存関係
 
     * requests>=2.31.0
@@ -42,33 +42,35 @@
     * validators>=0.18
     * msal>=1.22.0
 
+[[api-specifications]]
 === 「**Console Access Library**」 API仕様
 「**Console Access Library**」のAPI仕様を参照する方法は、下記の手順を参照してください。
 
 1. リポジトリをクローンします
     ** https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python
 
-2. クローンしたディレクトリ内に存在する `**docs/api-reference/index.html**` をウェブブラウザで開きます
+2. クローンしたディレクトリ内に存在する `**docs/api-reference/index.html**` をウェブブラウザで開きます。
 
 == 使用法
 
 === インストール
 
-. リポジトリをクローンします
+. リポジトリをクローンします。
+    ** https://github.com/SonySemiconductorSolutions/aitrios-sdk-console-access-lib-python
 
-. デモアプリケーション用にPython依存関係をインストールします
+. デモアプリケーション用にPython依存関係をインストールします。
 +
 ```
     pip install -r requirements.txt
 ```
 
-. 次のコマンドを実行してPython環境へのインストールを行います
+. 次のコマンドを実行してPython環境へのインストールを行います。
 +
 ```
-    python -m pip install lib/python_client.
+    python -m pip install lib/python-client/.
 ```
 
-. 次のコマンドを実行してPython環境へのインストールを行います
+. 次のコマンドを実行してPython環境へのインストールを行います。
 +
 ```
     python -m pip install src/.
@@ -76,7 +78,7 @@
 
 . ネットワークProxy設定
 +
-プロキシ環境で「**Console Access Library**」を使用するには `**https_proxy**` 環境変数を設定します
+プロキシ環境で「**Console Access Library**」を使用するには `**https_proxy**` 環境変数を設定します。
 +
 ```
     export https_proxy=http://username:password@proxyhost:port
@@ -86,15 +88,15 @@
 
 === 「**Console Access Library**」サンプルアプリケーション開始用のパラメータ設定
 
-==== オプション1: Console Access設定ファイルを使用
+1.  Console Access設定ファイルを作成してユーザー環境値を入力します。 + 
+作成したファイルは `**console_access_settings.yaml**` のファイル名で `**samples**` 配下に配置します。 
 
-* 手順1: Console Access設定ファイルを作成してユーザー環境値を入力します
-+
++ 
 `samples/console_access_settings.yaml`
 +
 
 |===
-|「**Console Developer Edition**」使用時
+|「**Console Developer Edition**」を使用する場合
 a|
 [source,Yaml]
 ----
@@ -109,7 +111,7 @@ a|
 +
 
 |===
-|「**Console Enterprise Edition**」使用時
+|「**Console Enterprise Edition**」を使用する場合
 a|
 [source,Yaml]
 ----
@@ -121,123 +123,54 @@ a|
         application_id: "__application_id__"
 ----
 |===
-
-* 手順2: モジュール `**ReadConsoleAccessSettings**`, `**Config**`, `**Client**` を「**Console Access Library**」サンプルアプリケーションにインポートします
-+
-|===
-|samples/demo-console/src/controller/apiexecutor.ts
-a|
-[source,python]
-----
-    from console_access_library.common.read_console_access_settings import ReadConsoleAccessSettings
-    from console_access_library.common.config import Config
-    from console_access_library.client import Client
-----
-|===
-
-* 手順3: Console Access設定ファイルのパスを設定し、「**Console Access Library**」 `**ReadConsoleAccessSettings**` のインスタンスを生成します `**console_access_settings.yaml**` ファイルを作成するには、手順1を参照してください
-+
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    SETTING_FILE_PATH = os.path.join(os.getcwd(), "samples", "console_access_settings.yaml")
-    read_console_access_settings_obj = ReadConsoleAccessSettings(SETTING_FILE_PATH)
-----
-|===
-
-* 手順4: 「**Console Access Library**」 `**Config**` のインスタンスを生成します
-+
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    config_obj = Config(console_endpoint=read_console_access_settings_obj.console_endpoint,
-                        portal_authorization_endpoint=read_console_access_settings_obj.portal_authorization_endpoint,
-                        client_id=read_console_access_settings_obj.client_id,
-                        client_secret=read_console_access_settings_obj.client_secret,
-                        application_id=read_console_access_settings_obj.application_id)
-----
-|===
-<<<
-
-==== オプション2: Console Access設定ファイルを作成せずにユーザー環境値を環境変数にエクスポート
-
-* 手順1: ユーザー環境値を環境変数にexportします
-+
++ 
+環境変数からエクスポート場合は、下記のコマンドでユーザー環境値を環境変数に設定します。 +
+その場合は、 `**console_access_settings.yaml**` の設定ファイルの作成は不要です。
++ 
 ```
     export CONSOLE_ENDPOINT="__console_endpoint__"
     export PORTAL_AUTHORIZATION_ENDPOINT="__portal_authorization_endpoint__"
     export CLIENT_SECRET="__client_secret__"
     export CLIENT_ID="__client_id__"
-    export APPLICATION_ID="__application_id__"
+    export APPLICATION_ID="__application_id__"    #「Console Enterprise Edition」使用時のみ設定
 ```
-* 手順2: モジュール `**Config**`, `**Client**` を「**Console Access Library**」サンプルアプリケーションにインポートします
+
+2. ユーザー側で用意したApplicationのwasmファイルまたはaotファイルを `**samples**` 配下に配置します。
+
+3. 下記のファイルを開きパラメータを適切な値に変更します。
+
++ 
+`samples/demo_config.yaml`
 +
 |===
-|samples/console_access_client_api_demo.py
+|必須パラメータのみ設定する場合
 a|
-[source,python]
 ----
-    from console_access_library.common.config import Config
-    from console_access_library.client import Client
+demo_configuration:
+   device_id: "__device_id__"
+   model_id: "__model_id__"
+   model: "__model__"
+   config_id: "__config_id__"
+   app_name: "__app_name__"
+   file_content_name: "__file_content_name__"
+   version_number: "__version_number__"
+   sub_directory_name: "__sub_directory_name__"
 ----
 |===
-
-* 手順3: 「**Console Access Library**」 `**Config**` のインスタンスを生成します
 +
-
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    config_obj = Config(console_endpoint=None,
-                        portal_authorization_endpoint=None,
-                        client_id=None,
-                        client_secret=None,
-                        application_id=None)
-----
-|===
-
-
-==== オプション3: 「**Console Access Library**」へユーザー環境値設定
-
-* 手順1: モジュール `**Config**`, `**Client**` を「**Console Access Library**」サンプルアプリケーションにインポートします
+    ** `**device_id**` にデバイスIDを指定してください。
+    ** `**model_id**` に「**Console**」に登録する任意のモデルの名前を指定してください。
+    ** `**model**` にモデルファイルのSAS URIまたは署名付きURIを指定してください。
+    ** `**config_id**` に「**Console**」に登録する任意のConfigの名前を指定してください。
+    ** `**app_name**` に「**Console**」に登録する任意のApplicationの名前を指定してください。
+    ** `**file_content_name**` に2.で配置したwasmファイルまたはaotファイルのファイル名を指定してください。
+    ** `**version_number**` に「**Console**」に登録する任意のApplicationのバージョンを指定してください。
+    ** `**sub_directory_name**` にエッジデバイスの任意のサブディレクトリを指定してください。
++
+NOTE: `**model_id**` 、`**config_id**` 、`**app_name**` は既に「**Console**」に登録されているものと重複しない値を指定してください。
 +
 |===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    from console_access_library.common.config import Config
-    from console_access_library.client import Client
-----
-|===
-
-* 手順2: 「**Console Access Library**」 `**Config**` のインスタンスをユーザー環境値で生成します
-+
-|===
-|samples/console_access_client_api_demo.py
-a|
-[source,python]
-----
-    config_obj = Conf(console_endpoint="__console_endpoint__", 
-                        portal_authorization_endpoint="__portal_authorization_endpoint__",
-                        client_id="__client_id__", 
-                        client_secret="__client_secret__",
-                        application_id="__application_id__")
-----
-|===
-
-* 手順3: 下記のファイルを開きパラメータを適切な値に変更します。
-+
-|===
-|samples/demo_config.yaml
+|オプションのパラメータをすべて含んで設定する場合
 a|
 ----
 demo_configuration:
@@ -265,8 +198,8 @@ demo_configuration:
    device_ids: "__device_ids__"
    replace_model_id: "__replace_model_id__"
    timeout: "__timeout__"
-   compiled_flg: "__compiled_flg__"
    app_name: "__app_name__"
+   file_content_name: "__file_content_name__"
    version_number: "__version_number__"
    file_name: "__file_name__"
    entry_point: "__entry_point__"
@@ -285,10 +218,7 @@ demo_configuration:
    time: "__time__"
 ----
 |===
-
-=== API import_device_app 実行
-
-aotファイルの内容をBase64 Encodeして `**samples/device_app_file_content.txt**` に配置します。
+オプションのパラメータの詳細については、<<api-specifications,「**Console Access Library**」 API仕様>>を参照してください。
 
 === アプリケーション開始
 
@@ -300,7 +230,7 @@ CLIデモを実行するにはrootフォルダからcmdターミナルを開き�
 
 NOTE: demo-consoleでAPIを一括実行した場合は、他のAPIの処理時間の影響により失敗することがあります。 +
 その場合は失敗したAPIを個別で実行してください。
-APIを個別で実行する場合は、samples/console_access_client_api_demo.pyを開き、実行しないAPIをコメントアウトしてください。
+APIを個別で実行する場合は、samples/console_access_client_api_demo.pyを開き、実行しないAPIをコメントアウトしてください。  
 
 * 例：
 |===
@@ -312,3 +242,35 @@ a|
     # print("START UPLOAD INFERENCE RESULT:", response)
 ----
 |===
+
+
+== 「**Console Access Library**」の使用方法
+1. 「**Console Access Library**」から `**Client**` と `**Config**` のクラスをインポートします。
++
+[source,Python]
+----
+    from console_access_library.client import Client
+    from console_access_library.common.config import Config
+----
+
+2. `**Config**` に接続情報を引数として渡し、 `**Config**` インスタンスを生成します。 +
+`**Config**` インスタンスを `**Client**` コンストラクタの引数として渡し、 `**Client**` インスタンスを生成します。
++
+[source,Python]
+----
+    config_obj = Config(
+            console_endpoint,
+            portal_authorization_endpoint,
+            client_id,
+            client_secret,
+            application_id    #「Console Enterprise Edition」使用時のみ指定
+        )
+    client_obj = Client(config_obj)
+----
+
+3. `**Client**` インスタンスのインスタンス変数が持つ任意のAPIを呼び出します。
++
+[source,Python]
+----
+    client_obj.device_management.get_command_parameter_file()
+----

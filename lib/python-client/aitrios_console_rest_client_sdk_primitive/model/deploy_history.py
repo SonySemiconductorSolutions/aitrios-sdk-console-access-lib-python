@@ -45,7 +45,6 @@ class DeployHistory(
             "deploy_status",
             "deploy_type",
             "ins_id",
-            "custom_setting",
             "firmware",
         }
         
@@ -336,7 +335,6 @@ class DeployHistory(
     deploy_status: MetaOapg.properties.deploy_status
     deploy_type: MetaOapg.properties.deploy_type
     ins_id: schemas.AnyTypeSchema
-    custom_setting: schemas.AnyTypeSchema
     firmware: MetaOapg.properties.firmware
     
     @typing.overload
@@ -439,7 +437,6 @@ class DeployHistory(
         deploy_status: typing.Union[MetaOapg.properties.deploy_status, str, ],
         deploy_type: typing.Union[MetaOapg.properties.deploy_type, str, ],
         ins_id: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader, ],
-        custom_setting: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader, ],
         firmware: typing.Union[MetaOapg.properties.firmware, dict, frozendict.frozendict, ],
         update_progress: typing.Union[MetaOapg.properties.update_progress, str, schemas.Unset] = schemas.unset,
         deploy_comment: typing.Union[MetaOapg.properties.deploy_comment, str, schemas.Unset] = schemas.unset,
@@ -463,7 +460,6 @@ class DeployHistory(
             deploy_status=deploy_status,
             deploy_type=deploy_type,
             ins_id=ins_id,
-            custom_setting=custom_setting,
             firmware=firmware,
             update_progress=update_progress,
             deploy_comment=deploy_comment,

@@ -62,7 +62,7 @@ class Insight(ConsoleAccessBaseClass):
         self._export_images_obj = ExportImages(config)
 
     def get_image_directories(self, device_id: str = None):
-        """Get the image save directory list of the devices for each device group
+        """Get the image save directory list of the Edge Devices for each device group
 
         Args:
             device_id (str, optional): Device ID. \
@@ -196,7 +196,7 @@ class Insight(ConsoleAccessBaseClass):
         skip: int = 0,
         order_by: str = "ASC",
     ):
-        """Get the (saved) images for a specified device. \
+        """Get the (saved) images for a specified Edge Device. \
             Application: Use to display an image in a UI
 
         Args:
@@ -318,7 +318,7 @@ class Insight(ConsoleAccessBaseClass):
         raw: int = 1,
         time: str = None,
     ):
-        """Get the (saved) inference result metadata list information for a specified device
+        """Get the (saved) inference result metadata list information for a specified Edge Device
 
         Args:
             device_id (str, required) : Device ID

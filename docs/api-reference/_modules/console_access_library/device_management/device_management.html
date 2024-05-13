@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.device_management.device_management &mdash; Console Access Library 1.1.0 documentation</title>
+  <title>console_access_library.device_management.device_management &mdash; Console Access Library 1.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -11,10 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -32,7 +33,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.1.0
+                1.2.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -111,7 +112,9 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="DeviceManagement"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement">[docs]</a><span class="k">class</span> <span class="nc">DeviceManagement</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<div class="viewcode-block" id="DeviceManagement">
+<a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement">[docs]</a>
+<span class="k">class</span> <span class="nc">DeviceManagement</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library DeviceManagement component</span>
 <span class="sd">    APIs from devicemanagement component</span>
 
@@ -132,7 +135,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_upload_inference_result_obj</span> <span class="o">=</span> <span class="n">StopUploadInferenceResult</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_command_parameter_file_obj</span> <span class="o">=</span> <span class="n">GetCommandParameterFile</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DeviceManagement.get_devices"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_devices">[docs]</a>    <span class="k">def</span> <span class="nf">get_devices</span><span class="p">(</span>
+<div class="viewcode-block" id="DeviceManagement.get_devices">
+<a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_devices">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_devices</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">device_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -351,7 +356,10 @@
             <span class="n">device_id</span><span class="p">,</span> <span class="n">device_name</span><span class="p">,</span> <span class="n">connection_state</span><span class="p">,</span> <span class="n">device_group_id</span><span class="p">,</span> <span class="n">device_ids</span><span class="p">,</span> <span class="n">scope</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DeviceManagement.start_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">start_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DeviceManagement.start_upload_inference_result">
+<a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.start_upload_inference_result">[docs]</a>
+    <span class="k">def</span> <span class="nf">start_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement instructions to a specified device to start to get the\</span>
 <span class="sd">             inference result metadata (Output Tensor) and image (Input image).</span>
 
@@ -459,7 +467,10 @@
             <span class="n">device_id</span><span class="o">=</span><span class="n">device_id</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DeviceManagement.stop_upload_inference_result"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result">[docs]</a>    <span class="k">def</span> <span class="nf">stop_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DeviceManagement.stop_upload_inference_result">
+<a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.stop_upload_inference_result">[docs]</a>
+    <span class="k">def</span> <span class="nf">stop_upload_inference_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Implement instructions to a specified device to stop getting the\</span>
 <span class="sd">             inference result metadata (Output Tensor) and image (Input image).</span>
 
@@ -558,7 +569,10 @@
             <span class="n">device_id</span><span class="o">=</span><span class="n">device_id</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DeviceManagement.get_command_parameter_file"><a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_command_parameter_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="DeviceManagement.get_command_parameter_file">
+<a class="viewcode-back" href="../../../console_access_library.device_management.html#console_access_library.device_management.device_management.DeviceManagement.get_command_parameter_file">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_command_parameter_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the command parameter file list information.</span>
 
 <span class="sd">        Returns:</span>
@@ -765,7 +779,9 @@
 <span class="sd">                    - ``datetime`` (str) : Time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_command_parameter_file_obj</span><span class="o">.</span><span class="n">get_command_parameter_file</span><span class="p">()</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_command_parameter_file_obj</span><span class="o">.</span><span class="n">get_command_parameter_file</span><span class="p">()</span></div>
+</div>
+
 </pre></div>
 
            </div>

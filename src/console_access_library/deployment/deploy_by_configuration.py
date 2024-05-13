@@ -118,7 +118,7 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
         replace_model_id: str = None,
         comment: str = None,
     ):
-        """Provide a function for deploying the following to devices \
+        """Provide a function for deploying the following to Edge Devices \
             specified with deploy config\
             ・Firmware\
             ・AI model
@@ -309,7 +309,7 @@ class DeployByConfiguration(ConsoleAccessBaseClass):
                 header_value=self._config.get_access_token(),
             ) as api_client:
 
-                # Adding Parameters to Connect to an Enterprise Edition Environment
+                # Adding Parameters to Connect to Console Enterprise Edition Environment
                 if self._config._application_id:
                     _query_params["grant_type"] = "client_credentials"
 

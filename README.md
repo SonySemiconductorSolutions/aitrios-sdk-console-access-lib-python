@@ -59,9 +59,9 @@
             In the case of using "**Console Enterprise Edition**"
             ```
             console_access_settings:
-                console_endpoint: "__base_url__"
+                console_endpoint: "__console_endpoint__"
                 portal_authorization_endpoint: "https://login.microsoftonline.com/'__tenant_id__'"
-                client_secret: "__creant_secret__"
+                client_secret: "__client_secret__"
                 client_id: "__client_id__"
                 application_id: "__application_id__"
             ```
@@ -149,57 +149,69 @@
             ```
 
 8. To run "**Console Access Library**" sample application, edit demo configuration parameters with real values.
-    (samples\demo_config.yaml).
-    ```
-    demo_configuration:
-        device_id: "__device_id__"
-        get_model_device_id: "__get_model_device_id__"
-        publish_model_wait_response_device_id: "__publish_model_wait_response_device_id__"
-        model_id: "__model_id__"
-        model: "__model__"
-        converted: "__converted__"
-        vendor_name: "__vendor_name__"
-        comment: "__comment__"
-        input_format_param: "__input_format_param__"
-        network_config: "__network_config__"
-        network_type: "__network_type__"
-        metadata_format_id: "__metadata_format_id__"
-        project_name: "__project_name__"
-        model_platform: "__model_platform__"
-        project_type: "__project_type__"
-        latest_type: "__latest_type__"
-        config_id: "__config_id__"
-        sensor_loader_version_number: "__sensor_loader_version_number__"
-        sensor_version_number: "__sensor_version_number__"
-        model_version_number: "__model_version_number__"
-        ap_fw_version_number: "__ap_fw_version_number__"
-        device_ids: "__device_ids__"
-        replace_model_id: "__replace_model_id__"
-        timeout: "__timeout__"
-        compiled_flg: "__compiled_flg__"
-        app_name: "__app_name__"
-        version_number: "__version_number__"
-        file_name: "__file_name__"
-        entry_point: "__entry_point__"
-        schema_info: "__schema_info__"
-        device_name: "__device_name__"
-        connection_state: "__connection_state__"
-        device_group_id: "__device_group_id__"
-        scope: "__scope__"
-        sub_directory_name: "__sub_directory_name__"
-        number_of_images: "__number_of_images__"
-        skip: "__skip__"
-        order_by: "__order_by__"
-        number_of_inference_results: "__number_of_inference_results__"
-        filter: "__filter__"
-        raw: "__raw__"
-        time: "__time__"
-    ```
+    * Case 1：When setting only required parameters
+        (samples\demo_config.yaml).
+        ```
+        demo_configuration:
+            device_id: "__device_id__"
+            model_id: "__model_id__"
+            model: "__model__"
+            config_id: "__config_id__"
+            app_name: "__app_name__"
+            file_content_name: "__file_content_name__"
+            version_number: "__version_number__"
+            sub_directory_name: "__sub_directory_name__"
+        ```
+    * Case 2：When setting optional parameters
+        (samples\demo_config.yaml).
+        ```
+        demo_configuration:
+            device_id: "__device_id__"
+            get_model_device_id: "__get_model_device_id__"
+            publish_model_wait_response_device_id: "__publish_model_wait_response_device_id__"
+            model_id: "__model_id__"
+            model: "__model__"
+            converted: "__converted__"
+            vendor_name: "__vendor_name__"
+            comment: "__comment__"
+            input_format_param: "__input_format_param__"
+            network_config: "__network_config__"
+            network_type: "__network_type__"
+            metadata_format_id: "__metadata_format_id__"
+            project_name: "__project_name__"
+            model_platform: "__model_platform__"
+            project_type: "__project_type__"
+            latest_type: "__latest_type__"
+            config_id: "__config_id__"
+            sensor_loader_version_number: "__sensor_loader_version_number__"
+            sensor_version_number: "__sensor_version_number__"
+            model_version_number: "__model_version_number__"
+            ap_fw_version_number: "__ap_fw_version_number__"
+            device_ids: "__device_ids__"
+            replace_model_id: "__replace_model_id__"
+            timeout: "__timeout__"
+            app_name: "__app_name__"
+            file_content_name: "__file_content_name__"
+            version_number: "__version_number__"
+            file_name: "__file_name__"
+            entry_point: "__entry_point__"
+            schema_info: "__schema_info__"
+            device_name: "__device_name__"
+            connection_state: "__connection_state__"
+            device_group_id: "__device_group_id__"
+            scope: "__scope__"
+            sub_directory_name: "__sub_directory_name__"
+            number_of_images: "__number_of_images__"
+            skip: "__skip__"
+            order_by: "__order_by__"
+            number_of_inference_results: "__number_of_inference_results__"
+            filter: "__filter__"
+            raw: "__raw__"
+            time: "__time__"
+        ```
 
-9. To run API "import_device_app" in "**Console Access Library**" sample application
-    ```
-    Place the contents of wasm file as base64 in samples/device_app_file_content.txt
-    ```
+9. To execute the API "import_device_app", place the contents of the wasm or aot file under samples.
+And set the file name to "file_content_name" of samples/demo_config.yaml.
 
 10. Run "**demo application**" using the following command
     ```
@@ -210,13 +222,13 @@
 - None
 
 ## Get support
-- [Contact us](https://developer.aitrios.sony-semicon.com/en/contact-us-en)
+- [Contact us](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/contact-us/)
 
 ## See also
 - ["**Developer Site**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/)
 
 ## Trademark
-- ["**Read This First**"](https://developer.aitrios.sony-semicon.com/en/documents/read-this-first)
+- ["**Read This First**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/documents/read-this-first/)
 
 ## Versioning
 

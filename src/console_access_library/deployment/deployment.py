@@ -722,7 +722,7 @@ class Deployment(ConsoleAccessBaseClass):
         return self._get_deploy_configurations_obj.get_deploy_configurations()
 
     def get_deploy_history(self, device_id: str):
-        """Get the deploy history for a specified device
+        """Get the deploy history for a specified Edge Device
 
         Args:
             device_id (str, required): Device ID.
@@ -778,7 +778,7 @@ class Deployment(ConsoleAccessBaseClass):
                 |          | ``current_target``   | ``string`` | Set the current target.       |
                 +----------+----------------------+------------+-------------------------------+
                 |          |``total_status``      | ``string`` | Set the deploy status.        |
-                |          |                      |            | Total status of devices       |
+                |          |                      |            | Total status of Edge Devices  |
                 |          |                      |            | deployed together.            |
                 |          |                      |            | - Value definition            |
                 |          |                      |            |                               |
@@ -1152,7 +1152,7 @@ class Deployment(ConsoleAccessBaseClass):
         model_version_number: str = None,
         ap_fw_version_number: str = None,
     ):
-        """Register the deploy config information to deploy to the following devices. \
+        """Register the deploy config information to deploy to the following Edge Devices. \
         ・Firmware ・AI model
 
         Args:
@@ -1382,7 +1382,7 @@ class Deployment(ConsoleAccessBaseClass):
         replace_model_id: str = None,
         comment: str = None,
     ):
-        """Provide a function for deploying the following to devices \
+        """Provide a function for deploying the following to Edge Devices \
             specified with deploy config\
             ・Firmware\
             ・AI model
@@ -1491,7 +1491,7 @@ class Deployment(ConsoleAccessBaseClass):
         device_id: str,
         deploy_id: str,
     ):
-        """Force cancellation of the device deployment status
+        """Force cancellation of the Edge Device deployment status
 
         Args:
             device_id (str, required) : Device ID.
@@ -1800,7 +1800,7 @@ class Deployment(ConsoleAccessBaseClass):
             comment (str, optional) : Comment. Max. 100 characters.
             callback (function, optional) : A function handle of the form - \
                 ``deploy_device_app_callback(device_status_array)``, where ``device_status_array``\
-                is the array of the dictionary for each device :
+                is the array of the dictionary for each Edge Device :
 
                 .. code-block:: console
 
@@ -1816,7 +1816,7 @@ class Deployment(ConsoleAccessBaseClass):
 
                 - ``device_id``: is device ID,
                 - ``status``: is the notified deployment status for that device_id,
-                - ``found_position``: index of the device id from devices array of the \
+                - ``found_position``: index of the device id from Edge Devices array of the \
                         ``get_device_app_deploys`` response
                 - ``skip``: deploy status has captured, so skip for next iteration \
                         inside the loop
@@ -1932,7 +1932,7 @@ class Deployment(ConsoleAccessBaseClass):
         timeout: int = None,
         callback=None,
     ):
-        """Provides a function to deploy the following to the device specified from the
+        """Provides a function to deploy the following to the Edge Device specified from the
         deployment config.
 
         Args:
@@ -1943,12 +1943,12 @@ class Deployment(ConsoleAccessBaseClass):
                 treat the entered value as the network_id and process it. Default : "".
             comment (str, optional) : Max 100 characters. Default : "".
             timeout (int, optional) : Timeout waiting for completion. There are cases where the \
-                edge AI device hangs up during the deployment process,\
+                Edge Device hangs up during the deployment process,\
                 so there are cases where the process remains in progress,\
                 so timeout to exit the process,  3600 seconds if not specified.
             callback (function, optional) : A function handle of the form - \
                 ``deploy_callback(device_status_array)``, where ``device_status_array`` \
-                is the array of the dictionary for each device :
+                is the array of the dictionary for each Edge Device :
 
                 .. code-block:: console
 
