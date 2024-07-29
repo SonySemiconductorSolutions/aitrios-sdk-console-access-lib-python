@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Insight Package &mdash; Console Access Library 1.2.0 documentation</title>
+  <title>Insight Package &mdash; Console Access Library 1.3.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -14,8 +14,8 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=6efca38a"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/documentation_options.js?v=1f29e9d3"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -36,7 +36,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -306,7 +306,7 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.insight.insight.Insight.get_images">
-<span class="sig-name descname"><span class="pre">get_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ASC'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_images" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ASC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_images" title="Link to this definition"></a></dt>
 <dd><p>Get the (saved) images for a specified Edge Device.             Application: Use to display an image in a UI</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -317,6 +317,8 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of images to skip fetching.                 default: 0</p></li>
 <li><p><strong>order_by</strong> (<em>str</em><em>, </em><em>optional</em>) – Sort Order: Sort order by date image was created.                 Value range: DESC, ASC.
 default: ASC</p></li>
+<li><p><strong>from_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (From).                 - Format: yyyyMMddhhmm</p></li>
+<li><p><strong>to_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (To).                 - Format: yyyyMMddhhmm</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -834,7 +836,7 @@ is other than 200. Dictionary with below key and value pairs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.insight.insight.Insight.get_image_data">
-<span class="sig-name descname"><span class="pre">get_image_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ASC'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_image_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_image_data" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_image_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ASC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/insight.html#Insight.get_image_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.insight.Insight.get_image_data" title="Link to this definition"></a></dt>
 <dd><p>Abstract function call to <code class="docutils literal notranslate"><span class="pre">get_image_data</span></code> API</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -845,6 +847,8 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of images to skip fetching.                 If not specified: 0.</p></li>
 <li><p><strong>order_by</strong> (<em>str</em><em>, </em><em>optional</em>) – Sort Order: Sort order by date image was created.                 Value range: DESC, ASC.
 If not specified: ASC.</p></li>
+<li><p><strong>from_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (From).                 - Format: yyyyMMddhhmm</p></li>
+<li><p><strong>to_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (To).                 - Format: yyyyMMddhhmm</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1942,7 +1946,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -2268,6 +2272,30 @@ Values allowed: DESC, ASC. If not specified defaults to ASC.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_data.SchemaGetImageData.from_datetime">
+<span class="sig-name descname"><span class="pre">from_datetime</span></span><a class="headerlink" href="#console_access_library.insight.get_image_data.SchemaGetImageData.from_datetime" title="Link to this definition"></a></dt>
+<dd><p>Date and time (From).
+- Format: yyyyMMddhhmm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_image_data.SchemaGetImageData.to_datetime">
+<span class="sig-name descname"><span class="pre">to_datetime</span></span><a class="headerlink" href="#console_access_library.insight.get_image_data.SchemaGetImageData.to_datetime" title="Link to this definition"></a></dt>
+<dd><p>Date and time (To).
+- Format: yyyyMMddhhmm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.insight.get_image_data.SchemaGetImageData.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_data.html#SchemaGetImageData.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_data.SchemaGetImageData.validate" title="Link to this definition"></a></dt>
@@ -2290,7 +2318,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -2313,7 +2341,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.insight.get_image_data.GetImageData.get_image_data">
-<span class="sig-name descname"><span class="pre">get_image_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_data.html#GetImageData.get_image_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_data.GetImageData.get_image_data" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_image_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_image_data.html#GetImageData.get_image_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_image_data.GetImageData.get_image_data" title="Link to this definition"></a></dt>
 <dd><p>Get a (saved) image of the specified Edge Device.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2324,6 +2352,8 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of images to skip fetching.                 If not specified: 0.</p></li>
 <li><p><strong>order_by</strong> (<em>str</em><em>, </em><em>optional</em>) – Sort Order: Sort order by date image was created.                 Value range: DESC, ASC.
 If not specified: ASC.</p></li>
+<li><p><strong>from_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (From).                 - Format: yyyyMMddhhmm</p></li>
+<li><p><strong>to_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (To).                 - Format: yyyyMMddhhmm</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2512,13 +2542,17 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <span class="n">number_of_images</span> <span class="o">=</span> <span class="n">__number_of_images__</span>
 <span class="n">skip</span> <span class="o">=</span> <span class="n">__skip__</span>
 <span class="n">order_by</span> <span class="o">=</span> <span class="s2">&quot;__get_image_data_order_by__&quot;</span>
+<span class="n">from_datetime</span> <span class="o">=</span> <span class="s2">&quot;__from_datetime__&quot;</span>
+<span class="n">to_datetime</span> <span class="o">=</span> <span class="s2">&quot;__to_datetime__&quot;</span>
 
 <span class="c1"># Insight - GetImageData</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">insight_obj</span><span class="o">.</span><span class="n">get_image_data</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span>
                                       <span class="n">sub_directory_name</span><span class="p">,</span>
                                       <span class="n">number_of_images</span><span class="p">,</span>
                                       <span class="n">skip</span><span class="p">,</span>
-                                      <span class="n">order_by</span><span class="p">)</span>
+                                      <span class="n">order_by</span><span class="p">,</span>
+                                      <span class="n">from_datetime</span><span class="p">,</span>
+                                      <span class="n">to_datetime</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2572,7 +2606,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -2916,6 +2950,30 @@ Values allowed: DESC, ASC. If not specified defaults to ASC.</p>
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.from_datetime">
+<span class="sig-name descname"><span class="pre">from_datetime</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.from_datetime" title="Link to this definition"></a></dt>
+<dd><p>Date and time (From).
+- Format: yyyyMMddhhmm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.to_datetime">
+<span class="sig-name descname"><span class="pre">to_datetime</span></span><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.to_datetime" title="Link to this definition"></a></dt>
+<dd><p>Date and time (To).
+- Format: yyyyMMddhhmm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.insight.get_images.SchemaGetImages.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#SchemaGetImages.validate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.SchemaGetImages.validate" title="Link to this definition"></a></dt>
@@ -2938,7 +2996,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -2961,7 +3019,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="console_access_library.insight.get_images.GetImages.get_images">
-<span class="sig-name descname"><span class="pre">get_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ASC'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#GetImages.get_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.GetImages.get_images" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sub_directory_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_images</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ASC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_datetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/console_access_library/insight/get_images.html#GetImages.get_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#console_access_library.insight.get_images.GetImages.get_images" title="Link to this definition"></a></dt>
 <dd><p>Get the (saved) images for a specified Edge Device.             Application: Use to display an image in a UI</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2972,6 +3030,8 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 <li><p><strong>skip</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of images to skip fetching.                 default: 0</p></li>
 <li><p><strong>order_by</strong> (<em>str</em><em>, </em><em>optional</em>) – Sort Order: Sort order by date image was created.                 Value range: DESC, ASC.
 default: ASC</p></li>
+<li><p><strong>from_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (From).                 - Format: yyyyMMddhhmm</p></li>
+<li><p><strong>to_datetime</strong> (<em>str</em><em>, </em><em>optional</em>) – Date and time (To).                 - Format: yyyyMMddhhmm</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -3160,13 +3220,17 @@ is other than 200. Dictionary with below key and value pairs.</p>
 <span class="n">number_of_images</span> <span class="o">=</span>  <span class="s2">&quot;__number_of_images__&quot;</span>
 <span class="n">skip</span> <span class="o">=</span>  <span class="s2">&quot;__skip__&quot;</span>
 <span class="n">order_by</span> <span class="o">=</span>  <span class="s2">&quot;__get_images_order_by__&quot;</span>
+<span class="n">from_datetime</span> <span class="o">=</span> <span class="s2">&quot;__from_datetime__&quot;</span>
+<span class="n">to_datetime</span> <span class="o">=</span> <span class="s2">&quot;__to_datetime__&quot;</span>
 
 <span class="c1"># Insight - GetImages</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">insight_obj</span><span class="o">.</span><span class="n">get_images</span><span class="p">(</span><span class="n">device_id</span><span class="p">,</span>
                                   <span class="n">sub_directory_name</span><span class="p">,</span>
                                   <span class="n">number_of_images</span><span class="p">,</span>
                                   <span class="n">skip</span><span class="p">,</span>
-                                  <span class="n">order_by</span><span class="p">)</span>
+                                  <span class="n">order_by</span><span class="p">,</span>
+                                  <span class="n">from_datetime</span><span class="p">,</span>
+                                  <span class="n">to_datetime</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -3335,7 +3399,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -3854,7 +3918,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -4367,7 +4431,7 @@ will be ignored. Use dot delimiters to specify nested fields.</p></li>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">Added in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 

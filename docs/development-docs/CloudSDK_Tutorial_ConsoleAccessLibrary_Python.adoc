@@ -1,7 +1,7 @@
 = Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python pass:[<br/>] Tutorial pass:[<br/>]
 :sectnums:
 :sectnumlevels: 1
-:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:author: Copyright 2023, 2024 Sony Semiconductor Solutions Corporation
 :version-label: Version 
 :revnumber: x.x.x
 :revdate: YYYY - MM - DD
@@ -21,7 +21,7 @@ To explain the various APIs exposed by "**Console Access Library**" and help the
 - Python 3.8.10
 - Python dependency modules
 
-    * requests>=2.31.0
+    * requests>=2.32.0
     * jsonschema>=4.6.2
     * setuptools>=65.5.1
     * wheel>=0.37.1
@@ -84,8 +84,6 @@ To use the "**Console Access Library**" in a proxy environment, set the `**https
 ```
     export https_proxy=http://username:password@proxyhost:port
 ```
-
-<<<
 
 === Set configuration parameter to start "**Console Access Library**" sample application
 
@@ -220,6 +218,8 @@ demo_configuration:
    filter: "__filter__"
    raw: "__raw__"
    time: "__time__"
+   from_datetime: "__from_datetime__"
+   to_datetime: "__to_datetime__"
 ----
 |===
 As for details on the optional parameters, please refer to the <<api-specifications,"**Console Access Library**" API specifications>>.

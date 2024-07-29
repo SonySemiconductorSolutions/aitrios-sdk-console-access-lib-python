@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023, 2024 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -84,6 +84,18 @@ class SchemaGetImages(Schema):
         required=False, error_messages={"invalid": "Invalid string for order_by"}, strict=True
     )
 
+    #: str, optional : Date and time (From).
+    #:                 - Format: yyyyMMddhhmm
+    from_datetime = fields.String(
+        required=False, error_messages={"invalid": "Invalid string for from_datetime"}, strict=True
+    )
+
+    #: str, optional : Date and time (To).
+    #:                 - Format: yyyyMMddhhmm
+    to_datetime = fields.String(
+        required=False, error_messages={"invalid": "Invalid string for to_datetime"}, strict=True
+    )
+
     @validates_schema
     def validate(self, data, **kwargs):
         if str(data["device_id"]).strip() == "":
@@ -109,6 +121,12 @@ class SchemaGetImages(Schema):
 
         if "order_by" in data and (data["order_by"] is None or str(data["order_by"]).strip() == ""):
             raise ValidationError("order_by is required or can't be empty string")
+        
+        if "from_datetime" in data and (data["from_datetime"] is None or str(data["from_datetime"]).strip() == ""):
+            raise ValidationError("from_datetime is required or can't be empty string")
+        
+        if "to_datetime" in data and (data["to_datetime"] is None or str(data["to_datetime"]).strip() == ""):
+            raise ValidationError("to_datetime is required or can't be empty string")
 
 
 class GetImages(ConsoleAccessBaseClass):
@@ -135,6 +153,8 @@ class GetImages(ConsoleAccessBaseClass):
         number_of_images: int = 50,
         skip: int = 0,
         order_by: str = "ASC",
+        from_datetime: str = None,
+        to_datetime: str = None,
     ):
         """Get the (saved) images for a specified Edge Device. \
             Application: Use to display an image in a UI
@@ -150,6 +170,10 @@ class GetImages(ConsoleAccessBaseClass):
             order_by (str, optional) : Sort Order: Sort order by date image was created. \
                 Value range: DESC, ASC.
                 default: ASC
+            from_datetime(str, optional) : Date and time (From). \
+                - Format: yyyyMMddhhmm
+            to_datetime(str, optional) : Date and time (To). \
+                - Format: yyyyMMddhhmm
 
         Returns:
             **Return Type**
@@ -299,13 +323,17 @@ class GetImages(ConsoleAccessBaseClass):
                 number_of_images =  "__number_of_images__"
                 skip =  "__skip__"
                 order_by =  "__get_images_order_by__"
+                from_datetime = "__from_datetime__"
+                to_datetime = "__to_datetime__"
 
                 # Insight - GetImages
                 response = insight_obj.get_images(device_id,
                                                   sub_directory_name,
                                                   number_of_images,
                                                   skip,
-                                                  order_by)
+                                                  order_by,
+                                                  from_datetime,
+                                                  to_datetime)
                 pprint(response)
         """
 
@@ -325,6 +353,12 @@ class GetImages(ConsoleAccessBaseClass):
 
             if "order_by" in _local_params and _local_params["order_by"] is None:
                 _local_params["order_by"] = "ASC"
+            
+            if "from_datetime" in _local_params and _local_params["from_datetime"] is None:
+                del _local_params["from_datetime"]
+            
+            if "to_datetime" in _local_params and _local_params["to_datetime"] is None:
+                del _local_params["to_datetime"]
 
             # Validate schema
             _local_params = SchemaGetImages().load(_local_params)
@@ -338,6 +372,14 @@ class GetImages(ConsoleAccessBaseClass):
                 "number_of_images": _local_params["number_of_images"],
                 "skip": _local_params["skip"],
             }
+
+            if "from_datetime" in _local_params:
+                from_datetime_dict = {"from_datetime": _local_params["from_datetime"]}
+                _query_params.update(from_datetime_dict)
+            
+            if "to_datetime" in _local_params:
+                to_datetime_dict = {"to_datetime": _local_params["to_datetime"]}
+                _query_params.update(to_datetime_dict)
 
             # Enter a context with an instance of the API client
             with aitrios_console_rest_client_sdk_primitive.ApiClient(

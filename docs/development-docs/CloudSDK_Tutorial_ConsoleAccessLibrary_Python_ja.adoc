@@ -1,7 +1,7 @@
 = Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python版 pass:[<br/>] チュートリアル pass:[<br/>]
 :sectnums:
 :sectnumlevels: 1
-:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:author: Copyright 2023, 2024 Sony Semiconductor Solutions Corporation
 :version-label: Version 
 :revnumber: x.x.x
 :revdate: YYYY - MM - DD
@@ -20,7 +20,7 @@
 - Python 3.11.8
 - Python依存関係
 
-    * requests>=2.31.0
+    * requests>=2.32.0
     * jsonschema>=4.6.2
     * setuptools>=65.5.1
     * wheel>=0.37.1
@@ -83,8 +83,6 @@
 ```
     export https_proxy=http://username:password@proxyhost:port
 ```
-
-<<<
 
 === 「**Console Access Library**」サンプルアプリケーション開始用のパラメータ設定
 
@@ -216,6 +214,8 @@ demo_configuration:
    filter: "__filter__"
    raw: "__raw__"
    time: "__time__"
+   from_datetime: "__from_datetime__"
+   to_datetime: "__to_datetime__"
 ----
 |===
 オプションのパラメータの詳細については、<<api-specifications,「**Console Access Library**」 API仕様>>を参照してください。
