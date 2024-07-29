@@ -1,7 +1,7 @@
 = Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python版 pass:[<br/>] 機能仕様書 pass:[<br/>]
 :sectnums:
 :sectnumlevels: 1
-:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:author: Copyright 2023, 2024 Sony Semiconductor Solutions Corporation
 :version-label: Version 
 :revnumber: x.x.x
 :revdate: YYYY - MM - DD
@@ -21,7 +21,7 @@
 
 |2023/01/30
 |version 0.2.0 修正対応 +
-表現統一 + 
+表現統一 +
 PDFビルド環境更新
 
 |2023/05/26
@@ -34,12 +34,16 @@ Console Enterprise Edition対応
 |2024/03/26
 |version 1.2.0 修正対応
 
+|2024/06/25
+|version 1.3.0 修正対応
+
 |===
 
 == はじめに
 
 * 本書は、「**Console**」へのアクセスを提供する「**Console Access Library**」についての機能仕様である。 + 
 機能開発言語には、Pythonを使用する。
+
 
 == 用語・略語
 |===
@@ -63,6 +67,7 @@ Azure Storage リソースへの制限付きアクセス権を付与する URI
 |
 
 |===
+
 
 == 想定ユースケース
 * 「**Console Access Library**」を使用して、下記を実施する
@@ -290,12 +295,12 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 
 * Insight
 ** get_image_directories(device_id: str)
-** get_images(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_images(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str, from_datetime: str, to_datetime: str)
 ** get_inference_results(device_id: str, filter: str, number_of_inference_results: int, raw: int, time: str)
 ** export_images(key: str, from_datetime: str, to_datetime: str, device_id: str, file_format: str)
 
 * Insight High Level API
-** get_image_data(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_image_data(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str, from_datetime: str, to_datetime: str)
 ** get_last_inference_data(device_id: str)
 ** get_last_inference_and_image_data(device_id: str, sub_directory_name: str)
 
@@ -479,16 +484,16 @@ Client生成時には、アクセストークンの取得、「**Low Level SDK**
 指定なしの場合、全device_group_id検索
 
 |device_ids
-|エッジデバイスの所属グループ
+|エッジデバイスのリスト
 |複数のDevice IDをカンマで区切って指定 +
 指定なしの場合、全deviceIds検索
 
 |scope
-|エッジデバイスの所属グループ
+|レスポンスパラメータに含める範囲
 |レスポンスパラメータの範囲を指定 +
-設定値 +
+設定値: +
 full: 完全なパラメータを返す +
-minmal: 最小限のパラメータを返す(応答速度が速い) +
+minimal: 最小限のパラメータを返す(応答速度が速い) +
 指定なしの場合、全scope検索
 
 |===
@@ -1567,6 +1572,16 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |DESC、ASC、desc、asc +
 指定なしの場合:ASC
 
+|from_datetime
+|日時(From)
+|yyyyMMddhhmm形式 +
+指定なしの場合、Fromの範囲設定なし
+
+|to_datetime
+|日時(To)
+|yyyyMMddhhmm形式 +
+指定なしの場合、Toの範囲設定なし
+
 |===
 +
 |===
@@ -1716,6 +1731,16 @@ deploy_device_app_wait_responseのdevice_idsで指定したdevice_id分のデー
 |ソート順：画像の作成された日時によるソート順
 |DESC、ASC、desc、asc +
 指定なしの場合:ASC
+
+|from_datetime
+|日時(From)
+|yyyyMMddhhmm形式 +
+指定なしの場合、Fromの範囲設定なし
+
+|to_datetime
+|日時(To)
+|yyyyMMddhhmm形式 +
+指定なしの場合、Toの範囲設定なし
 
 |===
 +

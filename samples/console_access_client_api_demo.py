@@ -184,6 +184,8 @@ if __name__ == "__main__":
     filter = demo_configuration.get("filter", None)
     raw = demo_configuration.get("raw", None)
     time = demo_configuration.get("time", None)
+    from_datetime = demo_configuration.get("from_datetime", None)
+    to_datetime = demo_configuration.get("to_datetime", None)
 
     def publish_callback(status):
         """Callback for publish model status"""
@@ -420,7 +422,9 @@ if __name__ == "__main__":
         sub_directory_name=sub_directory_name,
         number_of_images=number_of_images,
         skip=skip,
-        order_by=order_by
+        order_by=order_by,
+        from_datetime=from_datetime,
+        to_datetime=to_datetime
     )
     print("GET IMAGES:", response)
 
@@ -440,7 +444,9 @@ if __name__ == "__main__":
         sub_directory_name,
         number_of_images=number_of_images,
         skip=skip,
-        order_by=order_by
+        order_by=order_by,
+        from_datetime=from_datetime,
+        to_datetime=to_datetime
     )
     print("GET IMAGE DATA:", response)
 
