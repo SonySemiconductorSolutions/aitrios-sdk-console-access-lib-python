@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>console_access_library.insight.get_images &mdash; Console Access Library 1.2.0 documentation</title>
+  <title>console_access_library.insight.get_images &mdash; Console Access Library 1.3.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
@@ -13,8 +13,8 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/documentation_options.js?v=1f29e9d3"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -33,7 +33,7 @@
             Console Access Library
           </a>
               <div class="version">
-                1.2.0
+                1.3.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -75,7 +75,7 @@
              
   <h1>Source code for console_access_library.insight.get_images</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ------------------------------------------------------------------------</span>
-<span class="c1"># Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.</span>
+<span class="c1"># Copyright 2022, 2023, 2024 Sony Semiconductor Solutions Corp. All rights reserved.</span>
 
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -162,6 +162,18 @@
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for order_by&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
 
+    <span class="c1">#: str, optional : Date and time (From).</span>
+    <span class="c1">#:                 - Format: yyyyMMddhhmm</span>
+    <span class="n">from_datetime</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for from_datetime&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1">#: str, optional : Date and time (To).</span>
+    <span class="c1">#:                 - Format: yyyyMMddhhmm</span>
+    <span class="n">to_datetime</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">String</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error_messages</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;invalid&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid string for to_datetime&quot;</span><span class="p">},</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
 <div class="viewcode-block" id="SchemaGetImages.validate">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.get_images.SchemaGetImages.validate">[docs]</a>
     <span class="nd">@validates_schema</span>
@@ -188,7 +200,13 @@
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;skip is required or skip must be integer or can&#39;t be negative&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s2">&quot;order_by&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;order_by&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;order_by&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;order_by is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;order_by is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="s2">&quot;from_datetime&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;from_datetime is required or can&#39;t be empty string&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="s2">&quot;to_datetime&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;to_datetime is required or can&#39;t be empty string&quot;</span><span class="p">)</span></div>
 </div>
 
 
@@ -221,6 +239,8 @@
         <span class="n">number_of_images</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
         <span class="n">skip</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">order_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ASC&quot;</span><span class="p">,</span>
+        <span class="n">from_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">to_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the (saved) images for a specified Edge Device. \</span>
 <span class="sd">            Application: Use to display an image in a UI</span>
@@ -236,6 +256,10 @@
 <span class="sd">            order_by (str, optional) : Sort Order: Sort order by date image was created. \</span>
 <span class="sd">                Value range: DESC, ASC.</span>
 <span class="sd">                default: ASC</span>
+<span class="sd">            from_datetime(str, optional) : Date and time (From). \</span>
+<span class="sd">                - Format: yyyyMMddhhmm</span>
+<span class="sd">            to_datetime(str, optional) : Date and time (To). \</span>
+<span class="sd">                - Format: yyyyMMddhhmm</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            **Return Type**</span>
@@ -385,13 +409,17 @@
 <span class="sd">                number_of_images =  &quot;__number_of_images__&quot;</span>
 <span class="sd">                skip =  &quot;__skip__&quot;</span>
 <span class="sd">                order_by =  &quot;__get_images_order_by__&quot;</span>
+<span class="sd">                from_datetime = &quot;__from_datetime__&quot;</span>
+<span class="sd">                to_datetime = &quot;__to_datetime__&quot;</span>
 
 <span class="sd">                # Insight - GetImages</span>
 <span class="sd">                response = insight_obj.get_images(device_id,</span>
 <span class="sd">                                                  sub_directory_name,</span>
 <span class="sd">                                                  number_of_images,</span>
 <span class="sd">                                                  skip,</span>
-<span class="sd">                                                  order_by)</span>
+<span class="sd">                                                  order_by,</span>
+<span class="sd">                                                  from_datetime,</span>
+<span class="sd">                                                  to_datetime)</span>
 <span class="sd">                pprint(response)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -411,6 +439,12 @@
 
             <span class="k">if</span> <span class="s2">&quot;order_by&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;order_by&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;order_by&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ASC&quot;</span>
+            
+            <span class="k">if</span> <span class="s2">&quot;from_datetime&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="s2">&quot;to_datetime&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span> <span class="ow">and</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]</span>
 
             <span class="c1"># Validate schema</span>
             <span class="n">_local_params</span> <span class="o">=</span> <span class="n">SchemaGetImages</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">_local_params</span><span class="p">)</span>
@@ -424,6 +458,14 @@
                 <span class="s2">&quot;number_of_images&quot;</span><span class="p">:</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;number_of_images&quot;</span><span class="p">],</span>
                 <span class="s2">&quot;skip&quot;</span><span class="p">:</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;skip&quot;</span><span class="p">],</span>
             <span class="p">}</span>
+
+            <span class="k">if</span> <span class="s2">&quot;from_datetime&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
+                <span class="n">from_datetime_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">:</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;from_datetime&quot;</span><span class="p">]}</span>
+                <span class="n">_query_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">from_datetime_dict</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="s2">&quot;to_datetime&quot;</span> <span class="ow">in</span> <span class="n">_local_params</span><span class="p">:</span>
+                <span class="n">to_datetime_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">:</span> <span class="n">_local_params</span><span class="p">[</span><span class="s2">&quot;to_datetime&quot;</span><span class="p">]}</span>
+                <span class="n">_query_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">to_datetime_dict</span><span class="p">)</span>
 
             <span class="c1"># Enter a context with an instance of the API client</span>
             <span class="k">with</span> <span class="n">aitrios_console_rest_client_sdk_primitive</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span>

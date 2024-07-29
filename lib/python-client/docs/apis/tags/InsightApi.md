@@ -527,6 +527,8 @@ with aitrios_console_rest_client_sdk_primitive.ApiClient(configuration) as api_c
         'order_by': "ASC",
         'number_of_images': 50,
         'skip': 0,
+        'from_datetime': "",
+        'to_datetime': "",
     }
     try:
         # GetImages
@@ -558,6 +560,8 @@ grant_type | GrantTypeSchema | | optional
 order_by | OrderBySchema | | optional
 number_of_images | NumberOfImagesSchema | | optional
 skip | SkipSchema | | optional
+from_datetime | FromDatetimeSchema | | optional
+to_datetime | ToDatetimeSchema | | optional
 
 
 # GrantTypeSchema
@@ -587,6 +591,24 @@ decimal.Decimal, int,  | decimal.Decimal,  |  | if omitted the server will use t
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 decimal.Decimal, int,  | decimal.Decimal,  |  | if omitted the server will use the default value of 0
+
+# FromDatetimeSchema
+
+Date and time (From).     - Format: yyyyMMddhhmm
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  | Date and time (From).     - Format: yyyyMMddhhmm | if omitted the server will use the default value of ""
+
+# ToDatetimeSchema
+
+Date and time (To).    - Format: yyyyMMddhhmm
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  | Date and time (To).    - Format: yyyyMMddhhmm | if omitted the server will use the default value of ""
 
 ### path_params
 #### RequestPathParams

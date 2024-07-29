@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023, 2024 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -88,6 +88,18 @@ class SchemaGetImageData(Schema):
         required=False, error_messages={"invalid": "Invalid string for order_by"}, strict=True
     )
 
+    #: str, optional : Date and time (From).
+    #:                 - Format: yyyyMMddhhmm
+    from_datetime = fields.String(
+        required=False, error_messages={"invalid": "Invalid string for from_datetime"}, strict=True
+    )
+
+    #: str, optional : Date and time (To).
+    #:                 - Format: yyyyMMddhhmm
+    to_datetime = fields.String(
+        required=False, error_messages={"invalid": "Invalid string for to_datetime"}, strict=True
+    )
+
     @validates_schema
     def validate(self, data, **kwargs):
         if str(data["device_id"]).strip() == "":
@@ -113,6 +125,12 @@ class SchemaGetImageData(Schema):
 
         if "order_by" in data and (data["order_by"] is None or str(data["order_by"]).strip() == ""):
             raise ValidationError("order_by is required or can't be empty string")
+        
+        if "from_datetime" in data and (data["from_datetime"] is None or str(data["from_datetime"]).strip() == ""):
+            raise ValidationError("from_datetime is required or can't be empty string")
+        
+        if "to_datetime" in data and (data["to_datetime"] is None or str(data["to_datetime"]).strip() == ""):
+            raise ValidationError("to_datetime is required or can't be empty string")
 
 
 class GetImageData(ConsoleAccessBaseClass):
@@ -153,6 +171,13 @@ class GetImageData(ConsoleAccessBaseClass):
 
         if "order_by" in params and params["order_by"] is None:
             params["order_by"] = "ASC"
+        
+        if "from_datetime" in params and params["from_datetime"] is None:
+            del params["from_datetime"]
+        
+        if "to_datetime" in params and params["to_datetime"] is None:
+            del params["to_datetime"]
+
         return params
 
     def get_image_data(
@@ -162,6 +187,8 @@ class GetImageData(ConsoleAccessBaseClass):
         number_of_images: int = None,
         skip: int = None,
         order_by: str = None,
+        from_datetime: str = None,
+        to_datetime: str = None,
     ):
         """Get a (saved) image of the specified Edge Device.
 
@@ -175,6 +202,10 @@ class GetImageData(ConsoleAccessBaseClass):
             order_by (str, optional) : Sort Order: Sort order by date image was created. \
                 Value range: DESC, ASC.
                 If not specified: ASC.
+            from_datetime(str, optional) : Date and time (From). \
+                - Format: yyyyMMddhhmm
+            to_datetime(str, optional) : Date and time (To). \
+                - Format: yyyyMMddhhmm
 
         Returns:
             **Return Type**
@@ -324,13 +355,17 @@ class GetImageData(ConsoleAccessBaseClass):
                 number_of_images = __number_of_images__
                 skip = __skip__
                 order_by = "__get_image_data_order_by__"
+                from_datetime = "__from_datetime__"
+                to_datetime = "__to_datetime__"
 
                 # Insight - GetImageData
                 response = insight_obj.get_image_data(device_id,
                                                       sub_directory_name,
                                                       number_of_images,
                                                       skip,
-                                                      order_by)
+                                                      order_by,
+                                                      from_datetime,
+                                                      to_datetime)
                 pprint(response)
         """
 
@@ -368,6 +403,8 @@ class GetImageData(ConsoleAccessBaseClass):
                         number_of_images=number_of_images,
                         skip=_skip,
                         order_by=order_by,
+                        from_datetime=from_datetime,
+                        to_datetime=to_datetime,
                     )
                     if "result" in response:
                         return response

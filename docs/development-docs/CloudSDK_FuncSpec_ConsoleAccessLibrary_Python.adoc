@@ -1,7 +1,7 @@
 = Cloud SDK pass:[<br/>] Console Access Library pass:[<br/>] Python pass:[<br/>] Functional Specifications pass:[<br/>]
 :sectnums:
 :sectnumlevels: 1
-:author: Copyright 2023 Sony Semiconductor Solutions Corporation
+:author: Copyright 2023, 2024 Sony Semiconductor Solutions Corporation
 :version-label: Version 
 :revnumber: x.x.x
 :revdate: YYYY - MM - DD
@@ -35,6 +35,9 @@ Console Enterprise Edition support
 
 |2024/03/26
 |Changed for "**Cloud SDK**" 1.2.0
+
+|2024/06/25
+|Changed for "**Cloud SDK**" 1.3.0
 
 |===
 
@@ -293,12 +296,12 @@ When the Application ID is passed to Config, the token is obtained and updated b
 
 * Insight
 ** get_image_directories(device_id: str)
-** get_images(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_images(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str, from_datetime: str, to_datetime: str)
 ** get_inference_results(device_id: str, filter: str, number_of_inference_results: int, raw: int, time: str)
 ** export_images(key: str, from_datetime: str, to_datetime: str, device_id: str, file_format: str)
 
 * Insight High Level API
-** get_image_data(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str)
+** get_image_data(device_id: str, sub_directory_name: str, number_of_images: int, skip: int, order_by: str, from_datetime: str, to_datetime: str)
 ** get_last_inference_data(device_id: str)
 ** get_last_inference_and_image_data(device_id: str, sub_directory_name: str)
 
@@ -483,12 +486,12 @@ If not specified, search all connection_state
 If not specified, search all device_group_id
 
 |device_ids
-|Group that belongs to Edge Devices
+|List of the Edge Devices
 |Specify multiple Edge Device ID separated by comma. +
 If not specified, search all Edge Device IDs
 
 |scope
-|Group that belongs to Edge Devices 
+|Scope of response parameters to include 
 |Specifies the range of response parameters. +
 Setting value: +
 full: Return complete parameters. +
@@ -1572,6 +1575,16 @@ If not specified:0
 |DESC、ASC、desc、asc +
 If not specified:ASC
 
+|from_datetime
+|Date and time(From)
+|yyyyMMddhhmm format +
+If not specified, no start date and time is set
+
+|to_datetime
+|Date and time(To)
+|yyyyMMddhhmm format +
+If not specified, no end date and time is set
+
 |===
 +
 |===
@@ -1721,6 +1734,16 @@ If not specified:0
 |Sort order: Sort order by date and time the image was created
 |DESC、ASC、desc、asc +
 If not specified:ASC
+
+|from_datetime
+|Date and time(From)
+|yyyyMMddhhmm format +
+If not specified, no start date and time is set
+
+|to_datetime
+|Date and time(To)
+|yyyyMMddhhmm format +
+If not specified, no end date and time is set
 
 |===
 +

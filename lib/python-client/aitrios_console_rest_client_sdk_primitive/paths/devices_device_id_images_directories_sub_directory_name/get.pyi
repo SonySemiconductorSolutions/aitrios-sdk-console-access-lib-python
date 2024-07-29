@@ -32,6 +32,8 @@ GrantTypeSchema = schemas.StrSchema
 OrderBySchema = schemas.StrSchema
 NumberOfImagesSchema = schemas.IntSchema
 SkipSchema = schemas.IntSchema
+FromDatetimeSchema = schemas.StrSchema
+ToDatetimeSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -44,6 +46,8 @@ RequestOptionalQueryParams = typing_extensions.TypedDict(
         'order_by': typing.Union[OrderBySchema, str, ],
         'number_of_images': typing.Union[NumberOfImagesSchema, decimal.Decimal, int, ],
         'skip': typing.Union[SkipSchema, decimal.Decimal, int, ],
+        'from_datetime': typing.Union[FromDatetimeSchema, str, ],
+        'to_datetime': typing.Union[ToDatetimeSchema, str, ],
     },
     total=False
 )
@@ -75,6 +79,18 @@ request_query_skip = api_client.QueryParameter(
     name="skip",
     style=api_client.ParameterStyle.FORM,
     schema=SkipSchema,
+    explode=True,
+)
+request_query_from_datetime = api_client.QueryParameter(
+    name="from_datetime",
+    style=api_client.ParameterStyle.FORM,
+    schema=FromDatetimeSchema,
+    explode=True,
+)
+request_query_to_datetime = api_client.QueryParameter(
+    name="to_datetime",
+    style=api_client.ParameterStyle.FORM,
+    schema=ToDatetimeSchema,
     explode=True,
 )
 # Path params
@@ -462,6 +478,8 @@ class BaseApi(api_client.Api):
             request_query_order_by,
             request_query_number_of_images,
             request_query_skip,
+            request_query_from_datetime,
+            request_query_to_datetime,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:
