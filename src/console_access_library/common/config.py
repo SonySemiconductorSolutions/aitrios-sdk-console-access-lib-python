@@ -320,7 +320,7 @@ class Config:
                 client_id = self._client_id
                 authority = self._portal_authorization_endpoint
                 client_credential = self._client_secret
-                scope = ["api://" + self._application_id + "/.default"]
+                scope = [self._application_id + "/.default"]
 
                 # Create an instance of the Azure API class
                 _data = msal.ConfidentialClientApplication(

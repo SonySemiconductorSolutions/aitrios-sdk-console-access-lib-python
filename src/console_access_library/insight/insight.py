@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------
-# Copyright 2022, 2023 Sony Semiconductor Solutions Corp. All rights reserved.
+# Copyright 2022, 2023, 2024 Sony Semiconductor Solutions Corp. All rights reserved.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -195,6 +195,8 @@ class Insight(ConsoleAccessBaseClass):
         number_of_images: int = 50,
         skip: int = 0,
         order_by: str = "ASC",
+        from_datetime: str = None,
+        to_datetime: str = None,
     ):
         """Get the (saved) images for a specified Edge Device. \
             Application: Use to display an image in a UI
@@ -210,6 +212,10 @@ class Insight(ConsoleAccessBaseClass):
             order_by (str, optional) : Sort Order: Sort order by date image was created. \
                 Value range: DESC, ASC.
                 default: ASC
+            from_datetime(str, optional) : Date and time (From). \
+                - Format: yyyyMMddhhmm
+            to_datetime(str, optional) : Date and time (To). \
+                - Format: yyyyMMddhhmm
 
         Returns:
             **Return Type**
@@ -307,7 +313,7 @@ class Insight(ConsoleAccessBaseClass):
                     - ``datetime`` (str) : Time
         """
         return self._get_images_obj.get_images(
-            device_id, sub_directory_name, number_of_images, skip, order_by
+            device_id, sub_directory_name, number_of_images, skip, order_by, from_datetime, to_datetime
         )
 
     def get_inference_results(
@@ -553,6 +559,8 @@ class Insight(ConsoleAccessBaseClass):
         number_of_images: int = 50,
         skip: int = 0,
         order_by: str = "ASC",
+        from_datetime: str = None,
+        to_datetime: str = None,
     ):
         """Abstract function call to ``get_image_data`` API
 
@@ -566,6 +574,10 @@ class Insight(ConsoleAccessBaseClass):
             order_by (str, optional) : Sort Order: Sort order by date image was created. \
                 Value range: DESC, ASC.
                 If not specified: ASC.
+            from_datetime(str, optional) : Date and time (From). \
+                - Format: yyyyMMddhhmm
+            to_datetime(str, optional) : Date and time (To). \
+                - Format: yyyyMMddhhmm
 
         Returns:
             **Return Type**
@@ -663,7 +675,7 @@ class Insight(ConsoleAccessBaseClass):
                     - ``datetime`` (str) : Time
         """
         return self._get_image_data_obj.get_image_data(
-            device_id, sub_directory_name, number_of_images, skip, order_by
+            device_id, sub_directory_name, number_of_images, skip, order_by, from_datetime, to_datetime
         )
 
     def get_last_inference_data(

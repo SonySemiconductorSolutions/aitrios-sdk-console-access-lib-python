@@ -208,6 +208,8 @@
             filter: "__filter__"
             raw: "__raw__"
             time: "__time__"
+            from_datetime: "__from_datetime__"
+            to_datetime: "__to_datetime__"
         ```
 
 9. To execute the API "import_device_app", place the contents of the wasm or aot file under samples.
@@ -222,7 +224,7 @@ And set the file name to "file_content_name" of samples/demo_config.yaml.
 - None
 
 ## Get support
-- [Contact us](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/contact-us/)
+- [Contact us](https://support.aitrios.sony-semicon.com/hc/en-us/requests/new)
 
 ## See also
 - ["**Developer Site**"](https://developer.aitrios.sony-semicon.com/en/edge-ai-sensing/)
