@@ -60,7 +60,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=[
-        "marshmallow>=3.17.0",
+        "marshmallow>=3.17.0,<4.0.0",
         "requests>=2.32.0",
         "jsonschema>=4.6.2",
         "PyYAML>=6.0",
