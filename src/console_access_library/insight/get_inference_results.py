@@ -72,9 +72,8 @@ class SchemaGetInferenceresults(Schema):
     #:                     * T: string  match or more filter
     #:                         eg. "c.Inferences[0].T>=\"20230412140050618\""
     #:                     * T: string  range filter
-    #:                         eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences \
-    #:                             WHERE i.T >= \"20230412140023098\" AND \
-    #:                             i.T <= \"20230412140029728\")"
+    #:                         eg. "c.Inferences[0].T >= \"20230412140023098\" AND \
+    #:                             c.Inferences[0].T <= \"20230412140029728\""
     #:                     * _ts: number  match filter
     #:                         eg. "c._ts=1681308028"
     #:
@@ -203,9 +202,8 @@ class GetInferenceresults(ConsoleAccessBaseClass):
                             * T: string  match or more filter
                                 eg. "c.Inferences[0].T>=\"20230412140050618\""
                             * T: string  range filter
-                                eg. "EXISTS(SELECT VALUE i FROM i IN c.Inferences \
-                                    WHERE i.T >= \"20230412140023098\" AND \
-                                    i.T <= \"20230412140029728\")"
+                                eg. "c.Inferences[0].T >= \"20230412140023098\" AND \
+                                    c.Inferences[0].T <= \"20230412140029728\""
                             * _ts: number  match filter
                                 eg. "c._ts=1681308028"
 
