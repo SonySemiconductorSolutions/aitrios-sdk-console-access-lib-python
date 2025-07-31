@@ -13,8 +13,8 @@
   
         <script src="../../../_static/jquery.js?v=5d32c60e"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../../_static/documentation_options.js?v=1f29e9d3"></script>
-        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/documentation_options.js?v=6efca38a"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
         <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -102,21 +102,21 @@
 <span class="c1"># pylint:disable=too-many-return-statements</span>
 <span class="c1"># pylint:disable=anomalous-backslash-in-string</span>
 
-<span class="kn">from</span> <span class="nn">console_access_library.common.console_access_base_class</span> <span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.get_image_data</span> <span class="kn">import</span> <span class="n">GetImageData</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.get_image_directories</span> <span class="kn">import</span> <span class="n">GetImageDirectories</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.get_images</span> <span class="kn">import</span> <span class="n">GetImages</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.get_inference_results</span> <span class="kn">import</span> <span class="n">GetInferenceresults</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.get_last_inference_and_image_data</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.common.console_access_base_class</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConsoleAccessBaseClass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.get_image_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetImageData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.get_image_directories</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetImageDirectories</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.get_images</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetImages</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.get_inference_results</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetInferenceresults</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.get_last_inference_and_image_data</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">GetLastInferenceAndImageData</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.get_last_inference_data</span> <span class="kn">import</span> <span class="n">GetLastInferenceData</span>
-<span class="kn">from</span> <span class="nn">console_access_library.insight.export_images</span> <span class="kn">import</span> <span class="n">ExportImages</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.get_last_inference_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">GetLastInferenceData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">console_access_library.insight.export_images</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExportImages</span>
 
 
 <div class="viewcode-block" id="Insight">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight">[docs]</a>
-<span class="k">class</span> <span class="nc">Insight</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Insight</span><span class="p">(</span><span class="n">ConsoleAccessBaseClass</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract class to access Console Access Library Insight component APIs from Insight component</span>
 
 <span class="sd">    Args:</span>
@@ -124,7 +124,7 @@
 <span class="sd">            :class:`~console_access_library.common.ConsoleAccessBaseClass`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor Method for Insight Abstract class</span>
 
 <span class="sd">        Args:</span>
@@ -141,7 +141,7 @@
 
 <div class="viewcode-block" id="Insight.get_image_directories">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_image_directories">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_image_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the image save directory list of the Edge Devices for each device group</span>
 
 <span class="sd">        Args:</span>
@@ -271,7 +271,7 @@
 
 <div class="viewcode-block" id="Insight.get_images">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_images">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_images</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -402,7 +402,7 @@
 
 <div class="viewcode-block" id="Insight.get_inference_results">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_inference_results">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_inference_results</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_inference_results</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="nb">filter</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -429,9 +429,8 @@
 <span class="sd">                            * T: string  match or more filter</span>
 <span class="sd">                                eg. &quot;c.Inferences[0].T&gt;=\&quot;20230412140050618\&quot;&quot;</span>
 <span class="sd">                            * T: string  range filter</span>
-<span class="sd">                                eg. &quot;EXISTS(SELECT VALUE i FROM i IN c.Inferences \</span>
-<span class="sd">                                    WHERE i.T &gt;= \&quot;20230412140023098\&quot; AND \</span>
-<span class="sd">                                    i.T &lt;= \&quot;20230412140029728\&quot;)&quot;</span>
+<span class="sd">                                eg. &quot;c.Inferences[0].T &gt;= \&quot;20230412140023098\&quot; AND \</span>
+<span class="sd">                                    c.Inferences[0].T &lt;= \&quot;20230412140029728\&quot;&quot;</span>
 <span class="sd">                            * _ts: number  match filter</span>
 <span class="sd">                                eg. &quot;c._ts=1681308028&quot;</span>
 
@@ -641,7 +640,7 @@
 
 <div class="viewcode-block" id="Insight.get_image_data">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_image_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_image_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_image_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -770,7 +769,7 @@
 
 <div class="viewcode-block" id="Insight.get_last_inference_data">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_last_inference_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_last_inference_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_last_inference_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">):</span>
@@ -949,7 +948,7 @@
 
 <div class="viewcode-block" id="Insight.get_last_inference_and_image_data">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.get_last_inference_and_image_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_last_inference_and_image_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_last_inference_and_image_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">sub_directory_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -1172,7 +1171,7 @@
 
 <div class="viewcode-block" id="Insight.export_images">
 <a class="viewcode-back" href="../../../console_access_library.insight.html#console_access_library.insight.insight.Insight.export_images">[docs]</a>
-    <span class="k">def</span> <span class="nf">export_images</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_images</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">from_datetime</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
